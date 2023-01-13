@@ -37,3 +37,6 @@ Route::resource('users', App\Http\Controllers\UserController::class);
 
 
 Route::resource('rankings', App\Http\Controllers\RankingController::class);
+
+
+Route::resource('importar', App\Http\Controllers\ImportarController::class);

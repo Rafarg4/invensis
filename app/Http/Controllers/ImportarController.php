@@ -14,8 +14,14 @@ class ImportarController extends Controller
 {
      public function index()
     {
-      
-        return redirect(route('importar'));
+       return view('/importar');
+    }
+    public function store(request  $request) 
+    {
+        $file = $request->file('import_file');
+        Excel::import(new RankingsImport,$file);
+        Flash::success('Ranking import successfully.');
+        return redirect(route('rankings.index'));
     }
 
 }

@@ -51,6 +51,13 @@
     </a>
 </li>
 <li class="nav-item">
+    <a href="{{ route('importar.index') }}"
+       class="nav-link {{ Request::is('importar*') ? 'active' : '' }}">
+       <i class="fa fas-solid fa-file-excel"></i> 
+        <p>Importar Ranking</p>
+    </a>
+</li>
+<li class="nav-item">
     <a href="{{ route('users.index') }}"
        class="nav-link {{ Request::is('users*') ? 'active' : '' }}">
        <i class="fa fas-light fa-user"></i>

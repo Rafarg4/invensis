@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="content-header">
+     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
@@ -10,4 +10,23 @@
             </div>
         </div>
     </section>
+
+    <div class="content px-3">
+    	  @include('adminlte-templates::common.errors')
+ <div class="card">
+  <div class="card-header">
+    Selecione un archivo para importar
+  </div>
+  <div class="card-body">
+    {!! Form::open(['route' => 'importar.store','enctype' => 'multipart/form-data']) !!}
+            <input type="file" name="import_file">
+            <button class="btn btn-primary" type="submit">Importar</button>
+            <div class="card-body">
+                </div>
+
+            </div>
+            {!! Form::close() !!}
+  </div>
+</div>
+
 @endsection
