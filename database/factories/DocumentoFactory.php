@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Documento;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class UserFactory extends Factory
+class DocumentoFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = User::class;
+    protected $model = Documento::class;
 
     /**
      * Define the model's default state.
@@ -22,9 +22,8 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->text,
-        'email' => $this->faker->text,
-        'password' => $this->faker->text,
+            'archivo_pago' => $this->faker->text,
+        'archivo_inscripcion' => $this->faker->text,
         'created_at' => $this->faker->date('Y-m-d H:i:s'),
         'updated_at' => $this->faker->date('Y-m-d H:i:s')
         ];

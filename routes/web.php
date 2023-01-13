@@ -20,3 +20,20 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/reportes', [App\Http\Controllers\ReporteController::class, 'reporte'])->name('reportes');
+Route::resource('categorias', App\Http\Controllers\CategoriaController::class);
+
+
+Route::resource('pdf', App\Http\Controllers\PdfController::class);
+
+Route::resource('inscripcions', App\Http\Controllers\InscripcionController::class);
+
+
+Route::resource('documentos', App\Http\Controllers\DocumentoController::class);
+
+
+Route::resource('users', App\Http\Controllers\UserController::class);
+
+
+Route::resource('rankings', App\Http\Controllers\RankingController::class);
