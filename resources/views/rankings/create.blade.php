@@ -26,8 +26,6 @@
             </div>
 
             <div class="card-footer">
-                <input type="file" name="import_file">
-  <button class="btn btn-primary" type="submit">Importar</button>
                 {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
                 <a href="{{ route('rankings.index') }}" class="btn btn-default">Cancel</a>
             </div>

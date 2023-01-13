@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Flash;
 use Response;
 use Maatwebsite\Excel\Facades\Excel;
-
+use App\Models\Categoria;
 class RankingController extends AppBaseController
 {
     /** @var RankingRepository $rankingRepository*/
@@ -43,7 +43,8 @@ class RankingController extends AppBaseController
      */
     public function create()
     {
-        return view('rankings.create');
+        $categoria = Categoria::pluck('nombre','id');
+        return view('rankings.create', compact('categoria'));
     }
 
     /**
@@ -56,8 +57,7 @@ class RankingController extends AppBaseController
     public function store(CreateRankingRequest $request)
     {
         $input = $request->all();
-        $file = $request->file('import_file');
-        Excel::import(new RankingsImport,$file);
+
         $ranking = $this->rankingRepository->create($input);
 
         Flash::success('Ranking saved successfully.');
@@ -94,6 +94,7 @@ class RankingController extends AppBaseController
      */
     public function edit($id)
     {
+         $categoria = Categoria::pluck('nombre','id');
         $ranking = $this->rankingRepository->find($id);
 
         if (empty($ranking)) {
@@ -102,7 +103,7 @@ class RankingController extends AppBaseController
             return redirect(route('rankings.index'));
         }
 
-        return view('rankings.edit')->with('ranking', $ranking);
+        return view('rankings.edit',compact('ranking','categoria'));
     }
 
     /**

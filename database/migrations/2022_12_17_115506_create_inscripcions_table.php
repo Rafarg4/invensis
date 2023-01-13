@@ -26,6 +26,9 @@ class CreateInscripcionsTable extends Migration
             $table->text('celular');
             $table->text('domiciolio');
             $table->text('ciudad');
+            $table->text('region');
+            $table->text('monto');
+            $table->text('estado');
             $table->text('departamento');
             $table->unsignedBigInteger('id_categoria');
             $table->foreign('id_categoria')->references('id')->on('categorias');

@@ -20,7 +20,7 @@
             <tr>
                 <td>{{ $ranking->posicion }}</td>
             <td>{{ $ranking->nombre_apellido }}</td>
-            <td>{{ $ranking->categoria }}</td>
+            <td>{{ $ranking->categoria->nombre }}</td>
             <td>{{ $ranking->club }}</td>
             <td>{{ $ranking->sexo }}</td>
             <td>{{ $ranking->primer_fecha}}</td>

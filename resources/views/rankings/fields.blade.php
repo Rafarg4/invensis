@@ -11,10 +11,10 @@
 </div>
 
 <!-- Categoria Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('categoria', 'Categoria:') !!}
-    {!! Form::text('categoria', null, ['class' => 'form-control']) !!}
-</div>
+  <div class="form-group col-sm-6">
+                {!! Form::label('id_categoria', 'Categoria:') !!}
+                {!! Form::select('id_categoria', $categoria, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion','required']) !!}
+            </div>
 
 <!-- Club Field -->
 <div class="form-group col-sm-6">

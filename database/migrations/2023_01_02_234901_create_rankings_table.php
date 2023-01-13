@@ -18,7 +18,8 @@ class CreateRankingsTable extends Migration
             $table->id('id');
             $table->text('posicion');
             $table->text('nombre_apellido');
-            $table->text('categoria');
+            $table->unsignedBigInteger('id_categoria');
+            $table->foreign('id_categoria')->references('id')->on('categorias');
             $table->text('club');
             $table->text('sexo');
             $table->text('primer_fecha');

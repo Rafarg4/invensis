@@ -3,10 +3,18 @@
 namespace App\Imports;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use App\Models\Ranking;
+use App\Models\Categoria;
 use Maatwebsite\Excel\Concerns\ToModel;
 
 class RankingsImport implements ToModel, WithHeadingRow
 {
+  private $categorias;
+
+  public function __construct (){
+
+    $this->categorias=Categoria::pluck('id','nombre');
+  }
+
     /**
     * @param array $row
     *
@@ -17,7 +25,7 @@ class RankingsImport implements ToModel, WithHeadingRow
         return new Ranking([
           'posicion'  => $row['posicion'],
           'nombre_apellido' => $row['nombre_apellido'],
-          'categoria' => $row['categoria'],
+          'id_categoria' => $this->categorias[$row['categoria']],
           'club' => $row['club'],
           'sexo' => $row['sexo'],
           'primer_fecha' => $row['1_fecha'],

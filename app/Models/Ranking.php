@@ -38,7 +38,7 @@ class Ranking extends Model
     public $fillable = [
         'posicion',
         'nombre_apellido',
-        'categoria',
+        'id_categoria',
         'club',
         'sexo',
         'primer_fecha',
@@ -56,7 +56,7 @@ class Ranking extends Model
     protected $casts = [
         'posicion' => 'string',
         'nombre_apellido' => 'string',
-        'categoria' => 'string',
+        'id_categoria' => 'integer',
         'club' => 'string',
         'sexo' => 'string',
         'primer_fecha' => 'string',
@@ -74,7 +74,7 @@ class Ranking extends Model
     public static $rules = [
         'posicion' => 'required',
         'nombre_apellido' => 'required',
-        'categoria' => 'required',
+        'id_categoria' => 'required',
         'club' => 'required',
         'sexo' => 'required',
         'primer_fecha' => 'required',
@@ -84,5 +84,8 @@ class Ranking extends Model
         'total' => 'required'
     ];
 
-    
+    public function categoria (){
+     return $this-> belongsTo('App\Models\Categoria','id_categoria');
+
+    }
 }
