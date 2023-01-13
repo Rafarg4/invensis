@@ -15,19 +15,19 @@
 
         @include('adminlte-templates::common.errors')
 
-        <div class="card">
+        <div class="card"> 
 
-            {!! Form::open(['route' => 'rankings.store']) !!}
-
+            {!! Form::open(['route' => 'rankings.store','enctype' => 'multipart/form-data']) !!}
             <div class="card-body">
 
-                <div class="row">
                     @include('rankings.fields')
                 </div>
 
             </div>
 
             <div class="card-footer">
+                <input type="file" name="import_file">
+  <button class="btn btn-primary" type="submit">Importar</button>
                 {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
                 <a href="{{ route('rankings.index') }}" class="btn btn-default">Cancel</a>
             </div>

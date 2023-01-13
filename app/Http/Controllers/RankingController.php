@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Imports\RankingsImport;
 use App\Http\Requests\CreateRankingRequest;
 use App\Http\Requests\UpdateRankingRequest;
 use App\Repositories\RankingRepository;
@@ -9,6 +9,7 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RankingController extends AppBaseController
 {
@@ -55,7 +56,8 @@ class RankingController extends AppBaseController
     public function store(CreateRankingRequest $request)
     {
         $input = $request->all();
-
+        $file = $request->file('import_file');
+        Excel::import(new RankingsImport,$file);
         $ranking = $this->rankingRepository->create($input);
 
         Flash::success('Ranking saved successfully.');
@@ -153,4 +155,5 @@ class RankingController extends AppBaseController
 
         return redirect(route('rankings.index'));
     }
+
 }
