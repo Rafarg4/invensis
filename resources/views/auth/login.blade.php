@@ -33,8 +33,9 @@
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
+    <
     <div class="login-logo">
-        <a href="{{ url('/home') }}"><b>{{ config('app.name') }}</b></a>
+        
     </div>
 
     <!-- /.login-logo -->
@@ -42,7 +43,8 @@
     <!-- /.login-box-body -->
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">Sign in to start your session</p>
+            <center> <img src="/logof.png" width="150" height="150" class="img-circle" alt="User Image"/></center>
+            <p class="login-box-msg">Iniciar Sesion </p>
 
             <form method="post" action="{{ url('/login') }}">
                 @csrf
@@ -81,22 +83,22 @@
                     <div class="col-8">
                         <div class="icheck-primary">
                             <input type="checkbox" id="remember">
-                            <label for="remember">Remember Me</label>
+                            <label for="remember">Recordar</label>
                         </div>
                     </div>
 
                     <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                        <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
                     </div>
 
                 </div>
             </form>
 
             <p class="mb-1">
-                <a href="{{ route('password.request') }}">I forgot my password</a>
+                <a href="{{ route('password.request') }}">Olvidaste tu contaseña?</a>
             </p>
             <p class="mb-0">
-                <a href="{{ route('register') }}" class="text-center">Register a new membership</a>
+                <a href="{{ route('register') }}" class="text-center">Registrarse </a>
             </p>
         </div>
         <!-- /.login-card-body -->

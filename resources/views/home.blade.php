@@ -10,7 +10,7 @@
 <div class="info-box-content">
 <span class="info-box-text">Crear Inscripcion</span>
 <span class="info-box-number">
-<a href="" class="small-box-footer">Ir a <i class="fas fa-arrow-circle-right"></i></a>
+<a href="{{ route('inscripcions.create') }}" class="small-box-footer">Ir a <i class="fas fa-arrow-circle-right"></i></a>
 </span>
 </div>
 
@@ -22,7 +22,7 @@
 <span class="info-box-icon bg-danger elevation-1"><i class="fa fas-light fa-book"></i></span>
 <div class="info-box-content">
 <span class="info-box-text">Subir documentos</span>
-<span class="info-box-number"><a href="" class="small-box-footer">Ir a <i class="fas fa-arrow-circle-right"></i></a></span>
+<span class="info-box-number"><a href="{{ route('documentos.create') }}" class="small-box-footer">Ir a <i class="fas fa-arrow-circle-right"></i></a></span>
 </div>
 
 </div>
@@ -48,7 +48,7 @@
 <span class="info-box-icon bg-warning elevation-1"><i class="fa fas-solid fa-folder"></i></span>
 <div class="info-box-content">
 <span class="info-box-text">Ranking</span>
-<span class="info-box-number"><a href="" class="small-box-footer">Ir a <i class="fas fa-arrow-circle-right"></i></a></span>
+<span class="info-box-number"><a href="{{ route('rankings.index') }}" class="small-box-footer">Ir a <i class="fas fa-arrow-circle-right"></i></a></span>
 </div>
 
 </div>

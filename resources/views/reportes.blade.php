@@ -65,8 +65,8 @@
             @case($inscripcion->estado == 'Paralizado')
             <span class="badge badge-warning"> {{ $inscripcion->estado }} </span>
             @break
-            @case($inscripcion->estado == 'Finalizado' )
-            <span class="badge badge-danger"> {{ $inscripcion->estado }} </span>
+            @case($inscripcion->estado == 'Verificado' )
+            <span class="badge badge-success"> {{ $inscripcion->estado }} </span>
             @break
             @endswitch</td>
             <td>{{number_format ($inscripcion->monto) }}</td>

@@ -1,3 +1,7 @@
+<div class="form-group col-md-6 pull-left">
+<label for="id_user">id_user:</label>
+            <input type="text" name="id_user" class="form-control" value="{{ Auth::user()->id }}" readonly>
+        </div>
 <!-- Posicion Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('posicion', 'Posicion:') !!}
@@ -23,10 +27,10 @@
 </div>
 
 <!-- Sexo Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('sexo', 'Sexo:') !!}
-    {!! Form::text('sexo', null, ['class' => 'form-control']) !!}
-</div>
+<div class=" form-group col-sm-3">
+                {!! Form::label('sexo', 'Sexo:') !!}
+                {!! Form::select('sexo',array('Masculino' => 'Masculino', 'Femenino' => 'Femenino','Otro' => 'Otro'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
+                </div>
 
 <!-- 1 Fecha Field -->
 <div class="form-group col-sm-6">

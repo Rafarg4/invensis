@@ -22,6 +22,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/reportes', [App\Http\Controllers\ReporteController::class, 'reporte'])->name('reportes');
+Route::get('/graficos', [App\Http\Controllers\GraficoController::class, 'grafico'])->name('graficos');
 Route::resource('categorias', App\Http\Controllers\CategoriaController::class);
 
 

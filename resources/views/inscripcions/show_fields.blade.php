@@ -78,7 +78,7 @@
             @case($inscripcion->estado == 'Paralizado')
             <span class="badge badge-danger"> {{ $inscripcion->estado }} </span>
             @break
-            @case($inscripcion->estado == 'Finalizado' )
+            @case($inscripcion->estado == 'Verificado' )
             <span class="badge badge-success"> {{ $inscripcion->estado }} </span>
             @break
             @endswitch</td>

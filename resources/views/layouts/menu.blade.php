@@ -22,7 +22,6 @@
     </a>
 </li>
 
-
 <li class="nav-item">
     <a href="{{ route('inscripcions.index') }}"
        class="nav-link {{ Request::is('inscripcions*') ? 'active' : '' }}">
@@ -58,18 +57,24 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ route('users.index') }}"
-       class="nav-link {{ Request::is('users*') ? 'active' : '' }}">
-       <i class="fa fas-light fa-user"></i>
-        <p>Usuarios</p>
-    </a>
-</li>
-
-<li class="nav-item">
     <a href="{{ route('reportes') }}"
        class="nav-link {{ Request::is('reportes*') ? 'active' : '' }}">
        <i class="fas fa-solid fa-chart-area"></i>
         <p>Reportes</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('graficos') }}"
+       class="nav-link {{ Request::is('graficos*') ? 'active' : '' }}">
+       <i class="fa fas-solid fa fa-chart-bar"></i>
+        <p>Graficos</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('users.index') }}"
+       class="nav-link {{ Request::is('users*') ? 'active' : '' }}">
+       <i class="fa fas-light fa-user"></i>
+        <p>Usuarios</p>
     </a>
 </li>
 

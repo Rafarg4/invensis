@@ -30,6 +30,7 @@ Carnet de inscripcion
 <div class="row">
 <div class="col-7">
 <ul class="ml-4 mb-0 fa-ul text-muted">
+<br>
 <li class="small"><span class="fa-li"><i class="fas fa-solid fa-user"></i></span> Primer nombre:{{ $inscripcion->primer_nombre }}</li><br>
 <li class="small"><span class="fa-li"><i class="fas fa-solid fa-bars"></i></span> Categoria:{{ $inscripcion->categoria->nombre}}</li><br>	
 <li class="small"><span class="fa-li"><i class="fas fa-solid fa-id-badge"></i></span> Cedula:{{ $inscripcion->ci }}</li><br>
@@ -41,7 +42,6 @@ Carnet de inscripcion
 </div>
 <div class="col-5 text-center">
 	<br>
-<img src="https://adminlte.io/themes/v3/dist/img/user1-128x128.jpg" width="150" height="150" class="img-circle">
 <img src="{{ asset('storage').'/'.$inscripcions[0]->foto}}" width="150" height="150" class="img-circle">
 </div>
 </div>
