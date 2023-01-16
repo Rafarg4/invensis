@@ -33,6 +33,9 @@
         <th>Domiciolio</th>
         <th>Departamento</th>
         <th>Ciudad</th>
+        <th>Region</th>
+        <th>Estado</th>
+        <th>Monto</th>
         <th>Categoria</th>
         <th>Nombre Equipo</th>
         <th>Contacto Emergencia</th>
@@ -54,6 +57,19 @@
             <td>{{ $inscripcion->domiciolio }}</td>
             <td>{{ $inscripcion->departamento }}</td>
             <td>{{ $inscripcion->ciudad }}</td>
+            <td>{{ $inscripcion->region }}</td>
+            <td>@switch(true)
+            @case($inscripcion->estado == 'En espera')
+            <span class="badge badge-primary"> {{ $inscripcion->estado }} </span>
+            @break
+            @case($inscripcion->estado == 'Paralizado')
+            <span class="badge badge-warning"> {{ $inscripcion->estado }} </span>
+            @break
+            @case($inscripcion->estado == 'Finalizado' )
+            <span class="badge badge-danger"> {{ $inscripcion->estado }} </span>
+            @break
+            @endswitch</td>
+            <td>{{number_format ($inscripcion->monto) }}</td>
             <td>{{ $inscripcion->categoria->nombre }}</td>
             <td>{{ $inscripcion->nombre_equipo }}</td>
             <td>{{ $inscripcion->contacto_emergencia }}</td>

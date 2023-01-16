@@ -17,14 +17,19 @@
         </div>
     </section>
 
-    <div class="content px-3">
-        <div class="card">
+
+      <div class="content px-3">
+ <div class="card">
+  <div class="card-header">
+    Detalles de inscripto
+  </div>
+  <div class="card-body">
+    @include('inscripcions.show_fields')
             <div class="card-body">
-                <div class="row">
-                    @include('inscripcions.show_fields')
                 </div>
+
             </div>
-        </div>
-         
-    </div>
+            {!! Form::close() !!}
+  </div>
+</div>
 @endsection

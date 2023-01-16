@@ -56,7 +56,10 @@ class Inscripcion extends Model
         'contacto_emergencia',
         'nombre_apellido_contacto_emergencia',
         'foto',
-        'departamento'
+        'departamento',
+        'region',
+        'estado',
+        'monto'
     ];
 
     /**
@@ -80,7 +83,10 @@ class Inscripcion extends Model
         'contacto_emergencia' => 'string',
         'nombre_apellido_contacto_emergencia' => 'string',
         'foto' => 'string',
-        'departamento' => 'string'
+        'departamento' => 'string',
+        'region' => 'string',
+        'estado' => 'string',
+        'monto' => 'string'
     ];
 
     /**

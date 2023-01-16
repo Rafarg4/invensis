@@ -83,16 +83,16 @@
                 </div><!-- Grupo Sanguineo Field -->
                 <div class="form-group col-sm-12">
                     {!! Form::label('fechanac', 'Fecha de nacimiento n:') !!}
-                    {!! Form::text('fechanac', null, ['class' => 'form-control']) !!}
+                    {!! Form::date('fechanac', null, ['class' => 'form-control']) !!}
                 </div><!-- Grupo Sanguineo Field -->
                 <div class="form-group col-sm-12">
                     {!! Form::label('ci', 'CI:') !!}
                     {!! Form::text('ci', null, ['class' => 'form-control']) !!}
                 </div>
                 <!-- Grupo Sanguineo Field -->
-                <div class="form-group col-sm-12">
-                    {!! Form::label('sexo', 'Sexo:') !!}
-                    {!! Form::text('sexo', null, ['class' => 'form-control']) !!}
+                <div class=" form-group col-sm-12">
+                {!! Form::label('sexo', 'Sexo:') !!}
+                {!! Form::select('sexo',array('Masculino' => 'Masculino', 'Femenino' => 'Femenino','Otro' => 'Otro'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
                 </div>
                 <!-- Grupo Sanguineo Field -->
                 <div class="form-group col-sm-12">
@@ -125,6 +125,10 @@
                  <div class="form-group col-sm-12">
                     {!! Form::label('departamento', 'Departamento:') !!}
                     {!! Form::text('departamento', null, ['class' => 'form-control']) !!}
+                </div>
+                <div class="form-group col-sm-12">
+                    {!! Form::label('region', 'Region:') !!}
+                    {!! Form::text('region', null, ['class' => 'form-control']) !!}
                 </div>
 
                 <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Siguiente</button>
@@ -176,8 +180,16 @@
         <div class="col-xs-12">
             <div class="col-md-12">
                 <h3> Ultimo paso, confirmar datos ingresados</h3>
+                <div class=" form-group col-sm-12">
+             {!! Form::label('estado', 'Estado:') !!}
+            {!! Form::select('estado',array('En espera' => 'En espera', 'Paralizado' => 'Paralizado','Verificado' => 'Verificado'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
+            </div>
+              <!-- Nombre Apellido Contacto Emergencia Field -->
+            <div class="form-group col-sm-12">
+                {!! Form::label('monto', 'Monto:') !!}
+                {!! Form::text('monto', null, ['class' => 'form-control']) !!}
+            </div>
                 <button class="btn btn-success btn-lg pull-right" type="submit">Terminar!</button>
-
             </div>
         </div>
     </div>

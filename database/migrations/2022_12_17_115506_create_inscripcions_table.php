@@ -27,8 +27,6 @@ class CreateInscripcionsTable extends Migration
             $table->text('domiciolio');
             $table->text('ciudad');
             $table->text('region');
-            $table->text('monto');
-            $table->text('estado');
             $table->text('departamento');
             $table->unsignedBigInteger('id_categoria');
             $table->foreign('id_categoria')->references('id')->on('categorias');
@@ -36,6 +34,8 @@ class CreateInscripcionsTable extends Migration
             $table->text('contacto_emergencia');
             $table->text('nombre_apellido_contacto_emergencia');
             $table->text('foto');
+            $table->text('monto')->nullable();
+            $table->text('estado')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

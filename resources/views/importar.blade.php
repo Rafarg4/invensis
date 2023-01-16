@@ -19,8 +19,8 @@
   </div>
   <div class="card-body">
     {!! Form::open(['route' => 'importar.store','enctype' => 'multipart/form-data']) !!}
-            <input type="file" name="import_file">
-            <button class="btn btn-primary" type="submit">Importar</button>
+            <input type="file" name="import_file" required>
+            <button class="btn btn-primary" type="submit" >Importar</button>
             <div class="card-body">
                 </div>
 

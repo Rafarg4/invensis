@@ -33,8 +33,8 @@ class InscripcionController extends AppBaseController
     public function index(Request $request)
     {
     
-        $primer_nombre = $request->get('buscarpor');
-        $inscripcions = Inscripcion::where('primer_nombre','like',"%$primer_nombre%")->paginate(6);
+        $ci = $request->get('buscarpor');
+        $inscripcions = Inscripcion::where('ci','like',"%$ci%")->paginate(6);
         return view('inscripcions.index',compact('inscripcions'));
           
     }

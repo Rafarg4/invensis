@@ -29,9 +29,9 @@ Carnet de inscripcion
 <div class="card-body pt-0">
 <div class="row">
 <div class="col-7">
-<h2 class="lead"><b>Nombre: {{ $inscripcion->primer_nombre }}</b></h2>
-<p class="text-muted text-sm"><b>  <i class="fa fas-solid fa-bars"></i> Categoria: </b>{{ $inscripcion->categoria->nombre }} </p>
 <ul class="ml-4 mb-0 fa-ul text-muted">
+<li class="small"><span class="fa-li"><i class="fas fa-solid fa-user"></i></span> Primer nombre:{{ $inscripcion->primer_nombre }}</li><br>
+<li class="small"><span class="fa-li"><i class="fas fa-solid fa-bars"></i></span> Categoria:{{ $inscripcion->categoria->nombre}}</li><br>	
 <li class="small"><span class="fa-li"><i class="fas fa-solid fa-id-badge"></i></span> Cedula:{{ $inscripcion->ci }}</li><br>
 <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Domiciolio:{{ $inscripcion->domiciolio }}</li><br>
 <li class="small"><span class="fa-li"><i class="fas fa-solid fa-address-book"></i></span> Contacto de emergencia:{{ $inscripcion->contacto_emergencia }}</li><br>
@@ -40,8 +40,9 @@ Carnet de inscripcion
 </ul>
 </div>
 <div class="col-5 text-center">
+	<br>
 <img src="https://adminlte.io/themes/v3/dist/img/user1-128x128.jpg" width="150" height="150" class="img-circle">
-<img src="{{ asset('storage').'/'.$inscripcions[0]->foto}}" width="50" height="50">
+<img src="{{ asset('storage').'/'.$inscripcions[0]->foto}}" width="150" height="150" class="img-circle">
 </div>
 </div>
 </div>

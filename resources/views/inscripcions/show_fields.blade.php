@@ -1,103 +1,117 @@
-<!-- Primer Nombre Field -->
-<div class="col-sm-3">
-    {!! Form::label('primer_nombre', 'Primer Nombre:') !!}
-    <p>{{ $inscripcion->primer_nombre }}</p>
+  <div class="table-responsive">
+    <table class="table" id="tabla">
+        <thead>
+        <tr>
+            <th>Primer Nombre</th>
+        <th>Segundo Nombre</th>
+        <th>Apellido</th>
+        <th>Fecha de nacimiento</th>
+        <th>Cedula de indentidad</th>
+
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ $inscripcion->primer_nombre }}</td>
+            <td>{{ $inscripcion->segundo_nombre }}</td>
+            <td>{{ $inscripcion->segundo_nombre }}</td>
+            <td>{{ $inscripcion->fechanac }}</td>
+            <td>{{ $inscripcion->ci }}</td>
+            
+            </tr>
+        </tbody>
+    </table>
 </div>
 
-<!-- Segundo Nombre Field -->
-<div class="col-sm-3">
-    {!! Form::label('segundo_nombre', 'Segundo Nombre:') !!}
-    <p>{{ $inscripcion->segundo_nombre }}</p>
-</div>
-
-<!-- Fechanac Field -->
-<div class="col-sm-3">
-    {!! Form::label('fechanac', 'Fechanac:') !!}
-    <p>{{ $inscripcion->fechanac }}</p>
-</div>
-
-<!-- Ci Field -->
-<div class="col-sm-3">
-    {!! Form::label('ci', 'Ci:') !!}
-    <p>{{ $inscripcion->ci }}</p>
-</div>
-
-<!-- Sexo Field -->
-<div class="col-sm-3">
-    {!! Form::label('sexo', 'Sexo:') !!}
-    <p>{{ $inscripcion->sexo }}</p>
-</div>
-
-<!-- Grupo Sanguineo Field -->
-<div class="col-sm-3">
-    {!! Form::label('grupo_sanguineo', 'Grupo Sanguineo:') !!}
-    <p>{{ $inscripcion->grupo_sanguineo }}</p>
-</div>
-
-<!-- Nacionalidad Field -->
-<div class="col-sm-3">
-    {!! Form::label('nacionalidad', 'Nacionalidad:') !!}
-    <p>{{ $inscripcion->nacionalidad }}</p>
-</div>
-
-<!-- Celular Field -->
-<div class="col-sm-3">
-    {!! Form::label('celular', 'Celular:') !!}
-    <p>{{ $inscripcion->celular }}</p>
-</div>
-
-<!-- Domiciolio Field -->
-<div class="col-sm-3">
-    {!! Form::label('domiciolio', 'Domiciolio:') !!}
-    <p>{{ $inscripcion->domiciolio }}</p>
-</div>
-
-<!-- Ciudad Field -->
-<div class="col-sm-3">
-    {!! Form::label('ciudad', 'Ciudad:') !!}
-    <p>{{ $inscripcion->ciudad }}</p>
-</div>
-
-<!-- Id Categoria Field -->
-<div class="col-sm-3">
-    {!! Form::label('id_categoria', 'Id Categoria:') !!}
-    <p>{{ $inscripcion->id_categoria }}</p>
-</div>
-
-<!-- Nombre Equipo Field -->
-<div class="col-sm-3">
-    {!! Form::label('nombre_equipo', 'Nombre Equipo:') !!}
-    <p>{{ $inscripcion->nombre_equipo }}</p>
-</div>
-
-<!-- Contacto Emergencia Field -->
-<div class="col-sm-3">
-    {!! Form::label('contacto_emergencia', 'Contacto Emergencia:') !!}
-    <p>{{ $inscripcion->contacto_emergencia }}</p>
-</div>
-
-<!-- Nombre Apellido Contacto Emergencia Field -->
-<div class="col-sm-3">
-    {!! Form::label('nombre_apellido_contacto_emergencia', 'Nombre Apellido Contacto Emergencia:') !!}
-    <p>{{ $inscripcion->nombre_apellido_contacto_emergencia }}</p>
-</div>
-
-<!-- Foto Field -->
-<div class="col-sm-3">
-    {!! Form::label('foto', 'Foto:') !!}
-    <p>{{ $inscripcion->foto }}</p>
-</div>
-
-<!-- Created At Field -->
-<div class="col-sm-3">
-    {!! Form::label('created_at', 'Created At:') !!}
-    <p>{{ $inscripcion->created_at }}</p>
-</div>
-
-<!-- Updated At Field -->
-<div class="col-sm-3">
-    {!! Form::label('updated_at', 'Updated At:') !!}
-    <p>{{ $inscripcion->updated_at }}</p>
+<div class="table-responsive">
+    <table class="table" id="Tabla">
+        <thead>
+        <tr>
+    
+        <th>Sexo</th>
+        <th>Grupo Sanguineo</th>
+        <th>Nacionalidad</th>
+         <th>Celular</th>
+         <th>Region</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+               
+            <td>{{ $inscripcion->sexo }}</td>
+            <td>{{ $inscripcion->grupo_sanguineo }}</td>
+            <td>{{ $inscripcion->nacionalidad }}</td>
+            <td>{{ $inscripcion->celular }}</td>
+            <td>{{ $inscripcion->region }}</td>
+            
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 
+<div class="table-responsive">
+    <table class="table" id="Tabla">
+        <thead>
+        <tr>
+       
+        <th>Domiciolio</th>
+        <th>Departamento</th>
+        <th>Ciudad</th>
+        <th>Categoria</th>
+         <th>Estado</th>
+         <th>Monto</th>
+        
+
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <td>{{ $inscripcion->domiciolio }}</td>
+            <td>{{ $inscripcion->departamento }}</td>
+            <td>{{ $inscripcion->ciudad }}</td>
+            <td>{{ $inscripcion->categoria->nombre }}</td>
+            <td>@switch(true)
+            @case($inscripcion->estado == 'En espera')
+            <span class="badge badge-warning"> {{ $inscripcion->estado }} </span>
+            @break
+            @case($inscripcion->estado == 'Paralizado')
+            <span class="badge badge-danger"> {{ $inscripcion->estado }} </span>
+            @break
+            @case($inscripcion->estado == 'Finalizado' )
+            <span class="badge badge-success"> {{ $inscripcion->estado }} </span>
+            @break
+            @endswitch</td>
+             <td>{{number_format ($inscripcion->monto) }} Gs</td>
+            
+            
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-responsive">
+    <table class="table" id="Tabla">
+        <thead>
+        <tr>
+        <th>Nombre de equipo</th>   
+        <th>Contacto Emergencia</th>
+        <th>Nombre Apellido Contacto Emergencia</th>
+        <th>Fecha de registro</th>
+
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <td>{{ $inscripcion->nombre_equipo }}</td>
+            <td>{{ $inscripcion->contacto_emergencia }}</td>
+                <td>{{ $inscripcion->nombre_apellido_contacto_emergencia }}</td>
+            <td>{{ $inscripcion->created_at }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+                </div>
+            </div>
+
+        </div>
+    </div>

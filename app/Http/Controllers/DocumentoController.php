@@ -99,6 +99,7 @@ class DocumentoController extends AppBaseController
      */
     public function edit($id)
     {
+        $inscripcions = Inscripcion::pluck('primer_nombre','id');
         $documento = $this->documentoRepository->find($id);
 
         if (empty($documento)) {
@@ -107,7 +108,7 @@ class DocumentoController extends AppBaseController
             return redirect(route('documentos.index'));
         }
 
-        return view('documentos.edit')->with('documento', $documento);
+        return view('documentos.edit',compact('inscripcions','documento'));
     }
 
     /**
