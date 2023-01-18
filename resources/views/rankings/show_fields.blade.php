@@ -1,72 +1,71 @@
-<!-- Posicion Field -->
-<div class="col-sm-3">
-    {!! Form::label('posicion', 'Posicion:') !!}
-    <p>{{ $ranking->posicion }}</p>
+<div class="table-responsive" >
+    <table class="table" id="a">
+        <thead>
+        <tr>
+            <th>Posicion</th>
+            <th>Usuario</th>
+        <th>Nombre Apellido</th>
+        <th>Categoria</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ $ranking->posicion }}</td>
+                 <td>{{ $ranking->usuario->name }}</td>
+            <td>{{ $ranking->nombre_apellido }}</td>
+            <td>{{ $ranking->categoria->nombre }}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
-
-<!-- Nombre Apellido Field -->
-<div class="col-sm-3">
-    {!! Form::label('nombre_apellido', 'Nombre Apellido:') !!}
-    <p>{{ $ranking->nombre_apellido }}</p>
+<div class="table-responsive">
+    <table class="table" id="Tale">
+        <thead>
+        <tr>
+           
+        <th>Club</th>
+        <th>Sexo</th>
+        <th>1 Fecha</th>
+        <th>2 Fecha</th>
+      
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+              
+            <td>{{ $ranking->club }}</td>
+            <td>{{ $ranking->sexo }}</td>
+            <td>{{ $ranking->primer_fecha}}</td>
+            <td>{{ $ranking->segundo_fecha }}</td>
+            
+            </tr>
+        </tbody>
+    </table>
 </div>
-
-<!-- Categoria Field -->
-<div class="col-sm-3">
-    {!! Form::label('categoria', 'Categoria:') !!}
-    <p>{{ $ranking->categoria }}</p>
-</div>
-
-<!-- Club Field -->
-<div class="col-sm-3">
-    {!! Form::label('club', 'Club:') !!}
-    <p>{{ $ranking->club }}</p>
-</div>
-
-<!-- Sexo Field -->
-<div class="col-sm-3">
-    {!! Form::label('sexo', 'Sexo:') !!}
-    <p>{{ $ranking->sexo }}</p>
-</div>
-
-<!-- 1 Fecha Field -->
-<div class="col-sm-3">
-    {!! Form::label('primer_fecha', '1 Fecha:') !!}
-    <p>{{ $ranking->primer_fecha }}</p>
-</div>
-
-<!-- 2 Fecha Field -->
-<div class="col-sm-3">
-    {!! Form::label('segundo_fecha', '2 Fecha:') !!}
-    <p>{{ $ranking->segundo_fecha }}</p>
-</div>
-
-<!-- 3 Fecha Field -->
-<div class="col-sm-3">
-    {!! Form::label('tercero_fecha', '3 Fecha:') !!}
-    <p>{{ $ranking->tercero_fecha }}</p>
-</div>
-
-<!-- 4 Fecha Field -->
-<div class="col-sm-3">
-    {!! Form::label('cuarto_fecha', '4 Fecha:') !!}
-    <p>{{ $ranking->cuarto_fecha }}</p>
-</div>
-
-<!-- Total Field -->
-<div class="col-sm-3">
-    {!! Form::label('total', 'Total:') !!}
-    <p>{{ $ranking->total }}</p>
-</div>
-
-<!-- Created At Field -->
-<div class="col-sm-3">
-    {!! Form::label('created_at', 'Created At:') !!}
-    <p>{{ $ranking->created_at }}</p>
-</div>
-
-<!-- Updated At Field -->
-<div class="col-sm-3">
-    {!! Form::label('updated_at', 'Updated At:') !!}
-    <p>{{ $ranking->updated_at }}</p>
+<div class="table-responsive" >
+    <table class="table" id="Tale">
+        <thead>
+        <tr>
+           
+       
+        <th>3 Fecha</th>
+        <th>4 Fecha</th>
+        <th>Total</th>
+            <th>Fecha de registro</th>
+            <th>Fecha de actualizacion</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+               
+            <td>{{ $ranking->tercero_fecha }}</td>
+            <td>{{ $ranking->cuarto_fecha }}</td>
+            <td>{{ $ranking->total }}</td>
+               <td>{{ $ranking->created_at }}</td>
+  
+             <td>{{ $ranking->created_at }}</td>            
+            </tr>
+        </tbody>
+    </table>
 </div>
 

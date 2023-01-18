@@ -1,24 +1,21 @@
-<!-- Nombre Field -->
-<div class="col-sm-12">
-    {!! Form::label('nombre', 'Nombre:') !!}
-    <p>{{ $categoria->nombre }}</p>
+<div class="table-responsive">
+    <table class="table" id="Tabla">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+        <th>Descripcion</th>
+            <th >Fecha de Registro</th>
+            <th >Fecha de Actualizacion</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ $categoria->nombre }}</td>
+            <td>{{ $categoria->descripcion }}</td>
+             <td>{{ $categoria->created_at }}</td>
+              <td>{{ $categoria->updated_at }}</td>
+            
+            </tr>
+        </tbody>
+    </table>
 </div>
-
-<!-- Descripcion Field -->
-<div class="col-sm-12">
-    {!! Form::label('descripcion', 'Descripcion:') !!}
-    <p>{{ $categoria->descripcion }}</p>
-</div>
-
-<!-- Created At Field -->
-<div class="col-sm-12">
-    {!! Form::label('created_at', 'Created At:') !!}
-    <p>{{ $categoria->created_at }}</p>
-</div>
-
-<!-- Updated At Field -->
-<div class="col-sm-12">
-    {!! Form::label('updated_at', 'Updated At:') !!}
-    <p>{{ $categoria->updated_at }}</p>
-</div>
-

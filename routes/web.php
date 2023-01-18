@@ -13,12 +13,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', function () {
+        return view('home');
+   });
 });
 
 Auth::routes();
-
+Route::get('/symlink', function () {
+   $target =$_SERVER['DOCUMENT_ROOT'].'/storage/app/public';
+   $link = $_SERVER['DOCUMENT_ROOT'].'/public/storage';
+   symlink($target, $link);
+   echo "Done";
+});
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/reportes', [App\Http\Controllers\ReporteController::class, 'reporte'])->name('reportes');
