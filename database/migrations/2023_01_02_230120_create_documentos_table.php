@@ -18,6 +18,8 @@ class CreateDocumentosTable extends Migration
             $table->id('id');
             $table->text('archivo_pago');
             $table->text('archivo_inscripcion');
+             $table->text('archivo_seguro_medico');
+              $table->text('estado');
             $table->unsignedBigInteger('id_inscripcion');
             $table->foreign('id_inscripcion')->references('id')->on('inscripcions');
             $table->timestamps();

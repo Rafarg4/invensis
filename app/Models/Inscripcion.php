@@ -41,9 +41,10 @@ class Inscripcion extends Model
 
 
     public $fillable = [
-        'primer_nombre',
-        'segundo_nombre',
+        'primer_y_segundo_nombre',
+        'primer_y_segundo_apellido',
         'fechanac',
+        'email',
         'ci',
         'sexo',
         'grupo_sanguineo',
@@ -68,9 +69,10 @@ class Inscripcion extends Model
      * @var array
      */
     protected $casts = [
-        'primer_nombre' => 'string',
-        'segundo_nombre' => 'string',
+        'primer_y_segundo_nombre' => 'string',
+        'primer_y_segundo_apellido' => 'string',
         'fechanac' => 'string',
+        'email' => 'string',
         'ci' => 'string',
         'sexo' => 'string',
         'grupo_sanguineo' => 'string',
@@ -95,8 +97,8 @@ class Inscripcion extends Model
      * @var array
      */
     public static $rules = [
-        'primer_nombre' => 'required',
-        'segundo_nombre' => 'required',
+        'primer_y_segundo_nombre' => 'required',
+        'primer_y_segundo_apellido' => 'required',
         'fechanac' => 'required',
         'ci' => 'required',
         'sexo' => 'required',
@@ -109,6 +111,7 @@ class Inscripcion extends Model
         'nombre_equipo' => 'required',
         'contacto_emergencia' => 'required',
         'nombre_apellido_contacto_emergencia' => 'required',
+        'email' => 'required',
         'foto' => 'required',
         'departamento' => 'required'
     ];

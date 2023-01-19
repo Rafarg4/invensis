@@ -62,6 +62,9 @@ class DocumentoController extends AppBaseController
         if($request->hasFile('archivo_inscripcion')){
             $input['archivo_inscripcion']=$request->file('archivo_inscripcion')->store('uploads','public');   
         }
+        if($request->hasFile('archivo_seguro_medico')){
+            $input['archivo_seguro_medico']=$request->file('archivo_seguro_medico')->store('uploads','public');   
+        }
 
         $documento = $this->documentoRepository->create($input);
 

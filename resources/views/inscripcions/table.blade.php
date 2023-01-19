@@ -31,7 +31,7 @@ Carnet de inscripcion
 <div class="col-7">
 <ul class="ml-4 mb-0 fa-ul text-muted">
 <br>
-<li class="small"><span class="fa-li"><i class="fas fa-solid fa-user"></i></span> Primer nombre:{{ $inscripcion->primer_nombre }}</li><br>
+<li class="small"><span class="fa-li"><i class="fas fa-solid fa-user"></i></span> Nombres: {{ $inscripcion->primer_y_segundo_nombre}}</li><br>
 <li class="small"><span class="fa-li"><i class="fas fa-solid fa-bars"></i></span> Categoria:{{ $inscripcion->categoria->nombre}}</li><br>	
 <li class="small"><span class="fa-li"><i class="fas fa-solid fa-id-badge"></i></span> Cedula:{{ $inscripcion->ci }}</li><br>
 <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Domiciolio:{{ $inscripcion->domiciolio }}</li><br>
@@ -42,7 +42,7 @@ Carnet de inscripcion
 </div>
 <div class="col-5 text-center">
 	<br>
-<img src="{{ asset('storage').'/'.$inscripcions[0]->foto}}" width="150" height="150" class="img-circle">
+<img src="{{ asset('storage').'/'.$inscripcion->foto}}" width="150" height="150" class="img-circle">
 </div>
 </div>
 </div>

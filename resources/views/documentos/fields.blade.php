@@ -23,5 +23,20 @@
 
             </div>
             </div>
+<!-- Archivo Inscripcion Field -->
+<div class="form-group col-sm-6">
+              {!! Form::label('archivo_seguro_medico', 'Firma de seguro medico:') !!}
+            <div class="input-group">
+            <div class="custom-file">
+            {!! Form::file('archivo_seguro_medico', null, ['class' => 'form-control', 'id' => 'archivo_seguro_medico','required']) !!}
+            <label class="custom-file-label" for="archivo_seguro_medico">Seleccionar Archivo</label>
+            </div>
+        </div>
+    </div>
+  <div class=" form-group col-sm-6">
+             {!! Form::label('estado', 'Estado:') !!}
+            {!! Form::select('estado',array('En espera' => 'En espera', 'Paralizado' => 'Paralizado','Verificado' => 'Verificado'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
+            </div>
+
 
             

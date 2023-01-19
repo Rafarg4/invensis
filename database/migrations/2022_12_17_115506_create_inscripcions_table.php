@@ -16,14 +16,15 @@ class CreateInscripcionsTable extends Migration
     {
         Schema::create('inscripcions', function (Blueprint $table) {
             $table->id('id');
-            $table->text('primer_nombre');
-            $table->text('segundo_nombre');
+            $table->text('primer_y_segundo_nombre');
+             $table->text('primer_y_segundo_apellido');
             $table->text('fechanac');
             $table->text('ci');
             $table->text('sexo');
             $table->text('grupo_sanguineo');
             $table->text('nacionalidad');
             $table->text('celular');
+            $table->text('email');
             $table->text('domiciolio');
             $table->text('ciudad');
             $table->text('region');

@@ -74,13 +74,14 @@
                 <h3> Datos personales</h3>
                 <!-- Grupo Sanguineo Field -->
                 <div class="form-group col-sm-12">
-                    {!! Form::label('primer_nombre', 'Primer nombre:') !!}
-                    {!! Form::text('primer_nombre', null, ['class' => 'form-control']) !!}
+                    {!! Form::label('primer_y_segundo_nombre', 'Primer y segundo nombre:') !!}
+                    {!! Form::text('primer_y_segundo_nombre', null, ['class' => 'form-control']) !!}
                 </div><!-- Grupo Sanguineo Field -->
                 <div class="form-group col-sm-12">
-                    {!! Form::label('segundo_nombre', 'Segundo nombre:') !!}
-                    {!! Form::text('segundo_nombre', null, ['class' => 'form-control']) !!}
+                    {!! Form::label('primer_y_segundo_apellido', 'Primer y segundo apellido:') !!}
+                    {!! Form::text('primer_y_segundo_apellido', null, ['class' => 'form-control']) !!}
                 </div><!-- Grupo Sanguineo Field -->
+                <!-- Grupo Sanguineo Field -->
                 <div class="form-group col-sm-12">
                     {!! Form::label('fechanac', 'Fecha de nacimiento n:') !!}
                     {!! Form::date('fechanac', null, ['class' => 'form-control']) !!}
@@ -110,7 +111,11 @@
                     {!! Form::label('celular', 'Celular:') !!}
                     {!! Form::number('celular', null, ['class' => 'form-control']) !!}
                 </div>
-
+                <!-- Email Field -->
+                <div class="form-group col-sm-12 pull-left">
+                <label for="email">Email:</label>
+                <input type="text" name="email" class="form-control" value="{{ Auth::user()->email }}" readonly>
+                </div>
                 <!-- Domiciolio Field -->
                 <div class="form-group col-sm-12">
                     {!! Form::label('domiciolio', 'Domiciolio:') !!}
@@ -177,7 +182,6 @@
         </div>
     </div>
     <div class="row setup-content" id="step-3">
-        <div class="col-xs-12">
             <div class="col-md-12">
                 <h3> Ultimo paso, confirmar datos ingresados</h3>
                 <div class=" form-group col-sm-12">

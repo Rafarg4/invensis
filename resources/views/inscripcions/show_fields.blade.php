@@ -2,9 +2,9 @@
     <table class="table" id="tabla">
         <thead>
         <tr>
-            <th>Primer Nombre</th>
-        <th>Segundo Nombre</th>
-        <th>Apellido</th>
+            <th>Nombres</th>
+        <th>Apellidos</th>
+        <th>Email</th>
         <th>Fecha de nacimiento</th>
         <th>Cedula de indentidad</th>
 
@@ -12,9 +12,9 @@
         </thead>
         <tbody>
             <tr>
-                <td>{{ $inscripcion->primer_nombre }}</td>
-            <td>{{ $inscripcion->segundo_nombre }}</td>
-            <td>{{ $inscripcion->segundo_nombre }}</td>
+                <td>{{ $inscripcion->primer_y_segundo_nombre }}</td>
+            <td>{{ $inscripcion->primer_y_segundo_nombre }}</td>
+            <td>{{ $inscripcion->email }}</td>
             <td>{{ $inscripcion->fechanac }}</td>
             <td>{{ $inscripcion->ci }}</td>
             

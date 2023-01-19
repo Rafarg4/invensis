@@ -30,7 +30,10 @@ class Documento extends Model
     public $fillable = [
         'archivo_pago',
         'archivo_inscripcion',
-        'id_inscripcion'
+        'id_inscripcion',
+        'archivo_seguro_medico',
+        'estado'
+
     ];
 
     /**
@@ -41,7 +44,9 @@ class Documento extends Model
     protected $casts = [
         'archivo_pago' => 'string',
         'archivo_inscripcion' => 'string',
-        'id_inscripcion'=>'string'
+        'id_inscripcion'=>'string',
+        'archivo_seguro_medico'=>'string',
+        'estado'=>'string'
     ];
 
     /**
@@ -52,7 +57,9 @@ class Documento extends Model
     public static $rules = [
         'archivo_pago' => 'required',
         'archivo_inscripcion' => 'required',
-        'id_inscripcion'=>'required'
+        'id_inscripcion'=>'required',
+        'archivo_seguro_medico'=>'required',
+        'estado'=>'required'
     ];
 
      public function inscripto (){
