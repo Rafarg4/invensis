@@ -29,8 +29,13 @@
         <p>Inscripcions</p>
     </a>
 </li>
-
-
+<li class="nav-item">
+    <a href="{{ route('seguros.index') }}"
+       class="nav-link {{ Request::is('seguros*') ? 'active' : '' }}">
+       <i class="fa fas-regular fa-laptop-medical"></i>
+        <p>Seguros</p>
+    </a>
+</li>
 <li class="nav-item">
     <a href="{{ route('documentos.index') }}"
        class="nav-link {{ Request::is('documentos*') ? 'active' : '' }}">
@@ -38,10 +43,6 @@
         <p>Documentos</p>
     </a>
 </li>
-
-
-
-
 <li class="nav-item">
     <a href="{{ route('rankings.index') }}"
        class="nav-link {{ Request::is('rankings*') ? 'active' : '' }}">
@@ -77,4 +78,5 @@
         <p>Usuarios</p>
     </a>
 </li>
+
 

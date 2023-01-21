@@ -14,7 +14,7 @@
         @foreach($documentos as $documento)
             <tr>
                 <td>{{ $documento->inscripto->primer_nombre }}</td>
-                <td><img src="{{ asset('storage').'/'.$documento->archivo_pago}}" width="50" height="50"></td>
+                <td><a href="{{route('documento.download',$documento->id)}}"><img src="{{ asset('storage').'/'.$documento->archivo_pago}}" width="50" height="50"></a></td>
             <td><img src="{{ asset('storage').'/'.$documento->archivo_inscripcion}}" width="50" height="50"></td>
             <td><img src="{{ asset('storage').'/'.$documento->archivo_seguro_medico}}" width="50" height="50"></td>
              <td>@switch(true)

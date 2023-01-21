@@ -42,7 +42,7 @@ class DocumentoController extends AppBaseController
      */
     public function create()
     {
-        $inscripcions = Inscripcion::pluck('primer_nombre','id');
+        $inscripcions = Inscripcion::pluck('primer_y_segundo_nombre','id');
         return view('documentos.create', compact('inscripcions'));
     }
 

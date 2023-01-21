@@ -52,7 +52,7 @@ Carnet de inscripcion
 <a class="class='btn btn-default btn-xs">
 <button type="submit"  class="btn btn-sm btn-danger" onclick="return confirm('Estas seguro?')"><i class="fa fas-solid fa-trash"></i></button>
 </a>
-<a href="{{ route('inscripcions.edit', [$inscripcion->id]) }}" class="btn btn-sm bg-teal">
+<a href="{{ route('inscripcions.edit', [$inscripcion->id]) }}" class="btn btn-sm btn-warning">
 <i class="fas fa-edit"></i>
 </a>
 </a>
@@ -62,6 +62,8 @@ Carnet de inscripcion
 <a href="{{route('pdf.show', $inscripcion->id)}}" class="btn btn-sm btn-danger">
 <i class="fas fa-file-pdf"></i> 
 </a>
+<a href="{{ route('licencias.show',$inscripcion->id)}}" class="btn btn-sm btn-success">
+<i class="fa fas-solid fa-id-card"></i></a>
 </div>
 </div>{!! Form::close() !!}
 </div>

@@ -193,10 +193,12 @@
                 {!! Form::label('monto', 'Monto:') !!}
                 {!! Form::text('monto', null, ['class' => 'form-control']) !!}
             </div>
-                <button class="btn btn-success btn-lg pull-right" type="submit">Terminar!</button>
+                <button class="btn btn-success btn-lg pull-right" type="submit">Confirmar!</button>
+                
             </div>
+
         </div>
-    </div>
+    
 </form>
 </div>
 <script type="text/javascript">

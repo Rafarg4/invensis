@@ -26,9 +26,14 @@ Route::get('/symlink', function () {
    symlink($target, $link);
    echo "Done";
 });
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/reportes', [App\Http\Controllers\ReporteController::class, 'reporte'])->name('reportes');
+
+Route::get('download/{id}', [App\Http\Controllers\PdfController::class, 'download'])->name('documento.download');
+
+Route::resource('licencias', App\Http\Controllers\LicenciaController::class);
+
 Route::get('/graficos', [App\Http\Controllers\GraficoController::class, 'grafico'])->name('graficos');
 Route::resource('categorias', App\Http\Controllers\CategoriaController::class);
 
@@ -48,3 +53,5 @@ Route::resource('rankings', App\Http\Controllers\RankingController::class);
 
 
 Route::resource('importar', App\Http\Controllers\ImportarController::class);
+
+Route::resource('seguros', App\Http\Controllers\SeguroController::class);
