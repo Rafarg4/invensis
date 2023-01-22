@@ -62,7 +62,7 @@ Carnet de inscripcion
 <a href="{{route('pdf.show', $inscripcion->id)}}" class="btn btn-sm btn-danger">
 <i class="fas fa-file-pdf"></i> 
 </a>
-<a href="" class="btn btn-sm btn-info">
+<a href="{{route('seguro',$inscripcion->id)}}" class="btn btn-sm btn-info">
 <i class="fa fas-regular fa-laptop-medical"></i></a>
 <a href="{{ route('licencias.show',$inscripcion->id)}}" class="btn btn-sm btn-success">
 <i class="fa fas-solid fa-id-card"></i></a>

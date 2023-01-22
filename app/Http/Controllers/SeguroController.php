@@ -155,4 +155,5 @@ class SeguroController extends AppBaseController
 
         return redirect(route('seguros.index'));
     }
+    
 }

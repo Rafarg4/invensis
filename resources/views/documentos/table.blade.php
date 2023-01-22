@@ -14,9 +14,9 @@
         @foreach($documentos as $documento)
             <tr>
                 <td>{{ $documento->inscripto->primer_y_segundo_nombre }}</td>
-                <td><a href="{{route('documento.download_pago',$documento->id)}}"><img src="/pdf.jpg" width="50" height="50"></a></td>
-            <td><a href="{{route('documento.download_inscripcion',$documento->id)}}"><img src="pdf.jpg" width="50" height="50"></a></td>
-            <td><a href="{{route('documento.download_seguro',$documento->id)}}"><img src="/pdf.jpg" width="50" height="50"></a></td>
+                <td><a href="{{route('documento.download_pago',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
+            <td><a href="{{route('documento.download_inscripcion',$documento->id)}}"><img src="pdf.jpg" width="40" height="40"></a></td>
+            <td><a href="{{route('documento.download_seguro',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
              <td>@switch(true)
             @case($documento->estado == 'En espera')
             <span class="badge badge-primary"> {{ $documento->estado }} </span>

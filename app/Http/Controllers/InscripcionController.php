@@ -13,6 +13,7 @@ use App\Models\Categoria;
 use App\Models\Inscripcion;
 use App\Models\Documento;
 use App\Models\Seguro;
+use PDF;
 use Illuminate\Support\Facades\Storage;
 class InscripcionController extends AppBaseController
 {
@@ -167,5 +168,12 @@ class InscripcionController extends AppBaseController
         Flash::success('Inscripcion deleted successfully.');
 
         return redirect(route('inscripcions.index'));
+    }
+    public function seguro($id)
+    {
+    $seguro = Seguro::where('id_inscripcion',$id)->get();
+    $inscripcion = $this->inscripcionRepository->find($id);
+    $pdf = PDF::loadView('inscripcions.seguro', compact('inscripcion','seguro'));
+    return $pdf->download('Seguro.pdf');
     }
 }

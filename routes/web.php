@@ -34,6 +34,9 @@ Route::get('download_pago/{id}', [App\Http\Controllers\PdfController::class, 'do
 Route::get('download_inscripcion/{id}', [App\Http\Controllers\PdfController::class, 'download_inscripcion'])->name('documento.download_inscripcion');
 Route::get('download_seguro/{id}', [App\Http\Controllers\PdfController::class, 'download_seguro'])->name('documento.download_seguro');
 
+Route::get('seguro/{id}', [App\Http\Controllers\InscripcionController::class, 'seguro'])->name('seguro');
+
+
 Route::resource('licencias', App\Http\Controllers\LicenciaController::class);
 
 Route::get('/graficos', [App\Http\Controllers\GraficoController::class, 'grafico'])->name('graficos');
