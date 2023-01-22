@@ -13,10 +13,10 @@
         <tbody>
         @foreach($documentos as $documento)
             <tr>
-                <td>{{ $documento->inscripto->primer_nombre }}</td>
-                <td><a href="{{route('documento.download',$documento->id)}}"><img src="{{ asset('storage').'/'.$documento->archivo_pago}}" width="50" height="50"></a></td>
-            <td><img src="{{ asset('storage').'/'.$documento->archivo_inscripcion}}" width="50" height="50"></td>
-            <td><img src="{{ asset('storage').'/'.$documento->archivo_seguro_medico}}" width="50" height="50"></td>
+                <td>{{ $documento->inscripto->primer_y_segundo_nombre }}</td>
+                <td><a href="{{route('documento.download_pago',$documento->id)}}"><img src="/pdf.jpg" width="50" height="50"></a></td>
+            <td><a href="{{route('documento.download_inscripcion',$documento->id)}}"><img src="pdf.jpg" width="50" height="50"></a></td>
+            <td><a href="{{route('documento.download_seguro',$documento->id)}}"><img src="/pdf.jpg" width="50" height="50"></a></td>
              <td>@switch(true)
             @case($documento->estado == 'En espera')
             <span class="badge badge-primary"> {{ $documento->estado }} </span>

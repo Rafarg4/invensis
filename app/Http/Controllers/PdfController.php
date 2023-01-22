@@ -10,6 +10,8 @@ use App\Http\Controllers\AppBaseController;
 use Flash;
 use Response;
 use PDF;
+use App\Models\Documento;
+use Illuminate\Support\Facades\Storage;
 class PdfController extends Controller
 {
     /** @var InscripcionRepository $inscripcionRepository*/
@@ -27,11 +29,23 @@ class PdfController extends Controller
          return $pdf->download('Detalle-inscripto.pdf');
     }
    
-    public function download($id)
+    public function download_pago($id)
     {
-     $documento = Documento::findOrFail($id);
-     $media =$documento->getFirstMedia('downloads');
-     return $media;
+      $documento = Documento::where('id', $id)->first()->archivo_pago;
+      return Storage::download('public/' . $documento);
+
+    }
+    public function download_inscripcion($id)
+    {
+      $documento = Documento::where('id', $id)->first()->archivo_inscripcion;
+      return Storage::download('public/' . $documento);
+
+    }
+    public function download_seguro($id)
+    {
+      $documento = Documento::where('id', $id)->first()->archivo_seguro_medico;
+      return Storage::download('public/' . $documento);
+
     }
 
 }

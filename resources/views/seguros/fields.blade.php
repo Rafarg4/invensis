@@ -1,7 +1,6 @@
-<!-- Estado Civil Field -->
-<div class=" form-group col-sm-12">
-{!! Form::label('estado_civil', 'Estado Civil del Asegurado:') !!}
-{!! Form::select('estado_civil',array('Casado' => 'Casado', 'Soltero' => 'Soltero','Divorciado' => 'Divorciado','Viudo' => 'Viudo'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
+  <div class="form-group col-sm-12">
+    {!! Form::label('id_inscripcion', 'Inscripto:') !!}
+    {!! Form::select('id_inscripcion', $inscripcions, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion','required']) !!}
 </div>
 <div class="form-group col-sm-12">
     {!! Form::label('padece_enfermedad', '¿Padece o está siendo tratado por alguna enfermedad?:') !!}
@@ -10,31 +9,32 @@
 <!-- Especificar Enfermedad Field -->
 <div class="form-group col-sm-12">
    {!! Form::text('especificar_enfermedad', null, ['class' => 'form-control','placeholder'=>'Si es que padece de una enfermedad o esta siendo tratado favor especificar aquí','style'=>'display:none']) !!}
-
 </div>
 <!-- Presenta Defecto Fisico Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('presenta_defecto_fisico', '¿Presenta algún defecto físico, mutilación o deformación? :') !!}
-    {!! Form::select('presenta_defecto_fisico',array('si' => 'si', 'No' => 'No'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
+    {!! Form::select('presenta_defecto_fisico',array('Si' => 'Si', 'No' => 'No'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required','onchange'=>''])!!}
+</div>
+<!-- Especifique Defecto Fisico Field -->
+<div class="form-group col-sm-12">
+    {!! Form::text('especifique_defecto_fisico', null, ['class' => 'form-control','placeholder'=>'Si es que presenta algún defecto físico, mutilación o deformación favor especifique aquí','style'=>'display:none']) !!}
+</div>
+<!-- Estado Civil Field -->
+<div class=" form-group col-sm-12">
+{!! Form::label('estado_civil', 'Estado Civil del Asegurado:') !!}
+{!! Form::select('estado_civil',array('Casado' => 'Casado', 'Soltero' => 'Soltero','Divorciado' => 'Divorciado','Viudo' => 'Viudo'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
 </div>
 <!-- Edad Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('edad', 'Edad:') !!}
     {!! Form::text('edad', null, ['class' => 'form-control']) !!}
 </div>
-
 <!-- Usted Es Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('usted_es', 'Usted Es:') !!}
     {!! Form::select('usted_es',array('Zurdo' => 'Zurdo', 'Diestro' => 'Diestro','Ambidiestro' => 'Ambidiestro'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
 
 </div>
-<!-- Especifique Defecto Fisico Field -->
-<div class="form-group col-sm-12">
-    {!! Form::label('especifique_defecto_fisico', 'Si es que presenta algún defecto físico, mutilación o deformación favor especifique aquí:') !!}
-    {!! Form::text('especifique_defecto_fisico', null, ['class' => 'form-control']) !!}
-</div>
-
 <!-- Estatura Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('estatura', 'Estatura:') !!}
@@ -52,7 +52,10 @@
     {!! Form::label('plan', '¿Que plan desea elegir?:') !!}
      {!! Form::select('plan',array('Plan con deducible' => 'Plan con deducible', 'Plan sin deducible' => 'Plan sin deducible'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
 </div>
-
+<div class="form-group col-sm-12">
+    {!! Form::label('tipo_plan', 'Tipo de plan:') !!}
+    {!! Form::text('tipo_plan', null, ['class' => 'form-control']) !!}
+</div>
 <!-- Nombre Apellido Fallecimiento Titular Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('nombre_apellido_fallecimiento_titular', 'Nombre Apellido Fallecimiento Titular:') !!}
@@ -89,6 +92,18 @@ padece_enfermedad.addEventListener("change", () => {
     input.style.display = 'initial';
   } else {
     input.style.display = 'none';
+  }
+});
+</script>
+<script type="text/javascript">
+const presenta_defecto_fisico = document.querySelector("#presenta_defecto_fisico");
+const input1 = document.querySelector("[name=especifique_defecto_fisico]");
+
+presenta_defecto_fisico.addEventListener("change", () => {
+  if (presenta_defecto_fisico.value === "Si") {
+    input1.style.display = 'initial';
+  } else {
+    input1.style.display = 'none';
   }
 });
 </script>

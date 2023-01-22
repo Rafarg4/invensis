@@ -131,10 +131,6 @@
                     {!! Form::label('departamento', 'Departamento:') !!}
                     {!! Form::text('departamento', null, ['class' => 'form-control']) !!}
                 </div>
-                <div class="form-group col-sm-12">
-                    {!! Form::label('region', 'Region:') !!}
-                    {!! Form::text('region', null, ['class' => 'form-control']) !!}
-                </div>
 
                 <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Siguiente</button>
             </div>
@@ -147,7 +143,10 @@
                 {!! Form::label('id_categoria', 'Categoria:') !!}
                 {!! Form::select('id_categoria', $categoria, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion','required']) !!}
             </div>
-
+            <div class="form-group col-sm-12">
+                    {!! Form::label('region', 'Elegir a que región pertenece:') !!}
+                     {!! Form::select('region',array('Asosiacion metropolitana de ciclismo' => 'Asosiacion metropolitana de ciclismo', 'Federacion paranaense de ciclismo' => 'Federacion paranaense de ciclismo','Union Regional de ciclistas (URCI)' => 'Union Regional de ciclistas (URCI)','Federacion de ciclismo Itapuense' => 'Federacion de ciclismo Itapuense'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
+                </div>
             <!-- Nombre Equipo Field -->
             <div class="form-group col-sm-12">
                 {!! Form::label('nombre_equipo', 'Nombre Equipo:') !!}
@@ -192,6 +191,10 @@
             <div class="form-group col-sm-12">
                 {!! Form::label('monto', 'Monto:') !!}
                 {!! Form::text('monto', null, ['class' => 'form-control']) !!}
+            </div>
+            <div class="form-group col-sm-12">
+                {!! Form::label('federacion_id', 'Federacion id:') !!}
+                {!! Form::number('federacion_id', null, ['class' => 'form-control']) !!}
             </div>
                 <button class="btn btn-success btn-lg pull-right" type="submit">Confirmar!</button>
                 

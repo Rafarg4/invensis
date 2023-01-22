@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>Edit Documento</h1>
+                    <h1>Editar Documento</h1>
                 </div>
             </div>
         </div>
@@ -17,7 +17,7 @@
 
         <div class="card">
 
-            {!! Form::model($documento, ['route' => ['documentos.update', $documento->id], 'method' => 'patch']) !!}
+            {!! Form::model($documento, ['route' => ['documentos.update', $documento->id], 'method' => 'patch', 'enctype' => 'multipart/form-data']) !!}
 
             <div class="card-body">
                 <div class="row">
@@ -26,8 +26,8 @@
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('documentos.index') }}" class="btn btn-default">Cancel</a>
+                {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
+                <a href="{{ route('documentos.index') }}" class="btn btn-default">Cancelar</a>
             </div>
 
             {!! Form::close() !!}

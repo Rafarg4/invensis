@@ -35,6 +35,7 @@ class CreateInscripcionsTable extends Migration
             $table->text('contacto_emergencia');
             $table->text('nombre_apellido_contacto_emergencia');
             $table->text('foto');
+            $table->text('federacion_id');
             $table->text('monto')->nullable();
             $table->text('estado')->nullable();
             $table->timestamps();

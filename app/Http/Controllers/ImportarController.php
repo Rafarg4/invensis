@@ -20,7 +20,7 @@ class ImportarController extends Controller
     {
         $file = $request->file('import_file');
         Excel::import(new RankingsImport,$file);
-        Flash::success('Ranking import successfully.');
+        Flash::success('Ranking importado correctamente.');
         return redirect(route('rankings.index'));
     }
 

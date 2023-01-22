@@ -12,7 +12,8 @@ use Response;
 use App\Models\Categoria;
 use App\Models\Inscripcion;
 use App\Models\Documento;
-
+use App\Models\Seguro;
+use Illuminate\Support\Facades\Storage;
 class InscripcionController extends AppBaseController
 {
     /** @var InscripcionRepository $inscripcionRepository*/
@@ -80,6 +81,8 @@ class InscripcionController extends AppBaseController
     public function show($id)
     {
         $inscripcion = $this->inscripcionRepository->find($id);
+        $documento = Documento::where('id_inscripcion',$id)->get();
+        $seguros = Seguro::where('id_inscripcion',$id)->get();
 
         if (empty($inscripcion)) {
             Flash::error('Inscripcion not found');
@@ -87,7 +90,7 @@ class InscripcionController extends AppBaseController
             return redirect(route('inscripcions.index'));
         }
 
-        return view('inscripcions.show',compact('inscripcion'));
+        return view('inscripcions.show',compact('inscripcion','documento','seguros'));
     }
 
     /**
@@ -98,8 +101,9 @@ class InscripcionController extends AppBaseController
      * @return Response
      */
     public function edit($id)
-    {$categoria = Categoria::pluck('nombre','id');
-        $inscripcion = $this->inscripcionRepository->find($id);
+    {
+    $categoria = Categoria::pluck('nombre','id');
+    $inscripcion = $this->inscripcionRepository->find($id);
 
         if (empty($inscripcion)) {
             Flash::error('Inscripcion not found');
@@ -121,7 +125,11 @@ class InscripcionController extends AppBaseController
     public function update($id, UpdateInscripcionRequest $request)
     {
         $inscripcion = $this->inscripcionRepository->find($id);
-
+        if($request->hasFile('foto')){
+            $inscripcion=Inscripcion::findOrFail($id);
+            Storage::delete('public/'.$inscripcion->foto); 
+            $input['foto']=$request->file('foto')->store('uploads','public');   
+        }
         if (empty($inscripcion)) {
             Flash::error('Inscripcion not found');
 

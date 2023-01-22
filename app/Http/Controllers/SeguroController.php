@@ -9,7 +9,7 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
-
+use App\Models\Inscripcion;
 class SeguroController extends AppBaseController
 {
     /** @var SeguroRepository $seguroRepository*/
@@ -42,7 +42,8 @@ class SeguroController extends AppBaseController
      */
     public function create()
     {
-        return view('seguros.create');
+        $inscripcions = Inscripcion::pluck('primer_y_segundo_nombre','id');
+        return view('seguros.create', compact('inscripcions'));
     }
 
     /**
@@ -93,6 +94,7 @@ class SeguroController extends AppBaseController
     public function edit($id)
     {
         $seguro = $this->seguroRepository->find($id);
+        $inscripcions = Inscripcion::pluck('primer_y_segundo_nombre','id');
 
         if (empty($seguro)) {
             Flash::error('Seguro not found');
@@ -100,7 +102,7 @@ class SeguroController extends AppBaseController
             return redirect(route('seguros.index'));
         }
 
-        return view('seguros.edit')->with('seguro', $seguro);
+        return view('seguros.edit',compact('seguro','inscripcions'));
     }
 
     /**

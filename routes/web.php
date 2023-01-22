@@ -30,7 +30,9 @@ Route::get('/symlink', function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/reportes', [App\Http\Controllers\ReporteController::class, 'reporte'])->name('reportes');
 
-Route::get('download/{id}', [App\Http\Controllers\PdfController::class, 'download'])->name('documento.download');
+Route::get('download_pago/{id}', [App\Http\Controllers\PdfController::class, 'download_pago'])->name('documento.download_pago');
+Route::get('download_inscripcion/{id}', [App\Http\Controllers\PdfController::class, 'download_inscripcion'])->name('documento.download_inscripcion');
+Route::get('download_seguro/{id}', [App\Http\Controllers\PdfController::class, 'download_seguro'])->name('documento.download_seguro');
 
 Route::resource('licencias', App\Http\Controllers\LicenciaController::class);
 

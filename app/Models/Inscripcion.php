@@ -60,7 +60,8 @@ class Inscripcion extends Model
         'departamento',
         'region',
         'estado',
-        'monto'
+        'monto',
+        'federacion_id'
     ];
 
     /**
@@ -88,7 +89,8 @@ class Inscripcion extends Model
         'departamento' => 'string',
         'region' => 'string',
         'estado' => 'string',
-        'monto' => 'string'
+        'monto' => 'string',
+        'federacion_id'=>'string'
     ];
 
     /**
@@ -114,6 +116,7 @@ class Inscripcion extends Model
         'email' => 'required',
         'foto' => 'required',
         'departamento' => 'required'
+        
     ];
 
       public function categoria (){

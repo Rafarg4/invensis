@@ -26,11 +26,14 @@ class CreateSegurosTable extends Migration
             $table->text('estatura');
             $table->text('peso');
             $table->text('plan');
+            $table->text('tipo_plan');
             $table->text('nombre_apellido_fallecimiento_titular');
             $table->text('parentesco_titular_beneficiario');
             $table->text('ci_beneficiario');
             $table->text('porcentaje_cesion');
             $table->text('fechanac_beneficiario');
+             $table->unsignedBigInteger('id_inscripcion');
+            $table->foreign('id_inscripcion')->references('id')->on('inscripcions');
             $table->timestamps();
             $table->softDeletes();
         });

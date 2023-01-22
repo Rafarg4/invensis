@@ -102,7 +102,7 @@ class DocumentoController extends AppBaseController
      */
     public function edit($id)
     {
-        $inscripcions = Inscripcion::pluck('primer_nombre','id');
+        $inscripcions = Inscripcion::pluck('primer_y_segundo_nombre','id');
         $documento = $this->documentoRepository->find($id);
 
         if (empty($documento)) {

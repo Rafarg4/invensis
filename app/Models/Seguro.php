@@ -55,7 +55,9 @@ class Seguro extends Model
         'parentesco_titular_beneficiario',
         'ci_beneficiario',
         'porcentaje_cesion',
-        'fechanac_beneficiario'
+        'fechanac_beneficiario',
+        'id_inscripcion',
+        'tipo_plan'
     ];
 
     /**
@@ -78,7 +80,9 @@ class Seguro extends Model
         'parentesco_titular_beneficiario' => 'string',
         'ci_beneficiario' => 'string',
         'porcentaje_cesion' => 'string',
-        'fechanac_beneficiario' => 'string'
+        'fechanac_beneficiario' => 'string',
+        'id_inscripcion' => 'integer',
+        'tipo_plan' => 'string'
     ];
 
     /**
@@ -91,9 +95,7 @@ class Seguro extends Model
         'edad' => 'required',
         'usted_es' => 'required',
         'padece_enfermedad' => 'required',
-        'especificar_enfermedad' => 'required',
         'presenta_defecto_fisico' => 'required',
-        'especifique_defecto_fisico' => 'required',
         'estatura' => 'required',
         'peso' => 'required',
         'plan' => 'required',
@@ -101,7 +103,8 @@ class Seguro extends Model
         'parentesco_titular_beneficiario' => 'required',
         'ci_beneficiario' => 'required',
         'porcentaje_cesion' => 'required',
-        'fechanac_beneficiario' => 'required'
+        'fechanac_beneficiario' => 'required',
+        'id_inscripcion' => 'required'
     ];
 
     
