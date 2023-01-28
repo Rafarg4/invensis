@@ -1,11 +1,11 @@
 <div class="table-responsive" style="padding:15px;">
-    <table class="table" id="Table">
+    <table class="table" id="table">
         <thead>
         <tr>
-            <th>Name</th>
+            <th>Usuario</th>
         <th>Email</th>
         
-            <th >Action</th>
+            <th >Accion</th>
         </tr>
         </thead>
         <tbody>
@@ -25,7 +25,7 @@
                            class='btn btn-default btn-xs'>
                             <i class="far fa-edit"></i>
                         </a>
-                        {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                        {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Estas seguro?')"]) !!}
                     </div>
                     {!! Form::close() !!}
                 </td>

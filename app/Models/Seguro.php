@@ -107,5 +107,8 @@ class Seguro extends Model
         'id_inscripcion' => 'required'
     ];
 
-    
+    public function inscripto (){
+     return $this-> belongsTo('App\Models\Inscripcion','id_inscripcion');
+
+    }
 }

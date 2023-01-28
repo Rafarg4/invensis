@@ -55,6 +55,16 @@ class DocumentoController extends AppBaseController
      */
     public function store(CreateDocumentoRequest $request)
     {
+        $rules = [
+        'archivo_pago' => 'required',
+        'archivo_inscripcion' => 'required',
+        'archivo_seguro_medico' => 'required',
+      ];
+       $mensaje = [
+        'required'=>'El :attribute es requerido',
+      ];
+      $this->validate($request,$rules,$mensaje);
+
         $input = $request->all();
         if($request->hasFile('archivo_pago')){
             $input['archivo_pago']=$request->file('archivo_pago')->store('uploads','public');   
@@ -124,6 +134,19 @@ class DocumentoController extends AppBaseController
      */
     public function update($id, UpdateDocumentoRequest $request)
     {
+
+        if($request->hasFile('archivo_pago')){
+            $campo=['archivo_pago'=>'required'];   
+        }
+        if($request->hasFile('archivo_inscripcion')){
+            $campo=['archivo_inscripcion'=>'required'];
+             
+        }
+        if($request->hasFile('archivo_seguro_medico')){
+            $campo=['archivo_seguro_medico'=>'required'];
+             
+        }
+
         $documento = $this->documentoRepository->find($id);
 
         if (empty($documento)) {

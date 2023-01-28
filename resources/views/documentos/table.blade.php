@@ -1,8 +1,8 @@
 <div class="table-responsive" style="padding:15px;">
-    <table class="table" id="Table">
+    <table class="table" id="table">
         <thead>
         <tr>
-            <th>Inscripto</th>
+            <th>Ci Inscripto</th>
             <th>Archivo Pago</th>
         <th>Archivo Inscripcion</th>
         <th>Archivo Seguro medico</th>
@@ -13,7 +13,7 @@
         <tbody>
         @foreach($documentos as $documento)
             <tr>
-                <td>{{ $documento->inscripto->primer_y_segundo_nombre }}</td>
+                <td>{{ $documento->inscripto->ci }}</td>
                 <td><a href="{{route('documento.download_pago',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
             <td><a href="{{route('documento.download_inscripcion',$documento->id)}}"><img src="pdf.jpg" width="40" height="40"></a></td>
             <td><a href="{{route('documento.download_seguro',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>

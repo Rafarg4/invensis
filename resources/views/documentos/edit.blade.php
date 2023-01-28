@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>Editar Documento</h1>
+                    <h1>Editar documento</h1>
                 </div>
             </div>
         </div>

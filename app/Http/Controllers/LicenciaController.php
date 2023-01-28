@@ -22,7 +22,7 @@ class LicenciaController extends Controller
      public function show($id)
     {
         $inscripcions = $this->inscripcionRepository->find($id);
-        $pdf = PDF::loadView('inscripcions.licencias', compact('inscripcions'));
+        $pdf = PDF::loadView('inscripcions.licencias', compact('inscripcions'))->setPaper('a4', 'landscape');
          return $pdf->download('Licencia.pdf');
     }
 }

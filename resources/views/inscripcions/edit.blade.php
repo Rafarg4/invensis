@@ -26,8 +26,7 @@
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('inscripcions.index') }}" class="btn btn-default">Cancelar</a>
+                
             </div>
 
             {!! Form::close() !!}

@@ -53,7 +53,7 @@
 
 <div class="col-12 col-sm-6 col-md-3">
 <div class="info-box">
-<span class="info-box-icon bg-warning elevation-1"><i class="fa fas-solid fa-folder"></i></span>
+<span class="info-box-icon bg-warning elevation-1"><i class="fas fa-trophy"></i></span>
 <div class="info-box-content">
 <span class="info-box-text">Ranking</span>
 <span class="info-box-number"><a href="{{ route('rankings.index') }}" class="small-box-footer">Ir a <i class="fas fa-arrow-circle-right"></i></a></span>

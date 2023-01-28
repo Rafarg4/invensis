@@ -55,10 +55,7 @@ class Documento extends Model
      * @var array
      */
     public static $rules = [
-        'archivo_pago' => 'required',
-        'archivo_inscripcion' => 'required',
         'id_inscripcion'=>'required',
-        'archivo_seguro_medico'=>'required',
         'estado'=>'required'
     ];
 

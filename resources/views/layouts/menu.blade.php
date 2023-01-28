@@ -58,11 +58,35 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ route('reportes') }}"
-       class="nav-link {{ Request::is('reportes*') ? 'active' : '' }}">
+    <a href=""
+       class="nav-link ">
        <i class="fas fa-solid fa-chart-area"></i>
         <p>Reportes</p>
+        <i class="right fas fa-angle-left"></i>
     </a>
+<ul class="nav nav-treeview">
+<li class="nav-item">
+<a href="{{ route('reporte_inscripcion') }}" class="nav-link"
+  class="nav-link {{ Request::is('reporte_inscripcion*') ? 'active' : '' }}">
+<i class="fa fas-solid fa-list"></i>
+<p>Inscripciones</p>
+</a>
+</li>
+<li class="nav-item">
+<a href="{{ route('reporte_seguro') }}" class="nav-link"
+  class="nav-link {{ Request::is('reporte_seguro*') ? 'active' : '' }}">
+<i class="fa fas-solid fa-list"></i>
+<p>Seguros</p>
+</a>
+</li>
+<li class="nav-item">
+<a href="{{ route('reporte_ranking') }}" class="nav-link"
+class="nav-link {{ Request::is('reporte_ranking*') ? 'active' : '' }}">
+<i class="fa fas-solid fa-list"></i>
+<p>Rankings</p>
+</a>
+</li>
+</ul>
 </li>
 <li class="nav-item">
     <a href="{{ route('graficos') }}"
@@ -78,5 +102,3 @@
         <p>Usuarios</p>
     </a>
 </li>
-
-

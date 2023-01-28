@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Reporte</h1>
+                    <h1>Reporte de inscripciones</h1>
                 </div>
             </div>
         </div>
@@ -22,8 +22,8 @@
     <table class="table" id="Table">
         <thead>
         <tr>
-            <th>Primer Nombre</th>
-        <th>Segundo Nombre</th>
+            <th>Nombres</th>
+        <th>Apellidos</th>
         <th>Fechanac</th>
         <th>Ci</th>
         <th>Sexo</th>
@@ -44,10 +44,10 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($reporte as $inscripcion)
+        @foreach($inscripcions as $inscripcion)
             <tr>
-                <td>{{ $inscripcion->primer_nombre }}</td>
-            <td>{{ $inscripcion->segundo_nombre }}</td>
+                <td>{{ $inscripcion->primer_y_segundo_nombre }}</td>
+            <td>{{ $inscripcion->primer_y_segundo_apellido }}</td>
             <td>{{ $inscripcion->fechanac }}</td>
             <td>{{ $inscripcion->ci }}</td>
             <td>{{ $inscripcion->sexo }}</td>
@@ -79,6 +79,7 @@
         </tbody>
     </table>
 </div>
+
 <div class="card-footer clearfix">
                     <div class="float-right">
                         

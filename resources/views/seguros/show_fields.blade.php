@@ -1,102 +1,83 @@
-<!-- Estado Civil Field -->
-<div class="col-sm-12">
-    {!! Form::label('estado_civil', 'Estado Civil:') !!}
-    <p>{{ $seguro->estado_civil }}</p>
-</div>
-
-<!-- Edad Field -->
-<div class="col-sm-12">
-    {!! Form::label('edad', 'Edad:') !!}
-    <p>{{ $seguro->edad }}</p>
-</div>
-
-<!-- Usted Es Field -->
-<div class="col-sm-12">
-    {!! Form::label('usted_es', 'Usted Es:') !!}
-    <p>{{ $seguro->usted_es }}</p>
-</div>
-
-<!-- Padece Enfermedad Field -->
-<div class="col-sm-12">
-    {!! Form::label('padece_enfermedad', 'Padece Enfermedad:') !!}
-    <p>{{ $seguro->padece_enfermedad }}</p>
-</div>
-
-<!-- Especificar Enfermedad Field -->
-<div class="col-sm-12">
-    {!! Form::label('especificar_enfermedad', 'Especificar Enfermedad:') !!}
-    <p>{{ $seguro->especificar_enfermedad }}</p>
-</div>
-
-<!-- Presenta Defecto Fisico Field -->
-<div class="col-sm-12">
-    {!! Form::label('presenta_defecto_fisico', 'Presenta Defecto Fisico:') !!}
-    <p>{{ $seguro->presenta_defecto_fisico }}</p>
-</div>
-
-<!-- Especifique Defecto Fisico Field -->
-<div class="col-sm-12">
-    {!! Form::label('especifique_defecto_fisico', 'Especifique Defecto Fisico:') !!}
-    <p>{{ $seguro->especifique_defecto_fisico }}</p>
-</div>
-
-<!-- Estatura Field -->
-<div class="col-sm-12">
-    {!! Form::label('estatura', 'Estatura:') !!}
-    <p>{{ $seguro->estatura }}</p>
-</div>
-
-<!-- Peso Field -->
-<div class="col-sm-12">
-    {!! Form::label('peso', 'Peso:') !!}
-    <p>{{ $seguro->peso }}</p>
-</div>
-
-<!-- Plan Field -->
-<div class="col-sm-12">
-    {!! Form::label('plan', 'Plan:') !!}
-    <p>{{ $seguro->plan }}</p>
-</div>
-
-<!-- Nombre Apellido Fallecimiento Titular Field -->
-<div class="col-sm-12">
-    {!! Form::label('nombre_apellido_fallecimiento_titular', 'Nombre Apellido Fallecimiento Titular:') !!}
-    <p>{{ $seguro->nombre_apellido_fallecimiento_titular }}</p>
-</div>
-
-<!-- Parentesco Titular Beneficiario Field -->
-<div class="col-sm-12">
-    {!! Form::label('parentesco_titular_beneficiario', 'Parentesco Titular Beneficiario:') !!}
-    <p>{{ $seguro->parentesco_titular_beneficiario }}</p>
-</div>
-
-<!-- Ci Beneficiario Field -->
-<div class="col-sm-12">
-    {!! Form::label('ci_beneficiario', 'Ci Beneficiario:') !!}
-    <p>{{ $seguro->ci_beneficiario }}</p>
-</div>
-
-<!-- Porcentaje Cesion Field -->
-<div class="col-sm-12">
-    {!! Form::label('porcentaje_cesion', 'Porcentaje Cesion:') !!}
-    <p>{{ $seguro->porcentaje_cesion }}</p>
-</div>
-
-<!-- Fechanac Beneficiario Field -->
-<div class="col-sm-12">
-    {!! Form::label('fechanac_beneficiario', 'Fechanac Beneficiario:') !!}
-    <p>{{ $seguro->fechanac_beneficiario }}</p>
-</div>
-
-<!-- Created At Field -->
-<div class="col-sm-12">
-    {!! Form::label('created_at', 'Created At:') !!}
-    <p>{{ $seguro->created_at }}</p>
-</div>
-
-<!-- Updated At Field -->
-<div class="col-sm-12">
-    {!! Form::label('updated_at', 'Updated At:') !!}
-    <p>{{ $seguro->updated_at }}</p>
-</div>
-
+<div class="table-responsive" style="padding:15px;">
+    <table class="table" id="Tabla">
+        <thead>
+        <tr>
+            <th>Estado Civil</th>
+        <th>Edad</th>
+        <th>Usted Es</th>
+        <th>Padece Enfermedad</th>
+        </tr>
+        </thead>
+        <tbody>
+        
+            <tr>
+                <td>{{ $seguro->estado_civil }}</td>
+            <td>{{ $seguro->edad }}</td>
+            <td>{{ $seguro->usted_es }}</td>
+            <td>{{ $seguro->padece_enfermedad }}</td>
+            </tr>
+       
+        </tbody>
+    </table>
+     <table class="table" id="Tabla">
+        <thead>
+        <tr>
+        <th>Especificar Enfermedad</th>
+        <th>Presenta Defecto Fisico</th>
+        <th>Especifique Defecto Fisico</th>
+        <th>Estatura</th>
+        </tr>
+        </thead>
+        <tbody>
+        
+            <tr>
+            <td>{{ $seguro->especificar_enfermedad }}</td>
+            <td>{{ $seguro->presenta_defecto_fisico }}</td>
+            <td>{{ $seguro->especifique_defecto_fisico }}</td>
+            <td>{{ $seguro->estatura }}</td>
+            </tr>
+       
+        </tbody>
+    </table>
+     <table class="table" id="Tabla">
+        <thead>
+        <tr>
+        <th>Peso</th>
+        <th>Plan</th>
+        <th>Tipo de Plan</th>
+        <th>Nombre Apellido Fallecimiento Titular</th>
+         <th>Fecha de registro</th>
+        </tr>
+        </thead>
+        <tbody>
+        
+            <tr>
+            <td>{{ $seguro->parentesco_titular_beneficiario }}</td>
+            <td>{{ $seguro->ci_beneficiario }}</td>
+            <td>{{ $seguro->porcentaje_cesion }}</td>
+            <td>{{ $seguro->fechanac_beneficiario }}</td>
+             <td>{{ $seguro->created_at }}</td>
+            </tr>
+       
+        </tbody>
+    </table>
+    <table class="table" id="Tabla">
+        <thead>
+        <tr>
+      <th>Parentesco Titular Beneficiario</th>
+        <th>Ci Beneficiario</th>
+        <th>Porcentaje Cesion</th>
+        <th>Fechanac Beneficiario</th>
+        </tr>
+        </thead>
+        <tbody>
+        
+            <tr>
+            <td>{{ $seguro->parentesco_titular_beneficiario }}</td>
+            <td>{{ $seguro->ci_beneficiario }}</td>
+            <td>{{ $seguro->porcentaje_cesion }}</td>
+            <td>{{ $seguro->fechanac_beneficiario }}</td>
+            </tr>
+       
+        </tbody>
+    </table>

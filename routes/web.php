@@ -28,7 +28,12 @@ Route::get('/symlink', function () {
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/reportes', [App\Http\Controllers\ReporteController::class, 'reporte'])->name('reportes');
+Route::get('reportes/inscripcions', [App\Http\Controllers\ReporteController::class, 'reporte_inscripcion'])->name('reporte_inscripcion');
+
+Route::get('reportes/seguros', [App\Http\Controllers\ReporteController::class, 'reporte_seguro'])->name('reporte_seguro');
+
+Route::get('reportes/rankings', [App\Http\Controllers\ReporteController::class, 'reporte_ranking'])->name('reporte_ranking');
+
 
 Route::get('download_pago/{id}', [App\Http\Controllers\PdfController::class, 'download_pago'])->name('documento.download_pago');
 Route::get('download_inscripcion/{id}', [App\Http\Controllers\PdfController::class, 'download_inscripcion'])->name('documento.download_inscripcion');

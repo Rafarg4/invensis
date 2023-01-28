@@ -114,7 +114,7 @@ class Inscripcion extends Model
         'contacto_emergencia' => 'required',
         'nombre_apellido_contacto_emergencia' => 'required',
         'email' => 'required',
-        'foto' => 'required',
+
         'departamento' => 'required'
         
     ];

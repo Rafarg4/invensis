@@ -1,63 +1,63 @@
-<div class="form-group col-md-6 pull-left">
-<label for="id_user">id_user:</label>
+<div class="form-group col-md-12 pull-left">
+<label for="id_user">Usuario:</label>
             <input type="text" name="id_user" class="form-control" value="{{ Auth::user()->id }}" readonly>
         </div>
 <!-- Posicion Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
     {!! Form::label('posicion', 'Posicion:') !!}
     {!! Form::text('posicion', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Nombre Apellido Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
     {!! Form::label('nombre_apellido', 'Nombre Apellido:') !!}
     {!! Form::text('nombre_apellido', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Categoria Field -->
-  <div class="form-group col-sm-6">
+  <div class="form-group col-sm-12">
                 {!! Form::label('id_categoria', 'Categoria:') !!}
                 {!! Form::select('id_categoria', $categoria, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion','required']) !!}
             </div>
 
 <!-- Club Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
     {!! Form::label('club', 'Club:') !!}
     {!! Form::text('club', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Sexo Field -->
-<div class=" form-group col-sm-3">
+<div class=" form-group col-sm-12">
                 {!! Form::label('sexo', 'Sexo:') !!}
                 {!! Form::select('sexo',array('Masculino' => 'Masculino', 'Femenino' => 'Femenino','Otro' => 'Otro'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
                 </div>
 
 <!-- 1 Fecha Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
     {!! Form::label('primer_fecha', '1 Fecha:') !!}
     {!! Form::text('primer_fecha', null, ['class' => 'form-control','onchange'=>"sumar(this.value);" ,'required']) !!}
 </div>
 
 <!-- 2 Fecha Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
     {!! Form::label('segundo_fecha', '2 Fecha:') !!}
     {!! Form::text('segundo_fecha', null, ['class' => 'form-control','onchange'=>"sumar(this.value);" ,'required']) !!}
 </div>
 
 <!-- 3 Fecha Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
     {!! Form::label('tercero_fecha', '3 Fecha:') !!}
     {!! Form::text('tercero_fecha', null, ['class' => 'form-control','onchange'=>"sumar(this.value);" ,'required']) !!}
 </div>
 
 <!-- 4 Fecha Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
     {!! Form::label('cuarto_fecha', '4 Fecha:') !!}
     {!! Form::text('cuarto_fecha', null, ['class' => 'form-control','onchange'=>"sumar(this.value);" ,'required']) !!}
 </div>
 
 <!-- Total Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
     {!! Form::label('total', 'Total:') !!}
     {!! Form::text('total', null,['class' => 'form-control']) !!}
 </div>

@@ -167,15 +167,15 @@
 
             <!-- Foto Field -->
             <!-- Imagen Field -->
-            <div class="form-group col-sm-12">
-              {!! Form::label('foto', 'Foto:') !!}
-            <div class="input-group">
-            <div class="custom-file">
-            {!! Form::file('foto', null, ['class' => 'form-control', 'id' => 'foto','required']) !!}
-            <label class="custom-file-label" for="foto">Seleccionar Archivo</label>
-            </div>
 
-            </div>
+
+            <div class="form-group col-sm-12">
+            <label for="foto">Selecione un archivo:</label>
+             @if(isset($inscripcion->foto))
+            <img src="{{ asset('storage').'/'.$inscripcion->foto}}" width="100" height="100" class="img-circle">
+            @endif 
+            <input type="file" id="foto" name="foto">
+            
             </div>
                 <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Siguiente</button>
         </div>
