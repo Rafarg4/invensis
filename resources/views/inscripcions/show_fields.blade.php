@@ -1,4 +1,6 @@
-  <div class="table-responsive">
+ <div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+    <div class="table-responsive">
     <table class="table" id="tabla">
         <thead>
         <tr>
@@ -115,20 +117,10 @@
     </table>
 </div>
                 </div>
-            </div>
-<div id="accordion">
-  <div class="card">
-    <div class="card-header" id="headingTwo">
-      <h5 class="mb-0">
-        <button class="btn btn collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          <i class="fa fas-light fa-book"></i> Detalles de Documentos
-        </button>
-      </h5>
-    </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-      <div class="card-body">
         
-                    <div class="table-responsive" style="padding:15px;">
+
+  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+           <div class="table-responsive" style="padding:15px;">
     <table class="table" id="Tabla">
         <thead>
         <tr>
@@ -161,22 +153,10 @@
         </tbody>
     </table>
 </div>
-
-                </div>
-            </div>
-        </div>
+  </div>
    
-  <div class="card">
-    <div class="card-header" id="headingThree">
-      <h5 class="mb-0">
-        <button class="btn btn collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-         <i class="fa fas-regular fa-laptop-medical"></i> Detalles de Seguro
-        </button>
-      </h5>
-    </div>
-    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-      <div class="card-body">
-       <div class="table-responsive" style="padding:15px;">
+  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+      <div class="table-responsive" style="padding:15px;">
     <table class="table" id="Tabla">
         <thead>
         <tr>
@@ -259,10 +239,15 @@
         @endforeach
         </tbody>
     </table>
-</div>
-      </div>
-    </div>
+</div></div>
   </div>
-</div>
-        </div>
-    
+</div> 
+</div></div>
+  
+
+<script type="text/javascript">
+    $('#myTab a').on('click', function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+</script>

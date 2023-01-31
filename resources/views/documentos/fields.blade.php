@@ -9,9 +9,12 @@
             {!! Form::file('archivo_pago', null, ['class' => 'form-control', 'id' => 'archivo_pago','required']) !!}
             <label class="custom-file-label" for="archivo_pago">Seleccionar Archivo</label>
             </div>
+            </div>
+             @if(isset($documento->archivo_pago))
+            <img src="/pdf.jpg" width="40" height="40"></a>
+            @endif
+            </div>
 
-            </div>
-            </div>
 <!-- Archivo Inscripcion Field -->
 <div class="form-group col-sm-6">
               {!! Form::label('archivo_inscripcion', 'Comprobante de firma de documento:') !!}
@@ -20,8 +23,10 @@
             {!! Form::file('archivo_inscripcion', null, ['class' => 'form-control', 'id' => 'archivo_inscripcion','required']) !!}
             <label class="custom-file-label" for="archivo_inscripcion">Seleccionar Archivo</label>
             </div>
-
             </div>
+            @if(isset($documento->archivo_inscripcion))
+           <img src="/pdf.jpg" width="40" height="40"></a>
+            @endif
             </div>
 <!-- Archivo Inscripcion Field -->
 <div class="form-group col-sm-6">
@@ -32,6 +37,9 @@
             <label class="custom-file-label" for="archivo_seguro_medico">Seleccionar Archivo</label>
             </div>
         </div>
+        @if(isset($documento->archivo_seguro_medico))
+            <img src="/pdf.jpg" width="40" height="40"></a>
+            @endif
     </div>
   <div class=" form-group col-sm-6">
              {!! Form::label('estado', 'Estado:') !!}

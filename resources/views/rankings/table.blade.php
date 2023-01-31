@@ -1,36 +1,5 @@
-<script type="text/javascript">
-    $(document).ready(function () {
-    $('#example').DataTable({
-         "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-            },
-        initComplete: function () {
-            this.api()
-                .columns()
-                .every(function () {
-                    var column = this;
-                    var select = $('<select><option value="">Selecione</option></select>')
-                        .appendTo($(column.footer()).empty())
-                        .on('change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex($(this).val());
- 
-                            column.search(val ? '^' + val + '$' : '', true, false).draw();
-                        });
- 
-                    column
-                        .data()
-                        .unique()
-                        .sort()
-                        .each(function (d, j) {
-                            select.append('<option value="' + d + '">' + d + '</option>');
-                        });
-                });
-        },
-    });
-});
-</script>
 <div class="table-responsive" style="padding:15px;">
-    <table class="table" id="example">
+    <table class="table" id="tablas">
         <thead>
         <tr>
             <th>Posicion</th>
