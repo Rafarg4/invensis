@@ -10,10 +10,10 @@
     <p>{{ $user->email }}</p>
 </div>
 
-<!-- Password Field -->
+<!-- Role Field -->
 <div class="col-sm-12">
-    {!! Form::label('password', 'Password:') !!}
-    <p>{{ $user->password }}</p>
+    {!! Form::label('role', 'Role:') !!}
+    <p>{{ implode(" ", $user->getRoleNames()->toArray()) }}</p>
 </div>
 
 <!-- Created At Field -->

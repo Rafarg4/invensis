@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Flash;
 use Response;
 use App\Models\Inscripcion;
+use App\Models\Documento;
+use Illuminate\Support\Facades\Storage;
 class DocumentoController extends AppBaseController
 {
     /** @var DocumentoRepository $documentoRepository*/
@@ -56,12 +58,14 @@ class DocumentoController extends AppBaseController
     public function store(CreateDocumentoRequest $request)
     {
         $rules = [
+        'id_inscripcion'=>'required|unique:documentos,id_inscripcion',
         'archivo_pago' => 'required',
         'archivo_inscripcion' => 'required',
         'archivo_seguro_medico' => 'required',
       ];
        $mensaje = [
         'required'=>'El :attribute es requerido',
+        'unique'=> 'Registro de documentos ya creado.',
       ];
       $this->validate($request,$rules,$mensaje);
 
@@ -78,7 +82,7 @@ class DocumentoController extends AppBaseController
 
         $documento = $this->documentoRepository->create($input);
 
-        Flash::success('Documento saved successfully.');
+        Flash::success('Documento guardado.');
 
         return redirect(route('documentos.index'));
     }
@@ -95,7 +99,7 @@ class DocumentoController extends AppBaseController
         $documento = $this->documentoRepository->find($id);
 
         if (empty($documento)) {
-            Flash::error('Documento not found');
+            Flash::error('Documento no encontrado');
 
             return redirect(route('documentos.index'));
         }
@@ -116,7 +120,7 @@ class DocumentoController extends AppBaseController
         $documento = $this->documentoRepository->find($id);
 
         if (empty($documento)) {
-            Flash::error('Documento not found');
+            Flash::error('Documento no encontrado');
 
             return redirect(route('documentos.index'));
         }
@@ -147,17 +151,29 @@ class DocumentoController extends AppBaseController
              
         }
 
-        $documento = $this->documentoRepository->find($id);
-
-        if (empty($documento)) {
-            Flash::error('Documento not found');
-
-            return redirect(route('documentos.index'));
+       
+       if($request->hasFile('archivo_pago')){
+            $documento=Documento::findOrFail($id);
+            Storage::delete('public/'.$documento->archivo_pago); 
+            $datos['archivo_pago']=$request->file('archivo_pago')->store('uploads','public');   
         }
 
-        $documento = $this->documentoRepository->update($request->all(), $id);
+       if($request->hasFile('archivo_inscripcion')){
+            $documento=Documento::findOrFail($id);
+            Storage::delete('public/'.$documento->archivo_inscripcion); 
+            $datos['archivo_inscripcion']=$request->file('archivo_inscripcion')->store('uploads','public');   
+        }
+        
+       if($request->hasFile('archivo_seguro_medico')){
+            $documento=Documento::findOrFail($id);
+            Storage::delete('public/'.$documento->archivo_seguro_medico); 
+            $datos['archivo_seguro_medico']=$request->file('archivo_seguro_medico')->store('uploads','public');   
+        }
 
-        Flash::success('Documento updated successfully.');
+        Documento::where('id',$id)->update($datos);
+        $documento=Documento::findOrFail($id);
+
+        Flash::success('Documento actualizado.');
 
         return redirect(route('documentos.index'));
     }
@@ -176,14 +192,14 @@ class DocumentoController extends AppBaseController
         $documento = $this->documentoRepository->find($id);
 
         if (empty($documento)) {
-            Flash::error('Documento not found');
+            Flash::error('Documento no encontrado');
 
             return redirect(route('documentos.index'));
         }
 
         $this->documentoRepository->delete($id);
 
-        Flash::success('Documento deleted successfully.');
+        Flash::success('Documento eliminado.');
 
         return redirect(route('documentos.index'));
     }

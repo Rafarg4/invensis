@@ -36,12 +36,13 @@
                            class='btn btn-default btn-xs'>
                             <i class="far fa-eye"></i>
                         </a>
+                        @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
                         <a href="{{ route('seguros.edit', [$seguro->id]) }}"
                            class='btn btn-default btn-xs'>
                             <i class="far fa-edit"></i>
                         </a>
                         {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Estas seguro?')"]) !!}
-                    </div>
+                    </div>@endcan
                     {!! Form::close() !!}
                 </td>
             </tr>

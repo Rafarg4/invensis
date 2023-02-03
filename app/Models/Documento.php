@@ -55,8 +55,7 @@ class Documento extends Model
      * @var array
      */
     public static $rules = [
-        'id_inscripcion'=>'required',
-        'estado'=>'required'
+        
     ];
 
      public function inscripto (){

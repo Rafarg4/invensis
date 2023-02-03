@@ -7,12 +7,14 @@
                 <div class="col-sm-6">
                     <h1>Rankings</h1>
                 </div>
+                @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
                 <div class="col-sm-6">
                     <a class="btn btn-primary float-right"
                        href="{{ route('rankings.create') }}">
                         Nuevo
                     </a>
                 </div>
+                @endcan
             </div>
         </div>
     </section>

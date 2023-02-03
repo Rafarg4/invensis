@@ -52,5 +52,7 @@ class Categoria extends Model
         'descripcion' => 'required'
     ];
 
-    
+     public function incripcion (){
+        return $this-> hasMany('App\Models\Inscripcion');
+    }
 }

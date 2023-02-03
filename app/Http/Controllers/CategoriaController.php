@@ -139,6 +139,8 @@ class CategoriaController extends AppBaseController
      */
     public function destroy($id)
     {
+         //Renstrigir eliminacion
+        // $categoriaRepository=DB::select("select categorias.*, (select count(*) from inscripcions where categorias.id = inscripcions.id_categoria and inscripcions.deleted_at is null) as inscripcion_count  from categorias where deleted_at is null and categorias.deleted_at is null ");
         $categoria = $this->categoriaRepository->find($id);
 
         if (empty($categoria)) {

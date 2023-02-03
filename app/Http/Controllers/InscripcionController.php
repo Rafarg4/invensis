@@ -62,10 +62,12 @@ class InscripcionController extends AppBaseController
     public function store(CreateInscripcionRequest $request)
     {
         $rules = [
+        'ci'=>'required|unique:inscripcions,ci',
         'foto' => 'required',
       ];
        $mensaje = [
         'required'=>'El :attribute es requerido',
+        'unique'=> 'Registro de inscripcion ya creado.',
       ];
       $this->validate($request,$rules,$mensaje);
         $input = $request->all();
@@ -137,18 +139,13 @@ class InscripcionController extends AppBaseController
             $campo=['foto'=>'required|mines:jpeg,png,jpg'];
              
         }
-        $inscripcion = $this->inscripcionRepository->find($id);
-        if (empty($inscripcion)) {
-            Flash::error('Inscripcion no encontrado');
-
-            return redirect(route('inscripcions.index'));
-        }
         if($request->hasFile('foto')){
             $inscripcion=Inscripcion::findOrFail($id);
             Storage::delete('public/'.$inscripcion->foto); 
-            $input['foto']=$request->file('foto')->store('uploads','public');   
+            $datos['foto']=$request->file('foto')->store('uploads','public');   
         }
-        $inscripcion = $this->inscripcionRepository->update($request->all(), $id);
+        Inscripcion::where('id',$id)->update($datos);
+        $inscripcion=Inscripcion::findOrFail($id);
 
         Flash::success('Inscripcion actualizada.');
 

@@ -1,4 +1,5 @@
 <br>
+@canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
 <section class="content">
 <div class="container-fluid">
 <div class="row">
@@ -17,6 +18,7 @@
 </div>
 </div>
 </section>
+@endcan
 <div class="card-body pb-0">
    
 <div class="row">
@@ -46,16 +48,20 @@ Carnet de inscripcion
 </div>
 </div>
 </div>
+
 {!! Form::open(['route' => ['inscripcions.destroy', $inscripcion->id], 'method' => 'delete']) !!}
 <div class="card-footer">
 <div class="text-right">
+@canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
 <a class="class='btn btn-default btn-xs">
 <button type="submit"  class="btn btn-sm btn-danger" onclick="return confirm('Estas seguro?')"><i class="fa fas-solid fa-trash"></i></button>
-</a>
+</a>@endcan
+@canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
 <a href="{{ route('inscripcions.edit', [$inscripcion->id]) }}" class="btn btn-sm btn-warning">
 <i class="fas fa-edit"></i>
+</a>@endcan
 </a>
-</a>
+
 <a href="{{ route('inscripcions.show', [$inscripcion->id]) }}" class="btn btn-sm btn-primary">
 <i class="fas fa-eye"></i>
 </a>

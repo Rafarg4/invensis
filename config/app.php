@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Laraveles\Spanish\SpanishServiceProvider::class,
 
+
         /*
          * Package Service Providers...
          */
@@ -175,6 +176,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
+        Illuminate\View\ViewServiceProvider::class,
+        \App\Providers\ViewServiceProvider::class,
+
 
     ],
 

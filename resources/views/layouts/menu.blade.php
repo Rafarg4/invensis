@@ -14,6 +14,7 @@
         <p>Dashboard</p>
     </a>
 </li>
+@canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
 <li class="nav-item">
     <a href="{{ route('categorias.index') }}"
        class="nav-link {{ Request::is('categorias*') ? 'active' : '' }}">
@@ -21,7 +22,7 @@
         <p>Categorias</p>
     </a>
 </li>
-
+@endcan
 <li class="nav-item">
     <a href="{{ route('inscripcions.index') }}"
        class="nav-link {{ Request::is('inscripcions*') ? 'active' : '' }}">
@@ -50,6 +51,7 @@
         <p>Rankings</p>
     </a>
 </li>
+@canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
 <li class="nav-item">
     <a href="{{ route('importar.index') }}"
        class="nav-link {{ Request::is('importar*') ? 'active' : '' }}">
@@ -102,3 +104,4 @@ class="nav-link {{ Request::is('reporte_ranking*') ? 'active' : '' }}">
         <p>Usuarios</p>
     </a>
 </li>
+@endcan

@@ -28,40 +28,40 @@ Route::get('/symlink', function () {
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('reportes/inscripcions', [App\Http\Controllers\ReporteController::class, 'reporte_inscripcion'])->name('reporte_inscripcion');
+Route::get('reportes/inscripcions', [App\Http\Controllers\ReporteController::class, 'reporte_inscripcion'])->name('reporte_inscripcion')->middleware('auth');
 
-Route::get('reportes/seguros', [App\Http\Controllers\ReporteController::class, 'reporte_seguro'])->name('reporte_seguro');
+Route::get('reportes/seguros', [App\Http\Controllers\ReporteController::class, 'reporte_seguro'])->name('reporte_seguro')->middleware('auth');
 
-Route::get('reportes/rankings', [App\Http\Controllers\ReporteController::class, 'reporte_ranking'])->name('reporte_ranking');
-
-
-Route::get('download_pago/{id}', [App\Http\Controllers\PdfController::class, 'download_pago'])->name('documento.download_pago');
-Route::get('download_inscripcion/{id}', [App\Http\Controllers\PdfController::class, 'download_inscripcion'])->name('documento.download_inscripcion');
-Route::get('download_seguro/{id}', [App\Http\Controllers\PdfController::class, 'download_seguro'])->name('documento.download_seguro');
-
-Route::get('seguro/{id}', [App\Http\Controllers\InscripcionController::class, 'seguro'])->name('seguro');
+Route::get('reportes/rankings', [App\Http\Controllers\ReporteController::class, 'reporte_ranking'])->name('reporte_ranking')->middleware('auth');
 
 
-Route::resource('licencias', App\Http\Controllers\LicenciaController::class);
+Route::get('download_pago/{id}', [App\Http\Controllers\PdfController::class, 'download_pago'])->name('documento.download_pago')->middleware('auth');
+Route::get('download_inscripcion/{id}', [App\Http\Controllers\PdfController::class, 'download_inscripcion'])->name('documento.download_inscripcion')->middleware('auth');
+Route::get('download_seguro/{id}', [App\Http\Controllers\PdfController::class, 'download_seguro'])->name('documento.download_seguro')->middleware('auth');
 
-Route::get('/graficos', [App\Http\Controllers\GraficoController::class, 'grafico'])->name('graficos');
-Route::resource('categorias', App\Http\Controllers\CategoriaController::class);
-
-
-Route::resource('pdf', App\Http\Controllers\PdfController::class);
-
-Route::resource('inscripcions', App\Http\Controllers\InscripcionController::class);
+Route::get('seguro/{id}', [App\Http\Controllers\InscripcionController::class, 'seguro'])->name('seguro')->middleware('auth');
 
 
-Route::resource('documentos', App\Http\Controllers\DocumentoController::class);
+Route::resource('licencias', App\Http\Controllers\LicenciaController::class)->middleware('auth');
+
+Route::get('/graficos', [App\Http\Controllers\GraficoController::class, 'grafico'])->name('graficos')->middleware('auth');
+Route::resource('categorias', App\Http\Controllers\CategoriaController::class)->middleware('auth');
 
 
-Route::resource('users', App\Http\Controllers\UserController::class);
+Route::resource('pdf', App\Http\Controllers\PdfController::class)->middleware('auth');
+
+Route::resource('inscripcions', App\Http\Controllers\InscripcionController::class)->middleware('auth');
 
 
-Route::resource('rankings', App\Http\Controllers\RankingController::class);
+Route::resource('documentos', App\Http\Controllers\DocumentoController::class)->middleware('auth');
 
 
-Route::resource('importar', App\Http\Controllers\ImportarController::class);
+Route::resource('users', App\Http\Controllers\UserController::class)->middleware('auth');
 
-Route::resource('seguros', App\Http\Controllers\SeguroController::class);
+
+Route::resource('rankings', App\Http\Controllers\RankingController::class)->middleware('auth');
+
+
+Route::resource('importar', App\Http\Controllers\ImportarController::class)->middleware('auth');
+
+Route::resource('seguros', App\Http\Controllers\SeguroController::class)->middleware('auth');
