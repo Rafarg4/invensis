@@ -41,10 +41,12 @@
             <img src="/pdf.jpg" width="40" height="40"></a>
             @endif
     </div>
+    @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
   <div class=" form-group col-sm-6">
              {!! Form::label('estado', 'Estado:') !!}
             {!! Form::select('estado',array('En espera' => 'En espera', 'Paralizado' => 'Paralizado','Verificado' => 'Verificado'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
             </div>
+    @endcan
 
 
             

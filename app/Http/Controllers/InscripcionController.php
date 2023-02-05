@@ -144,8 +144,8 @@ class InscripcionController extends AppBaseController
             Storage::delete('public/'.$inscripcion->foto); 
             $datos['foto']=$request->file('foto')->store('uploads','public');   
         }
-        Inscripcion::where('id',$id)->update($datos);
         $inscripcion=Inscripcion::findOrFail($id);
+        $datos = $this->inscripcionRepository->update($request->all(), $id);
 
         Flash::success('Inscripcion actualizada.');
 

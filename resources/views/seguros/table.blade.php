@@ -10,8 +10,6 @@
         <th>Especificar Enfermedad</th>
         <th>Presenta Defecto Fisico</th>
         <th>Especifique Defecto Fisico</th>
-        
-        <th>Plan</th>
         <th>Tipo de Plan</th>
             <th>Accion</th>
         </tr>
@@ -27,7 +25,6 @@
             <td>{{ $seguro->especificar_enfermedad }}</td>
             <td>{{ $seguro->presenta_defecto_fisico }}</td>
             <td>{{ $seguro->especifique_defecto_fisico }}</td>
-            <td>{{ $seguro->plan }}</td>
             <td>{{ $seguro->tipo_plan }}</td>
                 <td width="120">
                     {!! Form::open(['route' => ['seguros.destroy', $seguro->id], 'method' => 'delete']) !!}

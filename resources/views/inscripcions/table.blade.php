@@ -1,4 +1,5 @@
 <br>
+ @if(!empty($inscripcions) && $inscripcions->count() > 0)
 @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
 <section class="content">
 <div class="container-fluid">
@@ -77,6 +78,13 @@ Carnet de inscripcion
 </div>
 </div>
 @endforeach
+@else
+<div class="container"> 
+
+   <div class="alert alert-light" role="alert">
+  <b><h4><center>Aun no se ha registrado ninguna inscripcion!</center></h4></b>   
+</div>                               
+@endif
 </div>
 {{ $inscripcions->links() }}
 

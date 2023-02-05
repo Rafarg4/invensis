@@ -25,8 +25,9 @@ class CreateSegurosTable extends Migration
             $table->text('especifique_defecto_fisico')->nullable();
             $table->text('estatura');
             $table->text('peso');
-            $table->text('plan');
             $table->text('tipo_plan');
+            $table->text('plan_con_deducible')->nullable();
+            $table->text('plan_sin_deducible')->nullable();
             $table->text('nombre_apellido_fallecimiento_titular');
             $table->text('parentesco_titular_beneficiario');
             $table->text('ci_beneficiario');

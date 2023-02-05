@@ -169,9 +169,8 @@ class DocumentoController extends AppBaseController
             Storage::delete('public/'.$documento->archivo_seguro_medico); 
             $datos['archivo_seguro_medico']=$request->file('archivo_seguro_medico')->store('uploads','public');   
         }
-
-        Documento::where('id',$id)->update($datos);
         $documento=Documento::findOrFail($id);
+        $datos = $this->documentoRepository->update($request->all(), $id);
 
         Flash::success('Documento actualizado.');
 

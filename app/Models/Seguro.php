@@ -57,7 +57,9 @@ class Seguro extends Model
         'porcentaje_cesion',
         'fechanac_beneficiario',
         'id_inscripcion',
-        'tipo_plan'
+        'tipo_plan',
+        'plan_con_deducible',
+        'plan_sin_deducible'
     ];
 
     /**
@@ -82,7 +84,9 @@ class Seguro extends Model
         'porcentaje_cesion' => 'string',
         'fechanac_beneficiario' => 'string',
         'id_inscripcion' => 'integer',
-        'tipo_plan' => 'string'
+        'tipo_plan' => 'string',
+         'plan_sin_deducible' => 'string',
+          'plan_con_deducible' => 'string'
     ];
 
     /**
@@ -98,7 +102,7 @@ class Seguro extends Model
         'presenta_defecto_fisico' => 'required',
         'estatura' => 'required',
         'peso' => 'required',
-        'plan' => 'required',
+        'tipo_plan' => 'required',
         'nombre_apellido_fallecimiento_titular' => 'required',
         'parentesco_titular_beneficiario' => 'required',
         'ci_beneficiario' => 'required',

@@ -47,14 +47,15 @@
     {!! Form::text('peso', null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Plan Field -->
-<div class="form-group col-sm-12">
-    {!! Form::label('plan', '¿Que plan desea elegir?:') !!}
-     {!! Form::select('plan',array('Plan con deducible' => 'Plan con deducible', 'Plan sin deducible' => 'Plan sin deducible'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
-</div>
 <div class="form-group col-sm-12">
     {!! Form::label('tipo_plan', 'Tipo de plan:') !!}
-    {!! Form::text('tipo_plan', null, ['class' => 'form-control']) !!}
+      {!! Form::select('tipo_plan',array('sin_deducile' => 'Plan sin deducile', 'con_deducible' => 'Plan con deducible'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
+</div>
+<div class="form-group col-sm-12">
+   {!! Form::select('plan_sin_deducible',array('OPCIÓN 1 - 150.000 GS POR PERSONA' => 'OPCIÓN 1 - 150.000 GS POR PERSONA', 'OPCIÓN 2 - 220.000GS POR PERSONA' => 'OPCIÓN 2 - 220.000GS POR PERSONA','OPCIÓN 3 - 280.000 GS POR PERSONA' => 'OPCIÓN 3 - 280.000 GS POR PERSONA','OPCIÓN 4 - 300.000 GS POR PERSONA' => 'OPCIÓN 4 - 300.000 GS POR PERSONA','OPCIÓN 5 - 560.000GS POR PERSONA' => 'OPCIÓN 5 - 560.000GS POR PERSONA','OPCIÓN 6 - 700.000 GS POR PERSONA' => 'OPCIÓN 6 - 700.000 GS POR PERSONA'),null, ['class' => 'form-control','placeholder'=>'Seleccione','style'=>'display:none'])!!}
+</div>
+<div class="form-group col-sm-12">
+      {!! Form::select('plan_con_deducible',array('OPCIÓN 1 - 82.500 GS POR PERSONA' => 'OPCIÓN 1 - 82.500 GS POR PERSONA', 'OPCIÓN 2 - 121.000 GS POR PERSONA' => 'OPCIÓN 3 - 154.000 GS POR PERSONA','OPCIÓN 4 - 231.000 GS POR PERSONA' => 'OPCIÓN 4 - 231.000 GS POR PERSONA','OPCIÓN 5 - 308.000 GS POR PERSONA' => 'OPCIÓN 5 - 308.000 GS POR PERSONA','OPCIÓN 6 - 385.000 GS POR PERSONA'),null, ['class' => 'form-control','placeholder'=>'Seleccione','style'=>'display:none'])!!}
 </div>
 <!-- Nombre Apellido Fallecimiento Titular Field -->
 <div class="form-group col-sm-12">
@@ -107,3 +108,27 @@ presenta_defecto_fisico.addEventListener("change", () => {
   }
 });
 </script>
+
+<script type="text/javascript">
+    const tipo_plan = document.querySelector("#tipo_plan");
+const input2 = document.querySelector("[name=plan_sin_deducible]");
+
+tipo_plan.addEventListener("change", () => {
+  if (tipo_plan.value === "sin_deducile") {
+    input2.style.display = 'initial';
+  } else {
+    input2.style.display = 'none';
+  }
+});   
+const input3 = document.querySelector("[name=plan_con_deducible]");
+
+tipo_plan.addEventListener("change", () => {
+  if (tipo_plan.value === "con_deducible") {
+    input3.style.display = 'initial';
+  } else {
+    input3.style.display = 'none';
+  }
+});
+</script>
+
+

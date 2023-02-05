@@ -44,19 +44,17 @@
         <tr>
         <th>Peso</th>
         <th>Plan</th>
-        <th>Tipo de Plan</th>
         <th>Nombre Apellido Fallecimiento Titular</th>
-         <th>Fecha de registro</th>
+        <th>Fecha de nacimiento de beneficiario</th>
         </tr>
         </thead>
         <tbody>
         
             <tr>
-            <td>{{ $seguro->parentesco_titular_beneficiario }}</td>
-            <td>{{ $seguro->ci_beneficiario }}</td>
-            <td>{{ $seguro->porcentaje_cesion }}</td>
+            <td>{{ $seguro->peso }}</td>
+            <td>{{ $seguro->tipo_plan }}</td>
+            <td>{{ $seguro->nombre_apellido_fallecimiento_titular }}</td>
             <td>{{ $seguro->fechanac_beneficiario }}</td>
-             <td>{{ $seguro->created_at }}</td>
             </tr>
        
         </tbody>
@@ -67,7 +65,7 @@
       <th>Parentesco Titular Beneficiario</th>
         <th>Ci Beneficiario</th>
         <th>Porcentaje Cesion</th>
-        <th>Fechanac Beneficiario</th>
+        <th>Fecha de registro</th>
         </tr>
         </thead>
         <tbody>
@@ -76,7 +74,7 @@
             <td>{{ $seguro->parentesco_titular_beneficiario }}</td>
             <td>{{ $seguro->ci_beneficiario }}</td>
             <td>{{ $seguro->porcentaje_cesion }}</td>
-            <td>{{ $seguro->fechanac_beneficiario }}</td>
+            <td>{{ $seguro->created_at }}</td>
             </tr>
        
         </tbody>

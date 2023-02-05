@@ -183,6 +183,7 @@
     <div class="row setup-content" id="step-3">
             <div class="col-md-12">
                 <h3> Ultimo paso, confirmar datos ingresados</h3>
+                @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
                 <div class=" form-group col-sm-12">
              {!! Form::label('estado', 'Estado:') !!}
             {!! Form::select('estado',array('En espera' => 'En espera', 'Paralizado' => 'Paralizado','Verificado' => 'Verificado'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
@@ -196,6 +197,7 @@
                 {!! Form::label('federacion_id', 'Federacion id:') !!}
                 {!! Form::number('federacion_id', null, ['class' => 'form-control']) !!}
             </div>
+            @endcan
                 <button class="btn btn-success btn-lg pull-right" type="submit">Confirmar!</button>
                 
             </div>
