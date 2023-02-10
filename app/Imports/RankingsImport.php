@@ -6,8 +6,9 @@ use App\Models\Ranking;
 use App\Models\Categoria;
 use App\Models\User;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class RankingsImport implements ToModel, WithHeadingRow
+class RankingsImport implements ToModel, WithHeadingRow, WithValidation
 {
   private $categorias;
   private $usuarios;
@@ -24,6 +25,22 @@ class RankingsImport implements ToModel, WithHeadingRow
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
+    public function rules(): array
+    {
+        return [
+        'posicion' => 'required|string',
+        'usuario' => 'required|string',
+        'nombre_apellido' => 'required|string',
+        'categoria' => 'required|string',
+        'club' => 'required|string',
+        'sexo' => 'required|string',
+        '1_fecha' => 'required|string',
+        '2_fecha' => 'required|string',
+        '3_fecha' => 'required|string',
+        '4_fecha' => 'required|string',
+        'total' => 'required|string',
+        ];
+    }
     public function model(array $row)
     {
         return new Ranking([

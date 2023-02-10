@@ -62,6 +62,8 @@ class DocumentoController extends AppBaseController
         'archivo_pago' => 'required',
         'archivo_inscripcion' => 'required',
         'archivo_seguro_medico' => 'required',
+        'archivo_copia_cedula' => 'required',
+        'archivo_certificado_medico' => 'required',
       ];
        $mensaje = [
         'required'=>'El :attribute es requerido',
@@ -79,7 +81,13 @@ class DocumentoController extends AppBaseController
         if($request->hasFile('archivo_seguro_medico')){
             $input['archivo_seguro_medico']=$request->file('archivo_seguro_medico')->store('uploads','public');   
         }
-
+        if($request->hasFile('archivo_copia_cedula')){
+            $input['archivo_copia_cedula']=$request->file('archivo_copia_cedula')->store('uploads','public');   
+        }
+        if($request->hasFile('archivo_certificado_medico')){
+            $input['archivo_certificado_medico']=$request->file('archivo_certificado_medico')->store('uploads','public');   
+        }
+        
         $documento = $this->documentoRepository->create($input);
 
         Flash::success('Documento guardado.');
@@ -139,7 +147,7 @@ class DocumentoController extends AppBaseController
     public function update($id, UpdateDocumentoRequest $request)
     {
 
-        if($request->hasFile('archivo_pago')){
+       if($request->hasFile('archivo_pago')){
             $campo=['archivo_pago'=>'required'];   
         }
         if($request->hasFile('archivo_inscripcion')){
@@ -148,6 +156,14 @@ class DocumentoController extends AppBaseController
         }
         if($request->hasFile('archivo_seguro_medico')){
             $campo=['archivo_seguro_medico'=>'required'];
+             
+        }
+        if($request->hasFile('archivo_certificado_medico')){
+            $campo=['archivo_certificado_medico'=>'required'];
+             
+        }
+        if($request->hasFile('archivo_copia_cedula')){
+            $campo=['archivo_copia_cedula'=>'required'];
              
         }
 
@@ -168,6 +184,16 @@ class DocumentoController extends AppBaseController
             $documento=Documento::findOrFail($id);
             Storage::delete('public/'.$documento->archivo_seguro_medico); 
             $datos['archivo_seguro_medico']=$request->file('archivo_seguro_medico')->store('uploads','public');   
+        }
+        if($request->hasFile('archivo_certificado_medico')){
+            $documento=Documento::findOrFail($id);
+            Storage::delete('public/'.$documento->archivo_certificado_medico); 
+            $datos['archivo_certificado_medico']=$request->file('archivo_certificado_medico')->store('uploads','public');   
+        }
+        if($request->hasFile('archivo_copia_cedula')){
+            $documento=Documento::findOrFail($id);
+            Storage::delete('public/'.$documento->archivo_copia_cedula); 
+            $datos['archivo_copia_cedula']=$request->file('archivo_copia_cedula')->store('uploads','public');   
         }
         $documento=Documento::findOrFail($id);
         $datos = $this->documentoRepository->update($request->all(), $id);

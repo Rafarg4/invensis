@@ -61,7 +61,8 @@ class Inscripcion extends Model
         'region',
         'estado',
         'monto',
-        'federacion_id'
+        'federacion_id',
+        'uciid'
     ];
 
     /**
@@ -90,7 +91,8 @@ class Inscripcion extends Model
         'region' => 'string',
         'estado' => 'string',
         'monto' => 'string',
-        'federacion_id'=>'string'
+        'federacion_id'=>'string',
+        'uciid'=>'string'
     ];
 
     /**
@@ -114,7 +116,8 @@ class Inscripcion extends Model
         'contacto_emergencia' => 'required',
         'nombre_apellido_contacto_emergencia' => 'required',
         'email' => 'required',
-        'departamento' => 'required'
+        'departamento' => 'required',
+        'uciid' => 'required'
         
     ];
 

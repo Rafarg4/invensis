@@ -85,6 +85,11 @@
                             <input type="checkbox" id="remember">
                             <label for="remember">Recordar</label>
                         </div>
+                        <div class="icheck-primary">
+                                    <a class="btn btn-link px-0" href="{{ url('/password/reset') }}">
+                                        Recuperar contraseña?
+                                    </a>
+                                </div>
                     </div>
 
                     <div class="col-4">
@@ -94,9 +99,6 @@
                 </div>
             </form>
 
-            <p class="mb-1">
-                <a href="{{ route('password.request') }}">Olvidaste tu contaseña?</a>
-            </p>
             <p class="mb-0">
                 <a href="{{ route('register') }}" class="text-center">Registrarse </a>
             </p>

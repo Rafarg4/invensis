@@ -33,11 +33,13 @@ Route::get('reportes/inscripcions', [App\Http\Controllers\ReporteController::cla
 Route::get('reportes/seguros', [App\Http\Controllers\ReporteController::class, 'reporte_seguro'])->name('reporte_seguro')->middleware('auth');
 
 Route::get('reportes/rankings', [App\Http\Controllers\ReporteController::class, 'reporte_ranking'])->name('reporte_ranking')->middleware('auth');
-
-
 Route::get('download_pago/{id}', [App\Http\Controllers\PdfController::class, 'download_pago'])->name('documento.download_pago')->middleware('auth');
 Route::get('download_inscripcion/{id}', [App\Http\Controllers\PdfController::class, 'download_inscripcion'])->name('documento.download_inscripcion')->middleware('auth');
 Route::get('download_seguro/{id}', [App\Http\Controllers\PdfController::class, 'download_seguro'])->name('documento.download_seguro')->middleware('auth');
+
+
+Route::get('download_copia/{id}', [App\Http\Controllers\PdfController::class, 'download_copia'])->name('documento.download_copia')->middleware('auth');
+Route::get('download_certificado/{id}', [App\Http\Controllers\PdfController::class, 'download_certificado'])->name('documento.download_certificado')->middleware('auth');
 
 Route::get('seguro/{id}', [App\Http\Controllers\InscripcionController::class, 'seguro'])->name('seguro')->middleware('auth');
 

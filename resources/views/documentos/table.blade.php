@@ -3,9 +3,11 @@
         <thead>
         <tr>
             <th>Ci Inscripto</th>
-            <th>Archivo Pago</th>
-        <th>Archivo Inscripcion</th>
-        <th>Archivo Seguro medico</th>
+            <th>Pago</th>
+        <th>Inscripcion</th>
+        <th> Seguro medico</th>
+        <th>Certificado medico</th>
+        <th> Copia de cedula</th>
         <th>Estado</th>
             <th>Accion</th>
         </tr>
@@ -17,6 +19,8 @@
                 <td><a href="{{route('documento.download_pago',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
             <td><a href="{{route('documento.download_inscripcion',$documento->id)}}"><img src="pdf.jpg" width="40" height="40"></a></td>
             <td><a href="{{route('documento.download_seguro',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
+            <td><a href="{{route('documento.download_certificado',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
+            <td><a href="{{route('documento.download_copia',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
              <td>@switch(true)
             @case($documento->estado == 'En espera')
             <span class="badge badge-primary"> {{ $documento->estado }} </span>

@@ -27,7 +27,7 @@
 <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
 <div class="card bg-light d-flex flex-fill">
 <div class="card-header text-muted border-bottom-0">
-Carnet de inscripcion
+Carnet de inscripcion  
 </div>
 <div class="card-body pt-0">
 <div class="row">
@@ -38,7 +38,17 @@ Carnet de inscripcion
 <li class="small"><span class="fa-li"><i class="fas fa-solid fa-bars"></i></span> Categoria:{{ $inscripcion->categoria->nombre}}</li><br>	
 <li class="small"><span class="fa-li"><i class="fas fa-solid fa-id-badge"></i></span> Cedula:{{ $inscripcion->ci }}</li><br>
 <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Domiciolio:{{ $inscripcion->domiciolio }}</li><br>
-<li class="small"><span class="fa-li"><i class="fas fa-solid fa-address-book"></i></span> Contacto de emergencia:{{ $inscripcion->contacto_emergencia }}</li><br>
+<li class="small"><span class="fa-li"><i class="fas fa-solid fa-address-book"></i></span>Estado: @switch(true)
+            @case($inscripcion->estado == 'En espera')
+            <span class="badge badge-primary"> {{ $inscripcion->estado }} </span>
+            @break
+            @case($inscripcion->estado == 'Paralizado')
+            <span class="badge badge-warning"> {{ $inscripcion->estado }} </span>
+            @break
+            @case($inscripcion->estado == 'Verificado' )
+            <span class="badge badge-success"> {{ $inscripcion->estado }} </span>
+            @break
+            @endswitch</li><br>
 <li class="small"><span class="fa-li"><i class="fas fa-regular fa-city"></i></span> Ciudad:{{ $inscripcion->ciudad }}</li><br>
 <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Telefono: {{ $inscripcion->celular }}</li>
 </ul>

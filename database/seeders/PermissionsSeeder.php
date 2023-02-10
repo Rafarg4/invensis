@@ -21,19 +21,24 @@ class PermissionsSeeder extends Seeder
     array_push($permission_array,Permission::create(['name' => 'create_inscripcion']));
     array_push($permission_array,Permission::create(['name' => 'edit_inscripcion']));
     array_push($permission_array,Permission::create(['name' => 'delete_inscripcion']));
-    $ViewInscripcionPermission= Permission::create(['name' => 'view_inscripcion']);
+    array_push($permission_array,Permission::create(['name' => 'admin_inscripcion']));
+    $UsuarioPermission= Permission::create(['name' => 'usuario_inscripcion']);
 
-    array_push($permission_array,  $ViewInscripcionPermission);
+    array_push($permission_array,  $UsuarioPermission);
 
 	$SuperAdminRole = Role::create(['name' => 'super_admin']);
 	$SuperAdminRole->syncPermissions($permission_array);
+    
+    $AdminRole = Role::create(['name' => 'admin']);
+    $AdminRole->syncPermissions($permission_array);
 
-	$UsuarioRole = Role::create(['name' => 'view_inscripcion']);
-	$UsuarioRole->syncPermissions($ViewInscripcionPermission);
+
+	$UsuarioRole = Role::create(['name' => 'usuario_inscripcion']);
+	$UsuarioRole->syncPermissions($UsuarioPermission);
 
 	 $userSuperAdmin=User::create([
             'name' => 'admin',
-            'email' => 'admin@gmail.com',
+            'email' => 'superadmin@gmail.com',
             'password' => Hash::make('Admin21141998'),
             'role' => 1,
         ]);
@@ -42,10 +47,18 @@ class PermissionsSeeder extends Seeder
 	 $UserView=User::create([
             'name' => 'usuario',
             'email' => 'usuario@gmail.com',
-            'password' => Hash::make('Admin21141998'),
+            'password' => Hash::make('123456789'),
             'role' => 2,
         ]);
-	 $UserView->assignRole('view_inscripcion');
+	 $UserView->assignRole('usuario_inscripcion');
+
+     $Admin=User::create([
+            'name' => 'admin',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('123456789'),
+            'role' => 3,
+        ]);
+     $Admin->assignRole('admin');
 	
 
 

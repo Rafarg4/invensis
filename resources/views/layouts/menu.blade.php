@@ -51,7 +51,7 @@
         <p>Rankings</p>
     </a>
 </li>
-@canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
+@canany(['create_inscripcion','edit_inscripcion','delete_inscripcion','admin_inscripcion'])
 <li class="nav-item">
     <a href="{{ route('importar.index') }}"
        class="nav-link {{ Request::is('importar*') ? 'active' : '' }}">

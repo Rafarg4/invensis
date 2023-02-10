@@ -17,7 +17,7 @@
             <tr>
                 <td><img src="{{ asset('storage').'/'.$inscripcion->foto}}" width="50" height="50" class="img-circle"></td>
                 <td>{{ $inscripcion->primer_y_segundo_nombre }}</td>
-            <td>{{ $inscripcion->primer_y_segundo_nombre }}</td>
+            <td>{{ $inscripcion->primer_y_segundo_apellido }}</td>
             <td>{{ $inscripcion->email }}</td>
             <td>{{ $inscripcion->fechanac }}</td>
             <td>{{ $inscripcion->ci }}</td>
@@ -97,7 +97,8 @@
     <table class="table" id="Tabla">
         <thead>
         <tr>
-            <th>Federacion Id</th>
+        <th>Federacion Id</th>
+        <th>Uciid</th>
         <th>Nombre de equipo</th>   
         <th>Contacto Emergencia</th>
         <th>Nombre Apellido Contacto Emergencia</th>
@@ -107,7 +108,8 @@
         </thead>
         <tbody>
             <tr>
-            <td>{{ $inscripcion->federacion_id }}</td>
+                <td>{{ $inscripcion->federacion_id }}</td>
+            <td>{{ $inscripcion->uciid }}</td>
             <td>{{ $inscripcion->nombre_equipo }}</td>
             <td>{{ $inscripcion->contacto_emergencia }}</td>
                 <td>{{ $inscripcion->nombre_apellido_contacto_emergencia }}</td>
@@ -124,18 +126,22 @@
     <table class="table" id="Tabla">
         <thead>
         <tr>
-            <th>Archivo Pago</th>
-        <th>Archivo Inscripcion</th>
-        <th>Archivo Seguro medico</th>
+            <th>Pago</th>
+        <th>Inscripcion</th>
+        <th> Seguro medico</th>
+        <th>Certificado medico</th>
+        <th> Copia de cedula</th>
         <th>Estado</th>
         </tr>
         </thead>
         <tbody>
         @foreach($documento as $documento)
             <tr>
-                <td><a href="{{route('documento.download_pago',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
-            <td><a href="{{route('documento.download_inscripcion',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
+               <td><a href="{{route('documento.download_pago',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
+            <td><a href="{{route('documento.download_inscripcion',$documento->id)}}"><img src="pdf.jpg" width="40" height="40"></a></td>
             <td><a href="{{route('documento.download_seguro',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
+            <td><a href="{{route('documento.download_certificado',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
+            <td><a href="{{route('documento.download_copia',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
              <td>@switch(true)
             @case($documento->estado == 'En espera')
             <span class="badge badge-primary"> {{ $documento->estado }} </span>

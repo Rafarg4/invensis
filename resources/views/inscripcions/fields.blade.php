@@ -188,7 +188,6 @@
              {!! Form::label('estado', 'Estado:') !!}
             {!! Form::select('estado',array('En espera' => 'En espera', 'Paralizado' => 'Paralizado','Verificado' => 'Verificado'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
             </div>
-              <!-- Nombre Apellido Contacto Emergencia Field -->
             <div class="form-group col-sm-12">
                 {!! Form::label('monto', 'Monto:') !!}
                 {!! Form::text('monto', null, ['class' => 'form-control']) !!}
@@ -196,6 +195,10 @@
             <div class="form-group col-sm-12">
                 {!! Form::label('federacion_id', 'Federacion id:') !!}
                 {!! Form::number('federacion_id', null, ['class' => 'form-control']) !!}
+            </div>
+            <div class="form-group col-sm-12">
+                {!! Form::label('uciid', ' Uciid:') !!}
+                {!! Form::number('uciid', null, ['class' => 'form-control']) !!}
             </div>
             @endcan
                 <button class="btn btn-success btn-lg pull-right" type="submit">Confirmar!</button>

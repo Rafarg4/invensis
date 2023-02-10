@@ -47,5 +47,17 @@ class PdfController extends Controller
       return Storage::download('public/' . $documento);
 
     }
+    public function download_certificado($id)
+    {
+      $documento = Documento::where('id', $id)->first()->archivo_certificado_medico;
+      return Storage::download('public/' . $documento);
+
+    }
+    public function download_copia($id)
+    {
+      $documento = Documento::where('id', $id)->first()->archivo_copia_cedula;
+      return Storage::download('public/' . $documento);
+ 
+    }
 
 }

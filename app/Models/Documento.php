@@ -32,7 +32,9 @@ class Documento extends Model
         'archivo_inscripcion',
         'id_inscripcion',
         'archivo_seguro_medico',
-        'estado'
+        'estado',
+        'archivo_certificado_medico',
+        'archivo_copia_cedula'
 
     ];
 
@@ -46,7 +48,9 @@ class Documento extends Model
         'archivo_inscripcion' => 'string',
         'id_inscripcion'=>'string',
         'archivo_seguro_medico'=>'string',
-        'estado'=>'string'
+        'estado'=>'string',
+        'archivo_certificado_medico'=>'string',
+        'archivo_copia_cedula'=>'string'
     ];
 
     /**
