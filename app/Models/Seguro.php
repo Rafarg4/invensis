@@ -59,7 +59,8 @@ class Seguro extends Model
         'id_inscripcion',
         'tipo_plan',
         'plan_con_deducible',
-        'plan_sin_deducible'
+        'plan_sin_deducible',
+        'id_user'
     ];
 
     /**
@@ -86,7 +87,8 @@ class Seguro extends Model
         'id_inscripcion' => 'integer',
         'tipo_plan' => 'string',
          'plan_sin_deducible' => 'string',
-          'plan_con_deducible' => 'string'
+          'plan_con_deducible' => 'string',
+           'id_user' => 'integer'
     ];
 
     /**

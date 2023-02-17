@@ -35,6 +35,8 @@ class CreateSegurosTable extends Migration
             $table->text('fechanac_beneficiario');
              $table->unsignedBigInteger('id_inscripcion');
             $table->foreign('id_inscripcion')->references('id')->on('inscripcions');
+             $table->unsignedBigInteger('id_user');
+            $table->foreign('id_user')->references('id')->on('users');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -35,7 +35,7 @@ class CreateInscripcionsTable extends Migration
             $table->text('contacto_emergencia');
             $table->text('nombre_apellido_contacto_emergencia');
             $table->text('foto');
-            $table->text('uciid');
+            $table->text('uciid')->nullable();
             $table->text('federacion_id')->nullable();
             $table->text('monto')->nullable();
             $table->text('estado')->nullable();

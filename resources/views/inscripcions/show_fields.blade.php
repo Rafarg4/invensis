@@ -103,6 +103,7 @@
         <th>Contacto Emergencia</th>
         <th>Nombre Apellido Contacto Emergencia</th>
         <th>Fecha de registro</th>
+        <th>Modificado por</th>
 
         </tr>
         </thead>
@@ -114,6 +115,7 @@
             <td>{{ $inscripcion->contacto_emergencia }}</td>
                 <td>{{ $inscripcion->nombre_apellido_contacto_emergencia }}</td>
             <td>{{ $inscripcion->created_at }}</td>
+             <td>{{ $inscripcion->usuario->name }}</td>
             </tr>
         </tbody>
     </table>
@@ -138,7 +140,7 @@
         @foreach($documento as $documento)
             <tr>
                <td><a href="{{route('documento.download_pago',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
-            <td><a href="{{route('documento.download_inscripcion',$documento->id)}}"><img src="pdf.jpg" width="40" height="40"></a></td>
+            <td><a href="{{route('documento.download_inscripcion',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
             <td><a href="{{route('documento.download_seguro',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
             <td><a href="{{route('documento.download_certificado',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
             <td><a href="{{route('documento.download_copia',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
@@ -231,6 +233,7 @@
         <th>Ci Beneficiario</th>
         <th>Porcentaje Cesion</th>
         <th>Fecha de registro</th>
+        
         </tr>
         </thead>
         <tbody>
@@ -240,6 +243,7 @@
             <td>{{ $seguro->ci_beneficiario }}</td>
             <td>{{ $seguro->porcentaje_cesion }}</td>
             <td>{{ $seguro->created_at }}</td>
+
             </tr>
         @endforeach
         </tbody>

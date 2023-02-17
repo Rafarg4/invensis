@@ -14,6 +14,7 @@ use App\Models\Inscripcion;
 use App\Models\Documento;
 use App\Models\Seguro;
 use PDF;
+use Auth;
 use Illuminate\Support\Facades\Storage;
 class InscripcionController extends AppBaseController
 {
@@ -34,11 +35,18 @@ class InscripcionController extends AppBaseController
      */
     public function index(Request $request)
     {
-    
-        $ci = $request->get('buscarpor');
+      if(Auth::user()->hasRole('super_admin')) {
+       $ci = $request->get('buscarpor');
         $inscripcions = Inscripcion::where('ci','like',"%$ci%")->paginate(3);
         return view('inscripcions.index',compact('inscripcions'));
-          
+     }else{
+        $ci = $request->get('buscarpor');
+        $inscripcions = Inscripcion::where('ci','like',"%$ci%")
+        ->where('id_user', auth()->user()->id)
+        ->paginate(3);
+        return view('inscripcions.index')->with('inscripcions', $inscripcions)->with('user', Auth::user());
+     } 
+
     }
 
     /**

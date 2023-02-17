@@ -9,7 +9,9 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
+use Auth;
 use App\Models\Inscripcion;
+use App\Models\Seguro;
 class SeguroController extends AppBaseController
 {
     /** @var SeguroRepository $seguroRepository*/
@@ -29,10 +31,15 @@ class SeguroController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $seguros = $this->seguroRepository->all();
-
+        if(Auth::user()->hasRole('super_admin')) {
+       $seguros = $this->seguroRepository->all();
         return view('seguros.index')
             ->with('seguros', $seguros);
+        }else{ 
+         $seguros= Seguro::where('id_user', auth()->user()->id)->get();  
+         return view('seguros.index')
+            ->with('seguros', $seguros)->with('user', Auth::user());
+     }
     }
 
     /**
@@ -42,9 +49,14 @@ class SeguroController extends AppBaseController
      */
     public function create()
     {
-        $inscripcions = Inscripcion::pluck('primer_y_segundo_nombre','id');
+     if(Auth::user()->hasRole('super_admin')) {
+         $inscripcions = Inscripcion::pluck('primer_y_segundo_nombre','id');
         return view('seguros.create', compact('inscripcions'));
-    }
+         }else{
+        $inscripcions = Inscripcion::where('id_user', auth()->user()->id)->pluck('primer_y_segundo_nombre','id');
+        return view('seguros.create')->with('inscripcions', $inscripcions)->with('user', Auth::user());
+     }
+     }
 
     /**
      * Store a newly created Seguro in storage.

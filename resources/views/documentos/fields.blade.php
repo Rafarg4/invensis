@@ -1,7 +1,18 @@
-  <div class="form-group col-sm-12">
+<div class="form-group col-sm-6">
+                <label for="id_user">Identificador:</label>
+                <input type="text" name="id_user" class="form-control" value="{{ Auth::user()->id }}" readonly>
+                </div>
+@if(Auth::user()->hasRole('super_admin'))
+  <div class="form-group col-sm-6">
                 {!! Form::label('id_inscripcion', 'Inscripto:') !!}
                 {!! Form::select('id_inscripcion', $inscripcions, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion','required']) !!}
             </div>
+ @else
+             <div class="form-group col-sm-6">
+                 {!! Form::label('id_inscripcion', 'Inscripto:') !!}
+                {!! Form::select('id_inscripcion', $inscripcions, null, ['class' => 'form-control custom-select','required','disabled']) !!}
+                </div>
+@endif
 <div class="form-group col-sm-6">
               {!! Form::label('archivo_pago', 'Comprobante de pago:') !!}
             <div class="input-group">
@@ -14,7 +25,6 @@
             <img src="/pdf.jpg" width="40" height="40"></a>
             @endif
             </div>
-
 <!-- Archivo Inscripcion Field -->
 <div class="form-group col-sm-6">
               {!! Form::label('archivo_inscripcion', 'Comprobante de firma de documento:') !!}
@@ -67,12 +77,17 @@
             <img src="/pdf.jpg" width="40" height="40"></a>
             @endif
     </div>
-    @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
-  <div class=" form-group col-sm-6">
+    
+            @if(Auth::user()->hasRole('super_admin'))
+             <div class=" form-group col-sm-6">
              {!! Form::label('estado', 'Estado:') !!}
             {!! Form::select('estado',array('En espera' => 'En espera', 'Paralizado' => 'Paralizado','Verificado' => 'Verificado'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
             </div>
-    @endcan
-
+            @else
+             <div class="form-group col-sm-6">
+                <label for="estado">Estado:</label>
+                <input type="text" name="estado" class="form-control" value="En espera" readonly>
+                </div>
+            @endif
 
             

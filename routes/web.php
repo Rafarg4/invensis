@@ -12,22 +12,23 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', function () {
         return view('home');
    });
 });
-
-Auth::routes();
 Route::get('/symlink', function () {
    $target =$_SERVER['DOCUMENT_ROOT'].'/storage/app/public';
    $link = $_SERVER['DOCUMENT_ROOT'].'/public/storage';
    symlink($target, $link);
    echo "Done";
 });
-
+Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//Route::group(['middleware' => ['permission:create_inscripcion|edit_inscripcion|delete_inscripcion|admin_inscripcion']], function () {
+	
+
 Route::get('reportes/inscripcions', [App\Http\Controllers\ReporteController::class, 'reporte_inscripcion'])->name('reporte_inscripcion')->middleware('auth');
 
 Route::get('reportes/seguros', [App\Http\Controllers\ReporteController::class, 'reporte_seguro'])->name('reporte_seguro')->middleware('auth');
@@ -67,3 +68,4 @@ Route::resource('rankings', App\Http\Controllers\RankingController::class)->midd
 Route::resource('importar', App\Http\Controllers\ImportarController::class)->middleware('auth');
 
 Route::resource('seguros', App\Http\Controllers\SeguroController::class)->middleware('auth');
+//});

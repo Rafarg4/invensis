@@ -25,10 +25,10 @@
 <div class="row">
       @foreach($inscripcions as $inscripcion)
 <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
-<div class="card bg-light d-flex flex-fill">
-<div class="card-header text-muted border-bottom-0">
-Carnet de inscripcion  
-</div>
+<div class="card">
+  <div class="card-header">
+   Carnet de inscripcion   
+  </div>
 <div class="card-body pt-0">
 <div class="row">
 <div class="col-7">
@@ -81,12 +81,19 @@ Carnet de inscripcion
 </a>
 <a href="{{route('seguro',$inscripcion->id)}}" class="btn btn-sm btn-info">
 <i class="fa fas-regular fa-laptop-medical"></i></a>
+@if($inscripcion->estado =='Verificado')         
 <a href="{{ route('licencias.show',$inscripcion->id)}}" class="btn btn-sm btn-success">
-<i class="fa fas-solid fa-id-card"></i></a>
+<i class="fa fas-solid fa-id-card"></i> </a>
+@else
+<a style="display: none;" href="{{ route('licencias.show',$inscripcion->id)}}" class="btn btn-sm btn-success">
+<i class="fa fas-solid fa-id-card"></i> </a>            
+@endif
+
 </div>
 </div>{!! Form::close() !!}
 </div>
 </div>
+
 @endforeach
 @else
 <div class="container"> 

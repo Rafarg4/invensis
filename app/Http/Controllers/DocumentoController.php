@@ -12,6 +12,7 @@ use Response;
 use App\Models\Inscripcion;
 use App\Models\Documento;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 class DocumentoController extends AppBaseController
 {
     /** @var DocumentoRepository $documentoRepository*/
@@ -31,11 +32,15 @@ class DocumentoController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $documentos = $this->documentoRepository->all();
-
-        return view('documentos.index')
-            ->with('documentos', $documentos);
+        if(Auth::user()->hasRole('super_admin')) {
+        $documentos = Documento::all();
+        return view('documentos.index',compact('documentos'));
+        }else{ 
+         $documentos= Documento::where('id_user', auth()->user()->id)->get();  
+         return view('documentos.index')
+            ->with('documentos', $documentos)->with('user', Auth::user());
     }
+}
 
     /**
      * Show the form for creating a new Documento.
@@ -44,8 +49,13 @@ class DocumentoController extends AppBaseController
      */
     public function create()
     {
-        $inscripcions = Inscripcion::pluck('primer_y_segundo_nombre','id');
+        if(Auth::user()->hasRole('super_admin')) {
+         $inscripcions = Inscripcion::pluck('primer_y_segundo_nombre','id');
         return view('documentos.create', compact('inscripcions'));
+         }else{
+        $inscripcions = Inscripcion::where('id_user', auth()->user()->id)->pluck('primer_y_segundo_nombre','id');
+        return view('documentos.create')->with('inscripcions', $inscripcions)->with('user', Auth::user());
+     }
     }
 
     /**

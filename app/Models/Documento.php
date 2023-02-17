@@ -34,7 +34,8 @@ class Documento extends Model
         'archivo_seguro_medico',
         'estado',
         'archivo_certificado_medico',
-        'archivo_copia_cedula'
+        'archivo_copia_cedula',
+        'id_user'
 
     ];
 

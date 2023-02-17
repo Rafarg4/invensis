@@ -22,10 +22,10 @@ class CreateDocumentosTable extends Migration
             $table->text('archivo_certificado_medico');
             $table->text('archivo_copia_cedula');
             $table->text('estado')->nullable();
-            $table->unsignedBigInteger('id_inscripcion');
-            $table->foreign('id_inscripcion')->references('id')->on('inscripcions');
             $table->unsignedBigInteger('id_user');
             $table->foreign('id_user')->references('id')->on('users');
+            $table->unsignedBigInteger('id_inscripcion');
+            $table->foreign('id_inscripcion')->references('id')->on('inscripcions');
             $table->timestamps();
             $table->softDeletes();
         });

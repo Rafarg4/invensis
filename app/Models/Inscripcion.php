@@ -62,7 +62,8 @@ class Inscripcion extends Model
         'estado',
         'monto',
         'federacion_id',
-        'uciid'
+        'uciid',
+        'id_user'
     ];
 
     /**
@@ -117,12 +118,16 @@ class Inscripcion extends Model
         'nombre_apellido_contacto_emergencia' => 'required',
         'email' => 'required',
         'departamento' => 'required',
-        'uciid' => 'required'
+      
         
     ];
 
       public function categoria (){
      return $this-> belongsTo('App\Models\Categoria','id_categoria');
+
+    }
+    public function usuario (){
+     return $this-> belongsTo('App\Models\User','id_user');
 
     }
 }

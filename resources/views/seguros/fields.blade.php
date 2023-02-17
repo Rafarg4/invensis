@@ -1,7 +1,18 @@
+<div class="form-group col-sm-12">
+                <label for="id_user">Identificador:</label>
+                <input type="text" name="id_user" class="form-control" value="{{ Auth::user()->id }}" readonly>
+                </div>
+  @if(Auth::user()->hasRole('super_admin'))
   <div class="form-group col-sm-12">
-    {!! Form::label('id_inscripcion', 'Inscripto:') !!}
-    {!! Form::select('id_inscripcion', $inscripcions, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion','required']) !!}
-</div>
+                {!! Form::label('id_inscripcion', 'Inscripto:') !!}
+                {!! Form::select('id_inscripcion', $inscripcions, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion','required']) !!}
+            </div>
+ @else
+             <div class="form-group col-sm-12">
+                 {!! Form::label('id_inscripcion', 'Inscripto:') !!}
+                {!! Form::select('id_inscripcion', $inscripcions, null, ['class' => 'form-control custom-select','required','disabled']) !!}
+                </div>
+@endif
 <div class="form-group col-sm-12">
     {!! Form::label('padece_enfermedad', '¿Padece o está siendo tratado por alguna enfermedad?:') !!}
     {!! Form::select('padece_enfermedad',array('Si' => 'Si', 'No' => 'No'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required','onchange'=>''])!!}
