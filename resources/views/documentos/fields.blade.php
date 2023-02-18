@@ -10,7 +10,7 @@
  @else
              <div class="form-group col-sm-6">
                  {!! Form::label('id_inscripcion', 'Inscripto:') !!}
-                {!! Form::select('id_inscripcion', $inscripcions, null, ['class' => 'form-control custom-select','required','disabled']) !!}
+                {!! Form::select('id_inscripcion', $inscripcions, null, ['class' => 'form-control custom-select','required']) !!}
                 </div>
 @endif
 <div class="form-group col-sm-6">

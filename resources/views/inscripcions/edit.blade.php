@@ -135,9 +135,9 @@
                     {!! Form::number('celular', null, ['class' => 'form-control']) !!}
                 </div>
                 <!-- Email Field -->
-                <div class="form-group col-sm-12 pull-left">
-                <label for="email">Email:</label>
-                <input type="text" name="email" class="form-control" value="{{ Auth::user()->email }}" readonly>
+               <div class="form-group col-sm-12">
+                    {!! Form::label('email', 'email:') !!}
+                    {!! Form::text('email', null, ['class' => 'form-control']) !!}
                 </div>
                 <!-- Domiciolio Field -->
                 <div class="form-group col-sm-12">

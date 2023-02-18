@@ -205,8 +205,8 @@ class DocumentoController extends AppBaseController
             Storage::delete('public/'.$documento->archivo_copia_cedula); 
             $datos['archivo_copia_cedula']=$request->file('archivo_copia_cedula')->store('uploads','public');   
         }
+        Documento::where('id','=',$id)->update($datos);
         $documento=Documento::findOrFail($id);
-        $datos = $this->documentoRepository->update($request->all(), $id);
 
         Flash::success('Documento actualizado.');
 

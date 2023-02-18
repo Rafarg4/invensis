@@ -34,11 +34,11 @@ class RankingsImport implements ToModel, WithHeadingRow, WithValidation
         'categoria' => 'required|string',
         'club' => 'required|string',
         'sexo' => 'required|string',
-        '1_fecha' => 'required|string',
-        '2_fecha' => 'required|string',
-        '3_fecha' => 'required|string',
-        '4_fecha' => 'required|string',
-        'total' => 'required|string',
+        '1_fecha' => 'required',
+        '2_fecha' => 'required',
+        '3_fecha' => 'required',
+        '4_fecha' => 'required',
+        'total' => 'required',
         ];
     }
     public function model(array $row)
