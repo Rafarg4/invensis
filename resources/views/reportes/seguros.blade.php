@@ -31,7 +31,6 @@
         <th>Especifique Defecto Fisico</th>
         <th>Estatura</th>
         <th>Peso</th>
-        <th>Plan</th>
         <th>Tipo de Plan</th>
         <th>Nombre Apellido Fallecimiento Titular</th>
         <th>Parentesco Titular Beneficiario</th>
@@ -53,7 +52,6 @@
             <td>{{ $seguro->especifique_defecto_fisico }}</td>
             <td>{{ $seguro->estatura }}</td>
             <td>{{ $seguro->peso }}</td>
-            <td>{{ $seguro->plan }}</td>
             <td>{{ $seguro->tipo_plan }}</td>
             <td>{{ $seguro->nombre_apellido_fallecimiento_titular }}</td>
             <td>{{ $seguro->parentesco_titular_beneficiario }}</td>

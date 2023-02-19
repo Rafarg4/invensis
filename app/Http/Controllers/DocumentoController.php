@@ -157,27 +157,47 @@ class DocumentoController extends AppBaseController
     public function update($id, UpdateDocumentoRequest $request)
     {
 
-       if($request->hasFile('archivo_pago')){
-            $campo=['archivo_pago'=>'required'];   
+         $rules = [
+        'estado' => 'required',
+      ];
+       $mensaje = [
+        'required'=>'El :attribute es requerido',
+        'unique'=> 'Registro de documentos ya creado.',
+      ];
+            if($request->hasFile('archivo_pago')){
+            $campo=['archivo_pago'=>'required'];  
+             $mensaje = [
+        'required'=>'El :attribute es requerido',
+      ]; 
         }
         if($request->hasFile('archivo_inscripcion')){
             $campo=['archivo_inscripcion'=>'required'];
-             
+              $mensaje = [
+        'required'=>'El :attribute es requerido',
+      ];
         }
         if($request->hasFile('archivo_seguro_medico')){
             $campo=['archivo_seguro_medico'=>'required'];
-             
+             $mensaje = [
+        'required'=>'El :attribute es requerido',
+      ]; 
         }
         if($request->hasFile('archivo_certificado_medico')){
             $campo=['archivo_certificado_medico'=>'required'];
-             
-        }
+           $mensaje = [
+        'required'=>'El :attribute es requerido',
+      ];   
+        } 
         if($request->hasFile('archivo_copia_cedula')){
-            $campo=['archivo_copia_cedula'=>'required'];
-             
+           $campo=['archivo_copia_cedula'=>'required'];
+          $mensaje = [
+        'required'=>'El :attribute es requerido',
+      ];    
         }
+           
+   $this->validate($request,$rules,$mensaje);
 
-       
+        $datos= request()->except(['_token','_method']);
        if($request->hasFile('archivo_pago')){
             $documento=Documento::findOrFail($id);
             Storage::delete('public/'.$documento->archivo_pago); 

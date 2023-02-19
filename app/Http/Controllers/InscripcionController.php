@@ -143,16 +143,48 @@ class InscripcionController extends AppBaseController
     public function update($id, UpdateInscripcionRequest $request)
     {
         //Verifica si la foto existe para no volver a cargar
+        $rules=[
+        'primer_y_segundo_nombre',
+        'primer_y_segundo_apellido',
+        'fechanac',
+        'email',
+        'ci',
+        'sexo',
+        'grupo_sanguineo',
+        'nacionalidad',
+        'celular',
+        'domiciolio',
+        'ciudad',
+        'id_categoria',
+        'nombre_equipo',
+        'contacto_emergencia',
+        'nombre_apellido_contacto_emergencia',
+        'departamento',
+        'region',
+        'estado',
+        'monto',
+        'federacion_id',
+        'uciid',
+        'id_user'
+        ];
+        $mensaje = [
+        'required'=>'El :attribute es requerido',
+      ];
+
         if($request->hasFile('foto')){
             $campo=['foto'=>'required|mines:jpeg,png,jpg'];
-             
-        }
+            $mensaje = [
+        'required'=>'El :attribute es requerido',
+      ];
+  }
+   $this->validate($request,$rules,$mensaje);
+        $dato= request()->except(['_token','_method']);
         if($request->hasFile('foto')){
             $inscripcion=Inscripcion::findOrFail($id);
             Storage::delete('public/'.$inscripcion->foto); 
-            $dato['foto']=$request->file('foto')->store('uploads','public');   
-        }
-        Inscripcion::where('id','=',$id)->update($dato);
+            $dato['foto']=$request->file('foto')->store('uploads','public'); 
+    }
+        Inscripcion::where('id','=',$id)->update($dato);  
         $inscripcion=Inscripcion::findOrFail($id);
         Flash::success('Inscripcion actualizada.');
 
