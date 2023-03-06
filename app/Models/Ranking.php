@@ -46,7 +46,7 @@ class Ranking extends Model
         'tercero_fecha',
         'cuarto_fecha',
         'total',
-        'id_user'
+        'id_inscripcion'
     ];
 
     /**
@@ -65,7 +65,7 @@ class Ranking extends Model
         'tercero_fecha' => 'string',
         'cuarto_fecha' => 'string',
         'total' => 'string',
-        'id_user' => 'integer'
+        'id_inscripcion' => 'integer'
     ];
 
     /**
@@ -84,15 +84,15 @@ class Ranking extends Model
         'tercero_fecha' => 'required',
         'cuarto_fecha' => 'required',
         'total' => 'required',
-        'id_user' => 'required'
+        'id_inscripcion' => 'required'
     ];
 
     public function categoria (){
      return $this-> belongsTo('App\Models\Categoria','id_categoria');
 
     }
-     public function usuario (){
-     return $this-> belongsTo('App\Models\User','id_user');
+     public function inscripcion (){
+     return $this-> belongsTo('App\Models\Inscripcion','id_inscripcion');
 
     }
 }

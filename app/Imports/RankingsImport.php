@@ -4,19 +4,19 @@ namespace App\Imports;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use App\Models\Ranking;
 use App\Models\Categoria;
-use App\Models\User;
+use App\Models\Inscripcion;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
 class RankingsImport implements ToModel, WithHeadingRow, WithValidation
 {
   private $categorias;
-  private $usuarios;
+  private $inscripcions;
 
   public function __construct (){
 
     $this->categorias=Categoria::pluck('id','nombre');
-    $this->usuarios=User::pluck('id','name');
+    $this->inscripcions=Inscripcion::pluck('id','ci');
   }
   
 
@@ -28,8 +28,8 @@ class RankingsImport implements ToModel, WithHeadingRow, WithValidation
     public function rules(): array
     {
         return [
-        'posicion' => 'required|string',
-        'usuario' => 'required|string',
+        'posicion' => 'required',
+        'ci' => 'required',
         'nombre_apellido' => 'required|string',
         'categoria' => 'required|string',
         'club' => 'required|string',
@@ -45,7 +45,7 @@ class RankingsImport implements ToModel, WithHeadingRow, WithValidation
     {
         return new Ranking([
           'posicion'  => $row['posicion'],
-          'id_user' => $this->usuarios[$row['usuario']],
+          'id_inscripcion' => $this->inscripcions[$row['ci']],
           'nombre_apellido' => $row['nombre_apellido'],
           'id_categoria' => $this->categorias[$row['categoria']],
           'club' => $row['club'],

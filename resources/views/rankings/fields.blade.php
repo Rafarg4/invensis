@@ -1,7 +1,9 @@
-<div class="form-group col-md-12 pull-left">
-<label for="id_user">Usuario:</label>
-            <input type="text" name="id_user" class="form-control" value="{{ Auth::user()->id }}" readonly>
-        </div>
+<!-- Categoria Field -->
+  <div class="form-group col-sm-12">
+                {!! Form::label('id_inscripcion', 'Inscripto:') !!}
+                {!! Form::select('id_inscripcion', $inscripcion, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion','required']) !!}
+            </div>
+
 <!-- Posicion Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('posicion', 'Posicion:') !!}

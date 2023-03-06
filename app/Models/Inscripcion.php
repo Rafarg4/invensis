@@ -46,6 +46,7 @@ class Inscripcion extends Model
         'fechanac',
         'email',
         'ci',
+        'tipo_categoria',
         'sexo',
         'grupo_sanguineo',
         'nacionalidad',

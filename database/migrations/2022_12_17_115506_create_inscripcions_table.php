@@ -21,6 +21,7 @@ class CreateInscripcionsTable extends Migration
             $table->text('fechanac');
             $table->text('ci');
             $table->text('sexo');
+            $table->text('tipo_categoria');
             $table->text('grupo_sanguineo');
             $table->text('nacionalidad');
             $table->text('celular');

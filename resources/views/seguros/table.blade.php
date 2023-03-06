@@ -14,7 +14,7 @@
         <tbody>
         @foreach($seguros as $seguro)
             <tr>
-            <td>{{ $seguro->inscripto->ci }}</td>
+            <td>{{ $seguro->inscripto->ci  ?? 'Incripto no asignada' }}</td>
             <td>{{ $seguro->estado_civil }}</td>
             <td>{{ $seguro->edad }}</td>
             <td>{{ $seguro->usted_es }}</td>
@@ -25,7 +25,7 @@
                     <div class='btn-group'>
                         <a href="{{ route('seguros.show', [$seguro->id]) }}"
                            class='btn btn-default btn-xs'>
-                            <i class="far fa-eye"></i>
+                            <i class="fas fa-file-pdf"></i>
                         </a>
                         @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
                         <a href="{{ route('seguros.edit', [$seguro->id]) }}"

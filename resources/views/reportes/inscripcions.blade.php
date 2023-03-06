@@ -70,7 +70,7 @@
             @break
             @endswitch</td>
             <td>{{number_format ($inscripcion->monto) }}</td>
-            <td>{{ $inscripcion->categoria->nombre }}</td>
+            <td>{{ $inscripcion->categoria->nombre  ?? 'Categoria no asignada' }}</td>
             <td>{{ $inscripcion->nombre_equipo }}</td>
             <td>{{ $inscripcion->contacto_emergencia }}</td>
             <td>{{ $inscripcion->nombre_apellido_contacto_emergencia }}</td>

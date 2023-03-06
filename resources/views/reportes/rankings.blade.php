@@ -23,7 +23,7 @@
         <thead>
         <tr>
             <th>Posicion</th>
-            <th>Usuario</th>
+            <th>Ci</th>
         <th>Nombre Apellido</th>
         <th>Categoria</th>
         <th>Club</th>
@@ -40,7 +40,7 @@
         @foreach($rankings as $ranking)
             <tr>
                 <td>{{ $ranking->posicion }}</td>
-                 <td>{{ $ranking->usuario->name }}</td>
+                 <td>{{ $ranking->inscripcion->ci  ?? 'Usuario no asignado' }}</td>
             <td>{{ $ranking->nombre_apellido }}</td>
             <td>{{ $ranking->categoria->nombre }}</td>
             <td>{{ $ranking->club }}</td>

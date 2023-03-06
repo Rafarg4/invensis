@@ -40,7 +40,7 @@
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
+            <p class="login-box-msg">¿Olvidaste tu contraseña? Aquí puede recuperar fácilmente una nueva contraseña.</p>
 
             @if (session('status'))
                 <div class="alert alert-success">
@@ -68,7 +68,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary btn-block">Send Password Reset Link</button>
+                        <button type="submit" class="btn btn-primary btn-block">Enviar enlace de restablecimiento</button>
                     </div>
                     <!-- /.col -->
                 </div>

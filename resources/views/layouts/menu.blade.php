@@ -51,6 +51,16 @@
         <p>Rankings</p>
     </a>
 </li>
+@if(Auth::user()->hasRole('super_admin'))
+ @else
+            <li class="nav-item">
+    <a href="{{ url('imprimir/licencias') }}"
+       class="nav-link {{ Request::is('licencias*') ? 'active' : '' }}">
+       <i class="fas fa-id-card"></i>
+        <p>Mi Licencia</p>
+    </a>
+</li>
+@endif
 @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion','admin_inscripcion'])
 <li class="nav-item">
     <a href="{{ route('importar.index') }}"

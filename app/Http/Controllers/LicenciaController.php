@@ -10,6 +10,7 @@ use App\Http\Controllers\AppBaseController;
 use Flash;
 use Response;
 use PDF;
+use App\Models\Inscripcion;
 class LicenciaController extends Controller
 {
 	 /** @var InscripcionRepository $inscripcionRepository*/
@@ -19,6 +20,7 @@ class LicenciaController extends Controller
     {
         $this->inscripcionRepository = $inscripcionRepo;
     }
+  
      public function show($id)
     {
         $inscripcions = $this->inscripcionRepository->find($id);

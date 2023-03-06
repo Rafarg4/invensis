@@ -11,6 +11,7 @@ use Flash;
 use Response;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Categoria;
+use App\Models\Inscripcion;
 class RankingController extends AppBaseController
 {
     /** @var RankingRepository $rankingRepository*/
@@ -44,7 +45,10 @@ class RankingController extends AppBaseController
     public function create()
     {
         $categoria = Categoria::pluck('nombre','id');
-        return view('rankings.create', compact('categoria'));
+        $inscripcion = Inscripcion::pluck('ci','id');
+        return view('rankings.create', compact('categoria','inscripcion'));
+        
+
     }
 
     /**
@@ -95,6 +99,7 @@ class RankingController extends AppBaseController
     public function edit($id)
     {
          $categoria = Categoria::pluck('nombre','id');
+        $inscripcion = Inscripcion::pluck('ci','id');
         $ranking = $this->rankingRepository->find($id);
 
         if (empty($ranking)) {
@@ -103,7 +108,7 @@ class RankingController extends AppBaseController
             return redirect(route('rankings.index'));
         }
 
-        return view('rankings.edit',compact('ranking','categoria'));
+        return view('rankings.edit',compact('ranking','categoria','inscripcion'));
     }
 
     /**

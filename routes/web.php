@@ -68,4 +68,8 @@ Route::resource('rankings', App\Http\Controllers\RankingController::class)->midd
 Route::resource('importar', App\Http\Controllers\ImportarController::class)->middleware('auth');
 
 Route::resource('seguros', App\Http\Controllers\SeguroController::class)->middleware('auth');
+
+Route::get('imprimir/licencias', [App\Http\Controllers\LicenciapdfController::class, 'licencias'])->name('licencias')->middleware('auth');
+
+
 //});

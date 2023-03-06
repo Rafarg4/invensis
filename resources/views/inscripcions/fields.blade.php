@@ -1,6 +1,5 @@
 <link href="//netdna.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <style type="text/css">
  
 .stepwizard-step p {
@@ -143,10 +142,47 @@
             <div class="col-md-12">
                 <h3>Datos de cliclista</h3>
                             <!-- Id Categoria Field -->
-           <div class="form-group col-sm-12">
-                {!! Form::label('id_categoria', 'Categoria:') !!}
-                {!! Form::select('id_categoria', $categoria, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion','required']) !!}
+                <div class="form-group col-sm-12">
+                    {!! Form::label('tipo_categoria', 'Categoria:') !!}
+                    {!! Form::select('tipo_categoria',array('Principal' => 'Principal', 'Master ' => 'Master ','Ciclismo para todos ' => 'Ciclismo para todos '),null, ['class' => 'form-control','placeholder'=>'Seleccione'])!!}
+                </div>
+         
+
+
+
+
+            <div class="form-group col-sm-12">
+                {!! Form::select('id_categoria', $categoria, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion','style'=>'display:none']) !!}
             </div>
+              <div class="form-group col-sm-12">
+                {!! Form::select('id_categoria', $categoria, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion','style'=>'display:none']) !!}
+            </div>
+              <div class="form-group col-sm-12">
+                {!! Form::select('id_categoria', $categoria, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion','style'=>'display:none']) !!}
+            </div>
+
+<script type="text/javascript">
+    const tipo_categoria = document.querySelector("#tipo_categoria");
+const input = document.querySelector("[name=id_categoria]");
+
+tipo_categoria.addEventListener("change", () => {
+  if (tipo_categoria.value === "Principal") {
+    input.style.display = 'initial';
+  } else {
+    input.style.display = 'none';
+  }
+});
+</script>
+
+
+
+
+
+
+
+
+
+
             <div class="form-group col-sm-12">
                     {!! Form::label('region', 'Elegir a que región pertenece:') !!}
                      {!! Form::select('region',array('Asosiacion metropolitana de ciclismo' => 'Asosiacion metropolitana de ciclismo', 'Federacion paranaense de ciclismo' => 'Federacion paranaense de ciclismo','Union Regional de ciclistas (URCI)' => 'Union Regional de ciclistas (URCI)','Federacion de ciclismo Itapuense' => 'Federacion de ciclismo Itapuense'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
@@ -221,6 +257,7 @@
     
 </form>
 </div>
+
 <script type="text/javascript">
  $(document).ready(function () {
 
@@ -265,6 +302,7 @@
 
     $('div.setup-panel div a.btn-primary').trigger('click');
 });
+
 </script>
 
 
