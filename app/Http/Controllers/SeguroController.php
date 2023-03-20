@@ -86,7 +86,7 @@ class SeguroController extends AppBaseController
     public function show($id)
     {
         $seguro = $this->seguroRepository->find($id);
-        $inscripcion = Inscripcion::where('id',$id)->get();
+       // $inscripcion = Inscripcion::where('id',$id)->get();
 
         if (empty($seguro)) {
             Flash::error('Seguro not found');
@@ -94,7 +94,7 @@ class SeguroController extends AppBaseController
             return redirect(route('seguros.index'));
         }
 
-        return $inscripcion;
+        return view('seguros.show',compact('seguro'));
     }
 
     /**

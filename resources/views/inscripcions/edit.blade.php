@@ -23,7 +23,6 @@
                 <div class="row">
                     <link href="//netdna.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <style type="text/css">
  
 .stepwizard-step p {
@@ -135,7 +134,7 @@
                     {!! Form::number('celular', null, ['class' => 'form-control']) !!}
                 </div>
                 <!-- Email Field -->
-               <div class="form-group col-sm-12">
+                 <div class="form-group col-sm-12">
                     {!! Form::label('email', 'email:') !!}
                     {!! Form::text('email', null, ['class' => 'form-control']) !!}
                 </div>
@@ -162,10 +161,53 @@
             <div class="col-md-12">
                 <h3>Datos de cliclista</h3>
                             <!-- Id Categoria Field -->
-           <div class="form-group col-sm-12">
-                {!! Form::label('id_categoria', 'Categoria:') !!}
-                {!! Form::select('id_categoria', $categoria, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion','required']) !!}
+                <div class="form-group col-sm-12">
+                    {!! Form::label('tipo_categoria', 'Categoria:') !!}
+                {!! Form::select('tipo_categoria',array('Principal' => 'Principal', 'Master' => 'Master','Ciclismo para todos' => 'Ciclismo para todos'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
+                </div>
+
+            <div class="form-group col-sm-12" id="id_categoria" style="display: none;">
+                
             </div>
+            <div class="form-group col-sm-12" id="id_categoria2" style="display: none;">
+                
+            </div>
+            <div class="form-group col-sm-12" id="id_categoria3" style="display: none;">
+                
+            </div>
+
+<script type="text/javascript">
+const tipo_categoria = document.querySelector("#tipo_categoria");
+const input1 = document.querySelector("[id=id_categoria]");
+const input2 = document.querySelector("[id=id_categoria2]");
+const input3 = document.querySelector("[id=id_categoria3]");
+
+tipo_categoria.addEventListener("change", changeTipo);
+
+function changeTipo(){
+
+    if (tipo_categoria.value === "Principal") {
+        input1.innerHTML = '{!! Form::select("id_categoria", $categoria, null, ["class" => "form-control custom-select","placeholder"=>"Selecione una opcion","id"=>"id_categoria"]) !!}';
+        input1.style.display = 'initial'
+        /*input1.style.display = 'initial';
+        input2.style.display = 'none';
+        input3.style.display = 'none';*/
+    } else if(tipo_categoria.value === "Master") {
+        input1.innerHTML = '{!! Form::select("id_categoria", $categoria2, null, ["class" => "form-control custom-select","placeholder"=>"Selecione una opcion","id"=>"id_categoria2"]) !!}';
+        input1.style.display = 'initial'
+        /*input1.style.display = 'none';
+        input3.style.display = 'none';
+        input2.style.display = 'initial';*/
+    } else if (tipo_categoria.value === "Ciclismo para todos"){
+        input1.innerHTML = '{!! Form::select("id_categoria", $categoria3, null, ["class" => "form-control custom-select","placeholder"=>"Selecione una opcion","id"=>"id_categoria3"]) !!}';
+        input1.style.display = 'initial'
+        /*input1.style.display = 'none';
+        input2.style.display = 'none';
+        input3.style.display = 'initial';*/
+    }
+}
+</script>
+
             <div class="form-group col-sm-12">
                     {!! Form::label('region', 'Elegir a que región pertenece:') !!}
                      {!! Form::select('region',array('Asosiacion metropolitana de ciclismo' => 'Asosiacion metropolitana de ciclismo', 'Federacion paranaense de ciclismo' => 'Federacion paranaense de ciclismo','Union Regional de ciclistas (URCI)' => 'Union Regional de ciclistas (URCI)','Federacion de ciclismo Itapuense' => 'Federacion de ciclismo Itapuense'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
@@ -240,6 +282,7 @@
     
 </form>
 </div>
+
 <script type="text/javascript">
  $(document).ready(function () {
 
@@ -284,7 +327,22 @@
 
     $('div.setup-panel div a.btn-primary').trigger('click');
 });
+
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 </div>
             </div>
 

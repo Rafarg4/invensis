@@ -30,7 +30,7 @@ class CreateInscripcionsTable extends Migration
             $table->text('ciudad');
             $table->text('region');
             $table->text('departamento');
-            $table->unsignedBigInteger('id_categoria');
+            $table->unsignedBigInteger('id_categoria')->nullable();
             $table->foreign('id_categoria')->references('id')->on('categorias');
             $table->text('nombre_equipo');
             $table->text('contacto_emergencia');

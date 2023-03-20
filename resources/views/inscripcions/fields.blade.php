@@ -78,20 +78,20 @@
                 <!-- Grupo Sanguineo Field -->
                 <div class="form-group col-sm-12">
                     {!! Form::label('primer_y_segundo_nombre', 'Primer y segundo nombre:') !!}
-                    {!! Form::text('primer_y_segundo_nombre', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('primer_y_segundo_nombre', null, ['class' => 'form-control','required']) !!}
                 </div><!-- Grupo Sanguineo Field -->
                 <div class="form-group col-sm-12">
                     {!! Form::label('primer_y_segundo_apellido', 'Primer y segundo apellido:') !!}
-                    {!! Form::text('primer_y_segundo_apellido', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('primer_y_segundo_apellido', null, ['class' => 'form-control','required']) !!}
                 </div><!-- Grupo Sanguineo Field -->
                 <!-- Grupo Sanguineo Field -->
                 <div class="form-group col-sm-12">
                     {!! Form::label('fechanac', 'Fecha de nacimiento n:') !!}
-                    {!! Form::date('fechanac', null, ['class' => 'form-control']) !!}
+                    {!! Form::date('fechanac', null, ['class' => 'form-control','required']) !!}
                 </div><!-- Grupo Sanguineo Field -->
                 <div class="form-group col-sm-12">
                     {!! Form::label('ci', 'CI:') !!}
-                    {!! Form::text('ci', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('ci', null, ['class' => 'form-control','required']) !!}
                 </div>
                 <!-- Grupo Sanguineo Field -->
                 <div class=" form-group col-sm-12">
@@ -101,18 +101,18 @@
                 <!-- Grupo Sanguineo Field -->
                 <div class="form-group col-sm-12">
                     {!! Form::label('grupo_sanguineo', 'Grupo Sanguineo:') !!}
-                    {!! Form::text('grupo_sanguineo', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('grupo_sanguineo', null, ['class' => 'form-control','required']) !!}
                 </div>
                 <!-- Nacionalidad Field -->
                 <div class="form-group col-sm-12">
                     {!! Form::label('nacionalidad', 'Nacionalidad:') !!}
-                    {!! Form::text('nacionalidad', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('nacionalidad', null, ['class' => 'form-control','required']) !!}
                 </div>
 
                 <!-- Celular Field -->
                 <div class="form-group col-sm-12">
                     {!! Form::label('celular', 'Celular:') !!}
-                    {!! Form::number('celular', null, ['class' => 'form-control']) !!}
+                    {!! Form::number('celular', null, ['class' => 'form-control','required']) !!}
                 </div>
                 <!-- Email Field -->
                 <div class="form-group col-sm-12 pull-left">
@@ -122,20 +122,20 @@
                 <!-- Domiciolio Field -->
                 <div class="form-group col-sm-12">
                     {!! Form::label('domiciolio', 'Domiciolio:') !!}
-                    {!! Form::text('domiciolio', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('domiciolio', null, ['class' => 'form-control','required']) !!}
                 </div>
 
                 <!-- Ciudad Field -->
                 <div class="form-group col-sm-12">
                     {!! Form::label('ciudad', 'Ciudad:') !!}
-                    {!! Form::text('ciudad', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('ciudad', null, ['class' => 'form-control','required']) !!}
                 </div>
                  <div class="form-group col-sm-12">
                     {!! Form::label('departamento', 'Departamento:') !!}
-                    {!! Form::text('departamento', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('departamento', null, ['class' => 'form-control','required']) !!}
                 </div>
 
-                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Siguiente</button>
+                <button class="btn btn-primary nextBtn  pull-right" type="button" >Siguiente</button>
             </div>
         </div>
     <div class="row setup-content" id="step-2">
@@ -144,65 +144,69 @@
                             <!-- Id Categoria Field -->
                 <div class="form-group col-sm-12">
                     {!! Form::label('tipo_categoria', 'Categoria:') !!}
-                    {!! Form::select('tipo_categoria',array('Principal' => 'Principal', 'Master ' => 'Master ','Ciclismo para todos ' => 'Ciclismo para todos '),null, ['class' => 'form-control','placeholder'=>'Seleccione'])!!}
+                {!! Form::select('tipo_categoria',array('Principal' => 'Principal', 'Master' => 'Master','Ciclismo para todos' => 'Ciclismo para todos'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
                 </div>
-         
-
-
-
-
-            <div class="form-group col-sm-12">
-                {!! Form::select('id_categoria', $categoria, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion','style'=>'display:none']) !!}
+            <div class="form-group col-sm-12" id="id_categoria" style="display: none;">
+                
             </div>
-              <div class="form-group col-sm-12">
-                {!! Form::select('id_categoria', $categoria, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion','style'=>'display:none']) !!}
+            <div class="form-group col-sm-12" id="id_categoria2" style="display: none;">
+                
             </div>
-              <div class="form-group col-sm-12">
-                {!! Form::select('id_categoria', $categoria, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion','style'=>'display:none']) !!}
+            <div class="form-group col-sm-12" id="id_categoria3" style="display: none;">
+                
             </div>
 
 <script type="text/javascript">
-    const tipo_categoria = document.querySelector("#tipo_categoria");
-const input = document.querySelector("[name=id_categoria]");
+const tipo_categoria = document.querySelector("#tipo_categoria");
+const input1 = document.querySelector("[id=id_categoria]");
+const input2 = document.querySelector("[id=id_categoria2]");
+const input3 = document.querySelector("[id=id_categoria3]");
 
-tipo_categoria.addEventListener("change", () => {
-  if (tipo_categoria.value === "Principal") {
-    input.style.display = 'initial';
-  } else {
-    input.style.display = 'none';
-  }
-});
+tipo_categoria.addEventListener("change", changeTipo);
+
+function changeTipo(){
+
+    if (tipo_categoria.value === "Principal") {
+        input1.innerHTML = '{!! Form::select("id_categoria", $categoria, null, ["class" => "form-control custom-select","placeholder"=>"Selecione una opcion","id"=>"id_categoria"]) !!}';
+        input1.style.display = 'initial'
+        /*input1.style.display = 'initial';
+        input2.style.display = 'none';
+        input3.style.display = 'none';*/
+    } else if(tipo_categoria.value === "Master") {
+        input1.innerHTML = '{!! Form::select("id_categoria", $categoria2, null, ["class" => "form-control custom-select","placeholder"=>"Selecione una opcion","id"=>"id_categoria2"]) !!}';
+        input1.style.display = 'initial'
+        /*input1.style.display = 'none';
+        input3.style.display = 'none';
+        input2.style.display = 'initial';*/
+    } else if (tipo_categoria.value === "Ciclismo para todos"){
+        input1.innerHTML = '{!! Form::select("id_categoria", $categoria3, null, ["class" => "form-control custom-select","placeholder"=>"Selecione una opcion","id"=>"id_categoria3"]) !!}';
+        input1.style.display = 'initial'
+        /*input1.style.display = 'none';
+        input2.style.display = 'none';
+        input3.style.display = 'initial';*/
+    }
+}
 </script>
-
-
-
-
-
-
-
-
-
-
             <div class="form-group col-sm-12">
                     {!! Form::label('region', 'Elegir a que región pertenece:') !!}
-                     {!! Form::select('region',array('Asosiacion metropolitana de ciclismo' => 'Asosiacion metropolitana de ciclismo', 'Federacion paranaense de ciclismo' => 'Federacion paranaense de ciclismo','Union Regional de ciclistas (URCI)' => 'Union Regional de ciclistas (URCI)','Federacion de ciclismo Itapuense' => 'Federacion de ciclismo Itapuense'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
+                     {!! Form::select('region',array('Asosiacion metropolitana de ciclismo' => 'Asosiacion metropolitana de ciclismo', 'Federacion paranaense de ciclismo' => 'Federacion paranaense de ciclismo','Union Regional de ciclistas (URCI)' => 'Union Regional de ciclistas (URCI)','Federacion de ciclismo Itapuense' => 'Federacion de ciclismo Itapuense'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required','required'])!!}
                 </div>
             <!-- Nombre Equipo Field -->
             <div class="form-group col-sm-12">
                 {!! Form::label('nombre_equipo', 'Nombre Equipo:') !!}
-                {!! Form::text('nombre_equipo', null, ['class' => 'form-control']) !!}
+                {!! Form::text('nombre_equipo', null, ['class' => 'form-control','required']) !!}
             </div>
 
             <!-- Contacto Emergencia Field -->
             <div class="form-group col-sm-12">
                 {!! Form::label('contacto_emergencia', 'Contacto Emergencia:') !!}
-                {!! Form::number('contacto_emergencia', null, ['class' => 'form-control']) !!}
+                {!! Form::number('contacto_emergencia', null, ['class' => 'form-control','required']) !!}
             </div>
 
             <!-- Nombre Apellido Contacto Emergencia Field -->
             <div class="form-group col-sm-12">
                 {!! Form::label('nombre_apellido_contacto_emergencia', 'Nombre Apellido Contacto Emergencia:') !!}
-                {!! Form::text('nombre_apellido_contacto_emergencia', null, ['class' => 'form-control']) !!}
+                {!! Form::text('nombre_apellido_contacto_emergencia', null, ['class' => 'form-control','required']) !!}
             </div>
 
             <!-- Foto Field -->
@@ -217,7 +221,7 @@ tipo_categoria.addEventListener("change", () => {
             <input type="file" id="foto" name="foto">
             
             </div>
-                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Siguiente</button>
+                <button class="btn btn-primary nextBtn  pull-right" type="button" >Siguiente</button>
         </div>
     </div>
     <div class="row setup-content" id="step-3">
@@ -249,7 +253,7 @@ tipo_categoria.addEventListener("change", () => {
                 <input type="text" name="estado" class="form-control" value="En espera" readonly>
                 </div>
             @endif
-                <button class="btn btn-success btn-lg pull-right" type="submit">Confirmar!</button>
+                <button class="btn btn-success  pull-right" type="submit">Confirmar!</button>
                 
             </div>
 
@@ -260,7 +264,6 @@ tipo_categoria.addEventListener("change", () => {
 
 <script type="text/javascript">
  $(document).ready(function () {
-
     var navListItems = $('div.setup-panel div a'),
             allWells = $('.setup-content'),
             allNextBtn = $('.nextBtn');

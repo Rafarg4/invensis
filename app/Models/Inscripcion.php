@@ -113,7 +113,6 @@ class Inscripcion extends Model
         'celular' => 'required',
         'domiciolio' => 'required',
         'ciudad' => 'required',
-        'id_categoria' => 'required',
         'nombre_equipo' => 'required',
         'contacto_emergencia' => 'required',
         'nombre_apellido_contacto_emergencia' => 'required',

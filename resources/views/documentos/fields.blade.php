@@ -1,19 +1,19 @@
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
                 <label for="id_user">Identificador:</label>
                 <input type="text" name="id_user" class="form-control" value="{{ Auth::user()->id }}" readonly>
                 </div>
 @if(Auth::user()->hasRole('super_admin'))
-  <div class="form-group col-sm-6">
+  <div class="form-group col-sm-12">
                 {!! Form::label('id_inscripcion', 'Inscripto:') !!}
                 {!! Form::select('id_inscripcion', $inscripcions, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion','required']) !!}
             </div>
  @else
-             <div class="form-group col-sm-6">
+             <div class="form-group col-sm-12">
                  {!! Form::label('id_inscripcion', 'Inscripto:') !!}
                 {!! Form::select('id_inscripcion', $inscripcions, null, ['class' => 'form-control custom-select','required']) !!}
                 </div>
 @endif
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
               {!! Form::label('archivo_pago', 'Comprobante de pago:') !!}
             <div class="input-group">
             <div class="custom-file">
@@ -26,7 +26,7 @@
             @endif
             </div>
 <!-- Archivo Inscripcion Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
               {!! Form::label('archivo_inscripcion', 'Comprobante de firma de documento:') !!}
             <div class="input-group">
             <div class="custom-file">
@@ -39,7 +39,7 @@
             @endif
             </div>
 <!-- Archivo Inscripcion Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
               {!! Form::label('archivo_seguro_medico', 'Firma de seguro medico:') !!}
             <div class="input-group">
             <div class="custom-file">
@@ -52,7 +52,7 @@
             @endif
     </div>
         <!-- Archivo Inscripcion Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
               {!! Form::label('archivo_copia_cedula', 'Copia de cedula:') !!}
             <div class="input-group">
             <div class="custom-file">
@@ -65,7 +65,7 @@
             @endif
     </div>
     <!-- Archivo Inscripcion Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
               {!! Form::label('archivo_certificado_medico', 'Certificado medico:') !!}
             <div class="input-group">
             <div class="custom-file">
@@ -79,12 +79,12 @@
     </div>
     
             @if(Auth::user()->hasRole('super_admin'))
-             <div class=" form-group col-sm-6">
+             <div class=" form-group col-sm-12">
              {!! Form::label('estado', 'Estado:') !!}
             {!! Form::select('estado',array('En espera' => 'En espera', 'Paralizado' => 'Paralizado','Verificado' => 'Verificado'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
             </div>
             @else
-             <div class="form-group col-sm-6">
+             <div class="form-group col-sm-12">
                 <label for="estado">Estado:</label>
                 <input type="text" name="estado" class="form-control" value="En espera" readonly>
                 </div>

@@ -29,7 +29,7 @@ class Categoria extends Model
 
     public $fillable = [
         'nombre',
-        'descripcion'
+        'tipo_categoria'
     ];
 
     /**
@@ -39,7 +39,7 @@ class Categoria extends Model
      */
     protected $casts = [
         'nombre' => 'string',
-        'descripcion' => 'string'
+        'tipo_categoria' => 'string'
     ];
 
     /**
@@ -49,7 +49,7 @@ class Categoria extends Model
      */
     public static $rules = [
         'nombre' => 'required',
-        'descripcion' => 'required'
+        'tipo_categoria' => 'required'
     ];
 
      public function incripcion (){

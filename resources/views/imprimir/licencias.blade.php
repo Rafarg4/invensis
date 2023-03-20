@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-	<br>
-	<br>
-	 @foreach($inscripcions as $inscripcions)
-	 <div class="card">
+    
+     @if(!empty($inscripcions) && $inscripcions->count() > 0)
+     @foreach($inscripcions as $inscripcions)
+     <div class="card">
   <div class="card-body">
     <br>
     <br>
@@ -65,7 +65,7 @@ table td {padding: 0px}
 <div style="position:absolute;top:1.64in;left:4.59in;width:1.60in;line-height:0.14in;"><DIV style="position:relative; left:0.88in;"><span style="font-style:normal;font-weight:normal;font-size:7pt;font-family:Calibri;color:#231f20">{{ $inscripcions->federacion_id}}</span><span style="font-style:normal;font-weight:normal;font-size:7pt;font-family:Calibri;color:#231f20"></span><br/></SPAN></DIV></div>
 <div style="position:absolute;top:1.80in;left:4.59in;width:1.60in;line-height:0.14in;"><span style="font-style:normal;font-weight:normal;font-size:7pt;font-family:Calibri;color:#231f20">National</span></SPAN><br/></div>
 <div style="position:absolute;top:1.80in;left:4.59in;width:1.60in;line-height:0.14in;"><DIV style="position:relative; left:0.39in;"><span style="font-style:normal;font-weight:normal;font-size:7pt;font-family:Calibri;color:#231f20">Category </span></SPAN></DIV><br/></div>
-<div style="position:absolute;top:1.80in;left:4.59in;width:1.60in;line-height:0.14in;"><DIV style="position:relative; left:0.88in;"><span style="font-style:normal;font-weight:normal;font-size:7pt;font-family:Calibri;color:#231f20">{{ $inscripcions->categoria->nombre}}</span></SPAN></DIV><br/></div>
+<div style="position:absolute;top:1.80in;left:4.59in;width:1.60in;line-height:0.14in;"><DIV style="position:relative; left:0.88in;"><span style="font-style:normal;font-weight:normal;font-size:7pt;font-family:Calibri;color:#231f20">{{ $inscripcions->categoria->nombre ?? 'Sin asignar'}}</span></SPAN></DIV><br/></div>
 <div style="position:absolute;top:1.80in;left:4.59in;width:1.60in;line-height:0.14in;"><DIV style="position:relative; left:1.20in;"><span style="font-style:normal;font-weight:normal;font-size:7pt;font-family:Calibri;color:#231f20"></span><span style="font-style:normal;font-weight:normal;font-size:7pt;font-family:Calibri;color:#231f20"></span><br/></SPAN></DIV></div>
 <div style="position:absolute;top:1.97in;left:4.59in;width:0.30in;line-height:0.14in;"><span style="font-style:normal;font-weight:normal;font-size:7pt;font-family:Calibri;color:#231f20">Club</span><span style="font-style:normal;font-weight:normal;font-size:7pt;font-family:Calibri;color:#231f20"></span><br/></SPAN></div>
 <div style="position:absolute;top:1.97in;left:5.47in;width:1.09in;line-height:0.14in;"><span style="font-style:normal;font-weight:normal;font-size:7pt;font-family:Calibri;color:#231f20">ClubCiclistaAmanecer</span><span style="font-style:normal;font-weight:normal;font-size:7pt;font-family:Calibri;color:#231f20"></span><br/></SPAN></div>
@@ -116,6 +116,35 @@ table td {padding: 0px}
 <img style="position:absolute;top:1.31in;left:3.65in;width:0.44in;height:0.31in" src="/imagenes/ri_11.png">
   </div>
 </div>
-
    @endforeach
+   @else
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Mi Licencia</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="content px-3">
+
+        <div class="clearfix"></div>
+
+        <div class="card">
+            <div class="card-body p-0">
+                <div class="container"> 
+<br>
+   <div class="alert alert-light" role="alert">
+  <b><h4><center>Aun no posee una licencia!</center></h4></b>   
+</div> 
+
+            
+                </div>
+            </div>
+
+        </div>                             
+@endif
+</div>
  @endsection

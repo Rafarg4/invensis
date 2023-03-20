@@ -3,7 +3,7 @@
         <thead>
         <tr>
             <th>Nombre</th>
-        <th>Descripcion</th>
+        <th>Tipo Categoria</th>
             <th >Accion</th>
         </tr>
         </thead>
@@ -11,7 +11,7 @@
         @foreach($categorias as $categoria)
             <tr>
                 <td>{{ $categoria->nombre }}</td>
-            <td>{{ $categoria->descripcion }}</td>
+            <td>{{ $categoria->tipo_categoria }}</td>
                 <td width="120">
                     {!! Form::open(['route' => ['categorias.destroy', $categoria->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>

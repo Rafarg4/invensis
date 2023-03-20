@@ -56,8 +56,10 @@ class InscripcionController extends AppBaseController
      */
     public function create()
     {
-        $categoria = Categoria::pluck('nombre','id');
-        return view('inscripcions.create', compact('categoria'));
+        $categoria = Categoria::where('tipo_categoria','Principal')->pluck('nombre','id');
+        $categoria2 = Categoria::where('tipo_categoria','Master')->pluck('nombre','id');
+        $categoria3 = Categoria::where('tipo_categoria','Ciclismo para todos')->pluck('nombre','id');
+        return view('inscripcions.create', compact('categoria','categoria2','categoria3'));
     }
 
     /**
@@ -121,6 +123,9 @@ class InscripcionController extends AppBaseController
     public function edit($id)
     {
     $categoria = Categoria::pluck('nombre','id');
+     $categoria = Categoria::where('tipo_categoria','Principal')->pluck('nombre','id');
+    $categoria2 = Categoria::where('tipo_categoria','Master')->pluck('nombre','id');
+    $categoria3 = Categoria::where('tipo_categoria','Ciclismo para todos')->pluck('nombre','id');
     $inscripcion = $this->inscripcionRepository->find($id);
 
         if (empty($inscripcion)) {
@@ -129,7 +134,7 @@ class InscripcionController extends AppBaseController
             return redirect(route('inscripcions.index'));
         }
 
-        return view('inscripcions.edit',compact('inscripcion','categoria'));
+        return view('inscripcions.edit',compact('inscripcion','categoria','categoria2','categoria3'));
     }
 
     /**
@@ -179,6 +184,7 @@ class InscripcionController extends AppBaseController
   }
    $this->validate($request,$rules,$mensaje);
         $dato= request()->except(['_token','_method']);
+        //dd($dato);
         if($request->hasFile('foto')){
             $inscripcion=Inscripcion::findOrFail($id);
             Storage::delete('public/'.$inscripcion->foto); 
@@ -216,11 +222,20 @@ class InscripcionController extends AppBaseController
 
         return redirect(route('inscripcions.index'));
     }
+
+    //Imprimir directo pdf de seguro
+  //  public function seguro($id)
+  //  {
+  //  $seguro = Seguro::where('id_inscripcion',$id)->get();
+   // $inscripcion = $this->inscripcionRepository->find($id);
+   // $pdf = PDF::loadView('inscripcions.seguro', compact('inscripcion','seguro'));
+   // return $pdf->download('Seguro.pdf');
+   // }
     public function seguro($id)
-    {
-    $seguro = Seguro::where('id_inscripcion',$id)->get();
+  {
     $inscripcion = $this->inscripcionRepository->find($id);
-    $pdf = PDF::loadView('inscripcions.seguro', compact('inscripcion','seguro'));
-    return $pdf->download('Seguro.pdf');
-    }
+    $seguros = Seguro::where('id_inscripcion',$id)->get();
+    return view('inscripcions.seguro',compact('inscripcion','seguros'));
+   
+   }
 }

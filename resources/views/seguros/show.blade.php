@@ -12,12 +12,6 @@
                        href="{{ route('seguros.index') }}">
                         Volver
                     </a>
-                     <div class="col-sm-12">
-                    <a class="btn btn-default float-right"
-                      button type="button" class="btn btn-primary"  onclick="javascript:window.print()">Imprimir</button>
-                    </a>
-                    
-                </div>
             </div>
         </div>
     </section>
