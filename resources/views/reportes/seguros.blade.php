@@ -47,9 +47,9 @@
             <td>{{ $seguro->edad }}</td>
             <td>{{ $seguro->usted_es }}</td>
             <td>{{ $seguro->padece_enfermedad }}</td>
-            <td>{{ $seguro->especificar_enfermedad }}</td>
+            <td>{{ $seguro->especificar_enfermedad ??'Sin asignar'}}</td>
             <td>{{ $seguro->presenta_defecto_fisico }}</td>
-            <td>{{ $seguro->especifique_defecto_fisico }}</td>
+            <td>{{ $seguro->especifique_defecto_fisico ??'Sin asignar'}}</td>
             <td>{{ $seguro->estatura }}</td>
             <td>{{ $seguro->peso }}</td>
             <td>{{ $seguro->tipo_plan }}</td>

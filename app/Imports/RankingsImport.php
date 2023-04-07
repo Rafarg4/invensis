@@ -10,13 +10,11 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 
 class RankingsImport implements ToModel, WithHeadingRow, WithValidation
 {
-  private $categorias;
-  private $inscripcions;
+  
 
   public function __construct (){
 
-    $this->categorias=Categoria::pluck('id','nombre');
-    $this->inscripcions=Inscripcion::pluck('id','ci');
+    
   }
   
 
@@ -45,9 +43,9 @@ class RankingsImport implements ToModel, WithHeadingRow, WithValidation
     {
         return new Ranking([
           'posicion'  => $row['posicion'],
-          'id_inscripcion' => $this->inscripcions[$row['ci']],
+          'ci' => $row['ci'],
           'nombre_apellido' => $row['nombre_apellido'],
-          'id_categoria' => $this->categorias[$row['categoria']],
+          'categoria' => $row['categoria'],
           'club' => $row['club'],
           'sexo' => $row['sexo'],
           'primer_fecha' => $row['1_fecha'],

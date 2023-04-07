@@ -1,7 +1,7 @@
 <!-- Categoria Field -->
   <div class="form-group col-sm-12">
-                {!! Form::label('id_inscripcion', 'Inscripto:') !!}
-                {!! Form::select('id_inscripcion', $inscripcion, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion','required']) !!}
+                {!! Form::label('ci', 'Ci:') !!}
+                {!! Form::text('ci', null, ['class' => 'form-control','required']) !!}
             </div>
 
 <!-- Posicion Field -->
@@ -18,8 +18,8 @@
 
 <!-- Categoria Field -->
   <div class="form-group col-sm-12">
-                {!! Form::label('id_categoria', 'Categoria:') !!}
-                {!! Form::select('id_categoria', $categoria, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion','required','required']) !!}
+                {!! Form::label('categoria', 'Categoria:') !!}
+                 {!! Form::text('categoria', null, ['class' => 'form-control','required']) !!}
             </div>
 
 <!-- Club Field -->

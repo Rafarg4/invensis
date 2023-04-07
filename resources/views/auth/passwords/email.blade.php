@@ -34,11 +34,11 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="{{ url('/home') }}"><b>{{ config('app.name') }}</b></a>
     </div>
 
     <!-- /.login-logo -->
     <div class="card">
+         <center> <img src="/logof.png" width="150" height="150" class="img-circle" alt="User Image"/></center>
         <div class="card-body login-card-body">
             <p class="login-box-msg">¿Olvidaste tu contraseña? Aquí puede recuperar fácilmente una nueva contraseña.</p>
 
@@ -78,7 +78,7 @@
                 <a href="{{ route("login") }}">Login</a>
             </p>
             <p class="mb-0">
-                <a href="{{ route("register") }}" class="text-center">Register a new membership</a>
+                <a href="{{ route("register") }}" class="text-center">Registrar una membresia </a>
             </p>
         </div>
         <!-- /.login-card-body -->

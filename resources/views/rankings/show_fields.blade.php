@@ -3,7 +3,7 @@
         <thead>
         <tr>
             <th>Posicion</th>
-            <th>Usuario</th>
+            <th>Ci</th>
         <th>Nombre Apellido</th>
         <th>Categoria</th>
         </tr>
@@ -11,9 +11,9 @@
         <tbody>
             <tr>
                 <td>{{ $ranking->posicion }}</td>
-                 <td>{{ $ranking->usuario->name }}</td>
+                 <td>{{ $ranking->ci }}</td>
             <td>{{ $ranking->nombre_apellido }}</td>
-            <td>{{ $ranking->categoria->nombre }}</td>
+            <td>{{ $ranking->categoria }}</td>
             </tr>
         </tbody>
     </table>

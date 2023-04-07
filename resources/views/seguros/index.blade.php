@@ -12,6 +12,11 @@
                        href="{{ route('seguros.create') }}">
                         Nuevo
                     </a>
+                    <div class="col-sm-12">
+                    <a class="btn btn-default float-right"
+                    href="/formulario.pdf" download>
+                     Formulario de deslinde
+                    </a>
                 </div>
             </div>
         </div>

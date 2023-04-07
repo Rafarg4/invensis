@@ -24,15 +24,15 @@
                     {!! Form::open(['route' => ['seguros.destroy', $seguro->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
                         <a href="{{ route('seguros.show', [$seguro->id]) }}"
-                           class='btn btn-default btn'>
-                            <i class="fas fa-file-pdf"></i>
+                           class='btn btn-default btn-xs'>
+                            <i class="far fa-eye"></i>
                         </a>
                         @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
                         <a href="{{ route('seguros.edit', [$seguro->id]) }}"
-                           class='btn btn-default btn'>
+                           class='btn btn-default btn-xs'>
                             <i class="far fa-edit"></i>
                         </a>
-                        {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn', 'onclick' => "return confirm('Estas seguro?')"]) !!}
+                        {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Estas seguro?')"]) !!}
                     </div>@endcan
                     {!! Form::close() !!}
                 </td>

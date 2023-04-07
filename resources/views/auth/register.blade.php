@@ -33,10 +33,10 @@
 <body class="hold-transition register-page">
 <div class="register-box">
     <div class="register-logo">
-        <a href="{{ url('/home') }}"><b>{{ config('app.name') }}</b></a>
     </div>
 
     <div class="card">
+         <center> <img src="/logof.png" width="150" height="150" class="img-circle" alt="User Image"/></center>
         <div class="card-body register-card-body">
             <p class="login-box-msg">Registrarse</p>
 

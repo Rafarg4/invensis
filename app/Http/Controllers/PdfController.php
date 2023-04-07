@@ -32,31 +32,31 @@ class PdfController extends Controller
     public function download_pago($id)
     {
       $documento = Documento::where('id', $id)->first()->archivo_pago;
-      return Storage::download('public/' . $documento,'Comprobante de pago.pdf');
+      return Storage::download('public/' . $documento);
 
     }
     public function download_inscripcion($id)
     {
       $documento = Documento::where('id', $id)->first()->archivo_inscripcion;
-      return Storage::download('public/' . $documento,'Inscripcion.pdf');
+      return Storage::download('public/' . $documento);
 
     }
     public function download_seguro($id)
     {
       $documento = Documento::where('id', $id)->first()->archivo_seguro_medico;
-      return Storage::download('public/' . $documento,'Seguro medico.pdf');
+      return Storage::download('public/' . $documento);
 
     }
     public function download_certificado($id)
     {
       $documento = Documento::where('id', $id)->first()->archivo_certificado_medico;
-      return Storage::download('public/' . $documento,'Certificado medico.pdf');
+      return Storage::download('public/' . $documento);
 
     }
     public function download_copia($id)
     {
       $documento = Documento::where('id', $id)->first()->archivo_copia_cedula;
-      return Storage::download('public/' . $documento,'Copia de Cedula.pdf');
+      return Storage::download('public/' . $documento);
  
     }
 

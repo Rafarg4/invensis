@@ -24,7 +24,7 @@
 <div class="row">
      @if(!empty($inscripcions) && $inscripcions->count() > 0)
       @foreach($inscripcions as $inscripcion)
-<div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+<div class="col d-flex justify-content-center">
 <div class="card">
 <div class="card-body pt-0">
 <div class="row">
@@ -76,15 +76,12 @@
 @if($inscripcion->estado =='Verificado')         
 <a href="{{ route('licencias.show',$inscripcion->id)}}" class="btn btn-sm btn-success">
 <i class="fa fas-solid fa-id-card"></i> </a>
-<a href="{{route('seguro',$inscripcion->id)}}" class="btn btn-sm btn-info">
-<i class="fa fas-regular fa-laptop-medical"></i> Descargar seguro</a>
 @else
 <a style="display: none;" href="{{ route('licencias.show',$inscripcion->id)}}" class="btn btn-sm btn-success">
-<i class="fa fas-solid fa-id-card"></i> </a> 
-<a style="display: none" href="{{route('seguro',$inscripcion->id)}}" class="btn btn-sm btn-info">
-<i class="fa fas-regular fa-laptop-medical"></i></a>           
+<i class="fa fas-solid fa-id-card"></i> </a>          
 @endif
-
+<a href="{{route('seguro',$inscripcion->id)}}" class="btn btn-sm btn-info">
+<i class="fa fas-regular fa-laptop-medical"></i> Descargar seguro</a>
 </div>
 </div>{!! Form::close() !!}
 </div>
@@ -196,21 +193,13 @@
 </a>
 <a href="{{route('pdf.show', $inscripcion->id)}}" class="btn btn-sm btn-danger">
 <i class="fas fa-file-pdf"></i> 
-</a>
-@if($inscripcion->estado =='Verificado')         
-
+</a>               
 <a href="{{route('seguro',$inscripcion->id)}}" class="btn btn-sm btn-info">
-<i class="fa fas-regular fa-laptop-medical"></i></a>
-@else
-<a style="display: none" href="{{route('seguro',$inscripcion->id)}}" class="btn btn-sm btn-info">
-<i class="fa fas-regular fa-laptop-medical"></i></a>           
-@endif
-
+<i class="fa fas-regular fa-laptop-medical"></i> Descargar seguro</a>
 </div>
 </div>{!! Form::close() !!}
 </div>
 </div>
-
 @endforeach
 @else
 <div class="container"> 

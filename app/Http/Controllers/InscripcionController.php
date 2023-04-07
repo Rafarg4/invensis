@@ -233,9 +233,10 @@ class InscripcionController extends AppBaseController
    // }
     public function seguro($id)
   {
-    $inscripcion = $this->inscripcionRepository->find($id);
-    $seguros = Seguro::where('id_inscripcion',$id)->get();
-    return view('inscripcions.seguro',compact('inscripcion','seguros'));
-   
-   }
+    
+    $inscripcion = $this->inscripcionRepository->find($id); 
+    $seguros = Seguro::where('id_inscripcion',$id)
+    ->get();
+      return view('inscripcions.seguro')->with('inscripcion', $inscripcion)->with('seguros', $seguros)->with('user', Auth::user());
+    }
 }

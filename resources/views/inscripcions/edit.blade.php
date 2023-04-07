@@ -154,7 +154,7 @@
                     {!! Form::text('departamento', null, ['class' => 'form-control']) !!}
                 </div>
 
-                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Siguiente</button>
+                <button class="btn btn-primary nextBtn  pull-right" type="button" >Siguiente</button>
             </div>
         </div>
     <div class="row setup-content" id="step-2">
@@ -242,7 +242,7 @@ function changeTipo(){
             <input type="file" id="foto" name="foto">
             
             </div>
-                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Siguiente</button>
+                <button class="btn btn-primary nextBtn  pull-right" type="button" >Siguiente</button>
         </div>
     </div>
     <div class="row setup-content" id="step-3">
@@ -274,7 +274,7 @@ function changeTipo(){
                 <input type="text" name="estado" class="form-control" value="En espera" readonly>
                 </div>
             @endif
-                <button class="btn btn-success btn-lg pull-right" type="submit">Confirmar!</button>
+                <button class="btn btn-success  pull-right" type="submit">Confirmar!</button>
                 
             </div>
 

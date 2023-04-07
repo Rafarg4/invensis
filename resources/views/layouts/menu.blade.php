@@ -44,13 +44,6 @@
         <p>Documentos</p>
     </a>
 </li>
-<li class="nav-item">
-    <a href="{{ route('rankings.index') }}"
-       class="nav-link {{ Request::is('rankings*') ? 'active' : '' }}">
-       <i class="fas fa-trophy"></i>
-        <p>Rankings</p>
-    </a>
-</li>
 @if(Auth::user()->hasRole('super_admin'))
  @else
             <li class="nav-item">
@@ -61,6 +54,13 @@
     </a>
 </li>
 @endif
+<li class="nav-item">
+    <a href="{{ route('rankings.index') }}"
+       class="nav-link {{ Request::is('rankings*') ? 'active' : '' }}">
+       <i class="fas fa-trophy"></i>
+        <p>Rankings</p>
+    </a>
+</li>
 @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion','admin_inscripcion'])
 <li class="nav-item">
     <a href="{{ route('importar.index') }}"

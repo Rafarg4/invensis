@@ -29,12 +29,20 @@ class RankingController extends AppBaseController
      *
      * @return Response
      */
+    public function mostrar(Request $request)
+    {
+        $rankings = $this->rankingRepository->all();
+        $inscripcion =Inscripcion::pluck('ci');
+        $categoria =Categoria::pluck('nombre');
+        return view('rankings.mostrar',compact('inscripcion','rankings','categoria')); 
+    }
+
     public function index(Request $request)
     {
         $rankings = $this->rankingRepository->all();
-
-        return view('rankings.index')
-            ->with('rankings', $rankings);
+        $inscripcion =Inscripcion::pluck('ci');
+        $categoria =Categoria::pluck('nombre');
+        return view('rankings.index',compact('inscripcion','rankings','categoria'));
     }
 
     /**
@@ -64,7 +72,7 @@ class RankingController extends AppBaseController
 
         $ranking = $this->rankingRepository->create($input);
 
-        Flash::success('Ranking saved successfully.');
+        Flash::success('Ranking creado.');
 
         return redirect(route('rankings.index'));
     }
@@ -81,7 +89,7 @@ class RankingController extends AppBaseController
         $ranking = $this->rankingRepository->find($id);
 
         if (empty($ranking)) {
-            Flash::error('Ranking not found');
+            Flash::error('Ranking no encontrado');
 
             return redirect(route('rankings.index'));
         }
@@ -103,7 +111,7 @@ class RankingController extends AppBaseController
         $ranking = $this->rankingRepository->find($id);
 
         if (empty($ranking)) {
-            Flash::error('Ranking not found');
+            Flash::error('Ranking no encontrado');
 
             return redirect(route('rankings.index'));
         }
@@ -124,14 +132,14 @@ class RankingController extends AppBaseController
         $ranking = $this->rankingRepository->find($id);
 
         if (empty($ranking)) {
-            Flash::error('Ranking not found');
+            Flash::error('Ranking no encontrado');
 
             return redirect(route('rankings.index'));
         }
 
         $ranking = $this->rankingRepository->update($request->all(), $id);
 
-        Flash::success('Ranking updated successfully.');
+        Flash::success('Ranking actualizado.');
 
         return redirect(route('rankings.index'));
     }
@@ -150,14 +158,14 @@ class RankingController extends AppBaseController
         $ranking = $this->rankingRepository->find($id);
 
         if (empty($ranking)) {
-            Flash::error('Ranking not found');
+            Flash::error('Ranking no encontrado');
 
             return redirect(route('rankings.index'));
         }
 
         $this->rankingRepository->delete($id);
 
-        Flash::success('Ranking deleted successfully.');
+        Flash::success('Ranking eliminado.');
 
         return redirect(route('rankings.index'));
     }

@@ -38,7 +38,7 @@ class Ranking extends Model
     public $fillable = [
         'posicion',
         'nombre_apellido',
-        'id_categoria',
+        'categoria',
         'club',
         'sexo',
         'primer_fecha',
@@ -46,7 +46,7 @@ class Ranking extends Model
         'tercero_fecha',
         'cuarto_fecha',
         'total',
-        'id_inscripcion'
+        'ci'
     ];
 
     /**
@@ -76,7 +76,7 @@ class Ranking extends Model
     public static $rules = [
         'posicion' => 'required',
         'nombre_apellido' => 'required',
-        'id_categoria' => 'required',
+        'categoria' => 'required',
         'club' => 'required',
         'sexo' => 'required',
         'primer_fecha' => 'required',
@@ -84,7 +84,7 @@ class Ranking extends Model
         'tercero_fecha' => 'required',
         'cuarto_fecha' => 'required',
         'total' => 'required',
-        'id_inscripcion' => 'required'
+        'ci' => 'required'
     ];
 
     public function categoria (){

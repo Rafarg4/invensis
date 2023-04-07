@@ -40,9 +40,9 @@
         @foreach($rankings as $ranking)
             <tr>
                 <td>{{ $ranking->posicion }}</td>
-                 <td>{{ $ranking->inscripcion->ci  ?? 'Usuario no asignado' }}</td>
+                 <td>{{$ranking->ci}}</td>
             <td>{{ $ranking->nombre_apellido }}</td>
-            <td>{{ $ranking->categoria->nombre }}</td>
+            <td>{{ $ranking->categoria }}</td>
             <td>{{ $ranking->club }}</td>
             <td>{{ $ranking->sexo }}</td>
             <td>{{ $ranking->primer_fecha}}</td>

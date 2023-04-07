@@ -1,30 +1,25 @@
-<!-- Name Field -->
-<div class="col-sm-12">
-    {!! Form::label('name', 'Nombre:') !!}
-    <p>{{ $user->name }}</p>
+<div class="table-responsive" style="padding:15px;">
+    <table class="table" id="tablse">
+        <thead>
+        <tr>
+            <th>Usuario</th>
+        <th>Email</th>
+        <th>Rol</th>
+        <th>Creado</th>
+        
+        </tr>
+        </thead>
+        <tbody>
+    
+            <tr>
+                <td>{{ $user->name }}</td>
+            <td>{{ $user->email }}</td>
+            <td>{{implode(" ",$user->getRoleNames()->toArray())}}</td>
+            <td>{{ $user->created_at }}</td>
+           
+            </tr>
+        </tbody>
+    </table>
 </div>
 
-<!-- Email Field -->
-<div class="col-sm-12">
-    {!! Form::label('email', 'Email:') !!}
-    <p>{{ $user->email }}</p>
-</div>
-
-<!-- Role Field -->
-<div class="col-sm-12">
-    {!! Form::label('role', 'Role:') !!}
-    <p>{{ implode(" ", $user->getRoleNames()->toArray()) }}</p>
-</div>
-
-<!-- Created At Field -->
-<div class="col-sm-12">
-    {!! Form::label('created_at', 'Creado:') !!}
-    <p>{{ $user->created_at }}</p>
-</div>
-
-<!-- Updated At Field -->
-<div class="col-sm-12">
-    {!! Form::label('updated_at', 'Actualizado:') !!}
-    <p>{{ $user->updated_at }}</p>
-</div>
 

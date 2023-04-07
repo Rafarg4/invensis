@@ -31,9 +31,9 @@
         <tbody>
        
             <tr>
-            <td>{{ $seguro->especificar_enfermedad }}</td>
+            <td>{{ $seguro->especificar_enfermedad ??'Sin asignar'}}</td>
             <td>{{ $seguro->presenta_defecto_fisico }}</td>
-            <td>{{ $seguro->especifique_defecto_fisico }}</td>
+            <td>{{ $seguro->especifique_defecto_fisico ??'Sin asignar'}}</td>
             <td>{{ $seguro->estatura }}</td>
             </tr>
       

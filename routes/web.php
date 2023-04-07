@@ -48,6 +48,9 @@ Route::get('seguro/{id}', [App\Http\Controllers\InscripcionController::class, 's
 Route::resource('licencias', App\Http\Controllers\LicenciaController::class)->middleware('auth');
 
 Route::get('/graficos', [App\Http\Controllers\GraficoController::class, 'grafico'])->name('graficos')->middleware('auth');
+
+Route::get('rankings/mostrar', [App\Http\Controllers\RankingController::class, 'mostrar'])->name('rankings/mostrar');
+
 Route::resource('categorias', App\Http\Controllers\CategoriaController::class)->middleware('auth');
 
 

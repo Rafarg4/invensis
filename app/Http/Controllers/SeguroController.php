@@ -71,7 +71,7 @@ class SeguroController extends AppBaseController
 
         $seguro = $this->seguroRepository->create($input);
 
-        Flash::success('Seguro saved successfully.');
+        Flash::success('Seguro guardado correctamente.');
 
         return redirect(route('seguros.index'));
     }
@@ -89,7 +89,7 @@ class SeguroController extends AppBaseController
        // $inscripcion = Inscripcion::where('id',$id)->get();
 
         if (empty($seguro)) {
-            Flash::error('Seguro not found');
+            Flash::error('Seguro no encontrado');
 
             return redirect(route('seguros.index'));
         }
@@ -110,7 +110,7 @@ class SeguroController extends AppBaseController
         $inscripcions = Inscripcion::pluck('primer_y_segundo_nombre','id');
 
         if (empty($seguro)) {
-            Flash::error('Seguro not found');
+            Flash::error('Seguro no encontrado');
 
             return redirect(route('seguros.index'));
         }
@@ -131,14 +131,14 @@ class SeguroController extends AppBaseController
         $seguro = $this->seguroRepository->find($id);
 
         if (empty($seguro)) {
-            Flash::error('Seguro not found');
+            Flash::error('Seguro no encontrado');
 
             return redirect(route('seguros.index'));
         }
 
         $seguro = $this->seguroRepository->update($request->all(), $id);
 
-        Flash::success('Seguro updated successfully.');
+        Flash::success('Seguro actualizado correctamente.');
 
         return redirect(route('seguros.index'));
     }
@@ -157,14 +157,14 @@ class SeguroController extends AppBaseController
         $seguro = $this->seguroRepository->find($id);
 
         if (empty($seguro)) {
-            Flash::error('Seguro not found');
+            Flash::error('Seguro no elminado');
 
             return redirect(route('seguros.index'));
         }
 
         $this->seguroRepository->delete($id);
 
-        Flash::success('Seguro deleted successfully.');
+        Flash::success('Seguro eliminado correctamente.');
 
         return redirect(route('seguros.index'));
     }
