@@ -4,6 +4,7 @@
     
      @if(!empty($inscripcions) && $inscripcions->count() > 0)
      @foreach($inscripcions as $inscripcions)
+     @if($inscripcions->estado=='Verificado')
      <div class="card">
   <div class="card-body">
     <br>
@@ -116,6 +117,35 @@ table td {padding: 0px}
 <img style="position:absolute;top:1.31in;left: 5.65in;width:0.44in;height:0.31in" src="/imagenes/ri_11.png">
   </div>
 </div>
+@else
+<section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Mi Licencia</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="content px-3">
+
+        <div class="clearfix"></div>
+
+        <div class="card">
+            <div class="card-body p-0">
+                <div class="container"> 
+<br>
+   <div class="alert alert-light" role="alert">
+  <b><h4><center>Licencia en espera de aprobacion!</center></h4></b>   
+</div> 
+
+            
+                </div>
+            </div>
+
+        </div> 
+        @endif   
    @endforeach
    @else
     <section class="content-header">

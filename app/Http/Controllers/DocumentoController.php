@@ -67,6 +67,7 @@ class DocumentoController extends AppBaseController
      */
     public function store(CreateDocumentoRequest $request)
     {
+        if(Auth::user()->hasRole('super_admin')) {
         $rules = [
         'id_inscripcion'=>'required|unique:documentos,id_inscripcion',
         'archivo_pago' => 'required',
@@ -103,6 +104,43 @@ class DocumentoController extends AppBaseController
         Flash::success('Documento guardado.');
 
         return redirect(route('documentos.index'));
+    }else{
+         $rules = [
+        'id_inscripcion'=>'required|unique:documentos,id_inscripcion',
+        'archivo_pago' => 'required',
+        'archivo_inscripcion' => 'required',
+        'archivo_seguro_medico' => 'required',
+        'archivo_copia_cedula' => 'required',
+        'archivo_certificado_medico' => 'required',
+      ];
+       $mensaje = [
+        'required'=>'El :attribute es requerido',
+        'unique'=> 'Registro de documentos ya creado.',
+      ];
+      $this->validate($request,$rules,$mensaje);
+
+        $input = $request->all();
+        if($request->hasFile('archivo_pago')){
+            $input['archivo_pago']=$request->file('archivo_pago')->store('uploads','public');   
+        }
+        if($request->hasFile('archivo_inscripcion')){
+            $input['archivo_inscripcion']=$request->file('archivo_inscripcion')->store('uploads','public');   
+        }
+        if($request->hasFile('archivo_seguro_medico')){
+            $input['archivo_seguro_medico']=$request->file('archivo_seguro_medico')->store('uploads','public');   
+        }
+        if($request->hasFile('archivo_copia_cedula')){
+            $input['archivo_copia_cedula']=$request->file('archivo_copia_cedula')->store('uploads','public');   
+        }
+        if($request->hasFile('archivo_certificado_medico')){
+            $input['archivo_certificado_medico']=$request->file('archivo_certificado_medico')->store('uploads','public');   
+        }
+        
+        $documento = $this->documentoRepository->create($input);
+
+        return redirect(route('home'));
+
+       }
     }
 
     /**

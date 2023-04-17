@@ -24,7 +24,7 @@
                     </a>
                 <div class="col-sm-12">
                     <a class="btn btn-default float-right"
-                      button type="button" class="btn btn-primary"  onclick="javascript:window.print()">Descargar</button>
+                      button type="button" class="btn btn-primary"  onclick="javascript:window.print()"> <i class="fas fa-file-pdf"></i> Descargar</button>
                     </a>
                     
                 </div>
@@ -348,6 +348,13 @@ F&#160;(&#160;&#160;&#160; X)&#160;&#160;&#160;&#160;/&#160;&#160;&#160;&#160;@e
 @endforeach
 @else
 <br>
+<style type="text/css">
+  .alert-light {
+    /* color: #1f2d3d; */
+    background-color: rgba(255,255,255,.8);
+    border-color: #e9ecef;
+}
+</style>
 <div class="container"> 
    <div class="alert alert-light" role="alert">
   <b><h4><center>Aun no se ha registrado datos de seguro!</center></h4></b>   

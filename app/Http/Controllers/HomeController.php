@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Inscripcion;
+use Auth;
+use App\Models\Seguro;
+use App\Models\Documento;
 class HomeController extends Controller
 {
     /**
@@ -16,13 +19,20 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    /**
+    /** 
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('home');
+        $inscripcions = Inscripcion::all()
+        ->where('id_user', auth()->user()->id);
+        $seguros = Seguro::all()
+        ->where('id_user', auth()->user()->id);
+        $documentos = Documento::all()
+        ->where('id_user', auth()->user()->id);
+        return view('home')->with('inscripcions', $inscripcions)->with('seguros', $seguros)->with('documentos', $documentos)->with('user', Auth::user());
+       
     }
 }

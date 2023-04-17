@@ -41,7 +41,7 @@
     <!-- /.login-logo -->
 
     <!-- /.login-box-body -->
-    <div class="card">
+    <div class="card" style="width: 20rem;">
         <div class="card-body login-card-body">
             <center> <img src="/logof.png" width="150" height="150" class="img-circle" alt="User Image"/></center>
             <p class="login-box-msg">Iniciar Sesion </p>

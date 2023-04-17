@@ -1,6 +1,6 @@
-<div class="tab-content" id="nav-tabContent">
-  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-    <div class="table-responsive">
+<div class="tab-content" id="custom-tabs-four-tabContent">
+<div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
+ <div class="table-responsive">
     <table class="table" id="tabla">
         <thead>
         <tr>
@@ -120,11 +120,9 @@
         </tbody>
     </table>
 </div>
-                </div>
-        
-
-  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-           <div class="table-responsive" style="padding:15px;">
+</div>
+<div class="tab-pane fade" id="custom-tabs-four-profile" role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab">
+<div class="table-responsive" style="padding:15px;">
     <table class="table" id="Tabla">
         <thead>
         <tr>
@@ -161,10 +159,9 @@
         </tbody>
     </table>
 </div>
-  </div>
-   
-  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-      <div class="table-responsive" style="padding:15px;">
+</div>
+<div class="tab-pane fade" id="custom-tabs-four-messages" role="tabpanel" aria-labelledby="custom-tabs-four-messages-tab">
+ <div class="table-responsive" style="padding:15px;">
     <table class="table" id="Tabla">
         <thead>
         <tr>
@@ -248,9 +245,10 @@
         @endforeach
         </tbody>
     </table>
-</div></div>
-  <div class="tab-pane fade" id="nav-licencia" role="tabpanel" aria-labelledby="nav-licencia-tab">
-    <br>
+</div>
+</div>
+<div class="tab-pane fade" id="custom-tabs-four-settings" role="tabpanel" aria-labelledby="custom-tabs-four-settings-tab">
+ <br>
     <br>
      <div class="col d-flex justify-content-center">
     <br>
@@ -361,10 +359,4 @@ table td {padding: 10px}
 <img style="position:absolute;top:1.30in;left: 8.41in;width:0.93in;height:0.33in" src="/imagenes/ri_10.png">
 <img style="position:absolute;top:1.31in;left: 5.65in;width:0.44in;height:0.31in" src="/imagenes/ri_11.png">
   </div>
-</div> 
-<script type="text/javascript">
-    $('#myTab a').on('click', function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
-</script>
+   </div>

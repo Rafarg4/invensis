@@ -23,6 +23,9 @@
     <footer class="blockquote-footer">2 IMPRIMIRLO Y FIRMARLO</footer>
     </blockquote>
     <footer class="blockquote-footer">3 ESCANEAR EL DOCUMENTO DEL ASEGURADO FIRMADO Y CARGALOS EN EL APARTADO DE DOCUMENTOS</footer>
+    <footer class="blockquote-footer">4 EN CASO DE CONTAR CON SEGURO PROPIO DESCARGAR FORMLARIO DE DESLINDE <a href="/formulario.pdf" download>
+                     <span class="badge badge-danger">AQUI</span>
+                    </a></footer>
     
   </div>
 </div>

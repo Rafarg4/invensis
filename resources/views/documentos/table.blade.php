@@ -2,8 +2,9 @@
     <table class="table" id="table">
         <thead>
         <tr>
-            <th>Ci Inscripto</th>
-            <th>Pago</th>
+        <th>Ci Inscripto</th>
+        <th>Nombre y Apellido</th>
+        <th>Pago</th>
         <th>Inscripcion</th>
         <th> Seguro medico</th>
         <th>Certificado medico</th>
@@ -16,6 +17,7 @@
         @foreach($documentos as $documento)
             <tr>
                 <td>{{ $documento->inscripto->ci  ?? 'Inscripto no asignada' }}</td>
+                <td>{{ $documento->inscripto->primer_y_segundo_nombre  ?? 'Inscripto no asignada' }} {{ $documento->inscripto->primer_y_segundo_apellido  ?? 'Inscripto no asignada' }}</td>
                 <td><a href="{{route('documento.download_pago',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
             <td><a href="{{route('documento.download_inscripcion',$documento->id)}}"><img src="pdf.jpg" width="40" height="40"></a></td>
             <td><a href="{{route('documento.download_seguro',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>

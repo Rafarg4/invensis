@@ -14,10 +14,10 @@
                 </div>
 @endif
 <div class="form-group col-sm-12">
-              {!! Form::label('archivo_pago', 'Comprobante de pago:') !!}
+            {!! Form::label('archivo_pago', 'Comprobante de pago:') !!}
             <div class="input-group">
             <div class="custom-file">
-            {!! Form::file('archivo_pago', null, ['class' => 'form-control', 'id' => 'archivo_pago','required']) !!}
+            <input type="file" id="archivo_pago" name="archivo_pago" required >
             <label class="custom-file-label" for="archivo_pago">Seleccionar Archivo</label>
             </div>
             </div>
@@ -30,7 +30,7 @@
               {!! Form::label('archivo_inscripcion', 'Comprobante de firma de documento:') !!}
             <div class="input-group">
             <div class="custom-file">
-            {!! Form::file('archivo_inscripcion', null, ['class' => 'form-control', 'id' => 'archivo_inscripcion','required']) !!}
+            <input type="file" id="archivo_inscripcion" name="archivo_inscripcion" required >
             <label class="custom-file-label" for="archivo_inscripcion">Seleccionar Archivo</label>
             </div>
             </div>
@@ -43,7 +43,7 @@
               {!! Form::label('archivo_seguro_medico', 'Firma de seguro medico:') !!}
             <div class="input-group">
             <div class="custom-file">
-            {!! Form::file('archivo_seguro_medico', null, ['class' => 'form-control', 'id' => 'archivo_seguro_medico','required']) !!}
+            <input type="file" id="archivo_seguro_medico" name="archivo_seguro_medico" required >
             <label class="custom-file-label" for="archivo_seguro_medico">Seleccionar Archivo</label>
             </div>
         </div>
@@ -56,7 +56,7 @@
               {!! Form::label('archivo_copia_cedula', 'Copia de cedula:') !!}
             <div class="input-group">
             <div class="custom-file">
-            {!! Form::file('archivo_copia_cedula', null, ['class' => 'form-control', 'id' => 'archivo_copia_cedula','required']) !!}
+            <input type="file" id="archivo_copia_cedula" name="archivo_copia_cedula" required >
             <label class="custom-file-label" for="archivo_copia_cedula">Seleccionar Archivo</label>
             </div>
         </div>
@@ -69,7 +69,7 @@
               {!! Form::label('archivo_certificado_medico', 'Certificado medico:') !!}
             <div class="input-group">
             <div class="custom-file">
-            {!! Form::file('archivo_certificado_medico', null, ['class' => 'form-control', 'id' => 'archivo_certificado_medico','required']) !!}
+           <input type="file" id="archivo_certificado_medico" name="archivo_certificado_medico" required >
             <label class="custom-file-label" for="archivo_certificado_medico">Seleccionar Archivo</label>
             </div>
         </div>

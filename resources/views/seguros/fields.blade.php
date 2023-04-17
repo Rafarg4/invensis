@@ -32,7 +32,7 @@
 </div>
 <!-- Estado Civil Field -->
 <div class=" form-group col-sm-12">
-{!! Form::label('estado_civil', 'Estado Civil del Asegurado:') !!}
+{!! Form::label('estado_civil', 'Estado civil del asegurado:') !!}
 {!! Form::select('estado_civil',array('Casado' => 'Casado', 'Soltero' => 'Soltero','Divorciado' => 'Divorciado','Viudo' => 'Viudo'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required','required'])!!}
 </div>
 <!-- Edad Field -->
@@ -42,7 +42,7 @@
 </div>
 <!-- Usted Es Field -->
 <div class="form-group col-sm-12">
-    {!! Form::label('usted_es', 'Usted Es:') !!}
+    {!! Form::label('usted_es', 'Usted es:') !!}
     {!! Form::select('usted_es',array('Zurdo' => 'Zurdo', 'Diestro' => 'Diestro','Ambidiestro' => 'Ambidiestro'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
 
 </div>
@@ -70,18 +70,18 @@
 </div>
 <!-- Nombre Apellido Fallecimiento Titular Field -->
 <div class="form-group col-sm-12">
-    {!! Form::label('nombre_apellido_fallecimiento_titular', 'Nombre Apellido Fallecimiento Titular:') !!}
+    {!! Form::label('nombre_apellido_fallecimiento_titular', 'Nombre y Apellido en caso de fallecimiento de titular:') !!}
     {!! Form::text('nombre_apellido_fallecimiento_titular', null, ['class' => 'form-control','required']) !!}
 </div>
 
 <!-- Parentesco Titular Beneficiario Field -->
 <div class="form-group col-sm-12">
-    {!! Form::label('parentesco_titular_beneficiario', 'Parentesco Titular Beneficiario:') !!}
+    {!! Form::label('parentesco_titular_beneficiario', 'Parentesco de titular con beneficiario:') !!}
     {!! Form::text('parentesco_titular_beneficiario', null, ['class' => 'form-control','required']) !!}
 </div>
 <!-- Ci Beneficiario Field -->
 <div class="form-group col-sm-12">
-    {!! Form::label('ci_beneficiario', 'Ci Beneficiario:') !!}
+    {!! Form::label('ci_beneficiario', 'Ci de beneficiario:') !!}
     {!! Form::text('ci_beneficiario', null, ['class' => 'form-control','required']) !!}
 </div>
 <!-- Porcentaje Cesion Field -->
@@ -92,7 +92,7 @@
 
 <!-- Fechanac Beneficiario Field -->
 <div class="form-group col-sm-12">
-    {!! Form::label('fechanac_beneficiario', 'Fechanac Beneficiario:') !!}
+    {!! Form::label('fechanac_beneficiario', 'Fecha de nacimiento de beneficiario:') !!}
     {!! Form::date('fechanac_beneficiario', null, ['class' => 'form-control','required']) !!}
 </div>
 <script type="text/javascript">

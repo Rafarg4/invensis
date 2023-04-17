@@ -7,18 +7,14 @@
                 <div class="col-sm-6">
                     <h1>Seguros</h1>
                 </div>
+                 @if($seguros->isempty())
                 <div class="col-sm-6">
                     <a class="btn btn-primary float-right"
                        href="{{ route('seguros.create') }}">
                         Nuevo
                     </a>
-                    <div class="col-sm-12">
-                    <a class="btn btn-default float-right"
-                    href="/formulario.pdf" download>
-                     Formulario de deslinde
-                    </a>
-                </div>
             </div>
+            @endif
         </div>
     </section>
 

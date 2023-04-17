@@ -21,23 +21,22 @@ class PermissionsSeeder extends Seeder
     array_push($permission_array,Permission::create(['name' => 'create_inscripcion']));
     array_push($permission_array,Permission::create(['name' => 'edit_inscripcion']));
     array_push($permission_array,Permission::create(['name' => 'delete_inscripcion']));
-    array_push($permission_array,Permission::create(['name' => 'admin_inscripcion']));
     $UsuarioPermission= Permission::create(['name' => 'usuario_inscripcion']);
-
-    array_push($permission_array,  $UsuarioPermission);
+    $Adminpermission=Permission::create(['name' => 'admin']);
+    array_push($permission_array,  $UsuarioPermission,$Adminpermission);
 
 	$SuperAdminRole = Role::create(['name' => 'super_admin']);
 	$SuperAdminRole->syncPermissions($permission_array);
     
     $AdminRole = Role::create(['name' => 'admin']);
-    $AdminRole->syncPermissions($permission_array);
+    $AdminRole->syncPermissions($Adminpermission);
 
 
 	$UsuarioRole = Role::create(['name' => 'usuario_inscripcion']);
 	$UsuarioRole->syncPermissions($UsuarioPermission);
 
 	 $userSuperAdmin=User::create([
-            'name' => 'admin',
+            'name' => 'Superadmin',
             'email' => 'superadmin@gmail.com',
             'password' => Hash::make('Admin21141998'),
             'role' => 1,

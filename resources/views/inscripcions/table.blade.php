@@ -7,9 +7,9 @@
 <div class="col-md-8 offset-md-2">
 <form class=" float-center">
 <div class="input-group">
-<input name="buscarpor" type="search" class="form-control form-control-lg" placeholder="Ingresar Ci para buscar">
+<input name="buscarpor" type="search" class="form-control form-control" placeholder="Ingresar Ci para buscar">
 <div class="input-group-append">
-<button type="submit" class="btn btn-lg btn-default">
+<button type="submit" class="btn btn- btn-default">
 <i class="fa fa-search"></i>
 </button>
 </div>
@@ -25,7 +25,7 @@
      @if(!empty($inscripcions) && $inscripcions->count() > 0)
       @foreach($inscripcions as $inscripcion)
 <div class="col d-flex justify-content-center">
-<div class="card">
+<div class="card" style="width: 23rem;">
 <div class="card-body pt-0">
 <div class="row">
 <div class="col-7">
@@ -73,15 +73,8 @@
 <a href="{{route('pdf.show', $inscripcion->id)}}" class="btn btn-sm btn-danger">
 <i class="fas fa-file-pdf"></i> 
 </a>
-@if($inscripcion->estado =='Verificado')         
-<a href="{{ route('licencias.show',$inscripcion->id)}}" class="btn btn-sm btn-success">
-<i class="fa fas-solid fa-id-card"></i> </a>
-@else
-<a style="display: none;" href="{{ route('licencias.show',$inscripcion->id)}}" class="btn btn-sm btn-success">
-<i class="fa fas-solid fa-id-card"></i> </a>          
-@endif
 <a href="{{route('seguro',$inscripcion->id)}}" class="btn btn-sm btn-info">
-<i class="fa fas-regular fa-laptop-medical"></i> Descargar seguro</a>
+<i class="fa fas-regular fa-laptop-medical"></i></a>
 </div>
 </div>{!! Form::close() !!}
 </div>
@@ -100,24 +93,7 @@
 
     
 
-<style type="text/css">
- 
-.card {
-    margin-bottom: 24px;
-    box-shadow: 0 2px 3px #e4e8f0;
-}
-.card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 1px solid #eff0f2;
-    border-radius: 1rem;
-}
-</style>
+
 @else
 <br>
  @if(!empty($inscripcions) && $inscripcions->count() > 0)
@@ -146,7 +122,7 @@
 <div class="row">
       @foreach($inscripcions as $inscripcion)
  <div class="col d-flex justify-content-center">
-<div class="card">
+<div class="card" style="width: 23rem;">
 <div class="card-body pt-0">
 <div class="row">
 <div class="col-7">
@@ -195,7 +171,7 @@
 <i class="fas fa-file-pdf"></i> 
 </a>               
 <a href="{{route('seguro',$inscripcion->id)}}" class="btn btn-sm btn-info">
-<i class="fa fas-regular fa-laptop-medical"></i> Descargar seguro</a>
+<i class="fa fas-regular fa-laptop-medical"></i></a>
 </div>
 </div>{!! Form::close() !!}
 </div>
@@ -211,14 +187,11 @@
 </div>
 {{ $inscripcions->links() }}
 
-    
 
-<style type="text/css">
+ @endif
+ <style type="text/css">
  
-.card {
-    margin-bottom: 24px;
-    box-shadow: 0 2px 3px #e4e8f0;
-}
+
 .card {
     position: relative;
     display: flex;
@@ -231,4 +204,3 @@
     border-radius: 1rem;
 }
 </style>
- @endif

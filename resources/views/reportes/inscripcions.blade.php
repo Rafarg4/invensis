@@ -22,7 +22,7 @@
     <table class="table" id="Table">
         <thead>
         <tr>
-            <th>Nombres</th>
+        <th>Nombres</th>
         <th>Apellidos</th>
         <th>Fechanac</th>
         <th>Ci</th>
@@ -36,10 +36,12 @@
         <th>Region</th>
         <th>Estado</th>
         <th>Monto</th>
+        <th>Federacion Id</th>
+        <th>Uciid</th>
         <th>Categoria</th>
         <th>Nombre Equipo</th>
-        <th>Contacto Emergencia</th>
-        <th>Nombre Apellido Contacto Emergencia</th>
+        <th>Nro Contacto Emergencia</th>
+        <th>Contacto de Emergencia</th>
 
         </tr>
         </thead>
@@ -70,6 +72,8 @@
             @break
             @endswitch</td>
             <td>{{number_format ($inscripcion->monto) }}</td>
+             <td>{{ $inscripcion->federacion_id ?? 'Sin asignar'}}</td>
+              <td>{{ $inscripcion->uciid ?? 'Sin asignar'}}</td>
             <td>{{ $inscripcion->categoria->nombre  ?? 'Categoria no asignada' }}</td>
             <td>{{ $inscripcion->nombre_equipo }}</td>
             <td>{{ $inscripcion->contacto_emergencia }}</td>

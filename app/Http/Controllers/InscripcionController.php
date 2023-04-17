@@ -71,6 +71,7 @@ class InscripcionController extends AppBaseController
      */
     public function store(CreateInscripcionRequest $request)
     {
+    if(Auth::user()->hasRole('super_admin')) {
         $rules = [
         'ci'=>'required|unique:inscripcions,ci',
         'foto' => 'required',
@@ -89,6 +90,25 @@ class InscripcionController extends AppBaseController
         Flash::success('Inscripcion creada.');
 
         return redirect(route('inscripcions.index'));
+    }else{
+        $rules = [
+        'ci'=>'required|unique:inscripcions,ci',
+        'foto' => 'required',
+      ];
+       $mensaje = [
+        'required'=>'El :attribute es requerido',
+        'unique'=> 'Registro de inscripcion ya creado.',
+      ];
+      $this->validate($request,$rules,$mensaje);
+        $input = $request->all();
+         if($request->hasFile('foto')){
+            $input['foto']=$request->file('foto')->store('uploads','public');   
+        }
+        $inscripcion = $this->inscripcionRepository->create($input);
+
+        return redirect(route('home'));
+    }
+
     }
 
     /**

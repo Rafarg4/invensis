@@ -14,6 +14,32 @@
         <p>Dashboard</p>
     </a>
 </li>
+@if(Auth::user()->hasRole('admin'))
+@canany(['admin'])
+<li class="nav-item">
+    <a href="{{ route('importar.index') }}"
+       class="nav-link {{ Request::is('importar*') ? 'active' : '' }}">
+       <i class="fa fas-solid fa-file-excel"></i> 
+        <p>Importar Ranking</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('rankings.index') }}"
+       class="nav-link {{ Request::is('rankings*') ? 'active' : '' }}">
+       <i class="fas fa-trophy"></i>
+        <p>Rankings</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="" 
+       class="nav-link " onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+      <i class="fas fa-sign-out-alt"></i>
+        <p>Salir</p>
+
+    </a>
+</li>
+@endcan
+@else
 @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
 <li class="nav-item">
     <a href="{{ route('categorias.index') }}"
@@ -26,8 +52,8 @@
 <li class="nav-item">
     <a href="{{ route('inscripcions.index') }}"
        class="nav-link {{ Request::is('inscripcions*') ? 'active' : '' }}">
-    <i class="fa fas-solid fa-motorcycle"></i>
-        <p>Inscripcions</p>
+    <i class="fa fas-solid fa-bicycle"></i>
+        <p>Inscripciones</p>
     </a>
 </li>
 <li class="nav-item">
@@ -123,3 +149,4 @@ class="nav-link {{ Request::is('reporte_ranking*') ? 'active' : '' }}">
 
     </a>
 </li>
+@endif

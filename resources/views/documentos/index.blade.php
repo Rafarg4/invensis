@@ -7,12 +7,14 @@
                 <div class="col-sm-6">
                     <h1>Documentos</h1>
                 </div>
+                 @if($documentos->isempty())
                 <div class="col-sm-6">
                     <a class="btn btn-primary float-right"
                        href="{{ route('documentos.create') }}">
                         Nuevo
                     </a>
                 </div>
+                @endif
             </div>
         </div>
     </section>

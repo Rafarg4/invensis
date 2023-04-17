@@ -135,7 +135,7 @@
                     {!! Form::text('departamento', null, ['class' => 'form-control','required']) !!}
                 </div>
 
-                <button class="btn btn-primary nextBtn  pull-right" type="button" >Siguiente</button>
+                <button class="btn btn-primary nextBtn  pull-right" type="submit" >Siguiente</button>
             </div>
         </div>
     <div class="row setup-content" id="step-2">
@@ -167,19 +167,19 @@ tipo_categoria.addEventListener("change", changeTipo);
 function changeTipo(){
 
     if (tipo_categoria.value === "Principal") {
-        input1.innerHTML = '{!! Form::select("id_categoria", $categoria, null, ["class" => "form-control custom-select","placeholder"=>"Selecione una opcion","id"=>"id_categoria"]) !!}';
+        input1.innerHTML = '{!! Form::select("id_categoria", $categoria, null, ["class" => "form-control custom-select","placeholder"=>"Selecione una opcion","id"=>"id_categoria","required"]) !!}';
         input1.style.display = 'initial'
         /*input1.style.display = 'initial';
         input2.style.display = 'none';
         input3.style.display = 'none';*/
     } else if(tipo_categoria.value === "Master") {
-        input1.innerHTML = '{!! Form::select("id_categoria", $categoria2, null, ["class" => "form-control custom-select","placeholder"=>"Selecione una opcion","id"=>"id_categoria2"]) !!}';
+        input1.innerHTML = '{!! Form::select("id_categoria", $categoria2, null, ["class" => "form-control custom-select","placeholder"=>"Selecione una opcion","id"=>"id_categoria2","required"]) !!}';
         input1.style.display = 'initial'
         /*input1.style.display = 'none';
         input3.style.display = 'none';
         input2.style.display = 'initial';*/
     } else if (tipo_categoria.value === "Ciclismo para todos"){
-        input1.innerHTML = '{!! Form::select("id_categoria", $categoria3, null, ["class" => "form-control custom-select","placeholder"=>"Selecione una opcion","id"=>"id_categoria3"]) !!}';
+        input1.innerHTML = '{!! Form::select("id_categoria", $categoria3, null, ["class" => "form-control custom-select","placeholder"=>"Selecione una opcion","id"=>"id_categoria3","required"]) !!}';
         input1.style.display = 'initial'
         /*input1.style.display = 'none';
         input2.style.display = 'none';
@@ -188,9 +188,22 @@ function changeTipo(){
 }
 </script>
             <div class="form-group col-sm-12">
-                    {!! Form::label('region', 'Elegir a que región pertenece:') !!}
+                    {!! Form::label('region', 'Elegir a que region pertenece:') !!}
                      {!! Form::select('region',array('Asosiacion metropolitana de ciclismo' => 'Asosiacion metropolitana de ciclismo', 'Federacion paranaense de ciclismo' => 'Federacion paranaense de ciclismo','Union Regional de ciclistas (URCI)' => 'Union Regional de ciclistas (URCI)','Federacion de ciclismo Itapuense' => 'Federacion de ciclismo Itapuense'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required','required'])!!}
                 </div>
+                 <!-- Imagen Field -->
+            <div class="form-group col-sm-12">
+              {!! Form::label('foto', 'Foto:') !!}
+            <div class="input-group">
+            <div class="custom-file">
+           <input type="file" id="foto" name="foto" required >
+            <label class="custom-file-label" for="foto">Seleccionar Archivo</label>
+            </div>
+        </div>
+         @if(isset($inscripcion->foto))
+            <img src="{{ asset('storage').'/'.$inscripcion->foto}}" width="100" height="100" class="img-circle">
+            @endif
+    </div>
             <!-- Nombre Equipo Field -->
             <div class="form-group col-sm-12">
                 {!! Form::label('nombre_equipo', 'Nombre Equipo:') !!}
@@ -210,18 +223,7 @@ function changeTipo(){
             </div>
 
             <!-- Foto Field -->
-            <!-- Imagen Field -->
-
-
-            <div class="form-group col-sm-12">
-            <label for="foto">Selecione un archivo:</label>
-             @if(isset($inscripcion->foto))
-            <img src="{{ asset('storage').'/'.$inscripcion->foto}}" width="100" height="100" class="img-circle">
-            @endif 
-            <input type="file" id="foto" name="foto">
-            
-            </div>
-                <button class="btn btn-primary nextBtn  pull-right" type="button" >Siguiente</button>
+                <button class="btn btn-primary nextBtn  pull-right" type="submit" >Siguiente</button>
         </div>
     </div>
     <div class="row setup-content" id="step-3">

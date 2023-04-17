@@ -67,6 +67,7 @@ class SeguroController extends AppBaseController
      */
     public function store(CreateSeguroRequest $request)
     {
+        if(Auth::user()->hasRole('super_admin')) {
         $input = $request->all();
 
         $seguro = $this->seguroRepository->create($input);
@@ -74,6 +75,14 @@ class SeguroController extends AppBaseController
         Flash::success('Seguro guardado correctamente.');
 
         return redirect(route('seguros.index'));
+    }else{
+        $input = $request->all();
+
+        $seguro = $this->seguroRepository->create($input);
+
+        return redirect(route('home'));
+
+     }
     }
 
     /**

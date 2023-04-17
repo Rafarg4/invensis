@@ -2,6 +2,8 @@
     <table class="table" id="Tabla">
         <thead>
         <tr>
+            <th>Ci</th>
+            <th>Nombre y Apellido</th>
             <th>Estado Civil</th>
         <th>Edad</th>
         <th>Usted Es</th>
@@ -11,6 +13,8 @@
         <tbody>
        
             <tr>
+                <td>{{ $seguro->inscripto->ci  ?? 'Incripto no asignada' }}</td>
+            <td>{{ $seguro->inscripto->primer_y_segundo_nombre  ?? 'Incripto no asignada' }} {{ $seguro->inscripto->primer_y_segundo_apellido  ?? 'Incripto no asignada' }}</td>
                 <td>{{ $seguro->estado_civil }}</td>
             <td>{{ $seguro->edad }}</td>
             <td>{{ $seguro->usted_es }}</td>

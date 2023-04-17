@@ -96,6 +96,7 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
 <script type="text/javascript">
     $(document).ready(function () {
     $('#tablas').DataTable({
+        "pageLength":6,
          "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
             },
@@ -170,7 +171,11 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
 
     @stack('page_css')
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+
+<!--
+    Menu original
+    <body class="hold-transition sidebar-mini layout-fixed">-->
+ <body class="sidebar-mini layout-fixed sidebar-collapse">   
 <div class="wrapper">
     <!-- Main Header -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -188,24 +193,6 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
                          class="user-image img-circle elevation-2" alt="User Image">
                     <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                    <!-- User image -->
-                    <li class="user-header bg-primary">
-                        <img src="/usuario.png"
-                             class="img-circle elevation-2"
-                             alt="User Image">
-                        <p>
-                            {{ Auth::user()->name }}
-                            <small>Miembro desde {{ Auth::user()->created_at->format('M. Y') }}</small>
-                        </p>
-                    </li>
-                    <!-- Menu Footer-->
-                    <li class="user-footer">
-                        <a href="#" class="btn btn-default btn-flat">Perfil</a>
-                        <a href="#" class="btn btn-default btn-flat float-right"
-                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            Salir
-                        </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
@@ -228,7 +215,7 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
     <!-- Main Footer -->
     <footer class="main-footer">
         <div class="float-right d-none d-sm-block">
-            <b>Version</b> 1.1.0
+            <b>Version</b> 1.2.0
         </div>
         <strong>
            Copyright &copy; 2023 <a href="https://fpc.org.py/">Federacion Paraguaya de Ciclismo</a>.

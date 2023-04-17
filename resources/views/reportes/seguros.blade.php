@@ -22,7 +22,9 @@
     <table class="table" id="Table">
         <thead>
         <tr>
-            <th>Estado Civil</th>
+        <th>Ci</th>
+        <th>Nombre y Apellido</th>
+        <th>Estado Civil</th>
         <th>Edad</th>
         <th>Usted Es</th>
         <th>Padece Enfermedad</th>
@@ -36,14 +38,16 @@
         <th>Parentesco Titular Beneficiario</th>
         <th>Ci Beneficiario</th>
         <th>Porcentaje Cesion</th>
-        <th>Fechanac Beneficiario</th>
+        <th>Fechade nacimiento de Beneficiario</th>
 
         </tr>
         </thead>
         <tbody>
         @foreach($seguros as $seguro)
             <tr>
-                <td>{{ $seguro->estado_civil }}</td>
+            <td>{{ $seguro->inscripto->ci  ?? 'Incripto no asignada' }}</td>
+            <td>{{ $seguro->inscripto->primer_y_segundo_nombre  ?? 'Incripto no asignada' }} {{ $seguro->inscripto->primer_y_segundo_apellido  ?? 'Incripto no asignada' }}</td>
+            <td>{{ $seguro->estado_civil }}</td>
             <td>{{ $seguro->edad }}</td>
             <td>{{ $seguro->usted_es }}</td>
             <td>{{ $seguro->padece_enfermedad }}</td>

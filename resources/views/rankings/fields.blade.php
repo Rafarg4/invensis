@@ -12,7 +12,7 @@
 
 <!-- Nombre Apellido Field -->
 <div class="form-group col-sm-12">
-    {!! Form::label('nombre_apellido', 'Nombre Apellido:') !!}
+    {!! Form::label('nombre_apellido', 'Nombre y Apellido:') !!}
     {!! Form::text('nombre_apellido', null, ['class' => 'form-control','required']) !!}
 </div>
 
