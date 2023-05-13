@@ -41,7 +41,7 @@ class CreateInscripcionsTable extends Migration
             $table->text('monto')->nullable();
             $table->text('estado')->nullable();
             $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')->references('id')->on('users');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

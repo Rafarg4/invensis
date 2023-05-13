@@ -34,9 +34,9 @@ class CreateSegurosTable extends Migration
             $table->text('porcentaje_cesion');
             $table->text('fechanac_beneficiario');
              $table->unsignedBigInteger('id_inscripcion');
-            $table->foreign('id_inscripcion')->references('id')->on('inscripcions');
+            $table->foreign('id_inscripcion')->references('id')->on('inscripcions')->onDelete('cascade');
              $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')->references('id')->on('users');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -95,7 +95,7 @@
 @if($inscripcions->isempty())	
 <div class="col-12 col-sm-6 col-md-3">
 <div class="info-box">
-<span class="info-box-icon bg-danger elevation-1"><i class="fa fas-solid fa-plus"></i></span>
+<span class="info-box-icon bg-danger elevation-1"><a href="{{ route('inscripcions.create') }}"  class="fa fas-solid fa-plus"></i></a></span>
 <div class="info-box-content">
 <span class="info-box-text">Paso 1 registrar inscripcion </span>
 <span class="info-box-number">
@@ -121,7 +121,7 @@
 <div class="clearfix hidden-md-up"></div>
 <div class="col-12 col-sm-6 col-md-3">
 <div class="info-box mb-3">
-<span class="info-box-icon bg-danger elevation-1"><i class="fa fas-solid fa-plus"></i></span>
+<span class="info-box-icon bg-danger elevation-1"><a href="{{ route('seguros.create') }}" class="fa fas-solid fa-plus"></i></a></span>
 <div class="info-box-content">
 <span class="info-box-text">Paso 2 Registro de seguro</span>
 <span class="info-box-number"><a href="{{ route('seguros.create') }}" class="small-box-footer">Ir a <i class="fas fa-arrow-circle-right"></i></a></span>
@@ -143,7 +143,7 @@
 @if($documentos->isempty())
 <div class="col-12 col-sm-6 col-md-3">
 <div class="info-box mb-3">
-<span class="info-box-icon bg-danger elevation-1"><i class="fa fas-solid fa-plus"></i></span>
+<span class="info-box-icon bg-danger elevation-1"><a href="{{ route('documentos.create') }}" class="fa fas-solid fa-plus"></i></a></span>
 <div class="info-box-content">
 <span class="info-box-text">Paso 3 Subir documentos</span>
 <span class="info-box-number"><a href="{{ route('documentos.create') }}" class="small-box-footer">Ir a <i class="fas fa-arrow-circle-right"></i></a></span>
