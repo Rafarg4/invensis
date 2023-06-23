@@ -23,6 +23,10 @@ Route::get('/symlink', function () {
    symlink($target, $link);
    echo "Done";
 });
+Route::get('/seguridad', function() {
+  Artisan::call('backup:run'); 
+  return response()->json(['success' => 'Backup for database created']);
+});
 Auth::routes();
 Route::get('', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -76,3 +80,13 @@ Route::get('imprimir/licencias', [App\Http\Controllers\LicenciapdfController::cl
 
 
 //});
+
+Route::resource('denuncias', App\Http\Controllers\DenunciaController::class);
+
+
+Route::get('backup', [App\Http\Controllers\BackupController::class, 'index'])->name('backup')->middleware('auth');
+
+Route::get('backup/create/', 'App\Http\Controllers\BackupController@create');
+Route::get('backup/download/{file_name}', 'App\Http\Controllers\BackupController@download');
+
+Route::get('backup/delete/{file_name}', 'App\Http\Controllers\BackupController@delete');

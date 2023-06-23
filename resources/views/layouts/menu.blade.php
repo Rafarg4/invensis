@@ -134,6 +134,13 @@ class="nav-link {{ Request::is('reporte_ranking*') ? 'active' : '' }}">
     </a>
 </li>
 <li class="nav-item">
+    <a href="{{ url('backup') }}"
+       class="nav-link {{ Request::is('bacukps*') ? 'active' : '' }}">
+       <i class="fa fas-solid fa-database"></i>
+        <p>Bacukps</p>
+    </a>
+</li>
+<li class="nav-item">
     <a href="{{ route('users.index') }}"
        class="nav-link {{ Request::is('users*') ? 'active' : '' }}">
        <i class="fa fas-light fa-user"></i>
