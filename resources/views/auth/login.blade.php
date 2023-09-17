@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       <link rel="icon" type="image/png" src="/logof.png" />
     <title>{{ config('app.name') }} | Login</title>
 
     <!-- Tell the browser to be responsive to screen width -->
@@ -32,16 +33,9 @@
 
 </head>
 <body class="hold-transition login-page">
-<div class="login-box">
-    
-    <div class="login-logo">
-        
-    </div>
-
-    <!-- /.login-logo -->
-
-    <!-- /.login-box-body -->
-    <div class="card" style="width: 20rem;">
+<div class="login-box"style="width: 19rem;">
+    <div class="card card-outline card-primary">
+ 
         <div class="card-body login-card-body">
             <center> <img src="/logof.png" width="150" height="150" class="img-circle" alt="User Image"/></center>
             <p class="login-box-msg">Iniciar Sesion </p>
@@ -93,7 +87,7 @@
                     </div>
 
                     <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+                        <button type="submit" class="btn btn-primary btn-block-btn-xs">Ingresar</button>
                     </div>
 
                 </div>

@@ -2,7 +2,7 @@
                 <label for="id_user">Identificador:</label>
                 <input type="text" name="id_user" class="form-control" value="{{ Auth::user()->id }}" readonly>
                 </div>
-  @if(Auth::user()->hasRole('super_admin'))
+   @if(Auth::user()->hasRole('super_admin'))
   <div class="form-group col-sm-12">
                 {!! Form::label('id_inscripcion', 'Inscripto:') !!}
                 {!! Form::select('id_inscripcion', $inscripcions, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion']) !!}
@@ -15,7 +15,7 @@
 @endif
 <div class="form-group col-sm-12">
     {!! Form::label('padece_enfermedad', '¿Padece o está siendo tratado por alguna enfermedad?:') !!}
-    {!! Form::select('padece_enfermedad',array('Si' => 'Si', 'No' => 'No'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required','onchange'=>'','required'])!!}
+    {!! Form::select('padece_enfermedad',array('Si' => 'Si', 'No' => 'No'),null, ['class' => 'form-control','placeholder'=>'Seleccione una opcion','required','onchange'=>'','required'])!!}
 </div>
 <!-- Especificar Enfermedad Field -->
 <div class="form-group col-sm-12" id="especificar_enfermedad" style="display: none;">
@@ -24,7 +24,7 @@
 <!-- Presenta Defecto Fisico Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('presenta_defecto_fisico', '¿Presenta algún defecto físico, mutilación o deformación? :') !!}
-    {!! Form::select('presenta_defecto_fisico',array('Si' => 'Si', 'No' => 'No'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required','onchange'=>'','required'])!!}
+    {!! Form::select('presenta_defecto_fisico',array('Si' => 'Si', 'No' => 'No'),null, ['class' => 'form-control','placeholder'=>'Seleccione una opcion','required','onchange'=>'','required'])!!}
 </div>
 <!-- Especifique Defecto Fisico Field -->
 <div class="form-group col-sm-12" id="especifique_defecto_fisico" style="display: none;">
@@ -60,14 +60,45 @@
 
 <div class="form-group col-sm-12">
     {!! Form::label('tipo_plan', 'Tipo de plan:') !!}
-      {!! Form::select('tipo_plan',array('sin_deducile' => 'Plan sin deducile', 'con_deducible' => 'Plan con deducible'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
-</div>
+      {!! Form::select('tipo_plan',array('Plan sin deducible' => 'Plan sin deducible', 'Plan con deducible' => 'Plan con deducible'),null, ['class' => 'form-control','placeholder'=>'Seleccione una opcion','required'])!!}
+</div>  
 <div class="form-group col-sm-12" id="plan_sin_deducible" style="display: none;">
-   {!! Form::select('plan_sin_deducible',array('OPCIÓN 1 - 150.000 GS POR PERSONA' => 'OPCIÓN 1 - 150.000 GS POR PERSONA', 'OPCIÓN 2 - 220.000GS POR PERSONA' => 'OPCIÓN 2 - 220.000GS POR PERSONA','OPCIÓN 3 - 280.000 GS POR PERSONA' => 'OPCIÓN 3 - 280.000 GS POR PERSONA','OPCIÓN 4 - 300.000 GS POR PERSONA' => 'OPCIÓN 4 - 300.000 GS POR PERSONA','OPCIÓN 5 - 560.000GS POR PERSONA' => 'OPCIÓN 5 - 560.000GS POR PERSONA','OPCIÓN 6 - 700.000 GS POR PERSONA' => 'OPCIÓN 6 - 700.000 GS POR PERSONA'),null, ['class' => 'form-control','placeholder'=>'Seleccione','id'=>'plan_sin_deducible'])!!}
+  
 </div>
 <div class="form-group col-sm-12" id="plan_con_deducible" style="display: none;">
-      {!! Form::select('plan_con_deducible',array('OPCIÓN 1 - 82.500 GS POR PERSONA' => 'OPCIÓN 1 - 82.500 GS POR PERSONA', 'OPCIÓN 2 - 121.000 GS POR PERSONA' => 'OPCIÓN 3 - 154.000 GS POR PERSONA','OPCIÓN 4 - 231.000 GS POR PERSONA' => 'OPCIÓN 4 - 231.000 GS POR PERSONA','OPCIÓN 5 - 308.000 GS POR PERSONA' => 'OPCIÓN 5 - 308.000 GS POR PERSONA','OPCIÓN 6 - 385.000 GS POR PERSONA'),null, ['class' => 'form-control','placeholder'=>'Seleccione','id'=>'plan_con_deducible'])!!}
+  
 </div>
+
+<script type="text/javascript">
+const tipo_plans = document.querySelector("#tipo_plane");
+const input1 = document.querySelector("[id=plan_sin_deducible]");
+const input2 = document.querySelector("[id=plan_con_deducible]");
+
+tipo_plan.addEventListener("change", changeTipo);
+
+function changeTipo(){
+
+    if (tipo_plan.value === "Plan sin deducible") {
+        input1.innerHTML = '{!! Form::select("id_tarifa", $tarifa_sin, null, ["class" => "form-control custom-select","placeholder"=>"Selecione una opcion","id"=>"plan_sin_deducible"]) !!}';
+        input1.style.display = 'initial'
+        /*input1.style.display = 'initial';
+        input2.style.display = 'none';
+        input3.style.display = 'none';*/
+    } else if(tipo_plan.value === "Plan con deducible") {
+        input1.innerHTML = '    {!! Form::select("id_tarifa", $tarifa_con, null, ["class" => "form-control custom-select","placeholder"=>"Selecione una opcion","id"=>"plan_con_deducible"]) !!}';
+        input1.style.display = 'initial'
+        /*input1.style.display = 'none';
+        input3.style.display = 'none';
+        input2.style.display = 'initial';*/
+    } 
+    
+}
+</script>
+
+
+
+
+
 <!-- Nombre Apellido Fallecimiento Titular Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('nombre_apellido_fallecimiento_titular', 'Nombre y Apellido en caso de fallecimiento de titular:') !!}
@@ -87,7 +118,7 @@
 <!-- Porcentaje Cesion Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('porcentaje_cesion', 'Porcentaje Cesion:') !!}
-   {!! Form::select('porcentaje_cesion',array('100%' => '100%'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required','required'])!!}
+   {!! Form::select('porcentaje_cesion',array('100%' => '100%'),null, ['class' => 'form-control','placeholder'=>'Seleccione una opcion','required','required'])!!}
 </div>
 
 <!-- Fechanac Beneficiario Field -->
@@ -107,39 +138,3 @@ padece_enfermedad.addEventListener("change", () => {
   }
 });
 </script>
-<script type="text/javascript">
-const presenta_defecto_fisico = document.querySelector("#presenta_defecto_fisico");
-const input1 = document.querySelector("[id=especifique_defecto_fisico]");
-
-presenta_defecto_fisico.addEventListener("change", () => {
-  if (presenta_defecto_fisico.value === "Si") {
-    input1.style.display = 'initial';
-  } else {
-    input1.style.display = 'none';
-  }
-});
-</script>
-
-<script type="text/javascript">
-    const tipo_plan = document.querySelector("#tipo_plan");
-const input2 = document.querySelector("[id=plan_sin_deducible]");
-
-tipo_plan.addEventListener("change", () => {
-  if (tipo_plan.value === "sin_deducile") {
-    input2.style.display = 'initial';
-  } else {
-    input2.style.display = 'none';
-  }
-});   
-const input3 = document.querySelector("[id=plan_con_deducible]");
-
-tipo_plan.addEventListener("change", () => {
-  if (tipo_plan.value === "con_deducible") {
-    input3.style.display = 'initial';
-  } else {
-    input3.style.display = 'none';
-  }
-});
-</script>
-
-

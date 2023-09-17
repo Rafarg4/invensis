@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\RankingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,8 +53,8 @@ Route::resource('licencias', App\Http\Controllers\LicenciaController::class)->mi
 
 Route::get('/graficos', [App\Http\Controllers\GraficoController::class, 'grafico'])->name('graficos')->middleware('auth');
 
-Route::get('rankings/mostrar', [App\Http\Controllers\RankingController::class, 'mostrar'])->name('rankings/mostrar');
-
+Route::get('rankings/consulta', [App\Http\Controllers\RankingController::class, 'consulta'])->name('rankings/consulta');
+Route::get('ranking_m_tbs/consulta', [App\Http\Controllers\RankingMTBController::class, 'consulta'])->name('rankingmtbs/consulta');
 Route::resource('categorias', App\Http\Controllers\CategoriaController::class)->middleware('auth');
 
 
@@ -74,6 +74,9 @@ Route::resource('rankings', App\Http\Controllers\RankingController::class)->midd
 
 Route::resource('importar', App\Http\Controllers\ImportarController::class)->middleware('auth');
 
+Route::resource('importar_mtb', App\Http\Controllers\ImportarMTBController::class)->middleware('auth');
+
+
 Route::resource('seguros', App\Http\Controllers\SeguroController::class)->middleware('auth');
 
 Route::get('imprimir/licencias', [App\Http\Controllers\LicenciapdfController::class, 'licencias'])->name('licencias')->middleware('auth');
@@ -81,12 +84,19 @@ Route::get('imprimir/licencias', [App\Http\Controllers\LicenciapdfController::cl
 
 //});
 
-Route::resource('denuncias', App\Http\Controllers\DenunciaController::class);
-
-
 Route::get('backup', [App\Http\Controllers\BackupController::class, 'index'])->name('backup')->middleware('auth');
 
 Route::get('backup/create/', 'App\Http\Controllers\BackupController@create');
 Route::get('backup/download/{file_name}', 'App\Http\Controllers\BackupController@download');
 
 Route::get('backup/delete/{file_name}', 'App\Http\Controllers\BackupController@delete');
+
+
+Route::resource('tarifas', App\Http\Controllers\TarifaController::class);
+
+
+Route::resource('rankingMTBs', App\Http\Controllers\RankingMTBController::class);
+
+//Route::get('/rankings/ver_ranking/{id}', 'App\Http\Controllers\RankingController@ver_ranking');
+
+Route::get('ranking/ver_ranking/{id}', [App\Http\Controllers\RankingController::class, 'ver_ranking'])->name('ranking/ver_ranking');

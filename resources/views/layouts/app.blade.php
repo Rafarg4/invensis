@@ -175,7 +175,7 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
 <!--
     Menu original
     <body class="hold-transition sidebar-mini layout-fixed">-->
- <body class="sidebar-mini layout-fixed sidebar-collapse">   
+ <body class="sidebar-mini layout-fixed sidebar-collapse"style="font-size: 11px;">   
 <div class="wrapper">
     <!-- Main Header -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">

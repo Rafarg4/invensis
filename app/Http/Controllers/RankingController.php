@@ -12,6 +12,8 @@ use Response;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Categoria;
 use App\Models\Inscripcion;
+use App\Models\Ranking;
+use DB;
 class RankingController extends AppBaseController
 {
     /** @var RankingRepository $rankingRepository*/
@@ -29,20 +31,43 @@ class RankingController extends AppBaseController
      *
      * @return Response
      */
-    public function mostrar(Request $request)
+    public function consulta(Request $request)
     {
-        $rankings = $this->rankingRepository->all();
-        $inscripcion =Inscripcion::pluck('ci');
-        $categoria =Categoria::pluck('nombre');
-        return view('rankings.mostrar',compact('inscripcion','rankings','categoria')); 
+        $nombre_apellido = $request->get('buscar');
+        $rankings = DB::table('rankings')
+        ->select('ci','nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis','fecha_siete','fecha_ocho','fecha_nueve','fecha_dies', DB::raw('fecha_uno + fecha_dos + fecha_tres + fecha_cuatro + fecha_cinco + fecha_seis + fecha_seis + fecha_ocho + fecha_nueve + fecha_dies AS totales'))
+         ->where('rankings.deleted_at', null)
+         ->where('nombre_apellido','like',"%$nombre_apellido%")
+         ->get();
+        return view('rankings.consulta',compact('rankings')); 
+    }
+    public function ver_ranking($id)
+    {
+        $rankings = $this->rankingRepository->find($id);
+
+        // Calcula la suma de las fechas
+        $totales = $rankings->fecha_uno + $rankings->fecha_dos + $rankings->fecha_tres + $rankings->fecha_cuatro + $rankings->fecha_cinco + $rankings->fecha_seis + $rankings->fecha_seis + $rankings->fecha_ocho + $rankings->fecha_nueve + $rankings->fecha_dies;
+
+
+        if (empty($rankings)) {
+            Flash::error('Ranking no encontrado');
+
+            return redirect(route('rankings.ver_ranking'));
+        }
+
+        return view('rankings.ver_ranking',compact('rankings','totales'));
     }
 
     public function index(Request $request)
     {
-        $rankings = $this->rankingRepository->all();
-        $inscripcion =Inscripcion::pluck('ci');
-        $categoria =Categoria::pluck('nombre');
-        return view('rankings.index',compact('inscripcion','rankings','categoria'));
+        $nombre_apellido = $request->get('buscar');
+        $rankings = DB::table('rankings')
+        ->select('ci','nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis','fecha_siete','fecha_ocho','fecha_nueve','fecha_dies', DB::raw('fecha_uno + fecha_dos + fecha_tres + fecha_cuatro + fecha_cinco + fecha_seis + fecha_seis + fecha_ocho + fecha_nueve + fecha_dies AS totales'))
+         ->where('rankings.deleted_at', null)
+         ->where('nombre_apellido','like',"%$nombre_apellido%")
+         ->get();
+         $inscripcion =Inscripcion::pluck('ci');
+        return view('rankings.index',compact('rankings','inscripcion'));
     }
 
     /**

@@ -1,58 +1,54 @@
 <?php
 
 namespace App\Imports;
+use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Illuminate\Support\Collection;
+use App\Imports\RankingsImport;
 use App\Models\Ranking;
-use App\Models\Categoria;
-use App\Models\Inscripcion;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithValidation;
-
-class RankingsImport implements ToModel, WithHeadingRow, WithValidation
+class RankingsImport implements ToModel, WithHeadingRow
 {
-  
-
-  public function __construct (){
-
-    
-  }
-  
-
-    /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
-    public function rules(): array
+     public function model(array $row)
     {
-        return [
-        'posicion' => 'required',
-        'ci' => 'required',
-        'nombre_apellido' => 'required|string',
-        'categoria' => 'required|string',
-        'club' => 'required|string',
-        'sexo' => 'required|string',
-        '1_fecha' => 'required',
-        '2_fecha' => 'required',
-        '3_fecha' => 'required',
-        '4_fecha' => 'required',
-        'total' => 'required',
-        ];
-    }
-    public function model(array $row)
-    {
-        return new Ranking([
-          'posicion'  => $row['posicion'],
-          'ci' => $row['ci'],
-          'nombre_apellido' => $row['nombre_apellido'],
-          'categoria' => $row['categoria'],
-          'club' => $row['club'],
-          'sexo' => $row['sexo'],
-          'primer_fecha' => $row['1_fecha'],
-          'segundo_fecha' => $row['2_fecha'],
-          'tercero_fecha' => $row['3_fecha'],
-          'cuarto_fecha' => $row['4_fecha'],
-          'total' => $row['total'],
-        ]);
+        $existingRanking = Ranking::where('ci', $row['ci'])->first();
+
+        if ($existingRanking) {
+            $existingRanking->update([
+            // Actualiza las columnas necesarias en el registro existente
+                'fecha_uno' => $row['fecha_uno'],
+                'fecha_dos' => $row['fecha_dos'],
+                'fecha_tres' => $row['fecha_tres'],
+                'fecha_cuatro' => $row['fecha_cuatro'],
+                'fecha_cinco' => $row['fecha_cinco'],
+                'fecha_seis' => $row['fecha_seis'],
+                'fecha_siete' => $row['fecha_siete'],
+                'fecha_ocho' => $row['fecha_ocho'],
+                'fecha_nueve' => $row['fecha_nueve'],
+                'fecha_dies' => $row['fecha_dies'],
+                // Agrega otras columnas que deseas actualizar aquí
+            ]);
+        } else {
+                // Si no existe un registro, crea uno nuevo
+                Ranking::create([
+                    'ci' => $row['ci'],
+                    'posicion'  => $row['pos'],
+                    'nombre_apellido' => $row['nombre_apellido'],
+                    'categoria' => $row['categoria'],
+                    'team' => $row['team'],
+                    'fecha_uno' => $row['fecha_uno'],
+                    'fecha_dos' => $row['fecha_dos'],
+                    'fecha_tres' => $row['fecha_tres'],
+                    'fecha_cuatro' => $row['fecha_cuatro'],
+                    'fecha_cinco' => $row['fecha_cinco'],
+                    'fecha_seis' => $row['fecha_seis'],
+                    'fecha_siete' => $row['fecha_seis'],
+                    'fecha_ocho' => $row['fecha_ocho'],
+                    'fecha_nueve' => $row['fecha_nueve'],
+                    'fecha_dies' => $row['fecha_dies'],
+                    
+                ]);
+        }
     }
 }
+

@@ -27,8 +27,8 @@ class ReporteController extends Controller
     }	
      public function reporte_ranking(){
 
-    	$rankings =Ranking::all();
-    	
+    	$rankings =Ranking::where('deleted_at', null)
+        ->get();   
 
     	return view('reportes.rankings',compact('rankings'));
 

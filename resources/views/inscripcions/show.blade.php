@@ -6,6 +6,7 @@
      header {display: none !important;}
      footer {display: none !important;}
       nav {display: none !important;}
+      ul  {display: none !important;}
      .noimprimir {display: none !important;}
      body {background: #fff !important;}     
 }
@@ -33,25 +34,18 @@
 
 
 <div class="content px-3">
+  <div class="row">
+<div class="col-12">
 <div class="card">
-<nav class="card card-primary card-outline card-outline-tabs">
-<div class="card-header p-0 border-bottom-0">
-<ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
-<li class="nav-item">
-<a class="nav-link active" id="custom-tabs-four-home-tab" data-toggle="pill" href="#custom-tabs-four-home" role="tab" aria-controls="custom-tabs-four-home" aria-selected="true"><i class="fa fas-solid fa-bicycle"></i> Inscripcion</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" id="custom-tabs-four-profile-tab" data-toggle="pill" href="#custom-tabs-four-profile" role="tab" aria-controls="custom-tabs-four-profile" aria-selected="false"><i class="fa fas-light fa-book"></i> Documento</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" id="custom-tabs-four-messages-tab" data-toggle="pill" href="#custom-tabs-four-messages" role="tab" aria-controls="custom-tabs-four-messages" aria-selected="false"> <i class="fa fas-regular fa-laptop-medical"></i> Seguro</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" id="custom-tabs-four-settings-tab" data-toggle="pill" href="#custom-tabs-four-settings" role="tab" aria-controls="custom-tabs-four-settings" aria-selected="false"><i class="fas fa-id-card"></i> Licencia</a>
-</li>
+<div class="card-header d-flex p-0">
+<ul class="nav nav-pills justify-content-start p-2">
+<li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab"><i class="fa fas-solid fa-bicycle"></i> Incrcipciones</a></li>
+<li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab"><i class="fa fas-light fa-book"></i> Documento</a></li>
+<li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab"><i class="fa fas-regular fa-laptop-medical"></i> Seguro</a></li>
+<li class="nav-item"><a class="nav-link" href="#tab_4" data-toggle="tab"><i class="fas fa-id-card"></i>  Licencia</a></li>
 </ul>
 </div>
-</nav>
+
 <div class="card-body">
     @include('inscripcions.show_fields')
             <div class="card-body">

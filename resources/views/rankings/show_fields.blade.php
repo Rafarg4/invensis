@@ -1,71 +1,57 @@
-<div class="table-responsive" >
-    <table class="table" id="a">
-        <thead>
-        <tr>
-            <th>Posicion</th>
-            <th>Ci</th>
-        <th>Nombre Apellido</th>
-        <th>Categoria</th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ $ranking->posicion }}</td>
-                 <td>{{ $ranking->ci }}</td>
-            <td>{{ $ranking->nombre_apellido }}</td>
-            <td>{{ $ranking->categoria }}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<div class="table-responsive">
-    <table class="table" id="Tale">
-        <thead>
-        <tr>
-           
-        <th>Club</th>
-        <th>Sexo</th>
-        <th>1 Fecha</th>
-        <th>2 Fecha</th>
-      
-        </tr>
-        </thead>
-        <tbody>
-            <tr>
-              
-            <td>{{ $ranking->club }}</td>
-            <td>{{ $ranking->sexo }}</td>
-            <td>{{ $ranking->primer_fecha}}</td>
-            <td>{{ $ranking->segundo_fecha }}</td>
-            
-            </tr>
-        </tbody>
-    </table>
-</div>
-<div class="table-responsive" >
-    <table class="table" id="Tale">
-        <thead>
-        <tr>
-           
-       
-        <th>3 Fecha</th>
-        <th>4 Fecha</th>
-        <th>Total</th>
-            <th>Fecha de registro</th>
-            <th>Fecha de actualizacion</th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr>
-               
-            <td>{{ $ranking->tercero_fecha }}</td>
-            <td>{{ $ranking->cuarto_fecha }}</td>
-            <td>{{ $ranking->total }}</td>
-               <td>{{ $ranking->created_at }}</td>
-  
-             <td>{{ $ranking->created_at }}</td>            
-            </tr>
-        </tbody>
-    </table>
-</div>
-
+ <form>
+  <div class="row">
+    
+    <div class="form-group col-md-3">
+      <label>Posicion:</label>  
+      <input type="text" class="form-control" placeholder="{{ $ranking->posicion }}", disabled="true">
+    </div>
+    <div class="form-group col-md-3">
+        <label>Nombre y apellido:</label>
+      <input type="text" class="form-control" placeholder="{{ $ranking->nombre_apellido }}", disabled="true">
+    </div>
+    <div class="form-group col-md-3">
+        <label>Fecha uno:</label>
+      <input type="text" class="form-control" placeholder="{{ $ranking->fecha_uno}}", disabled="true">
+    </div>
+    <div class="form-group col-md-3">
+        <label>Fecha dos:</label>
+      <input type="text" class="form-control" placeholder="{{ $ranking->fecha_dos ?? 'A competir'}}", disabled="true">
+    </div>
+    <div class="form-group col-md-3">
+        <label>Fecha tres:</label>
+      <input type="text" class="form-control" placeholder="{{ $ranking->fecha_tres ?? 'A competir'}}", disabled="true">
+    </div>
+    <div class="form-group col-md-3">
+        <label>Fecha cuatro:</label>
+      <input type="text" class="form-control" placeholder="{{ $ranking->fecha_cuatro ?? 'A competir'}}", disabled="true">
+    </div>
+    <div class="form-group col-md-3">
+        <label>Fecha cinco:</label>
+      <input type="text" class="form-control" placeholder="{{ $ranking->fecha_cinco ?? 'A competir'}}", disabled="true">
+    </div>
+    <div class="form-group col-md-3">
+        <label>Fecha seis:</label>
+      <input type="text" class="form-control" placeholder="{{ $ranking->fecha_seis ?? 'A competir'}}", disabled="true">
+    </div>
+    <div class="form-group col-md-3">
+        <label>Fecha Siete:</label>
+      <input type="text" class="form-control" placeholder="{{ $ranking->fecha_siete ?? 'A competir'}}", disabled="true">
+    </div>
+    <div class="form-group col-md-3">
+        <label>Fecha ocho:</label>
+      <input type="text" class="form-control" placeholder="{{ $ranking->fecha_ocho ?? 'A competir'}}", disabled="true">
+    </div>
+    <div class="form-group col-md-3">
+        <label>Fecha Nueve:</label>
+      <input type="text" class="form-control" placeholder="{{ $ranking->fecha_nueve ?? 'A competir'}}", disabled="true">
+    </div>
+    <div class="form-group col-md-3">
+        <label>Fecha dies:</label>
+      <input type="text" class="form-control" placeholder="{{ $ranking->fecha_dies ?? 'A competir'}}", disabled="true">
+    </div>
+    <div class="form-group col-md-3">
+        <label>Total:</label>
+      <input type="text" class="form-control" placeholder="{{ $ranking->total ?? 'A definir'}}", disabled="true">
+    </div>
+  </div>
+</form>

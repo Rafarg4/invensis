@@ -7,8 +7,8 @@
         <th>Estado Civil</th>
         <th>Edad</th>
         <th>Usted Es</th>
-        <th>Porcentaje de sesion </th>
         <th>Tipo de Plan</th>
+        <th>Plan</th>
             <th>Accion</th>
         </tr>
         </thead>
@@ -20,8 +20,8 @@
             <td>{{ $seguro->estado_civil }}</td>
             <td>{{ $seguro->edad }}</td>
             <td>{{ $seguro->usted_es }}</td>
-             <td>{{ $seguro->porcentaje_cesion }}</td>
             <td>{{ $seguro->tipo_plan }}</td>
+            <td>{{ number_format($seguro->tipo_tarifa->tarifa ?? 'Tarifa no asignada')}}.Gs</td>
                 <td width="120">
                     {!! Form::open(['route' => ['seguros.destroy', $seguro->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>

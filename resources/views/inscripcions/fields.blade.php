@@ -50,7 +50,7 @@
 }
 </style>
 
-<div class="container">
+<div class="container"style="font-size: 12px;">
 <div class="stepwizard">
     <div class="stepwizard-row setup-panel">
         <div class="stepwizard-step">
@@ -73,12 +73,12 @@
                 <h3> Datos personales</h3>
                 <div class="form-group col-sm-12">
                 <label for="id_user">Identificador:</label>
-                <input type="text" name="id_user" class="form-control" value="{{ Auth::user()->id }}" readonly>
+                <input type="text" name="id_user" class="form-control form-control-sm" value="{{ Auth::user()->id }}" readonly>
                 </div>
                 <!-- Grupo Sanguineo Field -->
                 <div class="form-group col-sm-12">
                     {!! Form::label('primer_y_segundo_nombre', 'Primer y segundo nombre:') !!}
-                    {!! Form::text('primer_y_segundo_nombre', null, ['class' => 'form-control','required']) !!}
+                    {!! Form::text('primer_y_segundo_nombre', null, ['class' => 'form-control form-control-sm','required']) !!}
                 </div><!-- Grupo Sanguineo Field -->
                 <div class="form-group col-sm-12">
                     {!! Form::label('primer_y_segundo_apellido', 'Primer y segundo apellido:') !!}
@@ -96,12 +96,14 @@
                 <!-- Grupo Sanguineo Field -->
                 <div class=" form-group col-sm-12">
                 {!! Form::label('sexo', 'Sexo:') !!}
-                {!! Form::select('sexo',array('Masculino' => 'Masculino', 'Femenino' => 'Femenino','Otro' => 'Otro'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
+                {!! Form::select('sexo',array('Masculino' => 'Masculino', 'Femenino' => 'Femenino','Otro' => 'Otro'),null, ['class' => 'form-control','placeholder'=>'Seleccione una opcion','required','required'])!!}
                 </div>
                 <!-- Grupo Sanguineo Field -->
                 <div class="form-group col-sm-12">
-                    {!! Form::label('grupo_sanguineo', 'Grupo Sanguineo:') !!}
-                    {!! Form::text('grupo_sanguineo', null, ['class' => 'form-control','required']) !!}
+                    {!! Form::label('grupo_sanguineo', 'Grupo sanguineo:') !!}
+                {!! Form::select('grupo_sanguineo',array('A +' => 'A +', 'A-' => 'A-','B +' => 'B +','B-' => 'B-','AB+' => 'AB+','AB-' => 'AB-','O+' => 'O+','O-' => 'O-'),null, ['class' => 'form-control','placeholder'=>'Seleccione una opcion','required'])!!}
+
+                    
                 </div>
                 <!-- Nacionalidad Field -->
                 <div class="form-group col-sm-12">
@@ -121,7 +123,7 @@
                 </div>
                 <!-- Domiciolio Field -->
                 <div class="form-group col-sm-12">
-                    {!! Form::label('domiciolio', 'Domiciolio:') !!}
+                    {!! Form::label('domiciolio', 'Domicilio:') !!}
                     {!! Form::text('domiciolio', null, ['class' => 'form-control','required']) !!}
                 </div>
 
@@ -130,10 +132,10 @@
                     {!! Form::label('ciudad', 'Ciudad:') !!}
                     {!! Form::text('ciudad', null, ['class' => 'form-control','required']) !!}
                 </div>
-                 <div class="form-group col-sm-12">
-                    {!! Form::label('departamento', 'Departamento:') !!}
-                    {!! Form::text('departamento', null, ['class' => 'form-control','required']) !!}
-                </div>
+                  <div class=" form-group col-sm-12">
+                     {!! Form::label('departamento', 'Departamento:') !!}
+                    {!! Form::select('departamento',array('Asunción' => 'Asunción', 'Concepción ' => 'Concepción ','San Pedro' => 'San Pedro','Guairá' => 'Guairá','Caaguazú' => 'Caaguazú','Itapúa' => 'Itapúa','Misiones' => 'Misiones','Paraguarí' => 'Paraguarí','Alto Paraná' => 'Alto Paraná','Central' => 'Central','Ñeembucú' => 'Ñeembucú','Amambay' => 'Amambay','Canindeyú' => 'Canindeyú','Presidente Hayes ' => 'Presidente Hayes  ','Boquerón' => 'Boquerón','Alto Paraguay   ' => 'Alto Paraguay    '),null, ['class' => 'form-control','placeholder'=>'Seleccione una opcion','required'])!!}
+            </div>
 
                 <button class="btn btn-primary nextBtn  pull-right" type="submit" >Siguiente</button>
             </div>
@@ -144,7 +146,7 @@
                             <!-- Id Categoria Field -->
                 <div class="form-group col-sm-12">
                     {!! Form::label('tipo_categoria', 'Categoria:') !!}
-                {!! Form::select('tipo_categoria',array('Principal' => 'Principal', 'Master' => 'Master','Ciclismo para todos' => 'Ciclismo para todos'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
+                {!! Form::select('tipo_categoria',array('Principal' => 'Principal', 'Master' => 'Master','Ciclismo para todos' => 'Ciclismo para todos'),null, ['class' => 'form-control','placeholder'=>'Seleccione una opcion','required','required'])!!}
                 </div>
             <div class="form-group col-sm-12" id="id_categoria" style="display: none;">
                 
@@ -189,7 +191,7 @@ function changeTipo(){
 </script>
             <div class="form-group col-sm-12">
                     {!! Form::label('region', 'Elegir a que region pertenece:') !!}
-                     {!! Form::select('region',array('Asosiacion metropolitana de ciclismo' => 'Asosiacion metropolitana de ciclismo', 'Federacion paranaense de ciclismo' => 'Federacion paranaense de ciclismo','Union Regional de ciclistas (URCI)' => 'Union Regional de ciclistas (URCI)','Federacion de ciclismo Itapuense' => 'Federacion de ciclismo Itapuense'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required','required'])!!}
+                     {!! Form::select('region',array('Asosiacion metropolitana de ciclismo' => 'Asosiacion metropolitana de ciclismo', 'Federacion paranaense de ciclismo' => 'Federacion paranaense de ciclismo','Union Regional de ciclistas (URCI)' => 'Union Regional de ciclistas (URCI)','Federacion de ciclismo Itapuense' => 'Federacion de ciclismo Itapuense'),null, ['class' => 'form-control','placeholder'=>'Seleccione una opcion','required','required','required'])!!}
                 </div>
                  <!-- Imagen Field -->
             <div class="form-group col-sm-12">
@@ -247,7 +249,7 @@ function changeTipo(){
             @if(Auth::user()->hasRole('super_admin'))
              <div class=" form-group col-sm-12">
              {!! Form::label('estado', 'Estado:') !!}
-            {!! Form::select('estado',array('En espera' => 'En espera', 'Paralizado' => 'Paralizado','Verificado' => 'Verificado'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
+            {!! Form::select('estado',array('En espera' => 'En espera', 'Paralizado' => 'Paralizado','Verificado' => 'Verificado','Vencido' => 'Vencido'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
             </div>
             @else
              <div class="form-group col-sm-12">

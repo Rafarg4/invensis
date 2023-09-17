@@ -16,22 +16,26 @@ class CreateRankingsTable extends Migration
     {
         Schema::create('rankings', function (Blueprint $table) {
             $table->id('id');
-            $table->text('posicion');
-            $table->text('nombre_apellido');
-            $table->text('categoria');
-            $table->text('ci');
-            $table->text('club');
-            $table->text('sexo');
-            $table->text('primer_fecha');
-            $table->text('segundo_fecha');
-            $table->text('tercero_fecha');
-            $table->text('cuarto_fecha');
-            $table->text('total');
+            $table->text('ci')->nullable();
+            $table->text('posicion')->nullable();
+            $table->text('nombre_apellido')->nullable();
+            $table->text('categoria')->nullable();
+            $table->text('team')->nullable();
+            $table->text('fecha_uno')->nullable();
+            $table->text('fecha_dos')->nullable();
+            $table->text('fecha_tres')->nullable();
+            $table->text('fecha_cuatro')->nullable();
+            $table->text('fecha_cinco')->nullable();
+            $table->text('fecha_seis')->nullable();
+            $table->text('fecha_siete')->nullable();
+            $table->text('fecha_ocho')->nullable();
+            $table->text('fecha_nueve')->nullable();
+            $table->text('fecha_dies')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
     }
-
+    
     /**
      * Reverse the migrations.
      *

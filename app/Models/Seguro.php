@@ -58,8 +58,7 @@ class Seguro extends Model
         'fechanac_beneficiario',
         'id_inscripcion',
         'tipo_plan',
-        'plan_con_deducible',
-        'plan_sin_deducible',
+        'id_tarifa',
         'id_user'
     ];
 
@@ -86,8 +85,8 @@ class Seguro extends Model
         'fechanac_beneficiario' => 'string',
         'id_inscripcion' => 'integer',
         'tipo_plan' => 'string',
-         'plan_sin_deducible' => 'string',
-          'plan_con_deducible' => 'string',
+         
+          'id_tarifa' => 'string',
            'id_user' => 'integer'
     ];
 
@@ -111,10 +110,15 @@ class Seguro extends Model
         'porcentaje_cesion' => 'required',
         'fechanac_beneficiario' => 'required',
         'id_inscripcion' => 'required'
+
     ];
 
     public function inscripto (){
      return $this-> belongsTo('App\Models\Inscripcion','id_inscripcion');
+
+    }
+    public function tipo_tarifa (){
+     return $this-> belongsTo('App\Models\Tarifa','id_tarifa');
 
     }
 }

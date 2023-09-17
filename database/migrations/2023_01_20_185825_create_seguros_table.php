@@ -26,8 +26,6 @@ class CreateSegurosTable extends Migration
             $table->text('estatura');
             $table->text('peso');
             $table->text('tipo_plan');
-            $table->text('plan_con_deducible')->nullable();
-            $table->text('plan_sin_deducible')->nullable();
             $table->text('nombre_apellido_fallecimiento_titular');
             $table->text('parentesco_titular_beneficiario');
             $table->text('ci_beneficiario');
@@ -37,6 +35,8 @@ class CreateSegurosTable extends Migration
             $table->foreign('id_inscripcion')->references('id')->on('inscripcions')->onDelete('cascade');
              $table->unsignedBigInteger('id_user');
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('id_tarifa')->nullable();
+            $table->foreign('id_tarifa')->references('id')->on('tarifas');
             $table->timestamps();
             $table->softDeletes();
         });

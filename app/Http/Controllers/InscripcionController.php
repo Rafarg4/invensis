@@ -36,8 +36,7 @@ class InscripcionController extends AppBaseController
     public function index(Request $request)
     {
       if(Auth::user()->hasRole('super_admin')) {
-       $ci = $request->get('buscarpor');
-        $inscripcions = Inscripcion::where('ci','like',"%$ci%")->paginate(3);
+        $inscripcions = Inscripcion::all();
         return view('inscripcions.index',compact('inscripcions'));
      }else{
         $ci = $request->get('buscarpor');
@@ -73,7 +72,7 @@ class InscripcionController extends AppBaseController
     {
     if(Auth::user()->hasRole('super_admin')) {
         $rules = [
-        'ci'=>'required|unique:inscripcions,ci',
+    
         'foto' => 'required',
       ];
        $mensaje = [
@@ -244,19 +243,19 @@ class InscripcionController extends AppBaseController
     }
 
     //Imprimir directo pdf de seguro
-  //  public function seguro($id)
-  //  {
-  //  $seguro = Seguro::where('id_inscripcion',$id)->get();
-   // $inscripcion = $this->inscripcionRepository->find($id);
-   // $pdf = PDF::loadView('inscripcions.seguro', compact('inscripcion','seguro'));
-   // return $pdf->download('Seguro.pdf');
-   // }
-    public function seguro($id)
-  {
-    
-    $inscripcion = $this->inscripcionRepository->find($id); 
-    $seguros = Seguro::where('id_inscripcion',$id)
-    ->get();
-      return view('inscripcions.seguro')->with('inscripcion', $inscripcion)->with('seguros', $seguros)->with('user', Auth::user());
+  public function seguro($id)
+   {
+   $seguros = Seguro::where('id_inscripcion',$id)->get();
+    $inscripcion = $this->inscripcionRepository->find($id);
+    $pdf = PDF::loadView('inscripcions.seguro', compact('inscripcion','seguros'));
+   return $pdf->download('Seguro.pdf');
     }
+  //  public function seguro($id)
+   //{
+    
+    //$inscripcion = $this->inscripcionRepository->find($id); 
+    //$seguros = Seguro::where('id_inscripcion',$id)
+    //->get();
+     // return view('inscripcions.seguro')->with('inscripcion', $inscripcion)->with('seguros', $seguros)->with('user', Auth::user());
+    //}
 }

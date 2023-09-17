@@ -140,7 +140,7 @@
                 </div>
                 <!-- Domiciolio Field -->
                 <div class="form-group col-sm-12">
-                    {!! Form::label('domiciolio', 'Domiciolio:') !!}
+                    {!! Form::label('domiciolio', 'Domicilio:') !!}
                     {!! Form::text('domiciolio', null, ['class' => 'form-control']) !!}
                 </div>
 
@@ -267,7 +267,7 @@ function changeTipo(){
             @if(Auth::user()->hasRole('super_admin'))
              <div class=" form-group col-sm-12">
              {!! Form::label('estado', 'Estado:') !!}
-            {!! Form::select('estado',array('En espera' => 'En espera', 'Paralizado' => 'Paralizado','Verificado' => 'Verificado'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
+            {!! Form::select('estado',array('En espera' => 'En espera', 'Paralizado' => 'Paralizado','Verificado' => 'Verificado','Vencido' => 'Vencido'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
             </div>
             @else
              <div class="form-group col-sm-12">

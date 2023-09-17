@@ -1,31 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="content-header">
-        <div class="container-fluid">
+<section class="content-header"style="font-size: 12px;">
+        <div class="container-fluid"style="font-size: 12px;">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Graficos</h1>
+                <div class="col-sm-6"style="font-size: 12px;">
+                    
                 </div>
                 <div class="col-sm-6">
                 
                 </div>
             </div>
         </div>
-         <div class="content px-3">
+         <div class="content px-3"style="font-size: 12px;">
         @include('flash::message')
 
         <div class="clearfix"></div>
 
-        <div class="card">
+        <div class="card"style="font-size: 12px;">
             <div class="card-body p-0">
 
 
-        <figure class="highcharts-figure">
-            <div id="container2"></div>
+        <figure class="highcharts-figure"style="font-size: 12px;">
+            <div id="container2"style="font-size: 12px;"></div>
     
-                <div class="card-footer clearfix">
-                    <div class="float-right">
+                <div class="card-footer clearfix"style="font-size: 12px;">
+                    <div class="float-right"style="font-size: 12px;">
                         
                     </div>
                 </div>

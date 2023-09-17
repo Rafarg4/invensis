@@ -20,36 +20,35 @@
             <div class="card-body p-0">
 <div class="table-responsive" style="padding:15px;">
     <table class="table" id="Table">
-        <thead>
+         <thead>
         <tr>
-            <th>Posicion</th>
-            <th>Ci</th>
-        <th>Nombre Apellido</th>
+        <th>#</th>
+        <th>Nombre y Apellido</th>
         <th>Categoria</th>
-        <th>Club</th>
-        <th>Sexo</th>
+        <th>Team</th>
         <th>1 Fecha</th>
         <th>2 Fecha</th>
         <th>3 Fecha</th>
         <th>4 Fecha</th>
+        <th>5 Fecha</th>
+        <th>6 Fecha</th>
         <th>Total</th>
-            
         </tr>
         </thead>
-        <tbody>
+        <tbody> 
         @foreach($rankings as $ranking)
             <tr>
-                <td>{{ $ranking->posicion }}</td>
-                 <td>{{$ranking->ci}}</td>
-            <td>{{ $ranking->nombre_apellido }}</td>
-            <td>{{ $ranking->categoria }}</td>
-            <td>{{ $ranking->club }}</td>
-            <td>{{ $ranking->sexo }}</td>
-            <td>{{ $ranking->primer_fecha}}</td>
-            <td>{{ $ranking->segundo_fecha }}</td>
-            <td>{{ $ranking->tercero_fecha }}</td>
-            <td>{{ $ranking->cuarto_fecha }}</td>
-            <td>{{ $ranking->total }}</td>
+            <td>{{ $ranking->posicion ?? 'S/D'}}</th>   
+            <td>{{ $ranking->nombre_apellido ?? 'S/D'}}</td>
+            <td>{{ $ranking->categoria ?? 'S/D'}}</td>
+            <td>{{ $ranking->team ?? 'S/D'}}</td>
+            <td>{{ $ranking->fecha_uno ?? 'S/D'}}</td>
+            <td>{{ $ranking->fecha_dos ?? 'S/D'}}</td>
+            <td>{{ $ranking->fecha_tres ?? 'S/D'}}</td>
+            <td>{{ $ranking->fecha_cuatro ?? 'S/D'}}</td>
+            <td>{{ $ranking->fecha_cinco ?? 'S/D'}}</td>
+            <td>{{ $ranking->fecha_seis ?? 'S/D'}}</td>
+            <td>100</td>
             </tr>
         @endforeach
         </tbody>

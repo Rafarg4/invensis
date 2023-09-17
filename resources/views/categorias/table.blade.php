@@ -1,4 +1,4 @@
-    <div class="table-responsive" style="padding:15px;">
+    <div class="table-responsive" style="padding:15px;font-size: 12px;">
     <table class="table" id="table">
         <thead>
         <tr>

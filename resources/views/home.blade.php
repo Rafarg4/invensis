@@ -2,9 +2,10 @@
 
 @section('content')
 <br>
+   <link rel="icon" type="image/png" src="/logof.png" />
 @if(Auth::user()->hasRole('super_admin'))
 @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
-<div class="container-fluid">
+<div class="container-fluid"style="font-size: 12px;">
 <div class="row">
 <div class="col-12 col-sm-6 col-md-3">
 <div class="info-box">
@@ -95,9 +96,9 @@
 @if($inscripcions->isempty())	
 <div class="col-12 col-sm-6 col-md-3">
 <div class="info-box">
-<span class="info-box-icon bg-danger elevation-1"><a href="{{ route('inscripcions.create') }}"  class="fa fas-solid fa-plus"></i></a></span>
+<span class="info-box-icon bg-danger elevation-1"><a href="{{ route('inscripcions.create') }}"  class="fa fas-solid fa-user-plus"></i></a></span>
 <div class="info-box-content">
-<span class="info-box-text">Paso 1 registrar inscripcion </span>
+<span class="info-box-text"><b>Paso 1: Registrar inscripcion</b></span>
 <span class="info-box-number">
 <a href="{{ route('inscripcions.create') }}" class="small-box-footer">Ir a <i class="fas fa-arrow-circle-right"></i></a>
 </span>
@@ -121,9 +122,9 @@
 <div class="clearfix hidden-md-up"></div>
 <div class="col-12 col-sm-6 col-md-3">
 <div class="info-box mb-3">
-<span class="info-box-icon bg-danger elevation-1"><a href="{{ route('seguros.create') }}" class="fa fas-solid fa-plus"></i></a></span>
+<span class="info-box-icon bg-danger elevation-1"><a href="{{ route('seguros.create') }}"   class="fa fas-solid fa-user-plus"></i></a></span>
 <div class="info-box-content">
-<span class="info-box-text">Paso 2 Registro de seguro</span>
+<span class="info-box-text"><b>Paso: 2 Registro de seguro</b></span>
 <span class="info-box-number"><a href="{{ route('seguros.create') }}" class="small-box-footer">Ir a <i class="fas fa-arrow-circle-right"></i></a></span>
 </div>
 </div>
@@ -143,9 +144,9 @@
 @if($documentos->isempty())
 <div class="col-12 col-sm-6 col-md-3">
 <div class="info-box mb-3">
-<span class="info-box-icon bg-danger elevation-1"><a href="{{ route('documentos.create') }}" class="fa fas-solid fa-plus"></i></a></span>
+<span class="info-box-icon bg-danger elevation-1"><a href="{{ route('documentos.create') }}"  class="fa-solid fas fa-folder-plus"></i></a></span>
 <div class="info-box-content">
-<span class="info-box-text">Paso 3 Subir documentos</span>
+<span class="info-box-text"><b>Paso 3: Subir documentos</b></span>
 <span class="info-box-number"><a href="{{ route('documentos.create') }}" class="small-box-footer">Ir a <i class="fas fa-arrow-circle-right"></i></a></span>
 </div>
 

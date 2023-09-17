@@ -10,8 +10,10 @@ use Illuminate\Http\Request;
 use Flash;
 use Response;
 use Auth;
+use DB;
 use App\Models\Inscripcion;
 use App\Models\Seguro;
+use App\Models\Tarifa;
 class SeguroController extends AppBaseController
 {
     /** @var SeguroRepository $seguroRepository*/
@@ -51,10 +53,24 @@ class SeguroController extends AppBaseController
     {
      if(Auth::user()->hasRole('super_admin')) {
          $inscripcions = Inscripcion::pluck('primer_y_segundo_nombre','id');
-        return view('seguros.create', compact('inscripcions'));
+         $tarifa_con = Tarifa::select(DB::raw('CONCAT("Gs. ", FORMAT(tarifa, 0)) AS tarifa_formateada'), 'id')
+         ->where('tipo_plan', 'Plan con deducible')
+        ->pluck('tarifa_formateada', 'id');
+         $tarifa_sin = Tarifa::select(DB::raw('CONCAT("Gs. ", FORMAT(tarifa, 0)) AS tarifa_formateada'), 'id')
+         ->where('tipo_plan', 'Plan sin deducible')
+         ->pluck('tarifa_formateada', 'id');
+
+        return view('seguros.create')->with('inscripcions', $inscripcions)->with('tarifa_sin', $tarifa_sin)->with('tarifa_con', $tarifa_con);
+
          }else{
         $inscripcions = Inscripcion::where('id_user', auth()->user()->id)->pluck('primer_y_segundo_nombre','id');
-        return view('seguros.create')->with('inscripcions', $inscripcions)->with('user', Auth::user());
+         $tarifa_con = Tarifa::select(DB::raw('CONCAT("Gs. ", FORMAT(tarifa, 0)) AS tarifa_formateada'), 'id')
+         ->where('tipo_plan', 'Plan con deducible')
+        ->pluck('tarifa_formateada', 'id');
+         $tarifa_sin = Tarifa::select(DB::raw('CONCAT("Gs. ", FORMAT(tarifa, 0)) AS tarifa_formateada'), 'id')
+         ->where('tipo_plan', 'Plan sin deducible')
+         ->pluck('tarifa_formateada', 'id');
+        return view('seguros.create')->with('inscripcions', $inscripcions)->with('tarifa_sin', $tarifa_sin)->with('tarifa_con', $tarifa_con)->with('user', Auth::user());
      }
      }
 
@@ -116,6 +132,8 @@ class SeguroController extends AppBaseController
     public function edit($id)
     {
         $seguro = $this->seguroRepository->find($id);
+        $tarifa_con = Tarifa::where('tipo_plan','Plan con deducible')->pluck('tarifa','id');
+        $tarifa_sin = Tarifa::where('tipo_plan','Plan sin deducible')->pluck('tarifa','id');
         $inscripcions = Inscripcion::pluck('primer_y_segundo_nombre','id');
 
         if (empty($seguro)) {
@@ -124,7 +142,7 @@ class SeguroController extends AppBaseController
             return redirect(route('seguros.index'));
         }
 
-        return view('seguros.edit',compact('seguro','inscripcions'));
+        return view('seguros.edit',compact('seguro','inscripcions','tarifa_con','tarifa_sin'));
     }
 
     /**

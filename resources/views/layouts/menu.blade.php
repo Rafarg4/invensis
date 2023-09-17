@@ -24,10 +24,24 @@
     </a>
 </li>
 <li class="nav-item">
+    <a href="{{ route('importar_mtb') }}"
+       class="nav-link {{ Request::is('importar*') ? 'active' : '' }}">
+       <i class="fa fas-solid fa-file-excel"></i> 
+        <p>Importar Ranking MTB</p>
+    </a>
+</li>
+<li class="nav-item">
     <a href="{{ route('rankings.index') }}"
        class="nav-link {{ Request::is('rankings*') ? 'active' : '' }}">
        <i class="fas fa-trophy"></i>
-        <p>Rankings</p>
+        <p>Rankings Ruta</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('rankingMTBs.index') }}"
+       class="nav-link {{ Request::is('rankingMTBs*') ? 'active' : '' }}">
+        <i class="fas fa-trophy"></i>
+        <p>Ranking MTB</p>
     </a>
 </li>
 <li class="nav-item">
@@ -70,6 +84,15 @@
         <p>Documentos</p>
     </a>
 </li>
+@canany(['create_inscripcion','edit_inscripcion','delete_inscripcion','admin_inscripcion'])
+<li class="nav-item">
+    <a href="{{ route('tarifas.index') }}"
+       class="nav-link {{ Request::is('tarifas*') ? 'active' : '' }}">
+       <i class="fas fa-solid fa-money-bill"></i>
+        <p>Tarifas</p>
+    </a>
+</li>
+@endcan
 @if(Auth::user()->hasRole('super_admin'))
  @else
             <li class="nav-item">
@@ -84,17 +107,40 @@
     <a href="{{ route('rankings.index') }}"
        class="nav-link {{ Request::is('rankings*') ? 'active' : '' }}">
        <i class="fas fa-trophy"></i>
-        <p>Rankings</p>
+        <p>Rankings Ruta</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('rankingMTBs.index') }}"
+       class="nav-link {{ Request::is('rankingMTBs*') ? 'active' : '' }}">
+        <i class="fas fa-trophy"></i>
+        <p>Ranking MTB</p>
     </a>
 </li>
 @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion','admin_inscripcion'])
 <li class="nav-item">
+    <a href=""
+       class="nav-link ">
+       <i class="fa fas-solid fa-file-excel"></i>
+        <p>Importar</p>
+        <i class="right fas fa-angle-left"></i>
+    </a>
+<ul class="nav nav-treeview">
+<li class="nav-item">
     <a href="{{ route('importar.index') }}"
-       class="nav-link {{ Request::is('importar*') ? 'active' : '' }}">
-       <i class="fa fas-solid fa-file-excel"></i> 
-        <p>Importar Ranking</p>
+       class="nav-link {{ Request::is('importar*') }}">
+       <i class="fa fas-solid fa-road"></i> 
+        <p>Ranking Ruta </p>
     </a>
 </li>
+<li class="nav-item">
+    <a href="{{ url('importar_mtb') }}"
+       class="nav-link {{ Request::is('importar_mtb*') }}">
+       <i class="fa fas-solid fa-bicycle"></i>
+        <p>Ranking MTB</p>
+    </a>
+</li>
+</ul>
 <li class="nav-item">
     <a href=""
        class="nav-link ">
@@ -157,3 +203,8 @@ class="nav-link {{ Request::is('reporte_ranking*') ? 'active' : '' }}">
     </a>
 </li>
 @endif
+
+
+
+
+

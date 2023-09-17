@@ -37,10 +37,7 @@
     <div class="content px-3">
 
         @include('adminlte-templates::common.errors')
-
-        <div class="card">
                    
-            @if (count($backups))
                  <div class="table-responsive" style="padding:15px;">
                  <table class="table" id="table">
                     <thead>
@@ -65,21 +62,16 @@
                             </td>
                             <td class="text-right">
                                 <a class="btn btn-success"
-                                   href="{{ url('backup/download/'.$backup['file_name']) }}"><i
-                                        class="fa fa-cloud-download"></i> Descargar</a>
+                                   href="{{ url('backup/download/'.$backup['file_name']) }}"> Descargar</a>
                                 <a class="btn btn-danger" onclick="return confirm('Estas seguro?')" data-button-type="delete"
-                                   href="{{ url('backup/delete/'.$backup['file_name']) }}"><i class="fa fa-trash-o"></i>
-                                    Delete</a>
+                                   href="{{ url('backup/delete/'.$backup['file_name']) }}">
+                                    Eliminar</a>
                             </td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
-            @else
-                <div class="well">
-                    <h4>No backups</h4>
-                </div>
-            @endif
+            
         </div>
     </div>
 

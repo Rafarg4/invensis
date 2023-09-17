@@ -1,148 +1,137 @@
-<div class="tab-content" id="custom-tabs-four-tabContent">
-<div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
- <div class="table-responsive">
-    <table class="table" id="tabla">
-        <thead>
-        <tr>
-            <th>Foto</th>
-            <th>Nombres</th>
-        <th>Apellidos</th>
-        <th>Email</th>
-        <th>Fecha de nacimiento</th>
-        <th>Cedula de indentidad</th>
-
-        </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><img src="{{ asset('storage').'/'.$inscripcion->foto}}" width="50" height="50" class="img-circle"></td>
-                <td>{{ $inscripcion->primer_y_segundo_nombre }}</td>
-            <td>{{ $inscripcion->primer_y_segundo_apellido }}</td>
-            <td>{{ $inscripcion->email }}</td>
-            <td>{{ $inscripcion->fechanac }}</td>
-            <td>{{ $inscripcion->ci }}</td>
-            
-            </tr>
-        </tbody>
-    </table>
+<div class="tab-content">
+<div class="tab-pane active" id="tab_1">
+ <div class="row">    
+<div class="form-group col-md-3">
+<img src="{{ asset('storage').'/'.$inscripcion->foto}}" width="70" height="70" class="">
 </div>
-
-<div class="table-responsive">
-    <table class="table" id="Tabla">
-        <thead>
-        <tr>
-    
-        <th>Sexo</th>
-        <th>Grupo Sanguineo</th>
-        <th>Nacionalidad</th>
-         <th>Celular</th>
-         <th>Region</th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr>
-               
-            <td>{{ $inscripcion->sexo }}</td>
-            <td>{{ $inscripcion->grupo_sanguineo }}</td>
-            <td>{{ $inscripcion->nacionalidad }}</td>
-            <td>{{ $inscripcion->celular }}</td>
-            <td>{{ $inscripcion->region }}</td>
-            
-            </tr>
-        </tbody>
-    </table>
+    <div class="form-group col-md-3">
+    <label for="nombre">Nombres:</label>
+    <input type="text" class="form-control" id="nombre" value="{{ $inscripcion->primer_y_segundo_nombre }}">
 </div>
-
-
-<div class="table-responsive">
-    <table class="table" id="Tabla">
-        <thead>
-        <tr>
-       
-        <th>Domiciolio</th>
-        <th>Departamento</th>
-        <th>Ciudad</th>
-        <th>Categoria</th>
-         <th>Estado</th>
-         <th>Monto</th>
-        
-
-        </tr>
-        </thead>
-        <tbody>
-            <tr>
-            <td>{{ $inscripcion->domiciolio }}</td>
-            <td>{{ $inscripcion->departamento }}</td>
-            <td>{{ $inscripcion->ciudad }}</td>
-            <td>{{ $inscripcion->categoria->nombre }}</td>
-            <td>@switch(true)
-            @case($inscripcion->estado == 'En espera')
-            <span class="badge badge-primary"> {{ $inscripcion->estado }} </span>
-            @break
-            @case($inscripcion->estado == 'Paralizado')
-            <span class="badge badge-warning"> {{ $inscripcion->estado }} </span>
-            @break
-            @case($inscripcion->estado == 'Verificado' )
-            <span class="badge badge-success"> {{ $inscripcion->estado }} </span>
-            @break
-            @endswitch</td>
-             <td>{{number_format ($inscripcion->monto)}} Gs</td>
-            
-            
-            </tr>
-        </tbody>
-    </table>
+<div class="form-group col-md-3">
+    <label for="apellido">Apellidos:</label>
+    <input type="text" class="form-control" id="apellido" value="{{ $inscripcion->primer_y_segundo_apellido }}">
 </div>
-<div class="table-responsive">
-    <table class="table" id="Tabla">
-        <thead>
-        <tr>
-        <th>Federacion Id</th>
-        <th>Uciid</th>
-        <th>Nombre de equipo</th>   
-        <th>Contacto Emergencia</th>
-        <th>Nombre Apellido Contacto Emergencia</th>
-        <th>Fecha de registro</th>
-        <th>Creado por</th>
-
-        </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ $inscripcion->federacion_id ?? 'Sin asignar'}}</td>
-            <td>{{ $inscripcion->uciid ?? 'Sin asignar' }}</td>
-            <td>{{ $inscripcion->nombre_equipo }}</td>
-            <td>{{ $inscripcion->contacto_emergencia }}</td>
-                <td>{{ $inscripcion->nombre_apellido_contacto_emergencia }}</td>
-            <td>{{ $inscripcion->created_at }}</td>
-             <td>{{ $inscripcion->usuario->name }}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="form-group col-md-3">
+    <label for="email">Email:</label>
+    <input type="text" class="form-control" id="email" value="{{ $inscripcion->email }}">
+</div>
+<div class="form-group col-md-3">
+    <label for="sexo">Sexo:</label>
+    <input type="text" class="form-control" id="sexo" value="{{ $inscripcion->sexo }}">
+</div>
+<div class="form-group col-md-3">
+    <label for="grupo_sanguineo">Grupo Sanguíneo:</label>
+    <input type="text" class="form-control" id="grupo_sanguineo" value="{{ $inscripcion->grupo_sanguineo }}Sanguineo">
+</div>
+<div class="form-group col-md-3">
+    <label for="nacionalidad">Nacionalidad:</label>
+    <input type="text" class="form-control" id="nacionalidad" value="{{ $inscripcion->nacionalidad }}">
+</div>
+<div class="form-group col-md-3">
+    <label for="celular">Celular:</label>
+    <input type="text" class="form-control" id="celular" value="{{ $inscripcion->celular }}">
+</div>
+<div class="form-group col-md-3">
+    <label for="region">Región:</label>
+    <input type="text" class="form-control" id="region" value="{{ $inscripcion->region }}">
+</div>
+<div class="form-group col-md-3">
+    <label for="domicilio">Domicilio:</label>
+    <input type="text" class="form-control" id="domiciolio" value="{{ $inscripcion->domiciolio }}">
+</div>
+<div class="form-group col-md-3">
+    <label for="departamento">Departamento:</label>
+    <input type="text" class="form-control" id="departamento" value="{{ $inscripcion->departamento }}">
+</div>
+<div class="form-group col-md-3">
+    <label for="ciudad">Ciudad:</label>
+    <input type="text" class="form-control" id="ciudad" value="{{ $inscripcion->ciudad }}">
+</div>
+<div class="form-group col-md-3">
+    <label for="categoria">Categoría:</label>
+    <input type="text" class="form-control" id="categoria" value="{{ $inscripcion->categoria->nombre }}">
+</div>
+<div class="form-group col-md-3">
+    <label for="estado">Estado:</label>
+    <input type="text" class="form-control" id="estado" value="{{ $inscripcion->estado }}">
+</div>
+<div class="form-group col-md-3">
+    <label for="monto">Monto:</label>
+    <input type="text" class="form-control" id="monto" value="{{ number_format($inscripcion->monto) }}.Gs">
+</div>
+<div class="form-group col-md-3">
+    <label for="federacion_id">Federación Id:</label>
+    <input type="text" class="form-control" id="federacion_id" value="{{ $inscripcion->federacion_id ?? 'Sin asignar' }}">
+</div>
+<div class="form-group col-md-3">
+    <label for="uciid">Uciid:</label>
+    <input type="text" class="form-control" id="uciid" value="{{ $inscripcion->uciid ?? 'Sin asignar' }}">
+</div>
+<div class="form-group col-md-3">
+    <label for="nombre_equipo">Nombre de equipo:</label>
+    <input type="text" class="form-control" id="nombre_equipo" value="{{ $inscripcion->nombre_equipo }}">
+</div>
+<div class="form-group col-md-3">
+    <label for="contacto_emergencia">Contacto de Emergencia:</label>
+    <input type="text" class="form-control" id="contacto_emergencia" value="{{ $inscripcion->contacto_emergencia }}">
+</div>
+<div class="form-group col-md-3">
+    <label for="nombre_apellido_contacto_emergencia">Nombre Apellido Contacto de Emergencia:</label>
+    <input type="text" class="form-control" id="nombre_apellido_contacto_emergencia" value="{{ $inscripcion->nombre_apellido_contacto_emergencia }}">
+</div>
+<div class="form-group col-md-3">
+    <label for="created_at">Fecha de Registro:</label>
+    <input type="text" class="form-control" id="created_at" value="{{ $inscripcion->created_at }}">
+</div>
+<div class="form-group col-md-3">
+    <label for="usuario">Creado por:</label>
+    <input type="text" class="form-control" id="usuario" value="{{ $inscripcion->usuario->name }}">
 </div>
 </div>
-<div class="tab-pane fade" id="custom-tabs-four-profile" role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab">
-<div class="table-responsive" style="padding:15px;">
-    <table class="table" id="Tabla">
-        <thead>
-        <tr>
-            <th>Pago</th>
-        <th>Inscripcion</th>
-        <th> Seguro medico</th>
-        <th>Certificado medico</th>
-        <th> Copia de cedula</th>
-        <th>Estado</th>
-        </tr>
-        </thead>
-        <tbody>
+</div>
+<div class="tab-pane" id="tab_2">
+ @if(!empty($documento) && $documento->count() > 0)
         @foreach($documento as $documento)
-            <tr>
-               <td><a href="{{route('documento.download_pago',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
-            <td><a href="{{route('documento.download_inscripcion',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
-            <td><a href="{{route('documento.download_seguro',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
-            <td><a href="{{route('documento.download_certificado',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
-            <td><a href="{{route('documento.download_copia',$documento->id)}}"><img src="/pdf.jpg" width="40" height="40"></a></td>
-             <td>@switch(true)
+<div class="row">
+<div class="form-group col-md-3">
+    <label for="documento_pago">Documento de pago:</label>
+    <a href="{{ route('documento.download_pago', $documento->id) }}" target="_blank">
+        <img src="/pdf.jpg" width="25" height="25">
+    </a>
+</div>
+
+<div class="form-group col-md-3">
+    <label for="documento_inscripcion">Documento de Inscripción:</label>
+    <a href="{{ route('documento.download_inscripcion', $documento->id) }}" target="_blank">
+        <img src="/pdf.jpg" width="25" height="25">
+    </a>
+</div>
+
+<div class="form-group col-md-3">
+    <label for="documento_seguro_medico">Documento de seguro médico:</label>
+    <a href="{{ route('documento.download_seguro', $documento->id) }}" target="_blank">
+        <img src="/pdf.jpg" width="25" height="25">
+    </a>
+</div>
+
+<div class="form-group col-md-3">
+    <label for="documento_certificado_medico">Documento de certificado médico:</label>
+    <a href="{{ route('documento.download_certificado', $documento->id) }}" target="_blank">
+        <img src="/pdf.jpg" width="25" height="25">
+    </a>
+</div>
+
+<div class="form-group col-md-3">
+    <label for="documento_copia_cedula">Documento de copia de cédula:</label>
+    <a href="{{ route('documento.download_copia', $documento->id) }}" target="_blank">
+        <img src="/pdf.jpg" width="25" height="25">
+    </a>
+</div>
+
+<div class="form-group col-md-3">
+    <label for="estado">Estado:</label>
+    @switch(true)
             @case($documento->estado == 'En espera')
             <span class="badge badge-primary"> {{ $documento->estado }} </span>
             @break
@@ -152,103 +141,105 @@
             @case($documento->estado == 'Verificado' )
             <span class="badge badge-success"> {{ $documento->estado }} </span>
             @break
-            @endswitch</td>
-                            
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
+            @endswitch
 </div>
 </div>
-<div class="tab-pane fade" id="custom-tabs-four-messages" role="tabpanel" aria-labelledby="custom-tabs-four-messages-tab">
- <div class="table-responsive" style="padding:15px;">
-    <table class="table" id="Tabla">
-        <thead>
-        <tr>
-            <th>Estado Civil</th>
-        <th>Edad</th>
-        <th>Usted Es</th>
-        <th>Padece Enfermedad</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($seguros as $seguro)
-            <tr>
-                <td>{{ $seguro->estado_civil }}</td>
-            <td>{{ $seguro->edad }}</td>
-            <td>{{ $seguro->usted_es }}</td>
-            <td>{{ $seguro->padece_enfermedad }}</td>
-            </tr>
         @endforeach
-        </tbody>
-    </table>
-     <table class="table" id="Tabla">
-        <thead>
-        <tr>
-        <th>Especificar Enfermedad</th>
-        <th>Presenta Defecto Fisico</th>
-        <th>Especifique Defecto Fisico</th>
-        <th>Estatura</th>
-        </tr>
-        </thead>
-        <tbody>
+@else
+ <strong><h6><center>Aun no se ha registrado sus documentos? <a class="btn btn-primary" href="{{ route('documentos.create') }}"><i class="fa-solid fas fa-folder-plus"></i></a></center></h6></strong>                                 
+@endif
+</div>
+<div class="tab-pane" id="tab_3">
+     @if(!empty($seguros) && $seguros->count() > 0)
         @foreach($seguros as $seguro)
-            <tr>
-            <td>{{ $seguro->especificar_enfermedad }}</td>
-            <td>{{ $seguro->presenta_defecto_fisico }}</td>
-            <td>{{ $seguro->especifique_defecto_fisico }}</td>
-            <td>{{ $seguro->estatura }}</td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
-     <table class="table" id="Tabla">
-        <thead>
-        <tr>
-        <th>Peso</th>
-        <th>Plan</th>
-        <th>Nombre Apellido Fallecimiento Titular</th>
-        <th>Fecha de nacimiento de beneficiario</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($seguros as $seguro)
-            <tr>
-           <td>{{ $seguro->peso }}</td>
-            <td>{{ $seguro->tipo_plan }}</td>
-            <td>{{ $seguro->nombre_apellido_fallecimiento_titular }}</td>
-            <td>{{ $seguro->fechanac_beneficiario }}</td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
+<div class="row">
+    <div class="form-group col-md-3">
+    <label for="estado_civil">Estado Civil:</label>
+    <input type="text" class="form-control" id="estado_civil" value="{{ $seguro->estado_civil }}">
+</div>
 
-    <table class="table" id="Tabla">
-        <thead>
-        <tr>
-      <th>Parentesco Titular Beneficiario</th>
-        <th>Ci Beneficiario</th>
-        <th>Porcentaje Cesion</th>
-        <th>Fecha de registro</th>
-        
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($seguros as $seguro)
-            <tr>
-            <td>{{ $seguro->parentesco_titular_beneficiario }}</td>
-            <td>{{ $seguro->ci_beneficiario }}</td>
-            <td>{{ $seguro->porcentaje_cesion }}</td>
-            <td>{{ $seguro->created_at }}</td>
+<div class="form-group col-md-3">
+    <label for="edad">Edad:</label>
+    <input type="text" class="form-control" id="edad" value="{{ $seguro->edad }}">
+</div>
 
-            </tr>
+<div class="form-group col-md-3">
+    <label for="usted_es">Usted es:</label>
+    <input type="text" class="form-control" id="usted_es" value="{{ $seguro->usted_es }}">
+</div>
+
+<div class="form-group col-md-3">
+    <label for="padece_enfermedad">Padece Enfermedad:</label>
+    <input type="text" class="form-control" id="padece_enfermedad" value="{{ $seguro->padece_enfermedad }}">
+</div>
+
+<div class="form-group col-md-3">
+    <label for="especificar_enfermedad">Especificar Enfermedad:</label>
+    <input type="text" class="form-control" id="especificar_enfermedad" value="{{ $seguro->especificar_enfermedad ??'Sin asignar'}} ">
+</div>
+
+<div class="form-group col-md-3">
+    <label for="presenta_defecto_fisico">Presenta Defecto Fisico:</label>
+    <input type="text" class="form-control" id="presenta_defecto_fisico" value="{{ $seguro->presenta_defecto_fisico ?? 'Sin asignar' }}">
+</div>
+
+<div class="form-group col-md-3">
+    <label for="especifique_defecto_fisico">Especifique Defecto Fisico:</label>
+    <input type="text" class="form-control" id="especifique_defecto_fisico" value="{{ $seguro->especifique_defecto_fisico ?? 'Sin asignar' }}">
+</div>
+
+<div class="form-group col-md-3">
+    <label for="estatura">Estatura:</label>
+    <input type="text" class="form-control" id="estatura" value="{{ $seguro->estatura }}">
+</div>
+
+<div class="form-group col-md-3">
+    <label for="peso">Peso:</label>
+    <input type="text" class="form-control" id="peso" value="{{ $seguro->peso }}">
+</div>
+
+<div class="form-group col-md-3">
+    <label for="tipo_plan">Plan:</label>
+    <input type="text" class="form-control" id="tipo_plan" value="{{ $seguro->tipo_plan }}">
+</div>
+
+<div class="form-group col-md-3">
+    <label for="nombre_apellido_fallecimiento_titular">Nombre Apellido Fallecimiento Titular:</label>
+    <input type="text" class="form-control" id="nombre_apellido_fallecimiento_titular" value="{{ $seguro->nombre_apellido_fallecimiento_titular }}">
+</div>
+
+<div class="form-group col-md-3">
+    <label for="fechanac_beneficiario">Fecha de nacimiento de beneficiario:</label>
+    <input type="text" class="form-control" id="fechanac_beneficiario" value="{{ $seguro->fechanac_beneficiario }}">
+</div>
+
+<div class="form-group col-md-3">
+    <label for="parentesco_titular_beneficiario">Parentesco Titular Beneficiario:</label>
+    <input type="text" class="form-control" id="parentesco_titular_beneficiario" value="{{ $seguro->parentesco_titular_beneficiario }}">
+</div>
+
+<div class="form-group col-md-3">
+    <label for="ci_beneficiario">Ci Beneficiario:</label>
+    <input type="text" class="form-control" id="ci_beneficiario" value="{{ $seguro->ci_beneficiario }}">
+</div>
+
+<div class="form-group col-md-3">
+    <label for="porcentaje_cesion">Porcentaje Cesion:</label>
+    <input type="text" class="form-control" id="porcentaje_cesion" value="{{ $seguro->porcentaje_cesion }}">
+</div>
+
+<div class="form-group col-md-3">
+    <label for="created_at">Fecha de registro:</label>
+    <input type="text" class="form-control" id="created_at" value="{{ $seguro->created_at }}">
+</div>
+</div>
         @endforeach
-        </tbody>
-    </table>
+    @else
+  <strong><h6><center>Aun no se ha registrado seguro? <a class="btn btn-primary" href="{{ route('seguros.create') }}"><i class="fa fas-solid fa-user-plus"></i></a></center></h6></strong>                                
+@endif
 </div>
-</div>
-<div class="tab-pane fade" id="custom-tabs-four-settings" role="tabpanel" aria-labelledby="custom-tabs-four-settings-tab">
- <br>
+<div class="tab-pane" id="tab_4">
+  <br>
     <br>
      <div class="col d-flex justify-content-center">
     <br>
@@ -275,7 +266,7 @@ table td {padding: 10px}
 
      </style>
 <div style="position:absolute;top:3.31in;left:2.96in;width:1.07in;line-height:0.14in;"><span style="font-style:normal;font-weight:normal;font-size:7pt;font-family:Calibri;color:#231f20">Validuntil:</span></SPAN><br/></div>
-<div style="position:absolute;top:3.31in;left:2.96in;width:1.07in;line-height:0.15in;"><DIV style="position:relative; left:0.48in;"><span style="font-style:normal;font-weight:bold;font-size:7pt;font-family:Calibri;color:#231f20">31.12.2023</span><span style="font-style:normal;font-weight:bold;font-size:7pt;font-family:Calibri;color:#231f20"></span><br/></SPAN></DIV></div>
+<div style="position:absolute;top:3.31in;left:2.96in;width:1.07in;line-height:0.15in;"><DIV style="position:relative; left:0.48in;"><span style="font-style:normal;font-weight:bold;font-size:7pt;font-family:Calibri;color:#231f20">31.3.2023</span><span style="font-style:normal;font-weight:bold;font-size:7pt;font-family:Calibri;color:#231f20"></span><br/></SPAN></DIV></div>
 
 <img style="position:absolute;top:1.22in;left: 2.82in;width:3.69in;height:2.33in" src="/imagenes/ri_1.png">
 <img style="position:absolute;top:1.22in;left: 6.51in;width:3.69in;height:2.33in" src="/imagenes/ri_2.png">
@@ -360,3 +351,15 @@ table td {padding: 10px}
 <img style="position:absolute;top:1.31in;left: 5.65in;width:0.44in;height:0.31in" src="/imagenes/ri_11.png">
   </div>
    </div>
+
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+</div>

@@ -18,10 +18,31 @@ class ImportarController extends Controller
     }
     public function store(request  $request) 
     {
-        $file = $request->file('import_file');
-        Excel::import(new RankingsImport,$file);
-        Flash::success('Ranking importado correctamente.');
-        return redirect(route('rankings.index'));
-    }
+    
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,xls',
+        ]);
 
+      
+        $file = $request->file('file');
+
+        try {
+          
+            Excel::import(new RankingsImport, $file);
+
+        
+            Flash::success('Ranking importado correctamente.');
+            return redirect(route('rankings.index'));
+        } catch (\Exception $e) {
+          
+            Flash::error('Error al importar, verifique que el formato sea el correcto.');
+            return redirect(route('importar.index'));
+        }
+    }
 }
+
+
+
+
+
+

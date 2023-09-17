@@ -36,17 +36,21 @@ class Ranking extends Model
 
 
     public $fillable = [
+        'ci',
         'posicion',
         'nombre_apellido',
         'categoria',
-        'club',
-        'sexo',
-        'primer_fecha',
-        'segundo_fecha',
-        'tercero_fecha',
-        'cuarto_fecha',
-        'total',
-        'ci'
+        'team',
+        'fecha_uno',
+        'fecha_dos',
+        'fecha_tres',
+        'fecha_cuatro',
+        'fecha_cinco',
+        'fecha_seis',
+        'fecha_siete',
+        'fecha_ocho',
+        'fecha_nueve',
+        'fecha_dies',
     ];
 
     /**
@@ -58,12 +62,9 @@ class Ranking extends Model
         'posicion' => 'string',
         'nombre_apellido' => 'string',
         'id_categoria' => 'integer',
-        'club' => 'string',
+        'team' => 'string',
         'sexo' => 'string',
         'primer_fecha' => 'string',
-        'segundo_fecha' => 'string',
-        'tercero_fecha' => 'string',
-        'cuarto_fecha' => 'string',
         'total' => 'string',
         'id_inscripcion' => 'integer'
     ];
@@ -74,17 +75,7 @@ class Ranking extends Model
      * @var array
      */
     public static $rules = [
-        'posicion' => 'required',
-        'nombre_apellido' => 'required',
-        'categoria' => 'required',
-        'club' => 'required',
-        'sexo' => 'required',
-        'primer_fecha' => 'required',
-        'segundo_fecha' => 'required',
-        'tercero_fecha' => 'required',
-        'cuarto_fecha' => 'required',
-        'total' => 'required',
-        'ci' => 'required'
+       
     ];
 
     public function categoria (){
