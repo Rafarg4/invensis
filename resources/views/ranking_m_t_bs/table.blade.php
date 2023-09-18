@@ -7,6 +7,7 @@
         <thead>
         <tr>
         <th>#</th>
+         <th>Ci</th>
         <th>Nombre y Apellido</th>
         <th>Categoria</th>
         <th>Team</th>
@@ -16,32 +17,52 @@
         <th>4 Fecha</th>
         <th>5 Fecha</th>
         <th>6 Fecha</th>
+        <th>7 Fecha</th>
+        <th>8 Fecha</th>
+        <th>9 Fecha</th>
+        <th>10 Fecha</th>
         <th>Total</th>
         <th>Accion</th>
         </tr>
         </thead>
         <tbody>
-        @foreach($rankingMTBs as $rankingMTB)
+       <?php $i = 0; ?>
+        @foreach($rankingMTBs as $rankingmtb)
             <tr>
-            <td>{{ $rankingMTB->posicion ?? 'S/D'}}</th>   
-            <td>{{ $rankingMTB->nombre_apellido ?? 'S/D'}}</td>
-            <td>{{ $rankingMTB->categoria ?? 'S/D'}}</td>
-            <td>{{ $rankingMTB->team ?? 'S/D'}}</td>
-            <td>{{ $rankingMTB->fecha_uno ?? 'S/D'}}</td>
-            <td>{{ $rankingMTB->fecha_dos ?? 'S/D'}}</td>
-            <td>{{ $rankingMTB->fecha_tres ?? 'S/D'}}</td>
-            <td>{{ $rankingMTB->fecha_cuatro ?? 'S/D'}}</td>
-            <td>{{ $rankingMTB->fecha_cinco ?? 'S/D'}}</td>
-            <td>{{ $rankingMTB->fecha_seis ?? 'S/D'}}</td>
-            <td>{{ $rankingMTB->totales ?? 'S/D'}}</td>
+            <td>{{ $rankingmtb->posicion ?? 'S/D'}}</th>
+             @if(!empty($inscripcion) && $inscripcion->count() > 0)    
+            <td> @if($rankingmtb->ci == $inscripcion[$i])
+                {{ $rankingmtb->ci }}
+            @else
+           Ci {{ $rankingmtb->ci }} no registrado 
+            @endif   
+            </td>
+            @else
+            <td>   
+           Ci {{ $rankingmtb->ci }} no registrado 
+            </td>@endif    
+            <td>{{ $rankingmtb->nombre_apellido ?? 'S/D'}}</td>
+            <td>{{ $rankingmtb->categoria ?? 'S/D'}}</td>
+            <td>{{ $rankingmtb->team ?? 'S/D'}}</td>
+            <td>{{ $rankingmtb->fecha_uno ?? 'A competir'}}</td>
+            <td>{{ $rankingmtb->fecha_dos ?? 'A competir'}}</td>
+            <td>{{ $rankingmtb->fecha_tres ?? 'S/D'}}</td>
+            <td>{{ $rankingmtb->fecha_cuatro ?? 'A competir'}}</td>
+            <td>{{ $rankingmtb->fecha_cinco ??  'A competir'}}</td>
+            <td>{{ $rankingmtb->fecha_seis ?? 'A competir'}}</td>
+            <td>{{ $rankingmtb->fecha_siete ?? 'A competir'}}</td>
+            <td>{{ $rankingmtb->fecha_ocho ?? 'A competir'}}</td>
+            <td>{{ $rankingmtb->fecha_nueve ?? 'A competir'}}</td>
+            <td>{{ $rankingmtb->fecha_dies ?? 'A competir'}}</td>
+            <td>{{ $rankingmtb->totales ?? 'A definir'}}</td>
                 <td width="120">
-                    {!! Form::open(['route' => ['rankingMTBs.destroy', $rankingMTB->id], 'method' => 'delete']) !!}
+                    {!! Form::open(['route' => ['rankingMTBs.destroy', $rankingmtb->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
-                        <a href="{{ route('rankingMTBs.show', [$rankingMTB->id]) }}"
+                        <a href="{{ route('rankingMTBs.show', [$rankingmtb->id]) }}"
                            class='btn btn-default btn-xs'>
                             <i class="far fa-eye"></i>
                         </a>
-                        <a href="{{ route('rankingMTBs.edit', [$rankingMTB->id]) }}"
+                        <a href="{{ route('rankingMTBs.edit', [$rankingmtb->id]) }}"
                            class='btn btn-default btn-xs'>
                             <i class="far fa-edit"></i>
                         </a>
@@ -60,6 +81,10 @@
                 <th></th>
                 <th></th>
                 <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th> 
                 <th></th>
                 <th></th>
                 <th></th>

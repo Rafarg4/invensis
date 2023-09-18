@@ -171,11 +171,35 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
 
     @stack('page_css')
 </head>
-
 <!--
     Menu original
     <body class="hold-transition sidebar-mini layout-fixed">-->
- <body class="sidebar-mini layout-fixed sidebar-collapse"style="font-size: 11px;">   
+ <body class="sidebar-mini layout-fixed sidebar-collapse"style="font-size: 11px;"> 
+ <div  class="pageLoader" id="pageLoader"></div>
+ <style type="text/css">
+     .pageLoader {
+    background: url(https://usagif.com/wp-content/uploads/loading-11.gif) no-repeat center center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 9999999;
+    
+    background-size: 190px 100px; /* Ajusta el tamaño del fondo */
+}
+
+ </style>
+ <script type="text/javascript">
+     $(window).on('beforeunload', function() {
+    $('#pageLoader').show();
+});
+
+$(document).ready(function() {
+    $('#pageLoader').hide();
+});
+
+ </script>  
 <div class="wrapper">
     <!-- Main Header -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">

@@ -2,6 +2,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
           integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
+          <meta name="viewport" content="width=device-width, initial-scale=1">  
 
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap4-toggle/3.6.1/bootstrap4-toggle.min.css"
@@ -52,7 +53,8 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
 
 <script type="text/javascript">
     $(document).ready(function () {
-    $('#tablas').DataTable({
+    $('#filtross').DataTable({
+         "pageLength":3,
          "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
             },
@@ -92,7 +94,6 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
     background-color: #fff !important;
 }
 </style>
-
  <title>Ranking MTB</title>
     <link rel="icon" type="image/png" src="/logof.png" />
  <!-- Just an image -->
@@ -122,23 +123,13 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
   </div>
 
 </nav>
+
    <br>
    <br>
 
     <style type="text/css">
      .dataTables_filter, .dataTables_info { display: none; }
  </style>
- <script type="text/javascript">
-     $(document).ready( function () {
-    $('#tables').DataTable({
-            "pageLength":3,
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-            },
-            
-        });
-} );
-</script>
 <center>
 <div class="col-sm-8">
 <div class="card">
@@ -157,6 +148,14 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
     <button class="btn btn-primary" type="submit">Buscar</button>
   </div>
 </div>
+<div class="input-group mt-3">
+                    <select name="categoria_filtro" class="form-control" onchange="this.form.submit()">
+                        <option value="">Selecione una categorías</option>
+                        @foreach($categorias as $categoria)
+                            <option value="{{ $categoria }}">{{ $categoria }}</option>
+                        @endforeach
+                    </select>
+                  </div>
 </form>
   </div>
 </div>
@@ -167,14 +166,14 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
 <div class="card">
   <div class="card-body">
  <div class="table-responsive" style="padding:15px">
-    <table class="table" id="tables">
+    <table class="table" id="filtross">
         <thead>
         <tr>
         <th style="font-size: 12px">#</th>
         <th style="font-size: 12px">Nombre y Apellido</th>
         <th style="font-size: 12px">Categoria</th>
-        <th style="font-size: 12px">Team</th>
         <th style="font-size: 12px">Total</th>
+        <th style="font-size: 12px">Acciones</th>
         </thead>
         <tbody> 
         @foreach($rankingmtbs as $ranking)
@@ -182,9 +181,14 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
             <td>{{ $ranking->posicion }}</th>
             <td>{{ $ranking->nombre_apellido }}</td>
             <td>{{ $ranking->categoria }}</td>
-            <td>{{ $ranking->team}}</td>
-            <td>{{ $ranking->totales }}</td>
-    
+            <td>{{ $ranking->totales ?? 'A definir' }}</td>
+            <td width="120">
+                    <div class='btn-group'>
+                        <a href="{{ url('ranking/ver_ranking_mtb', [$ranking->id]) }}"
+                           class='btn btn-primary btn-xs'>
+                            <i class="fas fa-id-card"></i>
+                        </a>
+                    </div>
             </tr>
         @endforeach
         </tbody>

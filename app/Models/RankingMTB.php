@@ -34,6 +34,7 @@ class RankingMTB extends Model
 
 
     public $fillable = [
+        'ci',
         'posicion',
         'nombre_apellido',
         'categoria',
@@ -44,7 +45,10 @@ class RankingMTB extends Model
         'fecha_cuatro',
         'fecha_cinco',
         'fecha_seis',
-        'total'
+        'fecha_siete',
+        'fecha_ocho',
+        'fecha_nueve',
+        'fecha_dies',
     ];
 
     /**

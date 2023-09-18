@@ -11,6 +11,7 @@ use Flash;
 use Response;
 use App\Models\RankingMTB;
 use DB;
+use App\Models\Inscripcion;
 class RankingMTBController extends AppBaseController
 {
     /** @var RankingMTBRepository $rankingMTBRepository*/
@@ -36,18 +37,42 @@ class RankingMTBController extends AppBaseController
          ->where('ranking_m_t_bs.deleted_at', null)
          ->where('nombre_apellido','like',"%$nombre_apellido%")
          ->get();
-        return view('ranking_m_t_bs.consulta',compact('rankingmtbs')); 
+
+         $categorias = RankingMtb::distinct()->pluck('categoria'); 
+         $categoriaSeleccionada = $request->input('categoria_filtro');
+         $query = RankingMtb::query();
+         if (!empty($categoriaSeleccionada)) {
+            $query->where('categoria', $categoriaSeleccionada);
+         }
+         $rankingmtbs = $query->get();
+
+        return view('ranking_m_t_bs.consulta',compact('rankingmtbs','categorias')); 
     }
+     public function ver_ranking_mtb ($id)
+    {
+        $rankingMTB = $this->rankingMTBRepository->find($id);
+
+        // Calcula la suma de las fechas
+        $totales = $rankingMTB->fecha_uno + $rankingMTB->fecha_dos + $rankingMTB->fecha_tres + $rankingMTB->fecha_cuatro + $rankingMTB->fecha_cinco + $rankingMTB->fecha_seis + $rankingMTB->fecha_seis + $rankingMTB->fecha_ocho + $rankingMTB->fecha_nueve + $rankingMTB->fecha_dies;
+
+
+        if (empty($rankingMTB)) {
+            Flash::error('Ranking no encontrado');
+
+            return redirect(route('ranking_m_t_bs.ver_rankingmtb'));
+        }
+
+        return view('ranking_m_t_bs.ver_rankingmtb',compact('rankingMTB','totales'));
+    }
+
     public function index(Request $request)
     {
-        $nombre_apellido = $request->get('buscar');
         $rankingMTBs = DB::table('ranking_m_t_bs')
-        ->select('nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis', DB::raw('fecha_uno + fecha_dos + fecha_tres + fecha_cuatro + fecha_cinco + fecha_seis AS totales'))
+        ->select('ci','nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis','fecha_siete','fecha_ocho','fecha_nueve','fecha_dies', DB::raw('fecha_uno + fecha_dos + fecha_tres + fecha_cuatro + fecha_cinco + fecha_seis + fecha_seis + fecha_ocho + fecha_nueve + fecha_dies AS totales'))
          ->where('ranking_m_t_bs.deleted_at', null)
-         ->where('nombre_apellido','like',"%$nombre_apellido%")
          ->get();
-        return view('ranking_m_t_bs.index')
-            ->with('rankingMTBs', $rankingMTBs);
+         $inscripcion =Inscripcion::pluck('ci');
+        return view('ranking_m_t_bs.index',compact('rankingMTBs','inscripcion'));
     }
 
     /**

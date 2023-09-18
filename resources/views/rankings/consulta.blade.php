@@ -58,28 +58,6 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
          "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
             },
-        initComplete: function () {
-            this.api()
-                .columns()
-                .every(function () {
-                    var column = this;
-                    var select = $('<select><option value="">Selecione</option></select>')
-                        .appendTo($(column.footer()).empty())
-                        .on('change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex($(this).val());
- 
-                            column.search(val ? '^' + val + '$' : '', true, false).draw();
-                        });
- 
-                    column
-                        .data()
-                        .unique()
-                        .sort()
-                        .each(function (d, j) {
-                            select.append('<option value="' + d + '">' + d + '</option>');
-                        });
-                });
-        },
     });
 });
 </script>
@@ -130,38 +108,6 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
     <style type="text/css">
      .dataTables_filter, .dataTables_info { display: none; }
  </style>
- <script type="text/javascript">
-    $(document).ready(function () {
-    $('#tablas').DataTable({
-        "pageLength":3,
-         "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-            },
-        initComplete: function () {
-            this.api()
-                .columns()
-                .every(function () {
-                    var column = this;
-                    var select = $('<select><option value="">Selecione</option></select>')
-                        .appendTo($(column.footer()).empty())
-                        .on('change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex($(this).val());
- 
-                            column.search(val ? '^' + val + '$' : '', true, false).draw();
-                        });
- 
-                    column
-                        .data()
-                        .unique()
-                        .sort()
-                        .each(function (d, j) {
-                            select.append('<option value="' + d + '">' + d + '</option>');
-                        });
-                });
-        },
-    });
-});
-</script>
 <center>
 <div class="col-sm-8">
 <div class="card">
@@ -179,6 +125,16 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
     <button class="btn btn-primary" type="submit">Buscar</button>
   </div>
 </div>
+<div class="input-group mt-3">
+  <span class="input-group-text"><i class="fa fa-bars" aria-hidden="true"></i>
+</span>
+                    <select name="categoria_filtros" class="form-control" onchange="this.form.submit()">
+                        <option value="">Selecione una categoría</option>
+                        @foreach($categorias as $categoria)
+                            <option value="{{ $categoria }}">{{ $categoria }}</option>
+                        @endforeach
+                    </select>
+                  </div>
 </form>
   </div>
 </div>

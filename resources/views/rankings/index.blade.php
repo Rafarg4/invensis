@@ -41,7 +41,7 @@
         <th>9 Fecha</th>
         <th>10 Fecha</th>
         <th>Total</th>
-        <th>Accion</th>
+        <th>Accion</th> 
         </tr>
         </thead>
         <tbody> 

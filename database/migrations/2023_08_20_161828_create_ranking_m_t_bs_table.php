@@ -16,6 +16,7 @@ class CreateRankingMTBsTable extends Migration
     {
         Schema::create('ranking_m_t_bs', function (Blueprint $table) {
             $table->id('id');
+            $table->text('ci')->nullable();
             $table->text('posicion')->nullable();
             $table->text('nombre_apellido')->nullable();
             $table->text('categoria')->nullable();
@@ -26,7 +27,10 @@ class CreateRankingMTBsTable extends Migration
             $table->text('fecha_cuatro')->nullable();
             $table->text('fecha_cinco')->nullable();
             $table->text('fecha_seis')->nullable();
-            $table->text('total')->nullable();
+            $table->text('fecha_siete')->nullable();
+            $table->text('fecha_ocho')->nullable();
+            $table->text('fecha_nueve')->nullable();
+            $table->text('fecha_dies')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

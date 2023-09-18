@@ -39,7 +39,15 @@ class RankingController extends AppBaseController
          ->where('rankings.deleted_at', null)
          ->where('nombre_apellido','like',"%$nombre_apellido%")
          ->get();
-        return view('rankings.consulta',compact('rankings')); 
+
+         $categorias = Ranking::distinct()->pluck('categoria'); 
+         $categoriaSeleccionada = $request->input('categoria_filtros');
+         $query = Ranking::query();
+         if (!empty($categoriaSeleccionada)) {
+            $query->where('categoria', $categoriaSeleccionada);
+         }
+         $rankingmtbs = $query->get();
+        return view('rankings.consulta',compact('rankings','categorias')); 
     }
     public function ver_ranking($id)
     {

@@ -100,3 +100,5 @@ Route::resource('rankingMTBs', App\Http\Controllers\RankingMTBController::class)
 //Route::get('/rankings/ver_ranking/{id}', 'App\Http\Controllers\RankingController@ver_ranking');
 
 Route::get('ranking/ver_ranking/{id}', [App\Http\Controllers\RankingController::class, 'ver_ranking'])->name('ranking/ver_ranking');
+
+Route::get('ranking/ver_ranking_mtb/{id}', [App\Http\Controllers\RankingMTBController::class, 'ver_ranking_mtb'])->name('ranking/ver_ranking_mtb');
