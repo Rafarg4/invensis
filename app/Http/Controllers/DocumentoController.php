@@ -30,6 +30,17 @@ class DocumentoController extends AppBaseController
      *
      * @return Response
      */
+    public function cambiar_estado_documento(Request $request, $id)
+    {
+        $nuevoEstado = $request->input('estado');
+
+        // Aquí debes realizar la lógica para actualizar el estado en tu modelo, por ejemplo:
+        $documento = Documento::find($id);
+        $documento->estado = $nuevoEstado;
+        $documento->save();
+
+        return response()->json(['message' => 'Estado actualizado correctamente']);
+    }
     public function index(Request $request)
     {
         if(Auth::user()->hasRole('super_admin')) {

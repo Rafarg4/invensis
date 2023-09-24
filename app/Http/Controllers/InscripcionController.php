@@ -33,6 +33,17 @@ class InscripcionController extends AppBaseController
      *
      * @return Response
      */
+    public function cambiar_estado(Request $request, $id)
+    {
+        $nuevoEstado = $request->input('estado');
+
+        // Aquí debes realizar la lógica para actualizar el estado en tu modelo, por ejemplo:
+        $inscripcion = Inscripcion::find($id);
+        $inscripcion->estado = $nuevoEstado;
+        $inscripcion->save();
+
+        return response()->json(['message' => 'Estado actualizado correctamente']);
+    }
     public function index(Request $request)
     {
       if(Auth::user()->hasRole('super_admin')) {

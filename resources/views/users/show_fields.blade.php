@@ -1,25 +1,27 @@
-<div class="table-responsive" style="padding:15px;">
-    <table class="table" id="tablse">
-        <thead>
-        <tr>
-            <th>Usuario</th>
-        <th>Email</th>
-        <th>Rol</th>
-        <th>Creado</th>
-        
-        </tr>
-        </thead>
-        <tbody>
-    
-            <tr>
-                <td>{{ $user->name }}</td>
-            <td>{{ $user->email }}</td>
-            <td>{{implode(" ",$user->getRoleNames()->toArray())}}</td>
-            <td>{{ $user->created_at }}</td>
-           
-            </tr>
-        </tbody>
-    </table>
-</div>
+<div class="form-group col-sm-6">
+        <label for="name">Usuario:</label>
+        <input type="text" id="name" name="name" class="form-control" value="{{ $user->name }}">
+    </div>
 
+    <!-- Email -->
+<div class="form-group col-sm-6">
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" class="form-control" value="{{ $user->email }}">
+    </div>
+
+    <!-- Rol -->
+<div class="form-group col-sm-6">
+        <label for="role">Rol:</label>
+        <select id="role" name="role" class="form-control">
+            @foreach($user->getRoleNames() as $role)
+                <option value="{{ $role }}" {{ $user->hasRole($role) ? 'selected' : '' }}>{{ $role }}</option>
+            @endforeach
+        </select>
+    </div>
+
+    <!-- Fecha de Creación -->
+<div class="form-group col-sm-6">
+        <label for="created_at">Creado:</label>
+        <input type="text" id="created_at" name="created_at" class="form-control" value="{{ $user->created_at }}">
+    </div>
 

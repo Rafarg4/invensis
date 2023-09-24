@@ -29,6 +29,7 @@
         <div class="clearfix"></div>
 
         <div class="card">
+             <div id="mensaje" class="alert alert-success" style="display: none;"></div>
             <div class="card-body p-0">
                 @include('documentos.table')
 

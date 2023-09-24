@@ -22,7 +22,8 @@
     <table class="table" id="Table">
          <thead>
         <tr>
-        <th>#</th>
+         <th>#</th>
+         <th>Ci</th>
         <th>Nombre y Apellido</th>
         <th>Categoria</th>
         <th>Team</th>
@@ -32,23 +33,32 @@
         <th>4 Fecha</th>
         <th>5 Fecha</th>
         <th>6 Fecha</th>
+        <th>7 Fecha</th>
+        <th>8 Fecha</th>
+        <th>9 Fecha</th>
+        <th>10 Fecha</th>
         <th>Total</th>
         </tr>
         </thead>
         <tbody> 
         @foreach($rankings as $ranking)
             <tr>
-            <td>{{ $ranking->posicion ?? 'S/D'}}</th>   
+            <td>{{ $ranking->posicion ?? 'S/D'}}</th>
+            <td> {{ $ranking->ci }} </td>    
             <td>{{ $ranking->nombre_apellido ?? 'S/D'}}</td>
             <td>{{ $ranking->categoria ?? 'S/D'}}</td>
             <td>{{ $ranking->team ?? 'S/D'}}</td>
-            <td>{{ $ranking->fecha_uno ?? 'S/D'}}</td>
-            <td>{{ $ranking->fecha_dos ?? 'S/D'}}</td>
+            <td>{{ $ranking->fecha_uno ?? 'A competir'}}</td>
+            <td>{{ $ranking->fecha_dos ?? 'A competir'}}</td>
             <td>{{ $ranking->fecha_tres ?? 'S/D'}}</td>
-            <td>{{ $ranking->fecha_cuatro ?? 'S/D'}}</td>
-            <td>{{ $ranking->fecha_cinco ?? 'S/D'}}</td>
-            <td>{{ $ranking->fecha_seis ?? 'S/D'}}</td>
-            <td>100</td>
+            <td>{{ $ranking->fecha_cuatro ?? 'A competir'}}</td>
+            <td>{{ $ranking->fecha_cinco ??  'A competir'}}</td>
+            <td>{{ $ranking->fecha_seis ?? 'A competir'}}</td>
+            <td>{{ $ranking->fecha_siete ?? 'A competir'}}</td>
+            <td>{{ $ranking->fecha_ocho ?? 'A competir'}}</td>
+            <td>{{ $ranking->fecha_nueve ?? 'A competir'}}</td>
+            <td>{{ $ranking->fecha_dies ?? 'A competir'}}</td>
+            <td>{{ $ranking->totales ?? 'A definir'}}</td>
             </tr>
         @endforeach
         </tbody>

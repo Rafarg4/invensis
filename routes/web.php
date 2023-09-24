@@ -102,3 +102,7 @@ Route::resource('rankingMTBs', App\Http\Controllers\RankingMTBController::class)
 Route::get('ranking/ver_ranking/{id}', [App\Http\Controllers\RankingController::class, 'ver_ranking'])->name('ranking/ver_ranking');
 
 Route::get('ranking/ver_ranking_mtb/{id}', [App\Http\Controllers\RankingMTBController::class, 'ver_ranking_mtb'])->name('ranking/ver_ranking_mtb');
+
+Route::post('cambiar_estado/{id}', [App\Http\Controllers\InscripcionController::class, 'cambiar_estado'])->name('cambiar_estado');
+
+Route::post('cambiar_estado_documento/{id}', [App\Http\Controllers\DocumentoController::class, 'cambiar_estado_documento'])->name('cambiar_estado_documento');

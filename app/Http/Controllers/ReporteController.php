@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Inscripcion;
 use App\Models\Seguro;
 use App\Models\Ranking;
+use DB;
 class ReporteController extends Controller
 {
    
@@ -27,8 +28,10 @@ class ReporteController extends Controller
     }	
      public function reporte_ranking(){
 
-    	$rankings =Ranking::where('deleted_at', null)
-        ->get();   
+    	$rankings = DB::table('rankings')
+        ->select('ci','nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis','fecha_siete','fecha_ocho','fecha_nueve','fecha_dies', DB::raw('fecha_uno + fecha_dos + fecha_tres + fecha_cuatro + fecha_cinco + fecha_seis + fecha_seis + fecha_ocho + fecha_nueve + fecha_dies AS totales'))
+         ->where('rankings.deleted_at', null)
+         ->get();   
 
     	return view('reportes.rankings',compact('rankings'));
 

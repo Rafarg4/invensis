@@ -24,20 +24,72 @@
             <td>{{ $inscripcion->ci }}</td>
             <td>{{ $inscripcion->sexo }}</td>
             <td>{{ $inscripcion->celular }}</td>
-            <td>@switch(true)
-            @case($inscripcion->estado == 'En espera')
-            <span class="badge badge-primary"> {{ $inscripcion->estado }} </span>
-            @break
-            @case($inscripcion->estado == 'Paralizado')
-            <span class="badge badge-warning"> {{ $inscripcion->estado }} </span>
-            @break
-            @case($inscripcion->estado == 'Verificado' )
-            <span class="badge badge-success"> {{ $inscripcion->estado }} </span>
-            @break
-            @case($inscripcion->estado == 'Vencido' )
-            <span class="badge badge-danger"> {{ $inscripcion->estado }} </span>
-            @break
-            @endswitch</td>
+            <td>
+            <div class="btn-group btn-group-sm" role="group">
+    <button id="btnGroupDrop{{$inscripcion->id}}" type="button" class="btn btn-sm {{$inscripcion->estado == 'En espera' ? 'btn-primary' : ($inscripcion->estado == 'Verificado' ? 'btn-success' : ($inscripcion->estado == 'Paralizado' ? 'btn-warning' : 'btn-danger'))}} dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-id="{{$inscripcion->id}}" style="font-size: .575rem;">
+        {{$inscripcion->estado}}
+    </button>
+    <div class="dropdown-menu" aria-labelledby="btnGroupDrop{{$inscripcion->id}}">
+        @if ($inscripcion->estado != 'En espera')
+        <a class="dropdown-item cambiar-estado" href="#" data-estado="En espera">En espera</a>
+        @endif
+        @if ($inscripcion->estado != 'Verificado')
+        <a class="dropdown-item cambiar-estado" href="#" data-estado="Verificado">Verificado</a>
+        @endif
+        @if ($inscripcion->estado != 'Vencido')
+        <a class="dropdown-item cambiar-estado" href="#" data-estado="Vencido">Vencido</a>
+        @endif
+        @if ($inscripcion->estado != 'Paralizado')
+        <a class="dropdown-item cambiar-estado" href="#" data-estado="Paralizado">Paralizado</a>
+        @endif
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.cambiar-estado').on('click', function (e) {
+            e.preventDefault();
+            const nuevoEstado = $(this).data('estado');
+            const inscripcionId = $(this).closest('.btn-group').find('.btn').data('id'); // Obtener el ID de la inscripción del botón actual
+
+            // Realiza la solicitud AJAX para actualizar el estado solo para el registro correspondiente
+            $.ajax({
+                type: 'POST',
+                url: '{{ url("cambiar_estado", ["id" => ""]) }}/' + inscripcionId, // Utiliza una ruta sin ID aquí
+                data: {
+                    estado: nuevoEstado,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (data) {
+                    // Actualiza el botón desplegable con el nuevo estado
+                    const boton = $('#btnGroupDrop' + inscripcionId);
+                    boton.text(nuevoEstado);
+
+                    // Cambia el color del botón en tiempo real
+                    boton.removeClass().addClass('btn btn-sm dropdown-toggle');
+                    if (nuevoEstado === 'En espera') {
+                        boton.addClass('btn-primary');
+                    } else if (nuevoEstado === 'Verificado') {
+                        boton.addClass('btn-success');
+                    } else if (nuevoEstado === 'Paralizado') {
+                        boton.addClass('btn-warning');
+                    } else if (nuevoEstado === 'Vencido') {
+                        boton.addClass('btn-danger');
+                    }
+
+                    // Muestra un mensaje de éxito
+                    $('#mensaje').text('Estado actualizado a ' + nuevoEstado).removeClass().addClass('alert alert-success').show();
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                    alert('Ha ocurrido un error al cambiar el estado.');
+                }
+            });
+        });
+    });
+</script>
+
+            </td>
             <td>{{ $inscripcion->ciudad }}</td>
             <td>{{ $inscripcion->categoria->nombre  ?? 'Categoria no asignada' }}</td>
              <td>{{$inscripcion->email}}</td>
@@ -67,6 +119,7 @@
         </tbody>
     </table>
 </div>
+
 @else
 <br>
  @if(!empty($inscripcions) && $inscripcions->count() > 0)
@@ -162,4 +215,4 @@
 
 
  @endif
- 
+

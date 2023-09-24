@@ -70,6 +70,9 @@
             @case($inscripcion->estado == 'Verificado' )
             <span class="badge badge-success"> {{ $inscripcion->estado }} </span>
             @break
+            @case($inscripcion->estado == 'Vencido' )
+            <span class="badge badge-danger"> {{ $inscripcion->estado }} </span>
+            @break
             @endswitch</td>
             <td>{{number_format ($inscripcion->monto) }}</td>
              <td>{{ $inscripcion->federacion_id ?? 'Sin asignar'}}</td>
