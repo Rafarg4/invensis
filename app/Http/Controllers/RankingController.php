@@ -34,19 +34,20 @@ class RankingController extends AppBaseController
     public function consulta(Request $request)
     {
         $nombre_apellido = $request->get('buscar');
-        $rankings = DB::table('rankings')
-        ->select('ci','nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis','fecha_siete','fecha_ocho','fecha_nueve','fecha_dies', DB::raw('fecha_uno + fecha_dos + fecha_tres + fecha_cuatro + fecha_cinco + fecha_seis + fecha_seis + fecha_ocho + fecha_nueve + fecha_dies AS totales'))
-         ->where('rankings.deleted_at', null)
-         ->where('nombre_apellido','like',"%$nombre_apellido%")
-         ->get();
+        $categoriaSeleccionada = $request->input('categoria_filtro');
 
-         $categorias = Ranking::distinct()->pluck('categoria'); 
-         $categoriaSeleccionada = $request->input('categoria_filtros');
-         $query = Ranking::query();
-         if (!empty($categoriaSeleccionada)) {
-            $query->where('categoria', $categoriaSeleccionada);
-         }
-         $rankingmtbs = $query->get();
+        $rankings = DB::table('rankings')
+            ->select('ci', 'nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis', 'fecha_siete', 'fecha_ocho', 'fecha_nueve', 'fecha_dies', DB::raw('fecha_uno + fecha_dos + fecha_tres + fecha_cuatro + fecha_cinco + fecha_seis + fecha_seis + fecha_ocho + fecha_nueve + fecha_dies AS totales'))
+            ->where('rankings.deleted_at', null)
+            ->when($nombre_apellido, function ($query) use ($nombre_apellido) {
+                return $query->where('nombre_apellido', 'like', "%$nombre_apellido%");
+            })
+            ->when(!empty($categoriaSeleccionada), function ($query) use ($categoriaSeleccionada) {
+                return $query->where('categoria', $categoriaSeleccionada);
+            })
+            ->get();
+            $categorias = Ranking::distinct()->pluck('categoria'); 
+
         return view('rankings.consulta',compact('rankings','categorias')); 
     }
     public function ver_ranking($id)

@@ -31,20 +31,20 @@ class RankingMTBController extends AppBaseController
      */
      public function consulta(Request $request)
     {
-        $nombre_apellido = $request->get('buscar');
-        $rankingmtbs = DB::table('ranking_m_t_bs')
-        ->select('nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis', DB::raw('fecha_uno + fecha_dos + fecha_tres + fecha_cuatro + fecha_cinco + fecha_seis AS totales'))
-         ->where('ranking_m_t_bs.deleted_at', null)
-         ->where('nombre_apellido','like',"%$nombre_apellido%")
-         ->get();
+         $nombre_apellido = $request->get('buscar');
+        $categoriaSeleccionada = $request->input('categoria_filtro');
 
-         $categorias = RankingMtb::distinct()->pluck('categoria'); 
-         $categoriaSeleccionada = $request->input('categoria_filtro');
-         $query = RankingMtb::query();
-         if (!empty($categoriaSeleccionada)) {
-            $query->where('categoria', $categoriaSeleccionada);
-         }
-         $rankingmtbs = $query->get();
+        $rankingmtbs = DB::table('ranking_m_t_bs')
+            ->select('ci', 'nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis', 'fecha_siete', 'fecha_ocho', 'fecha_nueve', 'fecha_dies', DB::raw('fecha_uno + fecha_dos + fecha_tres + fecha_cuatro + fecha_cinco + fecha_seis + fecha_seis + fecha_ocho + fecha_nueve + fecha_dies AS totales'))
+            ->where('ranking_m_t_bs.deleted_at', null)
+            ->when($nombre_apellido, function ($query) use ($nombre_apellido) {
+                return $query->where('nombre_apellido', 'like', "%$nombre_apellido%");
+            })
+            ->when(!empty($categoriaSeleccionada), function ($query) use ($categoriaSeleccionada) {
+                return $query->where('categoria', $categoriaSeleccionada);
+            })
+            ->get();
+            $categorias = RankingMTB::distinct()->pluck('categoria');
 
         return view('ranking_m_t_bs.consulta',compact('rankingmtbs','categorias')); 
     }

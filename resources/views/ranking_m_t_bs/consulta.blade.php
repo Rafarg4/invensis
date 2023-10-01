@@ -28,6 +28,12 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
           integrity="sha512-aEe/ZxePawj0+G2R+AaIxgrQuKT68I28qh+wgLrcAJOz3rxCP+TwrK5SPN+E5I+1IQjNtcfvb96HDagwrKRdBw=="
           crossorigin="anonymous"/>
+          <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css
+">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
@@ -48,8 +54,8 @@
 <script src="
 https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
 "></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css
-">
+
+
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -94,111 +100,104 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
     background-color: #fff !important;
 }
 </style>
- <title>Ranking MTB</title>
-    <link rel="icon" type="image/png" src="/logof.png" />
- <!-- Just an image -->
- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <img src="/logo_redondo.png" width="50" height="50" alt="">
-    <div
-      class="collapse navbar-collapse justify-content-center"
-      id="navbarCenteredExample"
-    >
-    <ul class="nav navbar-nav">
-       <a class="nav-link" href="https://fpc.org.py/"><i class="fas fa-home"></i> Inicio</a>
-      </li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url('rankings/consulta') }}"><i class="fas fa-trophy"></i> Ranking Ruta</a>
-      </li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li class="nav-item">
-         <a class="nav-link" href="{{ url('http://sistemafpc.site/login/') }}"><i class="fas fa-users"></i> Area de usuarios</a>
-      </li>
-    </ul>
-  </div>
-
+<title>Ranking</title>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCenteredExample" aria-controls="navbarCenteredExample" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <img src="/logo_redondo.png" width="50" height="50" alt="">
+    <div class="collapse navbar-collapse justify-content-center" id="navbarCenteredExample">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="https://fpc.org.py"><i class="fas fa-home"></i> Inicio</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('rankings/consulta') }}"><i class="fas fa-trophy"></i> Ranking Ruta</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('http://sistemafpc.site/login/') }}"><i class="fas fa-users"></i> Área de usuarios</a>
+            </li>
+        </ul>
+    </div>
 </nav>
+<br>
+<br>
 
-   <br>
-   <br>
+<style type="text/css">
+    .dataTables_filter, .dataTables_info { display: none; }
+</style>
 
-    <style type="text/css">
-     .dataTables_filter, .dataTables_info { display: none; }
- </style>
 <center>
-<div class="col-sm-8">
-<div class="card">
-  <div class="card-body">
-  <form method="GET"> 
-    <div class="col-sm-6">
-                    <h1><i class="fa fas-solid fa-bicycle"></i>
-                     Ranking MTB</h1>
-                </div>
- <div class="input-group">
-    <div class="input-group-append">
-        <span class="input-group-text"><i class="fas fa-search fa-fw"></i></span>
-  </div>
-  <input type="text" name="buscar" class="form-control" placeholder=" Busca al participante por su nombre " aria-label="Recipient's username" aria-describedby="basic-addon2">
-  <div class="input-group-append">
-    <button class="btn btn-primary" type="submit">Buscar</button>
-  </div>
-</div>
-<div class="input-group mt-3">
-                    <select name="categoria_filtro" class="form-control" onchange="this.form.submit()">
-                        <option value="">Selecione una categorías</option>
-                        @foreach($categorias as $categoria)
-                            <option value="{{ $categoria }}">{{ $categoria }}</option>
-                        @endforeach
-                    </select>
-                  </div>
-</form>
-  </div>
-</div>
-</div>
-</center>
-<center>
-<div class="col-sm-8">
-<div class="card">
-  <div class="card-body">
- <div class="table-responsive" style="padding:15px">
-    <table class="table" id="filtross">
-        <thead>
-        <tr>
-        <th style="font-size: 12px">#</th>
-        <th style="font-size: 12px">Nombre y Apellido</th>
-        <th style="font-size: 12px">Categoria</th>
-        <th style="font-size: 12px">Total</th>
-        <th style="font-size: 12px">Acciones</th>
-        </thead>
-        <tbody> 
-        @foreach($rankingmtbs as $ranking)
-            <tr>
-            <td>{{ $ranking->posicion }}</th>
-            <td>{{ $ranking->nombre_apellido }}</td>
-            <td>{{ $ranking->categoria }}</td>
-            <td>{{ $ranking->totales ?? 'A definir' }}</td>
-            <td width="120">
-                    <div class='btn-group'>
-                        <a href="{{ url('ranking/ver_ranking_mtb', [$ranking->id]) }}"
-                           class='btn btn-primary btn-xs'>
-                            <i class="fas fa-id-card"></i>
-                        </a>
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-body">
+                <form method="GET">
+                    <div class="col-sm-6">
+                        <h1><i class="fas fa-bicycle"></i> Ranking MTB</h1>
                     </div>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
-</div>
-</div>
-</div>
-</div>
-</div>
+                    <div class="input-group">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-search fa-fw"></i></span>
+                        </div>
+                        <input type="text" name="buscar" class="form-control" placeholder=" Busca al participante por su nombre" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Buscar</button>
+                        </div>
+                    </div>
+                    <div class="input-group mt-3">
+                       <span class="input-group-text"><i class="fa fa-bars" aria-hidden="true"></i></span>
+                        <select name="categoria_filtro" class="form-control" onchange="this.form.submit()">
+                            <option value="">Selecciona una categoría</option>
+                            @foreach($categorias as $categoria)
+                                <option value="{{ $categoria }}">{{ $categoria }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </center>
 
-
-
+<center>
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive" style="padding: 15px">
+                    <table class="table" id="filtross">
+                        <thead>
+                        <tr>
+                            <th style="font-size: 12px">#</th>
+                            <th style="font-size: 12px">Nombre y Apellido</th>
+                            <th style="font-size: 12px">Categoría</th>
+                            <th style="font-size: 12px">Total</th>
+                            <th style="font-size: 12px">Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($rankingmtbs as $ranking)
+                            <tr>
+                                <td>{{ $ranking->posicion }}</td>
+                                <td>{{ $ranking->nombre_apellido }}</td>
+                                <td>{{ $ranking->categoria }}</td>
+                                <td>{{ $ranking->totales ?? 'A definir' }}</td>
+                                <td width="120">
+                                    <div class='btn-group'>
+                                        <a href="{{ url('ranking/ver_ranking_mtb', [$ranking->id]) }}" class='btn btn-primary btn-xs'>
+                                            <i class="fas fa-id-card"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</center>
