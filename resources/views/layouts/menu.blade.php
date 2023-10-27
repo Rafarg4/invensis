@@ -20,7 +20,7 @@
     <a href="{{ route('importar.index') }}"
        class="nav-link {{ Request::is('importar*') ? 'active' : '' }}">
        <i class="fa fas-solid fa-file-excel"></i> 
-        <p>Importar Ranking</p>
+        <p>Importar Ranking Ruta</p>
     </a>
 </li>
 <li class="nav-item">

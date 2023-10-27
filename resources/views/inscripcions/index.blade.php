@@ -26,6 +26,11 @@
     <div class="content px-3">
 
         @include('flash::message')
+        @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
 
         <div class="clearfix"></div>
 

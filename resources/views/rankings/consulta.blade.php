@@ -57,10 +57,11 @@
   <script type="text/javascript">
       $(document).ready(function () {
       $('#filtros').DataTable({
-           "pageLength":3,
+           "pageLength":30,
            "language": {
                   "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
               },
+               "order": [[2, 'desc']],
       });
   });
   </script>
@@ -92,7 +93,7 @@
                 <a class="nav-link" href="{{ url('ranking_m_tbs/consulta') }}"><i class="fas fa-trophy"></i> Ranking MTB</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('http://sistemafpc.site/login/') }}"><i class="fas fa-users"></i> Área de usuarios</a>
+                <a class="nav-link" href="{{ url('http://sistema.fpc.org.py') }}"><i class="fas fa-users"></i> Área de usuarios</a>
             </li>
         </ul>
     </div>
@@ -111,7 +112,7 @@
             <div class="card-body">
                 <form method="GET">
                     <div class="col-sm-6">
-                        <h1><i class="fas fa-road"></i> Ranking de Ruta</h1>
+                        <h2><i class="fas fa-road"></i> Ranking de Ruta</h2>
                     </div>
                     <div class="input-group">
                         <div class="input-group-append">
@@ -141,29 +142,29 @@
     <div class="col-sm-8">
         <div class="card">
             <div class="card-body">
-                <div class="table-responsive" style="padding: 15px">
+                <div class="table-responsive" style="padding: 13px">
                     <table class="table" id="filtros">
                         <thead>
                         <tr>
-                            <th style="font-size: 12px">#</th>
-                            <th style="font-size: 12px">Nombre y Apellido</th>
-                            <th style="font-size: 12px">Categoría</th>
-                            <th style="font-size: 12px">Total</th>
-                            <th style="font-size: 12px">Acciones</th>
+                            
+                             <th class="center" style="font-size: 10px">Ciclista</th>
+                             <th class="center" style="font-size: 10px">Categoría</th>
+                             <th class="center" style="font-size: 10px">Total</th>
+                          <th class="center" style="font-size: 10px">Ver</th> 
                         </tr>
                         </thead>
                         <tbody>
                             <?php $i = 0; ?>
                             @foreach($rankings as $ranking)
                                 <tr>
-                                    <td>{{ $ranking->posicion }}</td>
-                                    <td>{{ $ranking->nombre_apellido }}</td>
-                                    <td>{{ $ranking->categoria }}</td>
-                                    <td>{{ $ranking->totales ?? 'A definir' }}</td>
+                                    
+                                    <td style="font-size: 11px">{{ $ranking->nombre_apellido }}</td>
+                                    <td style="font-size: 11px">{{ $ranking->categoria }}</td>
+                                    <td style="font-size: 11px">{{ $ranking->totales ?? 'A definir' }}</td>
                                     <td width="120">
                                         <div class='btn-group'>
                                             <a href="{{ url('ranking/ver_ranking', [$ranking->id]) }}" class='btn btn-primary btn-xs'>
-                                                <i class="fas fa-id-card"></i>
+                                                  <i class="fa fa-eye" aria-hidden="true"></i>
                                             </a>
                                         </div>
                                     </td>

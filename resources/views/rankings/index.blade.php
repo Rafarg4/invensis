@@ -3,21 +3,26 @@
 @if(Auth::user()->hasRole('super_admin'))
  @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion','admin'])
     <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Rankings</h1>
-                </div>
-                 <div class="col-sm-6">
-                    <a class="btn btn-primary float-right"
-                       href="{{ route('rankings.create') }}">
-                        Nuevo
-                    </a>
-                </div>
-                
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Rankings Ruta</h1>
             </div>
+               @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion','admin'])
+            <div class="col-sm-6">
+                <form method="POST" action="{{ url('/eliminar_ranking') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-danger float-right">Eliminar Ranking</button>
+                </form>
+                <a href="{{ route('importar.index') }}" class="btn btn-success float-right mr-2">
+                <i class="fa fas-solid fa-file-excel"></i>
+                </a>
+                <a class="btn btn-primary float-right mr-2" href="{{ route('rankings.create') }}">Nuevo</a>
+            </div>
+            @endcan
         </div>
-    </section>
+    </div>
+</section>
     @include('flash::message')
 <div class="card">
 <div class="card-body">        

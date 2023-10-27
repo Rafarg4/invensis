@@ -51,7 +51,7 @@
     </div>
     <div class="form-group col-md-3">
         <label>Total:</label>
-      <input type="text" class="form-control" placeholder="{{ $ranking->total ?? 'A definir'}}", disabled="true">
+      <input type="text" class="form-control" placeholder="{{ $totales}}", disabled="true">
     </div>
   </div>
 </form>

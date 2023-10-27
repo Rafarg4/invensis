@@ -15,6 +15,7 @@ use App\Models\Documento;
 use App\Models\Seguro;
 use PDF;
 use Auth;
+use DB;
 use Illuminate\Support\Facades\Storage;
 class InscripcionController extends AppBaseController
 {
@@ -269,4 +270,19 @@ class InscripcionController extends AppBaseController
     //->get();
      // return view('inscripcions.seguro')->with('inscripcion', $inscripcion)->with('seguros', $seguros)->with('user', Auth::user());
     //}
+     public function pago(Request $request, $id)
+        {
+        $monto = $request->input('monto');
+        $federacion_id = $request->input('federacion_id');
+        $uciid = $request->input('uciid');
+        $inscripcions = Inscripcion::all();
+            DB::table('inscripcions')
+                ->where('id', $id)
+                ->update([
+                'monto' => $monto,
+                'federacion_id' => $federacion_id, 
+                'uciid' => $uciid
+            ]);
+        return redirect()->back()->with('success', 'Datos actualizados correctamente');
+    }
 }

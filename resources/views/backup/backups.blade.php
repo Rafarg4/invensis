@@ -8,10 +8,11 @@
                     <h1>Copias de seguridad</h1>
                 </div>
                 <div class="col-sm-6"> 
-                       <form action="{{ url('backup/create') }}" method="GET" class="add-new-backup" enctype="multipart/form-data" id="CreateBackupForm">
-                {{ csrf_field() }}
-                <input type="submit" name="submit" class="btn btn-primary float-right" style="margin-bottom:2em;" value="Crear copia">
-            </form>
+                      <form action="{{ url('backup/create') }}" method="POST" class="add-new-backup" enctype="multipart/form-data" id="CreateBackupForm">
+    {{ csrf_field() }}
+    <input type="submit" name="submit" class="btn btn-primary float-right" style="margin-bottom:2em;" value="Crear copia">
+</form>
+
                 </div>
                 
         

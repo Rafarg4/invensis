@@ -56,6 +56,7 @@ class BackupController extends Controller{
           }
     }
 
+
     public function download($file_name) {
         $file = config('laravel-backup.backup.name') .'/Fpc/'. $file_name;
             $disk = Storage::disk(config('laravel-backup.backup.destination.disks'));

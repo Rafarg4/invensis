@@ -63,60 +63,59 @@
   <div class="card-body">
     <form>
   <div class="row">
-    
     <div class="form-group col-md-3">
-      <label>Posicion:</label>  
-      <input type="text" class="form-control" placeholder="{{ $rankings->posicion }}",>
+        <label>Posicion:</label>  
+        <input type="text" class="form-control" placeholder="{{ $rankings->posicion }}" disabled>
     </div>
     <div class="form-group col-md-3">
         <label>Nombre y apellido:</label>
-      <input type="text" class="form-control" placeholder="{{ $rankings->nombre_apellido }}",>
+        <input type="text" class="form-control" placeholder="{{ $rankings->nombre_apellido }}" disabled>
     </div>
     <div class="form-group col-md-3">
         <label>Fecha uno:</label>
-      <input type="text" class="form-control" placeholder="{{ $rankings->fecha_uno}}",>
+        <input type="text" class="form-control" placeholder="{{ $rankings->fecha_uno }}" disabled>
     </div>
     <div class="form-group col-md-3">
         <label>Fecha dos:</label>
-      <input type="text" class="form-control" placeholder="{{ $rankings->fecha_dos ?? 'A competir'}}",>
+        <input type="text" class="form-control" placeholder="{{ $rankings->fecha_dos ?? 'A competir' }}" disabled>
     </div>
     <div class="form-group col-md-3">
         <label>Fecha tres:</label>
-      <input type="text" class="form-control" placeholder="{{ $rankings->fecha_tres ?? 'A competir'}}",>
+        <input type="text" class="form-control" placeholder="{{ $rankings->fecha_tres ?? 'A competir' }}" disabled>
     </div>
     <div class="form-group col-md-3">
         <label>Fecha cuatro:</label>
-      <input type="text" class="form-control" placeholder="{{ $rankings->fecha_cuatro ?? 'A competir'}}",>
+        <input type="text" class="form-control" placeholder="{{ $rankings->fecha_cuatro ?? 'A competir' }}" disabled>
     </div>
     <div class="form-group col-md-3">
         <label>Fecha cinco:</label>
-      <input type="text" class="form-control" placeholder="{{ $rankings->fecha_cinco ?? 'A competir'}}",>
+        <input type="text" class="form-control" placeholder="{{ $rankings->fecha_cinco ?? 'A competir' }}" disabled>
     </div>
     <div class="form-group col-md-3">
         <label>Fecha seis:</label>
-      <input type="text" class="form-control" placeholder="{{ $rankings->fecha_seis ?? 'A competir'}}",>
+        <input type="text" class="form-control" placeholder="{{ $rankings->fecha_seis ?? 'A competir' }}" disabled>
     </div>
     <div class="form-group col-md-3">
         <label>Fecha Siete:</label>
-      <input type="text" class="form-control" placeholder="{{ $rankings->fecha_siete ?? 'A competir'}}",>
+        <input type="text" class="form-control" placeholder="{{ $rankings->fecha_siete ?? 'A competir' }}" disabled>
     </div>
-    <div class="form-group col-md-3">
+    <div class= "form-group col-md-3">
         <label>Fecha ocho:</label>
-      <input type="text" class="form-control" placeholder="{{ $rankings->fecha_ocho ?? 'A competir'}}",>
+        <input type="text" class="form-control" placeholder="{{ $rankings->fecha_ocho ?? 'A competir' }}" disabled>
     </div>
     <div class="form-group col-md-3">
         <label>Fecha Nueve:</label>
-      <input type="text" class="form-control" placeholder="{{ $rankings->fecha_nueve ?? 'A competir'}}",>
+        <input type="text" class="form-control" placeholder="{{ $rankings->fecha_nueve ?? 'A competir' }}" disabled>
     </div>
     <div class="form-group col-md-3">
-        <label>Fecha dies:</label>
-      <input type="text" class="form-control" placeholder="{{ $rankings->fecha_dies ?? 'A competir'}}",>
+        <label>Fecha diez:</label>
+        <input type="text" class="form-control" placeholder="{{ $rankings->fecha_dies ?? 'A competir' }}" disabled>
     </div>
     <div class="form-group col-md-3">
         <label>Total:</label>
-      <input type="text" class="form-control" placeholder="{{ $rankings->totales ?? 'A definir'}}",>
+        <input type="text" class="form-control" placeholder="{{ $totales }}" disabled>
     </div>
-  </div>
+</div>
 </form>
 
             <div class="card-body">

@@ -94,16 +94,7 @@
             <td>{{ $inscripcion->categoria->nombre  ?? 'Categoria no asignada' }}</td>
              <td>{{$inscripcion->email}}</td>
             <td >
-                     {!! Form::open(['route' => ['inscripcions.destroy', $inscripcion->id], 'method' => 'delete']) !!}
-@canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
-<a class="class='btn btn-default btn-xs">
-<button type="submit"  class="btn btn-sm btn-danger" onclick="return confirm('Estas seguro?')"><i class="fa fas-solid fa-trash"></i></button>
-</a>@endcan
-@canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
-<a href="{{ route('inscripcions.edit', [$inscripcion->id]) }}" class="btn btn-sm btn-warning">
-<i class="fas fa-edit"></i>
-</a>@endcan
-</a>
+{!! Form::open(['route' => ['inscripcions.destroy', $inscripcion->id], 'method' => 'delete']) !!}
 <a href="{{ route('inscripcions.show', [$inscripcion->id]) }}" class="btn btn-sm btn-primary">
 <i class="fas fa-eye"></i>
 </a>
@@ -112,8 +103,56 @@
 </a>
 <a href="{{route('seguro',$inscripcion->id)}}" class="btn btn-sm btn-info">
 <i class="fa fas-regular fa-laptop-medical"></i></a>
-
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#exampleModal">
+  <i class="fa fas-solid fa-dollar-sign"></i>
+</button>
+@canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
+<a href="{{ route('inscripcions.edit', [$inscripcion->id]) }}" class="btn btn-sm btn-warning">
+<i class="fas fa-edit"></i>
+</a>@endcan
+@canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
+<a class="class='btn btn-default btn-xs">
+<button type="submit"  class="btn btn-sm btn-danger" onclick="return confirm('Estas seguro?')"><i class="fa fas-solid fa-trash"></i></button>
+</a>@endcan
 {!! Form::close() !!}
+<form action="{{ route('pago', $inscripcion->id) }}" method="POST" id="formularioPago">
+@csrf
+@method('POST')
+</a>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Detalles de pago</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group col-sm-12">
+                {!! Form::label('monto', 'Monto:') !!}
+                {!! Form::text('monto', null, ['class' => 'form-control']) !!}
+            </div>
+            <div class="form-group col-sm-12">
+                {!! Form::label('federacion_id', 'Federacion id:') !!}
+                {!! Form::number('federacion_id', null, ['class' => 'form-control']) !!}
+            </div>
+            <div class="form-group col-sm-12">
+                {!! Form::label('uciid', ' Uciid:') !!}
+                {!! Form::number('uciid', null, ['class' => 'form-control']) !!}
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" name="pago" value="pagado" class="btn btn-primary" form="formularioPago">Aplicar</button>
+
+      </div>
+    </div>
+  </div>
+</div>
 </td>
         @endforeach
         </tbody>
@@ -122,97 +161,109 @@
 
 @else
 <br>
- @if(!empty($inscripcions) && $inscripcions->count() > 0)
-@canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
-<section class="content">
-<div class="container-fluid">
-<div class="row">
-<div class="col-md-8 offset-md-2">
-<form class=" float-center">
-<div class="input-group">
-<input name="buscarpor" type="search" class="form-control form-control-lg" placeholder="Ingresar Ci para buscar">
-<div class="input-group-append">
-<button type="submit" class="btn btn-lg btn-default">
-<i class="fa fa-search"></i>
-</button>
-</div>
-</div>
-</form>
-</div>
-</div>
-</div>
-</section>
-@endcan
-<div class="card-body pb-0">
-  
-<div class="row">
-      @foreach($inscripcions as $inscripcion)
- <div class="col d-flex justify-content-center">
-<div class="card" style="width: 23rem;">
-<div class="card-body pt-0">
-<div class="row">
-<div class="col-7">
-<ul class="ml-3 mb-0 fa-ul text-muted">
-<br>     
-<li class="small"><span class="fa-li"><i class="fas fa-solid fa-user"></i></span> Nombres: {{ $inscripcion->primer_y_segundo_nombre}}</li><br>
-<li class="small"><span class="fa-li"><i class="fas fa-solid fa-bars"></i></span> Categoria:{{ $inscripcion->categoria->nombre ?? 'Categoria no asignada'}}</li><br>    
-<li class="small"><span class="fa-li"><i class="fas fa-solid fa-id-badge"></i></span> Cedula:{{ $inscripcion->ci }}</li><br>
-<li class="small"><span class="fa-li"><i class="fas fa-solid fa-address-book"></i></span>Estado: @switch(true)
-            @case($inscripcion->estado == 'En espera')
-            <span class="badge badge-primary"> {{ $inscripcion->estado }} </span>
-            @break
-            @case($inscripcion->estado == 'Paralizado')
-            <span class="badge badge-warning"> {{ $inscripcion->estado }} </span>
-            @break
-            @case($inscripcion->estado == 'Verificado' )
-            <span class="badge badge-success"> {{ $inscripcion->estado }} </span>
-            @break
-            @endswitch</li><br>
-<li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Telefono: {{ $inscripcion->celular }}</li>
-</ul>
-</div>
-<div class="col-5 text-center">
-    <br>
-<img src="{{ asset('storage').'/'.$inscripcion->foto}}" width="110" height="110" class="img-circle">
-</div>
-</div>
-</div>
-{!! Form::open(['route' => ['inscripcions.destroy', $inscripcion->id], 'method' => 'delete']) !!}
-<div class="card-footer">
-<div class="text-right">
-@canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
-<a class="class='btn btn-default btn-xs">
-<button type="submit"  class="btn btn-sm btn-danger" onclick="return confirm('Estas seguro?')"><i class="fa fas-solid fa-trash"></i></button>
-</a>@endcan
-@canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
-<a href="{{ route('inscripcions.edit', [$inscripcion->id]) }}" class="btn btn-sm btn-warning">
-<i class="fas fa-edit"></i>
-</a>@endcan
-</a>
-
-<a href="{{ route('inscripcions.show', [$inscripcion->id]) }}" class="btn btn-sm btn-primary">
-<i class="fas fa-eye"></i>
-</a>
-<a href="{{route('pdf.show', $inscripcion->id)}}" class="btn btn-sm btn-danger">
-<i class="fas fa-file-pdf"></i> 
-</a>               
-<a href="{{route('seguro',$inscripcion->id)}}" class="btn btn-sm btn-info">
-<i class="fa fas-regular fa-laptop-medical"></i></a>
-</div>
-</div>{!! Form::close() !!}
-</div>
-</div>
-@endforeach
-@else
-<div class="container"> 
-
-   <div class="alert alert-light" role="alert">
-  <b><h4><center>Aun no se ha registrado ninguna inscripcion!</center></h4></b>   
-</div>                               
-@endif
+ @if (!empty($inscripcions) && $inscripcions->count() > 0)
+    @canany(['create_inscripcion', 'edit_inscripcion', 'delete_inscripcion'])
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <form class="float-center">
+                        <div class="input-group">
+                            <input name="buscarpor" type="search" class="form-control form-control-lg"
+                                placeholder="Ingresar Ci para buscar">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-lg btn-default">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    @endcan
+    <div class="card-body pb-0">
+        <div class="row">
+            @foreach($inscripcions as $inscripcion)
+            <div class="col d-flex justify-content-center">
+                <div class="card" style="width: 28rem;">
+                    <div class="card-body pt-0">
+                         <h5 class="card-header">Informacion de inscripcion</h5>
+                        <div class="row">
+                            <div class="col-7">
+                                <ul class="ml-3 mb-0 fa-ul text-muted">
+                                    <br>
+                                    <li class="small"><span class="fa-li"><i class="fas fa-solid fa-user"></i></span>
+                                        Nombres: {{ $inscripcion->primer_y_segundo_nombre}}</li><br>
+                                    <li class="small"><span class="fa-li"><i class="fas fa-solid fa-bars"></i></span>
+                                        Categoria:{{ $inscripcion->categoria->nombre ?? 'Categoria no asignada'}}</li><br>
+                                    <li class="small"><span class="fa-li"><i class="fas fa-solid fa-id-badge"></i></span>
+                                        Cedula:{{ $inscripcion->ci }}</li><br>
+                                    <li class="small"><span class="fa-li"><i class="fas fa-solid fa-address-book"></i></span>
+                                        Estado:
+                                        @switch(true)
+                                        @case($inscripcion->estado == 'En espera')
+                                        <span class="badge badge-primary"> {{ $inscripcion->estado }} </span>
+                                        @break
+                                        @case($inscripcion->estado == 'Paralizado')
+                                        <span class="badge badge-warning"> {{ $inscripcion->estado }} </span>
+                                        @break
+                                        @case($inscripcion->estado == 'Verificado' )
+                                        <span class="badge badge-success"> {{ $inscripcion->estado }} </span>
+                                        @break
+                                        @endswitch</li><br>
+                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Telefono:
+                                        {{ $inscripcion->celular }}</li>
+                                </ul>
+                            </div>
+                            <div class="col-5 text-center">
+                                <br>
+                                <img src="{{ asset('storage').'/'.$inscripcion->foto}}" width="110" height="110"
+                                    class="img-circle">
+                            </div>
+                        </div>
+                    </div>
+                    {!! Form::open(['route' => ['inscripcions.destroy', $inscripcion->id], 'method' => 'delete']) !!}
+                    <div class="card-footer">
+                        <div class="text-right">
+                            @canany(['create_inscripcion', 'edit_inscripcion', 'delete_inscripcion'])
+                            <a class="class='btn btn-default btn-xs">
+                                <button type="submit" class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Estas seguro?')"><i class="fa fas-solid fa-trash"></i></button>
+                            </a>
+                            @endcan
+                            @canany(['create_inscripcion', 'edit_inscripcion', 'delete_inscripcion'])
+                            <a href="{{ route('inscripcions.edit', [$inscripcion->id]) }}" class="btn btn-sm btn-warning">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            @endcan
+                            <a href="{{ route('inscripcions.show', [$inscripcion->id]) }}"
+                                class="btn btn-sm btn-primary">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a href="{{route('pdf.show', $inscripcion->id)}}" class="btn btn-sm btn-danger">
+                                <i class="fas fa-file-pdf"></i>
+                            </a>
+                            <a href="{{route('seguro',$inscripcion->id)}}" class="btn btn-sm btn-info">
+                                <i class="fa fas-regular fa-laptop-medical"></i></a>
+                        </div>
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+               </div>
+            </div>
+        </div>
+        @endforeach
+    @else
+        <div class="container">
+            <div class="alert alert-light" role="alert">
+                <b><h4><center>Aun no se ha registrado ninguna inscripcion!</center></h4></b>
+            </div>
+        </div>
+    @endif
 </div>
 {{ $inscripcions->links() }}
+@endif
 
-
- @endif
 

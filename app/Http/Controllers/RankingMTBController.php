@@ -35,7 +35,8 @@ class RankingMTBController extends AppBaseController
         $categoriaSeleccionada = $request->input('categoria_filtro');
 
         $rankingmtbs = DB::table('ranking_m_t_bs')
-            ->select('ci', 'nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis', 'fecha_siete', 'fecha_ocho', 'fecha_nueve', 'fecha_dies', DB::raw('fecha_uno + fecha_dos + fecha_tres + fecha_cuatro + fecha_cinco + fecha_seis + fecha_seis + fecha_ocho + fecha_nueve + fecha_dies AS totales'))
+            ->select('ci', 'nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis', 'fecha_seis', 'fecha_ocho', 'fecha_nueve', 'fecha_dies',
+            DB::raw('COALESCE(fecha_uno, 0) + COALESCE(fecha_dos, 0) + COALESCE(fecha_tres, 0) + COALESCE(fecha_cuatro, 0) + COALESCE(fecha_cinco, 0) + COALESCE(fecha_seis, 0) + COALESCE(fecha_siete, 0) + COALESCE(fecha_ocho, 0) + COALESCE(fecha_nueve, 0) + COALESCE(fecha_dies, 0) AS totales'))
             ->where('ranking_m_t_bs.deleted_at', null)
             ->when($nombre_apellido, function ($query) use ($nombre_apellido) {
                 return $query->where('nombre_apellido', 'like', "%$nombre_apellido%");
@@ -52,8 +53,17 @@ class RankingMTBController extends AppBaseController
     {
         $rankingMTB = $this->rankingMTBRepository->find($id);
 
-        // Calcula la suma de las fechas
-        $totales = $rankingMTB->fecha_uno + $rankingMTB->fecha_dos + $rankingMTB->fecha_tres + $rankingMTB->fecha_cuatro + $rankingMTB->fecha_cinco + $rankingMTB->fecha_seis + $rankingMTB->fecha_seis + $rankingMTB->fecha_ocho + $rankingMTB->fecha_nueve + $rankingMTB->fecha_dies;
+        // Sumar las fechas disponibles
+             $totales = $rankingMTB->fecha_uno +
+             ($rankingMTB->fecha_dos ?? 0) +
+             ($rankingMTB->fecha_tres ?? 0) +
+             ($rankingMTB->fecha_cuatro ?? 0) +
+             ($rankingMTB->fecha_cinco ?? 0) +
+             ($rankingMTB->fecha_seis ?? 0) +
+             ($rankingMTB->fecha_siete ?? 0) +
+             ($rankingMTB->fecha_ocho ?? 0) +
+             ($rankingMTB->fecha_nueve ?? 0) +
+             ($rankingMTB->fecha_dies ?? 0);
 
 
         if (empty($rankingMTB)) {
@@ -68,7 +78,8 @@ class RankingMTBController extends AppBaseController
     public function index(Request $request)
     {
         $rankingMTBs = DB::table('ranking_m_t_bs')
-        ->select('ci','nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis','fecha_siete','fecha_ocho','fecha_nueve','fecha_dies', DB::raw('fecha_uno + fecha_dos + fecha_tres + fecha_cuatro + fecha_cinco + fecha_seis + fecha_seis + fecha_ocho + fecha_nueve + fecha_dies AS totales'))
+        ->select('ci', 'nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis', 'fecha_seis', 'fecha_ocho', 'fecha_nueve', 'fecha_dies',
+            DB::raw('COALESCE(fecha_uno, 0) + COALESCE(fecha_dos, 0) + COALESCE(fecha_tres, 0) + COALESCE(fecha_cuatro, 0) + COALESCE(fecha_cinco, 0) + COALESCE(fecha_seis, 0) + COALESCE(fecha_siete, 0) + COALESCE(fecha_ocho, 0) + COALESCE(fecha_nueve, 0) + COALESCE(fecha_dies, 0) AS totales'))
          ->where('ranking_m_t_bs.deleted_at', null)
          ->get();
          $inscripcion =Inscripcion::pluck('ci');
@@ -113,6 +124,16 @@ class RankingMTBController extends AppBaseController
     public function show($id)
     {
         $rankingMTB = $this->rankingMTBRepository->find($id);
+         $totales = $rankingMTB->fecha_uno +
+             ($rankingMTB->fecha_dos ?? 0) +
+             ($rankingMTB->fecha_tres ?? 0) +
+             ($rankingMTB->fecha_cuatro ?? 0) +
+             ($rankingMTB->fecha_cinco ?? 0) +
+             ($rankingMTB->fecha_seis ?? 0) +
+             ($rankingMTB->fecha_siete ?? 0) +
+             ($rankingMTB->fecha_ocho ?? 0) +
+             ($rankingMTB->fecha_nueve ?? 0) +
+             ($rankingMTB->fecha_dies ?? 0);
 
         if (empty($rankingMTB)) {
             Flash::error('Ranking M T B not found');
@@ -120,7 +141,7 @@ class RankingMTBController extends AppBaseController
             return redirect(route('rankingMTBs.index'));
         }
 
-        return view('ranking_m_t_bs.show')->with('rankingMTB', $rankingMTB);
+        return view('ranking_m_t_bs.show')->with('rankingMTB', $rankingMTB)->with('totales', $totales);
     }
 
     /**
@@ -193,4 +214,11 @@ class RankingMTBController extends AppBaseController
 
         return redirect(route('rankingMTBs.index'));
     }
+    public function eliminar_ranking_mtb()
+   {
+    // Código para eliminar todos los datos de la tabla
+    RankingMTB::truncate(); // Asumiendo que "Tabla" es el nombre de tu modelo de Eloquent
+     Flash::success('Ranking MTB eliminado.');
+    return redirect(route('rankingMTBs.index'));
+}
 }

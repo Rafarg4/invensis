@@ -42,7 +42,7 @@ class RankingsImport implements ToModel, WithHeadingRow
                     'fecha_cuatro' => $row['fecha_cuatro'],
                     'fecha_cinco' => $row['fecha_cinco'],
                     'fecha_seis' => $row['fecha_seis'],
-                    'fecha_siete' => $row['fecha_seis'],
+                    'fecha_siete' => $row['fecha_siete'],
                     'fecha_ocho' => $row['fecha_ocho'],
                     'fecha_nueve' => $row['fecha_nueve'],
                     'fecha_dies' => $row['fecha_dies'],

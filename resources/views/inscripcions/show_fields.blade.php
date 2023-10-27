@@ -10,7 +10,7 @@
 </div>
 <div class="form-group col-md-3">
     <label for="apellido">Apellidos:</label>
-    <input type="text" class="form-control" id="apellido" value="{{ $inscripcion->primer_y_segundo_apellido }}">
+    <input type="text" class="form-control" id="apellido" value="{{ $inscripcion->primer_y_segundo_apellido  }}">
 </div>
 <div class="form-group col-md-3">
     <label for="email">Email:</label>
@@ -50,7 +50,7 @@
 </div>
 <div class="form-group col-md-3">
     <label for="categoria">Categoría:</label>
-    <input type="text" class="form-control" id="categoria" value="{{ $inscripcion->categoria->nombre }}">
+    <input type="text" class="form-control" id="categoria" value="{{ $inscripcion->categoria->nombre ?? 'Sin asignar' }}">
 </div>
 <div class="form-group col-md-3">
     <label for="estado">Estado:</label>

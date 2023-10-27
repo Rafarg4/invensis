@@ -37,9 +37,10 @@ class RankingController extends AppBaseController
         $categoriaSeleccionada = $request->input('categoria_filtro');
 
         $rankings = DB::table('rankings')
-            ->select('ci', 'nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis', 'fecha_siete', 'fecha_ocho', 'fecha_nueve', 'fecha_dies', DB::raw('fecha_uno + fecha_dos + fecha_tres + fecha_cuatro + fecha_cinco + fecha_seis + fecha_seis + fecha_ocho + fecha_nueve + fecha_dies AS totales'))
+            ->select('ci', 'nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis', 'fecha_seis', 'fecha_ocho', 'fecha_nueve', 'fecha_dies',
+            DB::raw('COALESCE(fecha_uno, 0) + COALESCE(fecha_dos, 0) + COALESCE(fecha_tres, 0) + COALESCE(fecha_cuatro, 0) + COALESCE(fecha_cinco, 0) + COALESCE(fecha_seis, 0) + COALESCE(fecha_siete, 0) + COALESCE(fecha_ocho, 0) + COALESCE(fecha_nueve, 0) + COALESCE(fecha_dies, 0) AS totales'))
             ->where('rankings.deleted_at', null)
-            ->when($nombre_apellido, function ($query) use ($nombre_apellido) {
+                ->when($nombre_apellido, function ($query) use ($nombre_apellido) {
                 return $query->where('nombre_apellido', 'like', "%$nombre_apellido%");
             })
             ->when(!empty($categoriaSeleccionada), function ($query) use ($categoriaSeleccionada) {
@@ -53,9 +54,17 @@ class RankingController extends AppBaseController
     public function ver_ranking($id)
     {
         $rankings = $this->rankingRepository->find($id);
-
-        // Calcula la suma de las fechas
-        $totales = $rankings->fecha_uno + $rankings->fecha_dos + $rankings->fecha_tres + $rankings->fecha_cuatro + $rankings->fecha_cinco + $rankings->fecha_seis + $rankings->fecha_seis + $rankings->fecha_ocho + $rankings->fecha_nueve + $rankings->fecha_dies;
+        // Sumar las fechas disponibles
+             $totales = $rankings->fecha_uno +
+             ($rankings->fecha_dos ?? 0) +
+             ($rankings->fecha_tres ?? 0) +
+             ($rankings->fecha_cuatro ?? 0) +
+             ($rankings->fecha_cinco ?? 0) +
+             ($rankings->fecha_seis ?? 0) +
+             ($rankings->fecha_siete ?? 0) +
+             ($rankings->fecha_ocho ?? 0) +
+             ($rankings->fecha_nueve ?? 0) +
+             ($rankings->fecha_dies ?? 0);
 
 
         if (empty($rankings)) {
@@ -71,7 +80,8 @@ class RankingController extends AppBaseController
     {
         $nombre_apellido = $request->get('buscar');
         $rankings = DB::table('rankings')
-        ->select('ci','nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis','fecha_siete','fecha_ocho','fecha_nueve','fecha_dies', DB::raw('fecha_uno + fecha_dos + fecha_tres + fecha_cuatro + fecha_cinco + fecha_seis + fecha_seis + fecha_ocho + fecha_nueve + fecha_dies AS totales'))
+        ->select('ci', 'nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis', 'fecha_seis', 'fecha_ocho', 'fecha_nueve', 'fecha_dies',
+            DB::raw('COALESCE(fecha_uno, 0) + COALESCE(fecha_dos, 0) + COALESCE(fecha_tres, 0) + COALESCE(fecha_cuatro, 0) + COALESCE(fecha_cinco, 0) + COALESCE(fecha_seis, 0) + COALESCE(fecha_siete, 0) + COALESCE(fecha_ocho, 0) + COALESCE(fecha_nueve, 0) + COALESCE(fecha_dies, 0) AS totales'))
          ->where('rankings.deleted_at', null)
          ->where('nombre_apellido','like',"%$nombre_apellido%")
          ->get();
@@ -121,6 +131,16 @@ class RankingController extends AppBaseController
     public function show($id)
     {
         $ranking = $this->rankingRepository->find($id);
+        $totales = $ranking->fecha_uno +
+             ($ranking->fecha_dos ?? 0) +
+             ($ranking->fecha_tres ?? 0) +
+             ($ranking->fecha_cuatro ?? 0) +
+             ($ranking->fecha_cinco ?? 0) +
+             ($ranking->fecha_seis ?? 0) +
+             ($ranking->fecha_siete ?? 0) +
+             ($ranking->fecha_ocho ?? 0) +
+             ($ranking->fecha_nueve ?? 0) +
+             ($ranking->fecha_dies ?? 0);
 
         if (empty($ranking)) {
             Flash::error('Ranking no encontrado');
@@ -128,7 +148,7 @@ class RankingController extends AppBaseController
             return redirect(route('rankings.index'));
         }
 
-        return view('rankings.show')->with('ranking', $ranking);
+        return view('rankings.show')->with('ranking', $ranking)->with('totales', $totales);
     }
 
     /**
@@ -203,5 +223,12 @@ class RankingController extends AppBaseController
 
         return redirect(route('rankings.index'));
     }
+    public function eliminar_todo()
+   {
+    // Código para eliminar todos los datos de la tabla
+    Ranking::truncate(); // Asumiendo que "Tabla" es el nombre de tu modelo de Eloquent
+     Flash::success('Ranking eliminado.');
+    return redirect(route('rankings.index'));
+}
 
 }

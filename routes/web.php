@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RankingController;
+use App\Http\Controllers\RankingMTBController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,10 +24,7 @@ Route::get('/symlink', function () {
    symlink($target, $link);
    echo "Done";
 });
-Route::get('/seguridad', function() {
-  Artisan::call('backup:run'); 
-  return response()->json(['success' => 'Backup for database created']);
-});
+
 Auth::routes();
 Route::get('', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -86,7 +84,8 @@ Route::get('imprimir/licencias', [App\Http\Controllers\LicenciapdfController::cl
 
 Route::get('backup', [App\Http\Controllers\BackupController::class, 'index'])->name('backup')->middleware('auth');
 
-Route::get('backup/create/', 'App\Http\Controllers\BackupController@create');
+Route::post('backup/create/', 'App\Http\Controllers\BackupController@create');
+
 Route::get('backup/download/{file_name}', 'App\Http\Controllers\BackupController@download');
 
 Route::get('backup/delete/{file_name}', 'App\Http\Controllers\BackupController@delete');
@@ -106,3 +105,9 @@ Route::get('ranking/ver_ranking_mtb/{id}', [App\Http\Controllers\RankingMTBContr
 Route::post('cambiar_estado/{id}', [App\Http\Controllers\InscripcionController::class, 'cambiar_estado'])->name('cambiar_estado');
 
 Route::post('cambiar_estado_documento/{id}', [App\Http\Controllers\DocumentoController::class, 'cambiar_estado_documento'])->name('cambiar_estado_documento');
+
+
+Route::post('/eliminar_ranking', [RankingController::class, 'eliminar_todo']);
+Route::post('/eliminar_ranking_mtb', [RankingMTBController::class, 'eliminar_ranking_mtb']);
+
+Route::post('pago/{id}', 'App\Http\Controllers\InscripcionController@pago')->name('pago');

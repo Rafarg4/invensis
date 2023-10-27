@@ -11,31 +11,31 @@
     </div>
     <div class="form-group col-md-3">
         <label>Fecha uno:</label>
-      <input type="text" class="form-control" placeholder="{{ $rankingMTB->fecha_uno}}", disabled="true">
+      <input type="text" class="form-control" placeholder="{{ $rankingMTB->fecha_uno ?? 'A competir'}}", disabled="true">
     </div>
     <div class="form-group col-md-3">
         <label>Fecha dos:</label>
-      <input type="text" class="form-control" placeholder="{{ $rankingMTB->fecha_dos}}", disabled="true">
+      <input type="text" class="form-control" placeholder="{{ $rankingMTB->fecha_dos ?? 'A competir'}}", disabled="true">
     </div>
     <div class="form-group col-md-3">
         <label>Fecha tres:</label>
-      <input type="text" class="form-control" placeholder="{{ $rankingMTB->fecha_tres}}", disabled="true">
+      <input type="text" class="form-control" placeholder="{{ $rankingMTB->fecha_tres ?? 'A competir'}}", disabled="true">
     </div>
     <div class="form-group col-md-3">
         <label>Fecha cuatro:</label>
-      <input type="text" class="form-control" placeholder="{{ $rankingMTB->fecha_cuatro}}", disabled="true">
+      <input type="text" class="form-control" placeholder="{{ $rankingMTB->fecha_cuatro ?? 'A competir'}}", disabled="true">
     </div>
     <div class="form-group col-md-3">
         <label>Fecha cinco:</label>
-      <input type="text" class="form-control" placeholder="{{ $rankingMTB->cinco}}", disabled="true">
+      <input type="text" class="form-control" placeholder="{{ $rankingMTB->cinco ?? 'A competir'}}", disabled="true">
     </div>
     <div class="form-group col-md-3">
         <label>Fecha seis:</label>
-      <input type="text" class="form-control" placeholder="{{ $rankingMTB->seis}}", disabled="true">
+      <input type="text" class="form-control" placeholder="{{ $rankingMTB->seis ?? 'A competir'}}", disabled="true">
     </div>
     <div class="form-group col-md-3">
         <label>Total:</label>
-      <input type="text" class="form-control" placeholder="{{ $rankingMTB->total}}", disabled="true">
+      <input type="text" class="form-control" placeholder="{{ $totales}}", disabled="true">
     </div>
   </div>
 </form>

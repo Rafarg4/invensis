@@ -59,36 +59,31 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
 
 <script type="text/javascript">
     $(document).ready(function () {
-    $('#filtross').DataTable({
-         "pageLength":3,
-         "language": {
+        $('#filtross').DataTable({
+            "pageLength": 30,
+            "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
             },
-        initComplete: function () {
-            this.api()
-                .columns()
-                .every(function () {
+            "order": [[2, 'desc']], // Ordenar por la tercera columna (índice 2) en orden descendente (de mayor a menor)
+            "initComplete": function () {
+                this.api().columns().every(function () {
                     var column = this;
-                    var select = $('<select><option value="">Selecione</option></select>')
+                    var select = $('<select><option value="">Seleccione</option></select>')
                         .appendTo($(column.footer()).empty())
                         .on('change', function () {
                             var val = $.fn.dataTable.util.escapeRegex($(this).val());
- 
                             column.search(val ? '^' + val + '$' : '', true, false).draw();
                         });
- 
-                    column
-                        .data()
-                        .unique()
-                        .sort()
-                        .each(function (d, j) {
-                            select.append('<option value="' + d + '">' + d + '</option>');
-                        });
+
+                    column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>');
+                    });
                 });
-        },
+            },
+        });
     });
-});
 </script>
+
 <style type="text/css">
     body{
     background:url("/fondo_pagina.jpeg");
@@ -119,7 +114,7 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('http://sistemafpc.site/login/') }}"><i class="fas fa-users"></i> Área de usuarios</a>
+                <a class="nav-link" href="{{ url('http://sistema.fpc.org.py') }}"><i class="fas fa-users"></i> Área de usuarios</a>
             </li>
         </ul>
     </div>
@@ -137,7 +132,7 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
             <div class="card-body">
                 <form method="GET">
                     <div class="col-sm-6">
-                        <h1><i class="fas fa-bicycle"></i> Ranking MTB</h1>
+                        <h2><i class="fas fa-bicycle"></i> Ranking MTB</h2>
                     </div>
                     <div class="input-group">
                         <div class="input-group-append">
@@ -171,24 +166,22 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
                     <table class="table" id="filtross">
                         <thead>
                         <tr>
-                            <th style="font-size: 12px">#</th>
-                            <th style="font-size: 12px">Nombre y Apellido</th>
-                            <th style="font-size: 12px">Categoría</th>
-                            <th style="font-size: 12px">Total</th>
-                            <th style="font-size: 12px">Acciones</th>
+                            <th class="center" style="font-size: 10px">Ciclista</th>
+                            <th class="center" style="font-size: 10px">Categoría</th>
+                            <th class="center" style="font-size: 10px">Total</th>
+                            <th class="center" style="font-size: 10px">Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($rankingmtbs as $ranking)
                             <tr>
-                                <td>{{ $ranking->posicion }}</td>
-                                <td>{{ $ranking->nombre_apellido }}</td>
-                                <td>{{ $ranking->categoria }}</td>
-                                <td>{{ $ranking->totales ?? 'A definir' }}</td>
+                                <td style="font-size: 11px">{{ $ranking->nombre_apellido }}</td>
+                                <td style="font-size: 11px">{{ $ranking->categoria }}</td>
+                                <td style="font-size: 11px">{{ $ranking->totales ?? 'A definir' }}</td>
                                 <td width="120">
                                     <div class='btn-group'>
                                         <a href="{{ url('ranking/ver_ranking_mtb', [$ranking->id]) }}" class='btn btn-primary btn-xs'>
-                                            <i class="fas fa-id-card"></i>
+                                              <i class="fa fa-eye" aria-hidden="true"></i>
                                         </a>
                                     </div>
                                 </td>
