@@ -85,7 +85,7 @@ table td {padding: 0px}
 <img style="position:absolute;top:1.33in;left: 9.42in;width:0.65in;height:0.16in" src="/imagenes/ri_5.png">
 <img style="position:absolute;top:1.34in;left: 2.92in;width:1.13in;height:0.27in" src="/imagenes/ri_6.png">
 <img style="position:absolute;top:1.74in;left:0.89in;width:1.22in;height:1.40in" src="/imagenes/ri_7.png" >
-<img style="position:absolute;top:1.80in;left: 2.9in;width:1.21in;height:1.29in" src="{{ asset('storage').'/'.$inscripcions->foto}}">
+<img style="position:absolute;top:1.80in;left: 2.9in;width:1.21in;height:1.29in" src="{{asset('storage/uploads/' . $inscripcions->foto) }}">
 <img style="position:absolute;top:3.10in;left: 6.62in;width:3.47in;height:0.38in" src="/imagenes/ri_9.png">
 <div style="position:absolute;top:3.14in;left:6.66in;width:3.34in;line-height:0.10in;"><span style="font-style:normal;font-weight:normal;font-size:5pt;font-family:Calibri;color:#231f20">“I</span></SPAN><br/></div>
 <div style="position:absolute;top:3.14in;left:6.66in;width:3.34in;line-height:0.10in;"><DIV style="position:relative; left:0.07in;"><span style="font-style:normal;font-weight:normal;font-size:5pt;font-family:Calibri;color:#231f20">agreetoabideandbeboundby</span></SPAN></DIV><br/></div>

@@ -12,7 +12,7 @@
             <div class="col-sm-6">
                 <form method="POST" action="{{ url('/eliminar_ranking') }}">
                     @csrf
-                    <button type="submit" class="btn btn-danger float-right">Eliminar Ranking</button>
+                    <button type="submit" class="btn btn-danger float-right"><i class="fa fas-solid fa-trash"></i> Eliminar Ranking</button>
                 </form>
                 <a href="{{ route('importar.index') }}" class="btn btn-success float-right mr-2">
                 <i class="fa fas-solid fa-file-excel"></i>

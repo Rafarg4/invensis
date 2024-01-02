@@ -203,7 +203,7 @@ function changeTipo(){
             </div>
         </div>
          @if(isset($inscripcion->foto))
-            <img src="{{ asset('storage').'/'.$inscripcion->foto}}" width="100" height="100" class="img-circle">
+            <img src="{{ asset('storage/uploads/' . $inscripcion->foto) }}" width="100" height="100" class="img-circle">
             @endif
     </div>
             <!-- Nombre Equipo Field -->

@@ -105,12 +105,16 @@
     <input type="text" class="form-control" placeholder="{{ $rankingMTB->fecha_ocho ?? 'A competir' }}" disabled>
 </div>
 <div class="form-group col-md-3">
-    <label>Fecha Nueve:</label>
+    <label>Fecha nueve:</label>
     <input type="text" class="form-control" placeholder="{{ $rankingMTB->fecha_nueve ?? 'A competir' }}" disabled>
 </div>
 <div class="form-group col-md-3">
     <label>Fecha diez:</label>
     <input type="text" class="form-control" placeholder="{{ $rankingMTB->fecha_dies ?? 'A competir' }}" disabled>
+</div>
+<div class="form-group col-md-3">
+    <label>Fecha once:</label>
+    <input type="text" class="form-control" placeholder="{{ $rankingMTB->once ?? 'A competir' }}" disabled>
 </div>
 <div class="form-group col-md-3">
     <label>Total:</label>

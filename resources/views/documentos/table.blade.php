@@ -100,11 +100,11 @@
             @endif
                             <td width="120">
                     {!! Form::open(['route' => ['documentos.destroy', $documento->id], 'method' => 'delete']) !!}
-                    <div class='btn-group'>
+                    <!--<div class='btn-group'>
                         <a href="{{ route('documentos.show', [$documento->id]) }}"
                            class='btn btn-default btn-xs'>
                             <i class="far fa-eye"></i>
-                        </a>
+                        </a>-->
                         @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
                         <a href="{{ route('documentos.edit', [$documento->id]) }}"
                            class='btn btn-default btn-xs'>

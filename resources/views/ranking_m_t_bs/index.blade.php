@@ -11,7 +11,7 @@
             <div class="col-sm-6">
                 <form method="POST" action="{{ url('/eliminar_ranking_mtb') }}">
                     @csrf
-                    <button type="submit" class="btn btn-danger float-right">Eliminar Ranking MTB</button>
+                    <button type="submit" class="btn btn-danger float-right"><i class="fa fas-solid fa-trash"></i> Eliminar Ranking MTB</button>
                 </form>
                 <a href="{{ url('importar_mtb') }}" class="btn btn-success float-right mr-2">
                 <i class="fa fas-solid fa-file-excel"></i>

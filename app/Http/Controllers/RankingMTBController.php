@@ -33,10 +33,9 @@ class RankingMTBController extends AppBaseController
     {
          $nombre_apellido = $request->get('buscar');
         $categoriaSeleccionada = $request->input('categoria_filtro');
-
         $rankingmtbs = DB::table('ranking_m_t_bs')
-            ->select('ci', 'nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis', 'fecha_seis', 'fecha_ocho', 'fecha_nueve', 'fecha_dies',
-            DB::raw('COALESCE(fecha_uno, 0) + COALESCE(fecha_dos, 0) + COALESCE(fecha_tres, 0) + COALESCE(fecha_cuatro, 0) + COALESCE(fecha_cinco, 0) + COALESCE(fecha_seis, 0) + COALESCE(fecha_siete, 0) + COALESCE(fecha_ocho, 0) + COALESCE(fecha_nueve, 0) + COALESCE(fecha_dies, 0) AS totales'))
+            ->select('ci', 'nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis', 'fecha_seis', 'fecha_ocho', 'fecha_nueve', 'fecha_dies','fecha_once',
+            DB::raw('COALESCE(fecha_uno, 0) + COALESCE(fecha_dos, 0) + COALESCE(fecha_tres, 0) + COALESCE(fecha_cuatro, 0) + COALESCE(fecha_cinco, 0) + COALESCE(fecha_seis, 0) + COALESCE(fecha_siete, 0) + COALESCE(fecha_ocho, 0) + COALESCE(fecha_nueve, 0) + COALESCE(fecha_dies, 0 )+ COALESCE(fecha_dies, 0) AS totales'))
             ->where('ranking_m_t_bs.deleted_at', null)
             ->when($nombre_apellido, function ($query) use ($nombre_apellido) {
                 return $query->where('nombre_apellido', 'like', "%$nombre_apellido%");
@@ -63,7 +62,8 @@ class RankingMTBController extends AppBaseController
              ($rankingMTB->fecha_siete ?? 0) +
              ($rankingMTB->fecha_ocho ?? 0) +
              ($rankingMTB->fecha_nueve ?? 0) +
-             ($rankingMTB->fecha_dies ?? 0);
+             ($rankingMTB->fecha_dies ?? 0) +
+             ($rankingMTB->fecha_once ?? 0);
 
 
         if (empty($rankingMTB)) {
@@ -78,8 +78,8 @@ class RankingMTBController extends AppBaseController
     public function index(Request $request)
     {
         $rankingMTBs = DB::table('ranking_m_t_bs')
-        ->select('ci', 'nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis', 'fecha_seis', 'fecha_ocho', 'fecha_nueve', 'fecha_dies',
-            DB::raw('COALESCE(fecha_uno, 0) + COALESCE(fecha_dos, 0) + COALESCE(fecha_tres, 0) + COALESCE(fecha_cuatro, 0) + COALESCE(fecha_cinco, 0) + COALESCE(fecha_seis, 0) + COALESCE(fecha_siete, 0) + COALESCE(fecha_ocho, 0) + COALESCE(fecha_nueve, 0) + COALESCE(fecha_dies, 0) AS totales'))
+        ->select('ci', 'nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis', 'fecha_seis', 'fecha_ocho', 'fecha_nueve', 'fecha_dies','fecha_once',
+            DB::raw('COALESCE(fecha_uno, 0) + COALESCE(fecha_dos, 0) + COALESCE(fecha_tres, 0) + COALESCE(fecha_cuatro, 0) + COALESCE(fecha_cinco, 0) + COALESCE(fecha_seis, 0) + COALESCE(fecha_siete, 0) + COALESCE(fecha_ocho, 0) + COALESCE(fecha_nueve, 0) + COALESCE(fecha_dies, 0)+ COALESCE(fecha_once, 0) AS totales'))
          ->where('ranking_m_t_bs.deleted_at', null)
          ->get();
          $inscripcion =Inscripcion::pluck('ci');
@@ -124,7 +124,8 @@ class RankingMTBController extends AppBaseController
     public function show($id)
     {
         $rankingMTB = $this->rankingMTBRepository->find($id);
-         $totales = $rankingMTB->fecha_uno +
+         $totales =
+              $rankingMTB->fecha_uno +
              ($rankingMTB->fecha_dos ?? 0) +
              ($rankingMTB->fecha_tres ?? 0) +
              ($rankingMTB->fecha_cuatro ?? 0) +
@@ -133,7 +134,9 @@ class RankingMTBController extends AppBaseController
              ($rankingMTB->fecha_siete ?? 0) +
              ($rankingMTB->fecha_ocho ?? 0) +
              ($rankingMTB->fecha_nueve ?? 0) +
-             ($rankingMTB->fecha_dies ?? 0);
+             ($rankingMTB->fecha_dies ?? 0) +
+             ($rankingMTB->fecha_once ?? 0);
+             
 
         if (empty($rankingMTB)) {
             Flash::error('Ranking M T B not found');

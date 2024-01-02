@@ -21,6 +21,7 @@
         <th>8 Fecha</th>
         <th>9 Fecha</th>
         <th>10 Fecha</th>
+        <th>11 Fecha</th>
         <th>Total</th>
         <th>Accion</th>
         </tr>
@@ -54,6 +55,7 @@
             <td>{{ $rankingmtb->fecha_ocho ?? 'A competir'}}</td>
             <td>{{ $rankingmtb->fecha_nueve ?? 'A competir'}}</td>
             <td>{{ $rankingmtb->fecha_dies ?? 'A competir'}}</td>
+             <td>{{ $rankingmtb->fecha_once ?? 'A competir'}}</td>
             <td>{{ $rankingmtb->totales ?? 'A definir'}}</td>
                 <td width="120">
                     {!! Form::open(['route' => ['rankingMTBs.destroy', $rankingmtb->id], 'method' => 'delete']) !!}
@@ -91,7 +93,7 @@
                 <th></th> 
                 <th></th>
                 <th></th>
-                
+                <th></th>                
             </tr>
         </tfoot>
     </table>

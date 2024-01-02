@@ -31,6 +31,7 @@ class CreateRankingMTBsTable extends Migration
             $table->text('fecha_ocho')->nullable();
             $table->text('fecha_nueve')->nullable();
             $table->text('fecha_dies')->nullable();
+            $table->text('fecha_once')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

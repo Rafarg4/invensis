@@ -94,22 +94,44 @@ class DocumentoController extends AppBaseController
       $this->validate($request,$rules,$mensaje);
 
         $input = $request->all();
-        if($request->hasFile('archivo_pago')){
-            $input['archivo_pago']=$request->file('archivo_pago')->store('uploads','public');   
+
+        if ($request->hasFile('archivo_pago')) {
+            $archivoPago = $request->file('archivo_pago');
+            $nombreArchivoPago = $archivoPago->getClientOriginalName(); // Obtiene el nombre original del archivo
+            $archivoPago->storeAs('public/uploads', $nombreArchivoPago);
+            $input['archivo_pago'] = $nombreArchivoPago;
         }
-        if($request->hasFile('archivo_inscripcion')){
-            $input['archivo_inscripcion']=$request->file('archivo_inscripcion')->store('uploads','public');   
+
+        if ($request->hasFile('archivo_inscripcion')) {
+            $archivoInscripcion = $request->file('archivo_inscripcion');
+            $nombreArchivoInscripcion = $archivoInscripcion->getClientOriginalName(); // Obtiene el nombre original del archivo
+            $archivoInscripcion->storeAs('public/uploads', $nombreArchivoInscripcion);
+            $input['archivo_inscripcion'] = $nombreArchivoInscripcion;
         }
-        if($request->hasFile('archivo_seguro_medico')){
-            $input['archivo_seguro_medico']=$request->file('archivo_seguro_medico')->store('uploads','public');   
+
+        if ($request->hasFile('archivo_seguro_medico')) {
+            $archivoSeguroMedico = $request->file('archivo_seguro_medico');
+            $nombreArchivoSeguroMedico = $archivoSeguroMedico->getClientOriginalName(); // Obtiene el nombre original del archivo
+            $archivoSeguroMedico->storeAs('public/uploads', $nombreArchivoSeguroMedico);
+            $input['archivo_seguro_medico'] = $nombreArchivoSeguroMedico;
         }
-        if($request->hasFile('archivo_copia_cedula')){
-            $input['archivo_copia_cedula']=$request->file('archivo_copia_cedula')->store('uploads','public');   
+
+        if ($request->hasFile('archivo_copia_cedula')) {
+            $archivoCopiaCedula = $request->file('archivo_copia_cedula');
+            $nombreArchivoCopiaCedula = $archivoCopiaCedula->getClientOriginalName(); // Obtiene el nombre original del archivo
+            $archivoCopiaCedula->storeAs('public/uploads', $nombreArchivoCopiaCedula);
+            $input['archivo_copia_cedula'] = $nombreArchivoCopiaCedula;
         }
-        if($request->hasFile('archivo_certificado_medico')){
-            $input['archivo_certificado_medico']=$request->file('archivo_certificado_medico')->store('uploads','public');   
+
+        if ($request->hasFile('archivo_certificado_medico')) {
+            $archivoCertificadoMedico = $request->file('archivo_certificado_medico');
+            $nombreArchivoCertificadoMedico = $archivoCertificadoMedico->getClientOriginalName(); // Obtiene el nombre original del archivo
+            $archivoCertificadoMedico->storeAs('public/uploads', $nombreArchivoCertificadoMedico);
+            $input['archivo_certificado_medico'] = $nombreArchivoCertificadoMedico;
         }
-        
+
+        // Resto de tu código para crear el documento
+
         $documento = $this->documentoRepository->create($input);
 
         Flash::success('Documento guardado.');
@@ -131,22 +153,41 @@ class DocumentoController extends AppBaseController
       $this->validate($request,$rules,$mensaje);
 
         $input = $request->all();
-        if($request->hasFile('archivo_pago')){
-            $input['archivo_pago']=$request->file('archivo_pago')->store('uploads','public');   
+
+        if ($request->hasFile('archivo_pago')) {
+            $archivoPago = $request->file('archivo_pago');
+            $nombreArchivoPago = $archivoPago->getClientOriginalName(); // Obtiene el nombre original del archivo
+            $archivoPago->storeAs('public/uploads', $nombreArchivoPago);
+            $input['archivo_pago'] = $nombreArchivoPago;
         }
-        if($request->hasFile('archivo_inscripcion')){
-            $input['archivo_inscripcion']=$request->file('archivo_inscripcion')->store('uploads','public');   
+
+        if ($request->hasFile('archivo_inscripcion')) {
+            $archivoInscripcion = $request->file('archivo_inscripcion');
+            $nombreArchivoInscripcion = $archivoInscripcion->getClientOriginalName(); // Obtiene el nombre original del archivo
+            $archivoInscripcion->storeAs('public/uploads', $nombreArchivoInscripcion);
+            $input['archivo_inscripcion'] = $nombreArchivoInscripcion;
         }
-        if($request->hasFile('archivo_seguro_medico')){
-            $input['archivo_seguro_medico']=$request->file('archivo_seguro_medico')->store('uploads','public');   
+
+        if ($request->hasFile('archivo_seguro_medico')) {
+            $archivoSeguroMedico = $request->file('archivo_seguro_medico');
+            $nombreArchivoSeguroMedico = $archivoSeguroMedico->getClientOriginalName(); // Obtiene el nombre original del archivo
+            $archivoSeguroMedico->storeAs('public/uploads', $nombreArchivoSeguroMedico);
+            $input['archivo_seguro_medico'] = $nombreArchivoSeguroMedico;
         }
-        if($request->hasFile('archivo_copia_cedula')){
-            $input['archivo_copia_cedula']=$request->file('archivo_copia_cedula')->store('uploads','public');   
+
+        if ($request->hasFile('archivo_copia_cedula')) {
+            $archivoCopiaCedula = $request->file('archivo_copia_cedula');
+            $nombreArchivoCopiaCedula = $archivoCopiaCedula->getClientOriginalName(); // Obtiene el nombre original del archivo
+            $archivoCopiaCedula->storeAs('public/uploads', $nombreArchivoCopiaCedula);
+            $input['archivo_copia_cedula'] = $nombreArchivoCopiaCedula;
         }
-        if($request->hasFile('archivo_certificado_medico')){
-            $input['archivo_certificado_medico']=$request->file('archivo_certificado_medico')->store('uploads','public');   
+
+        if ($request->hasFile('archivo_certificado_medico')) {
+            $archivoCertificadoMedico = $request->file('archivo_certificado_medico');
+            $nombreArchivoCertificadoMedico = $archivoCertificadoMedico->getClientOriginalName(); // Obtiene el nombre original del archivo
+            $archivoCertificadoMedico->storeAs('public/uploads', $nombreArchivoCertificadoMedico);
+            $input['archivo_certificado_medico'] = $nombreArchivoCertificadoMedico;
         }
-        
         $documento = $this->documentoRepository->create($input);
 
         return redirect(route('home'));
@@ -246,41 +287,42 @@ class DocumentoController extends AppBaseController
            
    $this->validate($request,$rules,$mensaje);
 
-        $datos= request()->except(['_token','_method']);
-       if($request->hasFile('archivo_pago')){
-            $documento=Documento::findOrFail($id);
-            Storage::delete('public/'.$documento->archivo_pago); 
-            $datos['archivo_pago']=$request->file('archivo_pago')->store('uploads','public');   
+       $datos = request()->except(['_token', '_method']);
+$documento = Documento::findOrFail($id);
+
+$archivos = [
+    'archivo_pago',
+    'archivo_inscripcion',
+    'archivo_seguro_medico',
+    'archivo_certificado_medico',
+    'archivo_copia_cedula',
+];
+
+foreach ($archivos as $campo) {
+    if ($request->hasFile($campo)) {
+        $archivo = $request->file($campo);
+        $nombreOriginal = $archivo->getClientOriginalName(); // Obtiene el nombre original del archivo
+
+        // Elimina el archivo anterior
+        $archivoAnterior = 'public/' . $documento->$campo;
+        if (Storage::exists($archivoAnterior)) {
+            Storage::delete($archivoAnterior);
         }
 
-       if($request->hasFile('archivo_inscripcion')){
-            $documento=Documento::findOrFail($id);
-            Storage::delete('public/'.$documento->archivo_inscripcion); 
-            $datos['archivo_inscripcion']=$request->file('archivo_inscripcion')->store('uploads','public');   
-        }
-        
-       if($request->hasFile('archivo_seguro_medico')){
-            $documento=Documento::findOrFail($id);
-            Storage::delete('public/'.$documento->archivo_seguro_medico); 
-            $datos['archivo_seguro_medico']=$request->file('archivo_seguro_medico')->store('uploads','public');   
-        }
-        if($request->hasFile('archivo_certificado_medico')){
-            $documento=Documento::findOrFail($id);
-            Storage::delete('public/'.$documento->archivo_certificado_medico); 
-            $datos['archivo_certificado_medico']=$request->file('archivo_certificado_medico')->store('uploads','public');   
-        }
-        if($request->hasFile('archivo_copia_cedula')){
-            $documento=Documento::findOrFail($id);
-            Storage::delete('public/'.$documento->archivo_copia_cedula); 
-            $datos['archivo_copia_cedula']=$request->file('archivo_copia_cedula')->store('uploads','public');   
-        }
-        Documento::where('id','=',$id)->update($datos);
-        $documento=Documento::findOrFail($id);
-
-        Flash::success('Documento actualizado.');
-
-        return redirect(route('documentos.index'));
+        // Almacena el nuevo archivo con el nombre original
+        $datos[$campo] = $nombreOriginal;
+        $archivo->storeAs('public/uploads', $nombreOriginal);
     }
+}
+
+Documento::where('id', $id)->update($datos);
+
+$documento = Documento::findOrFail($id);
+
+Flash::success('Documento actualizado.');
+
+return redirect(route('documentos.index'));
+}
 
     /**
      * Remove the specified Documento from storage.

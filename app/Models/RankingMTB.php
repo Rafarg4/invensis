@@ -49,6 +49,7 @@ class RankingMTB extends Model
         'fecha_ocho',
         'fecha_nueve',
         'fecha_dies',
+        'fecha_once',
     ];
 
     /**

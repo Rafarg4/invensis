@@ -93,8 +93,11 @@ class InscripcionController extends AppBaseController
       ];
       $this->validate($request,$rules,$mensaje);
         $input = $request->all();
-         if($request->hasFile('foto')){
-            $input['foto']=$request->file('foto')->store('uploads','public');   
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $nombrefoto = $foto->getClientOriginalName(); // Obtiene el nombre original del archivo
+            $foto->storeAs('public/uploads', $nombrefoto);
+            $input['foto'] = $nombrefoto;
         }
         $inscripcion = $this->inscripcionRepository->create($input);
 
@@ -112,8 +115,11 @@ class InscripcionController extends AppBaseController
       ];
       $this->validate($request,$rules,$mensaje);
         $input = $request->all();
-         if($request->hasFile('foto')){
-            $input['foto']=$request->file('foto')->store('uploads','public');   
+         if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $nombrefoto = $foto->getClientOriginalName(); // Obtiene el nombre original del archivo
+            $foto->storeAs('public/uploads', $nombrefoto);
+            $input['foto'] = $nombrefoto;
         }
         $inscripcion = $this->inscripcionRepository->create($input);
 
@@ -214,20 +220,35 @@ class InscripcionController extends AppBaseController
       ];
   }
    $this->validate($request,$rules,$mensaje);
-        $dato= request()->except(['_token','_method']);
-        //dd($dato);
-        if($request->hasFile('foto')){
-            $inscripcion=Inscripcion::findOrFail($id);
-            Storage::delete('public/'.$inscripcion->foto); 
-            $dato['foto']=$request->file('foto')->store('uploads','public'); 
-    }
-        Inscripcion::where('id','=',$id)->update($dato);  
-        $inscripcion=Inscripcion::findOrFail($id);
-        Flash::success('Inscripcion actualizada.');
+        $datos = request()->except(['_token', '_method']);
+        $inscripcion = Inscripcion::findOrFail($id);
+
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $nombreOriginal = $foto->getClientOriginalName(); // Obtiene el nombre original del archivo
+
+            // Elimina el archivo anterior
+            $archivoAnterior = 'public/uploads/' . $inscripcion->foto;
+            if (Storage::exists($archivoAnterior)) {
+                Storage::delete($archivoAnterior);
+            }
+
+            // Almacena el nuevo archivo en la ubicación con el nombre original
+            $foto->storeAs('public/uploads', $nombreOriginal);
+
+            // Actualiza el nombre del archivo en los datos de entrada
+            $datos['foto'] = $nombreOriginal;
+        }
+
+        Inscripcion::where('id', $id)->update($datos);
+
+        $inscripcion = Inscripcion::findOrFail($id);
+
+        Flash::success('Inscripción actualizada.');
 
         return redirect(route('inscripcions.index'));
-    }
 
+    }
     /**
      * Remove the specified Inscripcion from storage.
      *
@@ -238,22 +259,32 @@ class InscripcionController extends AppBaseController
      * @return Response
      */
     public function destroy($id)
-    {
-        $inscripcion = $this->inscripcionRepository->find($id);
+{
+    $inscripcion = $this->inscripcionRepository->find($id);
 
-        if (empty($inscripcion)) {
-            Flash::error('Inscripcion no encontrado');
-
-            return redirect(route('inscripcions.index'));
-        }
-
-        $this->inscripcionRepository->delete($id);
-
-        Flash::success('Inscripcion eliminada.');
-
+    if (empty($inscripcion)) {
+        Flash::error('Inscripcion no encontrado');
         return redirect(route('inscripcions.index'));
     }
 
+    // Obtén el nombre del archivo asociado a la inscripción
+    $nombreArchivo = $inscripcion->foto;
+
+    // Elimina el archivo desde el sistema de almacenamiento
+    if (!empty($nombreArchivo)) {
+        $archivoAEliminar = 'public/uploads/' . $nombreArchivo;
+        if (Storage::exists($archivoAEliminar)) {
+            Storage::delete($archivoAEliminar);
+        }
+    }
+
+    // Elimina la inscripción de la base de datos
+    $this->inscripcionRepository->delete($id);
+
+    Flash::success('Inscripcion eliminada.');
+
+    return redirect(route('inscripcions.index'));
+}
     //Imprimir directo pdf de seguro
   public function seguro($id)
    {
@@ -271,18 +302,21 @@ class InscripcionController extends AppBaseController
      // return view('inscripcions.seguro')->with('inscripcion', $inscripcion)->with('seguros', $seguros)->with('user', Auth::user());
     //}
      public function pago(Request $request, $id)
-        {
-        $monto = $request->input('monto');
-        $federacion_id = $request->input('federacion_id');
-        $uciid = $request->input('uciid');
-        $inscripcions = Inscripcion::all();
-            DB::table('inscripcions')
-                ->where('id', $id)
-                ->update([
+    {
+    $monto = $request->input('monto');
+    $federacion_id = $request->input('federacion_id');
+    $uciid = $request->input('uciid');
+    $estado = $request->input('estado');
+    
+    DB::table('inscripcions')
+            ->where('id', $id)
+            ->update([
                 'monto' => $monto,
                 'federacion_id' => $federacion_id, 
-                'uciid' => $uciid
+                'uciid' => $uciid,
+                'estado' => $estado
             ]);
+
         return redirect()->back()->with('success', 'Datos actualizados correctamente');
-    }
+}
 }

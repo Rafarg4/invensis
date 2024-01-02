@@ -110,4 +110,6 @@ Route::post('cambiar_estado_documento/{id}', [App\Http\Controllers\DocumentoCont
 Route::post('/eliminar_ranking', [RankingController::class, 'eliminar_todo']);
 Route::post('/eliminar_ranking_mtb', [RankingMTBController::class, 'eliminar_ranking_mtb']);
 
-Route::post('pago/{id}', 'App\Http\Controllers\InscripcionController@pago')->name('pago');
+Route::post('/pago/{id}', 'App\Http\Controllers\InscripcionController@pago')->name('pago');
+
+Route::post('cambiar_estado/{id}', [App\Http\Controllers\InscripcionController::class, 'cambiar_estado'])->name('cambiar_estado');

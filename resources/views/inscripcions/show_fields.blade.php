@@ -2,7 +2,7 @@
 <div class="tab-pane active" id="tab_1">
  <div class="row">    
 <div class="form-group col-md-3">
-<img src="{{ asset('storage').'/'.$inscripcion->foto}}" width="70" height="70" class="">
+<img src="{{ asset('storage/uploads/' . $inscripcion->foto) }}" width="70" height="70" class="">
 </div>
     <div class="form-group col-md-3">
     <label for="nombre">Nombres:</label>
@@ -146,7 +146,7 @@
 </div>
         @endforeach
 @else
- <strong><h6><center>Aun no se ha registrado sus documentos? <a class="btn btn-primary" href="{{ route('documentos.create') }}"><i class="fa-solid fas fa-folder-plus"></i></a></center></h6></strong>                                 
+ <strong><h6><center>Aun no has registrado tus documentos? <a class="btn btn-primary" href="{{ route('documentos.create') }}"><i class="fa-solid fas fa-folder-plus"></i></a></center></h6></strong>                                 
 @endif
 </div>
 <div class="tab-pane" id="tab_3">
@@ -235,13 +235,15 @@
 </div>
         @endforeach
     @else
-  <strong><h6><center>Aun no se ha registrado seguro? <a class="btn btn-primary" href="{{ route('seguros.create') }}"><i class="fa fas-solid fa-user-plus"></i></a></center></h6></strong>                                
+  <strong><h6><center>Aun no has registrado seguro? <a class="btn btn-primary" href="{{ route('seguros.create') }}"><i class="fa fas-solid fa-user-plus"></i></a></center></h6></strong>                                
 @endif
 </div>
 <div class="tab-pane" id="tab_4">
   <br>
     <br>
      <div class="col d-flex justify-content-center">
+    <br>
+    <br>
     <br>
     <br>
     <br>
@@ -319,7 +321,7 @@ table td {padding: 10px}
 <img style="position:absolute;top:1.33in;left: 9.42in;width:0.65in;height:0.16in" src="/imagenes/ri_5.png">
 <img style="position:absolute;top:1.34in;left: 2.92in;width:1.13in;height:0.27in" src="/imagenes/ri_6.png">
 <img style="position:absolute;top:1.74in;left:0.89in;width:1.22in;height:1.40in" src="/imagenes/ri_7.png" >
-<img style="position:absolute;top:1.80in;left: 2.9in;width:1.21in;height:1.29in" src="{{ asset('storage').'/'.$inscripcion->foto}}">
+<img style="position:absolute;top:1.80in;left: 2.9in;width:1.21in;height:1.29in" src="{{ asset('storage/uploads/' . $inscripcion->foto) }}">
 <img style="position:absolute;top:3.10in;left: 6.62in;width:3.47in;height:0.38in" src="/imagenes/ri_9.png">
 <div style="position:absolute;top:3.14in;left:6.66in;width:3.34in;line-height:0.10in;"><span style="font-style:normal;font-weight:normal;font-size:5pt;font-family:Calibri;color:#231f20">“I</span></SPAN><br/></div>
 <div style="position:absolute;top:3.14in;left:6.66in;width:3.34in;line-height:0.10in;"><DIV style="position:relative; left:0.07in;"><span style="font-style:normal;font-weight:normal;font-size:5pt;font-family:Calibri;color:#231f20">agreetoabideandbeboundby</span></SPAN></DIV><br/></div>

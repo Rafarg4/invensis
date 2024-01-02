@@ -171,7 +171,7 @@
 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-id-card"></i></span>
 <div class="info-box-content">
 <span class="info-box-text">Licencia verificada</span>
-<span class="info-box-number"><a href="{{ url('imprimir/licencias') }}" class="small-box-footer">Mi licencia <i class="fas fa-arrow-circle-right"></i></a></span>
+<!--<span class="info-box-number"><a href="{{ url('imprimir/licencias') }}" class="small-box-footer">Mi licencia <i class="fas fa-arrow-circle-right"></i></a></span>/-->
 </div>
 </div>
 </div>
@@ -181,7 +181,7 @@
 <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-id-card"></i></span>
 <div class="info-box-content">
 <span class="info-box-text">En espera de aprobacion</span>
-<span class="info-box-number"><a href="{{ url('imprimir/licencias') }}" class="small-box-footer">Mi licencia<i class="fas fa-arrow-circle-right"></i></a></span>
+<!--<span class="info-box-number"><a href="{{ url('imprimir/licencias') }}" class="small-box-footer">Mi licencia<i class="fas fa-arrow-circle-right"></i></a></span>-->
 </div>
 </div>
 </div>

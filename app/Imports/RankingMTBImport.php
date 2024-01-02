@@ -28,6 +28,7 @@ class RankingMTBImport  implements ToModel, WithHeadingRow
                 'fecha_ocho' => $row['fecha_ocho'],
                 'fecha_nueve' => $row['fecha_nueve'],
                 'fecha_dies' => $row['fecha_dies'],
+                'fecha_once' => $row['fecha_once'],
                 // Agrega otras columnas que deseas actualizar aquí
             ]);
         } else {
@@ -48,6 +49,7 @@ class RankingMTBImport  implements ToModel, WithHeadingRow
                     'fecha_ocho' => $row['fecha_ocho'],
                     'fecha_nueve' => $row['fecha_nueve'],
                     'fecha_dies' => $row['fecha_dies'],
+                    'fecha_once' => $row['fecha_once'],
                     
                 ]);
         }

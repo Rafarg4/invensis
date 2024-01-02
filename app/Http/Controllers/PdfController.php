@@ -13,7 +13,7 @@ use PDF;
 use App\Models\Documento;
 use Illuminate\Support\Facades\Storage;
 class PdfController extends Controller
-{
+{ 
     /** @var InscripcionRepository $inscripcionRepository*/
     private $inscripcionRepository;
 
@@ -30,34 +30,89 @@ class PdfController extends Controller
     }
    
     public function download_pago($id)
-    {
-      $documento = Documento::where('id', $id)->first()->archivo_pago;
-      return Storage::download('public/' . $documento);
+{
+    $documento = Documento::where('id', $id)->first();
+    
+    if ($documento) {
+        // Construye la ruta completa al archivo
+        $archivoPath = storage_path('app/public/uploads/' . $documento->archivo_pago);
+        
+        // Verifica si el archivo existe
+        if (file_exists($archivoPath)) {
+            return response()->download($archivoPath, $documento->archivo_pago);
+        }
+    }
 
+    // Si el documento no existe o el archivo no se encuentra, puedes manejar el error apropiadamente.
+    abort(404, 'Archivo no encontrado');
+}
+   public function download_inscripcion($id)
+{
+    $documento = Documento::where('id', $id)->first();
+    
+    if ($documento) {
+        // Construye la ruta completa al archivo
+        $archivoPath = storage_path('app/public/uploads/' . $documento->archivo_inscripcion);
+        
+        // Verifica si el archivo existe
+        if (file_exists($archivoPath)) {
+            return response()->download($archivoPath, $documento->archivo_inscripcion);
+        }
     }
-    public function download_inscripcion($id)
-    {
-      $documento = Documento::where('id', $id)->first()->archivo_inscripcion;
-      return Storage::download('public/' . $documento);
 
+    // Si el documento no existe o el archivo no se encuentra, puedes manejar el error apropiadamente.
+    abort(404, 'Archivo no encontrado');
+}
+ public function download_seguro($id)
+{
+    $documento = Documento::where('id', $id)->first();
+    
+    if ($documento) {
+        // Construye la ruta completa al archivo
+        $archivoPath = storage_path('app/public/uploads/' . $documento->archivo_seguro_medico);
+        
+        // Verifica si el archivo existe
+        if (file_exists($archivoPath)) {
+            return response()->download($archivoPath, $documento->archivo_seguro_medico);
+        }
     }
-    public function download_seguro($id)
-    {
-      $documento = Documento::where('id', $id)->first()->archivo_seguro_medico;
-      return Storage::download('public/' . $documento);
 
+    // Si el documento no existe o el archivo no se encuentra, puedes manejar el error apropiadamente.
+    abort(404, 'Archivo no encontrado');
+}
+ public function download_certificado($id)
+{
+    $documento = Documento::where('id', $id)->first();
+    
+    if ($documento) {
+        // Construye la ruta completa al archivo
+        $archivoPath = storage_path('app/public/uploads/' . $documento->archivo_certificado_medico);
+        
+        // Verifica si el archivo existe
+        if (file_exists($archivoPath)) {
+            return response()->download($archivoPath, $documento->archivo_certificado_medico);
+        }
     }
-    public function download_certificado($id)
-    {
-      $documento = Documento::where('id', $id)->first()->archivo_certificado_medico;
-      return Storage::download('public/' . $documento);
 
+    // Si el documento no existe o el archivo no se encuentra, puedes manejar el error apropiadamente.
+    abort(404, 'Archivo no encontrado');
+}
+ public function download_copia($id)
+{
+    $documento = Documento::where('id', $id)->first();
+    
+    if ($documento) {
+        // Construye la ruta completa al archivo
+        $archivoPath = storage_path('app/public/uploads/' . $documento->archivo_copia_cedula);
+        
+        // Verifica si el archivo existe
+        if (file_exists($archivoPath)) {
+            return response()->download($archivoPath, $documento->archivo_copia_cedula);
+        }
     }
-    public function download_copia($id)
-    {
-      $documento = Documento::where('id', $id)->first()->archivo_copia_cedula;
-      return Storage::download('public/' . $documento);
- 
-    }
+
+    // Si el documento no existe o el archivo no se encuentra, puedes manejar el error apropiadamente.
+    abort(404, 'Archivo no encontrado');
+}
 
 }
