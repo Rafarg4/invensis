@@ -11,7 +11,7 @@
 <div class="info-box">
 <span class="info-box-icon bg-info elevation-1"><i class="fa fas-solid fa-bicycle"></i></span>
 <div class="info-box-content">
-<span class="info-box-text">Inscripciones</span>
+<span class="info-box-text">Licencias</span>
 <span class="info-box-number">
 <a href="{{ route('inscripcions.index') }}" class="small-box-footer">Ir a <i class="fas fa-arrow-circle-right"></i></a>
 </span>
@@ -98,7 +98,7 @@
 <div class="info-box">
 <span class="info-box-icon bg-danger elevation-1"><a href="{{ route('inscripcions.create') }}"  class="fa fas-solid fa-user-plus"></i></a></span>
 <div class="info-box-content">
-<span class="info-box-text"><b>Paso 1: Registrar inscripcion</b></span>
+<span class="info-box-text"><b>Paso 1: Registrar Licnecia</b></span>
 <span class="info-box-number">
 <a href="{{ route('inscripcions.create') }}" class="small-box-footer">Ir a <i class="fas fa-arrow-circle-right"></i></a>
 </span>
@@ -110,9 +110,9 @@
 <div class="info-box">
 <span class="info-box-icon bg-success elevation-1"><i class="fa fas-solid fa-check"></i></span>
 <div class="info-box-content">
-<span class="info-box-text">Inscripcion creada!</span>
+<span class="info-box-text">Licencia creada!</span>
 <span class="info-box-number">
-<a href="{{ route('inscripcions.index') }}" class="small-box-footer">Mi inscripcion<i class="fas fa-arrow-circle-right"></i></a>
+<a href="{{ route('inscripcions.index') }}" class="small-box-footer">Mi Licencia<i class="fas fa-arrow-circle-right"></i></a>
 </span>
 </div>
 </div>

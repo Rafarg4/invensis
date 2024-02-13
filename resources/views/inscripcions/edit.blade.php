@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>Editar Inscripcion</h1>
+                    <h1>Editar Licencia</h1>
                 </div>
             </div>
         </div>
@@ -250,19 +250,6 @@ function changeTipo(){
             <div class="col-md-12">
                 <h3> Ultimo paso, confirmar datos ingresados</h3>
                 @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
-               
-            <div class="form-group col-sm-12">
-                {!! Form::label('monto', 'Monto:') !!}
-                {!! Form::text('monto', null, ['class' => 'form-control']) !!}
-            </div>
-            <div class="form-group col-sm-12">
-                {!! Form::label('federacion_id', 'Federacion id:') !!}
-                {!! Form::number('federacion_id', null, ['class' => 'form-control']) !!}
-            </div>
-            <div class="form-group col-sm-12">
-                {!! Form::label('uciid', ' Uciid:') !!}
-                {!! Form::number('uciid', null, ['class' => 'form-control']) !!}
-            </div>
             @endcan
             @if(Auth::user()->hasRole('super_admin'))
              <div class=" form-group col-sm-12">

@@ -23,13 +23,12 @@
     </section>
 
     <div class="content px-3">
-
+         <div id="mensaje" class="alert alert-success" style="display: none;"></div>
         @include('flash::message')
 
         <div class="clearfix"></div>
 
         <div class="card">
-             <div id="mensaje" class="alert alert-success" style="display: none;"></div>
             <div class="card-body p-0">
                 @include('documentos.table')
 

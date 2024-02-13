@@ -37,6 +37,7 @@ Route::get('reportes/seguros', [App\Http\Controllers\ReporteController::class, '
 
 Route::get('reportes/rankings', [App\Http\Controllers\ReporteController::class, 'reporte_ranking'])->name('reporte_ranking')->middleware('auth');
 Route::get('download_pago/{id}', [App\Http\Controllers\PdfController::class, 'download_pago'])->name('documento.download_pago')->middleware('auth');
+Route::get('download_comprobante/{id}', [App\Http\Controllers\PdfController::class, 'download_comprobante'])->name('comprobante.download_comprobante')->middleware('auth');
 Route::get('download_inscripcion/{id}', [App\Http\Controllers\PdfController::class, 'download_inscripcion'])->name('documento.download_inscripcion')->middleware('auth');
 Route::get('download_seguro/{id}', [App\Http\Controllers\PdfController::class, 'download_seguro'])->name('documento.download_seguro')->middleware('auth');
 
@@ -113,3 +114,24 @@ Route::post('/eliminar_ranking_mtb', [RankingMTBController::class, 'eliminar_ran
 Route::post('/pago/{id}', 'App\Http\Controllers\InscripcionController@pago')->name('pago');
 
 Route::post('cambiar_estado/{id}', [App\Http\Controllers\InscripcionController::class, 'cambiar_estado'])->name('cambiar_estado');
+
+Route::resource('pagos', App\Http\Controllers\PagoController::class);
+Route::post('cambiar_estado_pago/{id}', [App\Http\Controllers\PagoController::class, 'cambiar_estado_pago'])->name('cambiar_estado_pago');
+
+Route::resource('eventos', App\Http\Controllers\EventoController::class);
+
+Route::resource('atletas', App\Http\Controllers\AtletaController::class);
+
+Route::get('/buscar', [App\Http\Controllers\EventoController::class, 'buscar'])->name('buscar');
+
+
+Route::get('ver_evento', [App\Http\Controllers\EventoController::class, 'ver_evento'])->name('ver_evento');
+
+Route::get('registro_atleta', [App\Http\Controllers\AtletaController::class, 'registro_atleta'])->name('registro_atleta');
+// En tu archivo de rutas web.php
+Route::post('/guardar-descarga/{id}', [App\Http\Controllers\InscripcionController::class, 'guardarDescarga'])->name('guardarDescarga');
+Route::post('/guardar-seguro/{id}', [App\Http\Controllers\InscripcionController::class, 'actualizarSeguro'])->name('actualizarSeguro');
+
+Route::get('ver_eventos_detalles/{id}', [App\Http\Controllers\EventoController::class, 'ver_eventos_detalles'])->name('ver_eventos_detalles');
+
+Route::post('/guardar_atelta', [App\Http\Controllers\AtletaController::class, 'guardar_atelta'])->name('guardar_atelta');

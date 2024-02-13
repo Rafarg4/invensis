@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Inscripciones</h1>
+                    <h1>Licencias</h1>
                 </div>
                 @if(Auth::user()->hasRole('super_admin'))
                 @else
@@ -24,7 +24,7 @@
     </section>
 
     <div class="content px-3">
-
+         <div id="mensaje" class="alert alert-success" style="display: none;"></div>
         @include('flash::message')
         @if(session('success'))
                 <div class="alert alert-success">
@@ -35,7 +35,6 @@
         <div class="clearfix"></div>
 
         <div class="card">
-            <div id="mensaje" class="alert alert-success" style="display: none;"></div>
             <div class="card-body p-0">
                 @include('inscripcions.table')
 

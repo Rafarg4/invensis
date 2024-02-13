@@ -58,7 +58,7 @@ class TarifaController extends AppBaseController
 
         $tarifa = $this->tarifaRepository->create($input);
 
-        Flash::success('Tarifa saved successfully.');
+        Flash::success('Tarifa creada correctamente.');
 
         return redirect(route('tarifas.index'));
     }
@@ -123,7 +123,7 @@ class TarifaController extends AppBaseController
 
         $tarifa = $this->tarifaRepository->update($request->all(), $id);
 
-        Flash::success('Tarifa updated successfully.');
+        Flash::success('Tarifa actualizada correctamente.');
 
         return redirect(route('tarifas.index'));
     }
@@ -149,7 +149,7 @@ class TarifaController extends AppBaseController
 
         $this->tarifaRepository->delete($id);
 
-        Flash::success('Tarifa deleted successfully.');
+        Flash::success('Tarifa eliminada correctamente.');
 
         return redirect(route('tarifas.index'));
     }

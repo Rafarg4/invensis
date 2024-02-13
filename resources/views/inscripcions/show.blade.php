@@ -31,8 +31,6 @@
             @endcan
         </div>
     </section>
-
-
 <div class="content px-3">
   <div class="row">
 <div class="col-12">
@@ -42,7 +40,9 @@
 <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab"><i class="fa fas-solid fa-bicycle"></i> Incrcipciones</a></li>
 <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab"><i class="fa fas-light fa-book"></i> Documento</a></li>
 <li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab"><i class="fa fas-regular fa-laptop-medical"></i> Seguro</a></li>
-<li class="nav-item"><a class="nav-link" href="#tab_4" data-toggle="tab"><i class="fas fa-id-card"></i>  Licencia</a></li>
+<li class="nav-item"><a class="nav-link" href="#tab_5" data-toggle="tab"><i class="fa fas-solid fa-credit-card"></i></i> Mis pagos</a></li>
+
+<!--<li class="nav-item"><a class="nav-link" href="#tab_4" data-toggle="tab"><i class="fas fa-id-card"></i>  Licencia</a></li>-->
 </ul>
 </div>
 

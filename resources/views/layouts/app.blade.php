@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ config('app.name') }}</title>
-     <link rel="icon" type="image/png" src="/logof.png" />
+     <link rel="icon" type="image/png" src="/logo_redondo.png">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
         integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
@@ -87,6 +87,15 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
 <script type="text/javascript">
      $(document).ready( function () {
     $('#table').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+            },
+        } );
+} );
+</script>
+<script type="text/javascript">
+     $(document).ready( function () {
+    $('#tables').DataTable({
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
             },

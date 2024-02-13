@@ -11,6 +11,7 @@ use Flash;
 use Response;
 use PDF;
 use App\Models\Documento;
+use App\Models\Pago;
 use Illuminate\Support\Facades\Storage;
 class PdfController extends Controller
 { 
@@ -108,6 +109,23 @@ class PdfController extends Controller
         // Verifica si el archivo existe
         if (file_exists($archivoPath)) {
             return response()->download($archivoPath, $documento->archivo_copia_cedula);
+        }
+    }
+
+    // Si el documento no existe o el archivo no se encuentra, puedes manejar el error apropiadamente.
+    abort(404, 'Archivo no encontrado');
+}
+public function download_comprobante($id)
+{
+    $pago = Pago::where('id', $id)->first();
+    
+    if ($pago) {
+        // Construye la ruta completa al archivo
+        $archivoPath = storage_path('app/public/uploads/' . $pago->comprobante);
+        
+        // Verifica si el archivo existe
+        if (file_exists($archivoPath)) {
+            return response()->download($archivoPath, $pago->comprobante);
         }
     }
 

@@ -1,9 +1,6 @@
 <div class="tab-content">
 <div class="tab-pane active" id="tab_1">
  <div class="row">    
-<div class="form-group col-md-3">
-<img src="{{ asset('storage/uploads/' . $inscripcion->foto) }}" width="70" height="70" class="">
-</div>
     <div class="form-group col-md-3">
     <label for="nombre">Nombres:</label>
     <input type="text" class="form-control" id="nombre" value="{{ $inscripcion->primer_y_segundo_nombre }}">
@@ -91,47 +88,31 @@
 </div>
 </div>
 <div class="tab-pane" id="tab_2">
- @if(!empty($documento) && $documento->count() > 0)
+ <div class="table-responsive" style="padding:15px;">
+    <table class="table" id="tables">
+        <thead>
+        <tr>
+        <th>Ci Inscripto</th>
+        <th>Nombre y Apellido</th>
+        <th>Pago</th>
+        <th>Inscripcion</th>
+        <th> Seguro medico</th>
+        <th>Certificado medico</th>
+        <th> Copia de cedula</th>
+        <th>Estado</th>
+        </tr>
+        </thead>
+        <tbody>
         @foreach($documento as $documento)
-<div class="row">
-<div class="form-group col-md-3">
-    <label for="documento_pago">Documento de pago:</label>
-    <a href="{{ route('documento.download_pago', $documento->id) }}" target="_blank">
-        <img src="/pdf.jpg" width="25" height="25">
-    </a>
-</div>
-
-<div class="form-group col-md-3">
-    <label for="documento_inscripcion">Documento de Inscripción:</label>
-    <a href="{{ route('documento.download_inscripcion', $documento->id) }}" target="_blank">
-        <img src="/pdf.jpg" width="25" height="25">
-    </a>
-</div>
-
-<div class="form-group col-md-3">
-    <label for="documento_seguro_medico">Documento de seguro médico:</label>
-    <a href="{{ route('documento.download_seguro', $documento->id) }}" target="_blank">
-        <img src="/pdf.jpg" width="25" height="25">
-    </a>
-</div>
-
-<div class="form-group col-md-3">
-    <label for="documento_certificado_medico">Documento de certificado médico:</label>
-    <a href="{{ route('documento.download_certificado', $documento->id) }}" target="_blank">
-        <img src="/pdf.jpg" width="25" height="25">
-    </a>
-</div>
-
-<div class="form-group col-md-3">
-    <label for="documento_copia_cedula">Documento de copia de cédula:</label>
-    <a href="{{ route('documento.download_copia', $documento->id) }}" target="_blank">
-        <img src="/pdf.jpg" width="25" height="25">
-    </a>
-</div>
-
-<div class="form-group col-md-3">
-    <label for="estado">Estado:</label>
-    @switch(true)
+            <tr>
+                <td>{{ $documento->inscripto->ci  ?? 'Inscripto no asignada' }}</td>
+                <td>{{ $documento->inscripto->primer_y_segundo_nombre  ?? 'Inscripto no asignada' }} {{ $documento->inscripto->primer_y_segundo_apellido  ?? 'Inscripto no asignada' }}</td>
+                <td><a href="{{route('documento.download_pago',$documento->id)}}"><img src="/pdf.jpg" width="35" height="35"></a></td>
+            <td><a href="{{route('documento.download_inscripcion',$documento->id)}}"><img src="/pdf.jpg" width="35" height="35"></a></td>
+            <td><a href="{{route('documento.download_seguro',$documento->id)}}"><img src="/pdf.jpg" width="35" height="35"></a></td>
+            <td><a href="{{route('documento.download_certificado',$documento->id)}}"><img src="/pdf.jpg" width="35" height="35"></a></td>
+            <td><a href="{{route('documento.download_copia',$documento->id)}}"><img src="/pdf.jpg" width="35" height="35"></a></td>
+             <td>@switch(true)
             @case($documento->estado == 'En espera')
             <span class="badge badge-primary"> {{ $documento->estado }} </span>
             @break
@@ -141,13 +122,14 @@
             @case($documento->estado == 'Verificado' )
             <span class="badge badge-success"> {{ $documento->estado }} </span>
             @break
-            @endswitch
-</div>
-</div>
+            @endswitch</td>
+            
+            </tr>
         @endforeach
-@else
- <strong><h6><center>Aun no has registrado tus documentos? <a class="btn btn-primary" href="{{ route('documentos.create') }}"><i class="fa-solid fas fa-folder-plus"></i></a></center></h6></strong>                                 
-@endif
+        </tbody>
+    </table>
+</div>
+
 </div>
 <div class="tab-pane" id="tab_3">
      @if(!empty($seguros) && $seguros->count() > 0)
@@ -237,6 +219,72 @@
     @else
   <strong><h6><center>Aun no has registrado seguro? <a class="btn btn-primary" href="{{ route('seguros.create') }}"><i class="fa fas-solid fa-user-plus"></i></a></center></h6></strong>                                
 @endif
+</div>
+<div class="tab-pane" id="tab_5">
+<div class="table-responsive" style="padding:15px;">
+    <table class="table" id="table">
+        <thead>
+        <tr>
+        <th>Ci</th>
+        <th>Inscripto</th>
+        <th>Tipo Pago</th>
+        <th>Comprobante</th>
+        <th>Forma de pago</th>
+        <th>Estado</th>
+        <th>Observacion</th>
+        <th>Accion</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($pagos as $pago)
+            <tr>
+            <td>{{ $pago->inscripcion->ci ?? 'Sin datos' }}</td>
+            <td>{{ $pago->inscripcion->primer_y_segundo_nombre ?? 'Sin datos' }} {{ $pago->inscripcion->primer_y_segundo_apellido ?? 'Sin datos' }}</td>
+            <td>{{ $pago->tarifa->tipo_plan ?? 'Sin datos' }}</td>
+            <td><a href="{{route('comprobante.download_comprobante',$pago->id)}}"><img src="/pdf.jpg" width="35" height="35"></a></td>
+            <td>{{ $pago->forma_pago }}</td>
+             </td>
+             <td>@switch(true)
+            @case($pago->estado == 'En espera')
+            <span class="badge badge-warning"> {{ $pago->estado }} </span>
+            @break
+            @case($pago->estado == 'Rechazado')
+            <span class="badge badge-danger"> {{ $pago->estado }} </span>
+            @break
+            @case($pago->estado == 'Verificado' )
+            <span class="badge badge-success"> {{ $pago->estado }} </span>
+            @break
+            @endswitch</td>
+            <td>{{ $pago->observacion }}</td>
+                <td width="120">
+                {!! Form::open(['route' => ['pagos.destroy', $pago->id], 'method' => 'delete']) !!}
+                    <!-- Para que solo los usuarios normales puedan ver los botones, porque no cambia al mismo tiempo que el select -->
+                    @if($pago->estado=='En espera')
+                    <div class='btn-group'>
+                        <button type="button" class='btn btn-warning btn-sm'>
+                            <i class="fa fa-history" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    @elseif($pago->estado=='Verificado')
+                    <div class='btn-group'>
+                        <button type="button" class='btn btn-success btn-sm'>
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    @elseif($pago->estado=='Rechazado')
+                    <div class='btn-group'>
+                        <button type="button" class='btn btn-danger btn-sm'>
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    @endif
+                    {!! Form::close() !!}
+                </td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+</div>
 </div>
 <div class="tab-pane" id="tab_4">
   <br>

@@ -112,6 +112,11 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
                 <a class="nav-link" href="{{ url('rankings/consulta') }}"><i class="fas fa-trophy"></i> Ranking Ruta</a>
             </li>
         </ul>
+         <ul class="navbar-nav">
+        <li class="nav-item">
+                <a class="nav-link" href="{{ url('ver_evento') }}"><i class="fa fa-calendar" aria-hidden="true"></i> Eventos</a>
+            </li>
+        </ul>
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" href="{{ url('http://sistema.fpc.org.py') }}"><i class="fas fa-users"></i> Área de usuarios</a>

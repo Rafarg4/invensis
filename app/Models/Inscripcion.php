@@ -64,7 +64,10 @@ class Inscripcion extends Model
         'monto',
         'federacion_id',
         'uciid',
-        'id_user'
+        'id_user',
+        'ruc',
+        'licencia',
+        'seguro'
     ];
 
     /**
@@ -103,21 +106,7 @@ class Inscripcion extends Model
      * @var array
      */
     public static $rules = [
-        'primer_y_segundo_nombre' => 'required',
-        'primer_y_segundo_apellido' => 'required',
-        'fechanac' => 'required',
-        'ci' => 'required',
-        'sexo' => 'required',
-        'grupo_sanguineo' => 'required',
-        'nacionalidad' => 'required',
-        'celular' => 'required',
-        'domiciolio' => 'required',
-        'ciudad' => 'required',
-        'nombre_equipo' => 'required',
-        'contacto_emergencia' => 'required',
-        'nombre_apellido_contacto_emergencia' => 'required',
-        'email' => 'required',
-        'departamento' => 'required',
+        
       
         
     ];

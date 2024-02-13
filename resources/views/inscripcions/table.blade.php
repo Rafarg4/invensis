@@ -1,5 +1,13 @@
 <br> 
 @if(Auth::user()->hasRole('super_admin'))
+<!-- Agrega la referencia a la biblioteca de Bootstrap (asegúrate de usar la versión adecuada) -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<!-- Agrega la referencia a la biblioteca de Popper.js (necesaria para Bootstrap) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+<!-- Agrega la referencia a la biblioteca de Bootstrap (necesaria para Bootstrap) -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <div class="table-responsive" style="padding:15px;font-size: 12px;">
     <table class="table" id="table">
         <thead>
@@ -103,19 +111,19 @@
 <a href="{{route('seguro',$inscripcion->id)}}" class="btn btn-sm btn-info"data-toggle="tooltip" title="Descargar seguro">
 <i class="fa fas-regular fa-laptop-medical"></i></a>
 @if($inscripcion->estado =="Verificado")
-<a href="#" class="btn btn-sm btn-success"data-toggle="tooltip" title="Pago aplicado">
+<a href="#" class="btn btn-sm btn-success"data-toggle="tooltip" title="Verificado">
 <i class="fa fa-check-circle" aria-hidden="true"></i></a>
 @else
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#exampleModal{{ $inscripcion->id }}">
-        <i class="fa fas-solid fa-dollar-sign"></i>
+        <i class="fa fa-id-badge" aria-hidden="true"></i>
     </button>
 <!-- Modal -->
  <div class="modal fade" id="exampleModal{{ $inscripcion->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Detalles</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Asignar federacion ID y UCI ID</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -124,12 +132,6 @@
        <form action="{{ route('pago', $inscripcion->id) }}" method="POST" id="formularioPago{{ $inscripcion->id }}">
           @csrf
           @method('POST')
-
-          <div class="form-group col-sm-12">
-            {!! Form::label('monto', 'Monto:') !!}
-            {!! Form::text('monto', null, ['class' => 'form-control']) !!}
-          </div>
-
           <div class="form-group col-sm-12">
             {!! Form::label('federacion_id', 'ID de Federación:') !!}
             {!! Form::number('federacion_id', null, ['class' => 'form-control']) !!}
@@ -207,13 +209,127 @@
         </div>
     </section>
     @endcan
+    <!-- Agrega la referencia a la biblioteca de Bootstrap (asegúrate de usar la versión adecuada) -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<!-- Agrega la referencia a la biblioteca de Popper.js (necesaria para Bootstrap) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+<!-- Agrega la referencia a la biblioteca de Bootstrap (necesaria para Bootstrap) -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <div class="card-body pb-0">
         <div class="row">
             @foreach($inscripcions as $inscripcion)
+        @if($inscripcion->licencia === null)
+            <script>
+                $(document).ready(function(){
+                    $('#miModal').modal('show');
+                    
+                    // Manejar el clic en el botón de Descargar
+                    $('#btnDescargar').on('click', function() {
+                        // Hacer la descarga del PDF
+                        window.location.href = "{{ route('pdf.show', $inscripcion->id) }}";
+                        
+                        // Actualizar la columna descarga
+                        $.post("{{ route('guardarDescarga', ['id' => $inscripcion->id]) }}", { _token: "{{ csrf_token() }}" }, function(data) {
+                            console.log(data);
+                            // Opcional: Puedes ocultar el modal después de la descarga
+                            $('#miModal').modal('hide');
+                        });
+                    });
+                });
+            </script>
+        @elseif($inscripcion->seguro === null && $inscripcion->licencia)
+            <script>
+                $(document).ready(function(){
+                    $('#miModal2').modal('show');
+
+                    // Manejar el clic en el botón "Crear seguro"
+                    $('#btnCrearSeguro').on('click', function() {
+                        // Actualizar la columna seguro
+                        $.post("{{ route('actualizarSeguro', ['id' => $inscripcion->id]) }}", { _token: "{{ csrf_token() }}" }, function(data) {
+                            console.log(data);
+                            // Opcional: Puedes realizar alguna acción adicional después de la actualización
+                            $('#miModal2').modal('hide');
+                        });
+                    });
+                });
+            </script>
+            <script>
+    $(document).ready(function(){
+        // Manejar el clic en el botón "Descargar Deslinde"
+        $('#btnDescargarDeslinde').on('click', function(e) {
+            e.preventDefault(); // Evitar que el enlace se abra automáticamente
+
+            // Realizar la descarga del formulario de deslinde
+            window.location.href = "/formulario.pdf";
+
+            // Actualizar la columna seguro
+            $.post("{{ route('actualizarSeguro', ['id' => $inscripcion->id]) }}", { _token: "{{ csrf_token() }}" }, function(data) {
+                console.log(data);
+                // Opcional: Puedes realizar alguna acción adicional después de la actualización
+
+                // Recargar la página después de la actualización
+                location.reload();
+            });
+        });
+    });
+</script>
+        @endif
+
+        <!-- Modal para descargar licencia -->
+        <div class="modal fade" id="miModal" tabindex="-1" role="dialog" aria-labelledby="miModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="miModalLabel">Paso 1: Descarga de Licencia</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Se ha creado la licencia correctamente. Por favor, descargue su licencia en el apartado de licencias.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{{ route('pdf.show', $inscripcion->id) }}" id="btnDescargar" class="btn btn-danger" data-toggle="tooltip" title="Descargar">
+                        <i class="fas fa-file-pdf"></i> Descargar
+                        </a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- fin de Modal para descargar licencia -->
+        <div class="modal fade" id="miModal2" tabindex="-1" role="dialog" aria-labelledby="miModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="miModalLabel">Paso 2 Registrar seguro</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Para continuar con el registro se debe de subir datos de seguro, EN CASO DE CONTAR CON SEGURO PROPIO DESCARGAR FORMLARIO DE DESLINDE.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{{ route('seguros.create') }}" id="btnCrearSeguro" class="btn btn-primary" data-toggle="tooltip" title="Crear seguro">
+                            <i class="fas fa-clipboard"></i> Crear seguro
+                        </a>
+                        <a href="/formulario.pdf" id="btnDescargarDeslinde" download class="btn btn-warning" data-toggle="tooltip" title="Deslinde">
+                            <i class="fas fa-file-pdf"></i> Formulario de deslinde 
+                        </a>
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal para registrar seguro -->
             <div class="col d-flex justify-content-center">
                 <div class="card" style="width: 28rem;">
                     <div class="card-body pt-0">
-                         <h5 class="card-header"><i class="fa fas-solid fa-bicycle"></i> Informacion de inscripcion </h5>
+                         <h5 class="card-header"><i class="fa fas-solid fa-bicycle"></i> Informacion de Licencia </h5>
                         <div class="row">
                             <div class="col-7">
                                 <ul class="ml-3 mb-0 fa-ul text-muted">
@@ -348,7 +464,6 @@
     </div>
     @endif
 </div>
-{{ $inscripcions->links() }}
 @endif
 
 

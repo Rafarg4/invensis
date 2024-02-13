@@ -13,9 +13,10 @@ use App\Models\Categoria;
 use App\Models\Inscripcion;
 use App\Models\Documento;
 use App\Models\Seguro;
+use App\Models\Pago;
 use PDF;
 use Auth;
-use DB;
+use DB; 
 use Illuminate\Support\Facades\Storage;
 class InscripcionController extends AppBaseController
 {
@@ -52,8 +53,7 @@ class InscripcionController extends AppBaseController
         return view('inscripcions.index',compact('inscripcions'));
      }else{
         $ci = $request->get('buscarpor');
-        $inscripcions = Inscripcion::where('ci','like',"%$ci%")
-        ->where('id_user', auth()->user()->id)
+        $inscripcions = Inscripcion::where('id_user', auth()->user()->id)
         ->paginate(3);
         return view('inscripcions.index')->with('inscripcions', $inscripcions)->with('user', Auth::user());
      } 
@@ -101,17 +101,15 @@ class InscripcionController extends AppBaseController
         }
         $inscripcion = $this->inscripcionRepository->create($input);
 
-        Flash::success('Inscripcion creada.');
+       Flash::success('Licencia creada. Descargue su licencia en el apartado de licencias.');
 
-        return redirect(route('inscripcions.index'));
+    return redirect(route('inscripcions.index'));
     }else{
         $rules = [
-        'ci'=>'required|unique:inscripcions,ci',
         'foto' => 'required',
       ];
        $mensaje = [
         'required'=>'El :attribute es requerido',
-        'unique'=> 'Registro de inscripcion ya creado.',
       ];
       $this->validate($request,$rules,$mensaje);
         $input = $request->all();
@@ -123,7 +121,7 @@ class InscripcionController extends AppBaseController
         }
         $inscripcion = $this->inscripcionRepository->create($input);
 
-        return redirect(route('home'));
+        return redirect(route('inscripcions.index'));
     }
 
     }
@@ -140,6 +138,7 @@ class InscripcionController extends AppBaseController
         $inscripcion = $this->inscripcionRepository->find($id);
         $documento = Documento::where('id_inscripcion',$id)->get();
         $seguros = Seguro::where('id_inscripcion',$id)->get();
+        $pagos = Pago::where('id_inscripcion',$id)->get();
 
         if (empty($inscripcion)) {
             Flash::error('Inscripcion no encontrado');
@@ -147,7 +146,7 @@ class InscripcionController extends AppBaseController
             return redirect(route('inscripcions.index'));
         }
 
-        return view('inscripcions.show',compact('inscripcion','documento','seguros'));
+        return view('inscripcions.show',compact('inscripcion','documento','seguros','pagos'));
     }
 
     /**
@@ -303,7 +302,6 @@ class InscripcionController extends AppBaseController
     //}
      public function pago(Request $request, $id)
     {
-    $monto = $request->input('monto');
     $federacion_id = $request->input('federacion_id');
     $uciid = $request->input('uciid');
     $estado = $request->input('estado');
@@ -311,7 +309,6 @@ class InscripcionController extends AppBaseController
     DB::table('inscripcions')
             ->where('id', $id)
             ->update([
-                'monto' => $monto,
                 'federacion_id' => $federacion_id, 
                 'uciid' => $uciid,
                 'estado' => $estado
@@ -319,4 +316,27 @@ class InscripcionController extends AppBaseController
 
         return redirect()->back()->with('success', 'Datos actualizados correctamente');
 }
+public function guardarDescarga($id)
+{
+    $inscripcion = Inscripcion::find($id);
+
+    if ($inscripcion) {
+        $inscripcion->update(['licencia' => 'S']);
+        return response()->json(['success' => true, 'message' => 'Descarga actualizada correctamente.']);
+    }
+
+    return response()->json(['success' => false, 'message' => 'No se pudo encontrar la inscripción.']);
+}
+public function actualizarSeguro($id)
+{
+    $inscripcion = Inscripcion::find($id);
+
+    if ($inscripcion) {
+        $inscripcion->update(['seguro' => 'S']);
+        return response()->json(['success' => true, 'message' => 'Descarga actualizada correctamente.']);
+    }
+
+    return response()->json(['success' => false, 'message' => 'No se pudo encontrar la inscripción.']);
+}
+
 }

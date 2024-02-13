@@ -67,7 +67,7 @@
     <a href="{{ route('inscripcions.index') }}"
        class="nav-link {{ Request::is('inscripcions*') ? 'active' : '' }}">
     <i class="fa fas-solid fa-bicycle"></i>
-        <p>Inscripciones</p>
+        <p>Licencias</p>
     </a>
 </li>
 <li class="nav-item">
@@ -84,12 +84,34 @@
         <p>Documentos</p>
     </a>
 </li>
+<li class="nav-item">
+    <a href="{{ route('pagos.index') }}"
+       class="nav-link {{ Request::is('pagos*') ? 'active' : '' }}">
+       <i class="fa fas-solid fa-credit-card"></i>
+        <p>Pagos</p>
+    </a>
+</li>
+
 @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion','admin_inscripcion'])
 <li class="nav-item">
     <a href="{{ route('tarifas.index') }}"
        class="nav-link {{ Request::is('tarifas*') ? 'active' : '' }}">
        <i class="fas fa-solid fa-money-bill"></i>
         <p>Tarifas</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('eventos.index') }}"
+       class="nav-link {{ Request::is('eventos*') ? 'active' : '' }}">
+       <i class="fa fa-calendar" aria-hidden="true"></i>
+        <p>Eventos</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('atletas.index') }}"
+       class="nav-link {{ Request::is('atletas*') ? 'active' : '' }}">
+       <i class="fa fa-users" aria-hidden="true"></i>
+        <p>Atletas</p>
     </a>
 </li>
 @endcan
@@ -154,7 +176,7 @@
 <a href="{{ route('reporte_inscripcion') }}" class="nav-link"
   class="nav-link {{ Request::is('reporte_inscripcion*') ? 'active' : '' }}">
 <i class="fa fas-solid fa-list"></i>
-<p>Inscripciones</p>
+<p>Licencias</p>
 </a>
 </li>
 <li class="nav-item">
@@ -204,6 +226,7 @@ class="nav-link {{ Request::is('reporte_ranking*') ? 'active' : '' }}">
     </a>
 </li>
 @endif
+
 
 
 

@@ -118,7 +118,7 @@ function changeTipo(){
 <!-- Porcentaje Cesion Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('porcentaje_cesion', 'Porcentaje Cesion:') !!}
-   {!! Form::select('porcentaje_cesion',array('100%' => '100%'),null, ['class' => 'form-control','placeholder'=>'Seleccione una opcion','required','required'])!!}
+    {!! Form::select('porcentaje_cesion', array('100%' => '100%'), '100%', ['class' => 'form-control', 'required', 'readonly']) !!}
 </div>
 
 <!-- Fechanac Beneficiario Field -->
