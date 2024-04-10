@@ -31,7 +31,7 @@ class RankingMTBController extends AppBaseController
      */
      public function consulta(Request $request)
     {
-         $nombre_apellido = $request->get('buscar');
+        $nombre_apellido = $request->get('buscar');
         $categoriaSeleccionada = $request->input('categoria_filtro');
         $rankingmtbs = DB::table('ranking_m_t_bs')
             ->select('ci', 'nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis', 'fecha_seis', 'fecha_ocho', 'fecha_nueve', 'fecha_dies','fecha_once',

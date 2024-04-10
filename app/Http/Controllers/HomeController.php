@@ -7,6 +7,7 @@ use App\Models\Inscripcion;
 use Auth;
 use App\Models\Seguro;
 use App\Models\Documento;
+use App\Models\Pago;
 class HomeController extends Controller
 {
     /**
@@ -32,7 +33,10 @@ class HomeController extends Controller
         ->where('id_user', auth()->user()->id);
         $documentos = Documento::all()
         ->where('id_user', auth()->user()->id);
-        return view('home')->with('inscripcions', $inscripcions)->with('seguros', $seguros)->with('documentos', $documentos)->with('user', Auth::user());
+        $pagos = Pago::all()
+        ->where('id_user', auth()->user()->id);
+        return view('home')->with('inscripcions', $inscripcions)->with('pagos', $pagos)->with('seguros', $seguros)->with('documentos', $documentos)->with('user', Auth::user());
+
        
     }
 }

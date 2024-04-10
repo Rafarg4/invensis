@@ -26,8 +26,9 @@ class PdfController extends Controller
      public function show($id)
     {
         $inscripcions = $this->inscripcionRepository->find($id);
-         $pdf = PDF::loadView('inscripcions.pdf', compact('inscripcions'));
-         return $pdf->download('Detalle-inscripto.pdf');
+        return view('inscripcions.pdf',compact('inscripcions'));
+         //$pdf = PDF::loadView('inscripcions.pdf', compact('inscripcions'));
+        // return $pdf->download('Detalle-inscripto.pdf');
     }
    
     public function download_pago($id)
@@ -126,6 +127,40 @@ public function download_comprobante($id)
         // Verifica si el archivo existe
         if (file_exists($archivoPath)) {
             return response()->download($archivoPath, $pago->comprobante);
+        }
+    }
+
+    // Si el documento no existe o el archivo no se encuentra, puedes manejar el error apropiadamente.
+    abort(404, 'Archivo no encontrado');
+}
+ public function copia_cedula_fpc($id)
+{
+    $cedula = Documento::where('id', $id)->first();
+    
+    if ($cedula) {
+        // Construye la ruta completa al archivo
+        $archivoPath = storage_path('app/public/uploads/' . $cedula->copia_cedula_fpc);
+        
+        // Verifica si el archivo existe
+        if (file_exists($archivoPath)) {
+            return response()->download($archivoPath, $cedula->copia_cedula_fpc);
+        }
+    }
+
+    // Si el documento no existe o el archivo no se encuentra, puedes manejar el error apropiadamente.
+    abort(404, 'Archivo no encontrado');
+}
+ public function firma_registro_fpc($id)
+{
+    $firma = Documento::where('id', $id)->first();
+    
+    if ($firma) {
+        // Construye la ruta completa al archivo
+        $archivoPath = storage_path('app/public/uploads/' . $firma->firma_registro_fpc);
+        
+        // Verifica si el archivo existe
+        if (file_exists($archivoPath)) {
+            return response()->download($archivoPath, $firma->firma_registro_fpc);
         }
     }
 

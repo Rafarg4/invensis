@@ -62,10 +62,13 @@ class DocumentoController extends AppBaseController
     {
         if(Auth::user()->hasRole('super_admin')) {
          $inscripcions = Inscripcion::pluck('primer_y_segundo_nombre','id');
-        return view('documentos.create', compact('inscripcions'));
+         $tipo_licencia = Inscripcion::where('id_user', auth()->user()->id)->pluck('tipo_licencia','id');
+        return view('documentos.create', compact('inscripcions','tipo_licencia'));
          }else{
         $inscripcions = Inscripcion::where('id_user', auth()->user()->id)->pluck('primer_y_segundo_nombre','id');
-        return view('documentos.create')->with('inscripcions', $inscripcions)->with('user', Auth::user());
+        $tipo_licencia = Inscripcion::where('id_user', auth()->user()->id)->pluck('tipo_licencia');
+        //return $tipo_licencia;
+        return view('documentos.create')->with('inscripcions', $inscripcions)->with('tipo_licencia', $tipo_licencia)->with('user', Auth::user());
      }
     }
 
@@ -81,11 +84,7 @@ class DocumentoController extends AppBaseController
         if(Auth::user()->hasRole('super_admin')) {
         $rules = [
         'id_inscripcion'=>'required|unique:documentos,id_inscripcion',
-        'archivo_pago' => 'required',
-        'archivo_inscripcion' => 'required',
-        'archivo_seguro_medico' => 'required',
-        'archivo_copia_cedula' => 'required',
-        'archivo_certificado_medico' => 'required',
+        
       ];
        $mensaje = [
         'required'=>'El :attribute es requerido',
@@ -94,13 +93,6 @@ class DocumentoController extends AppBaseController
       $this->validate($request,$rules,$mensaje);
 
         $input = $request->all();
-
-        if ($request->hasFile('archivo_pago')) {
-            $archivoPago = $request->file('archivo_pago');
-            $nombreArchivoPago = $archivoPago->getClientOriginalName(); // Obtiene el nombre original del archivo
-            $archivoPago->storeAs('public/uploads', $nombreArchivoPago);
-            $input['archivo_pago'] = $nombreArchivoPago;
-        }
 
         if ($request->hasFile('archivo_inscripcion')) {
             $archivoInscripcion = $request->file('archivo_inscripcion');
@@ -128,6 +120,18 @@ class DocumentoController extends AppBaseController
             $nombreArchivoCertificadoMedico = $archivoCertificadoMedico->getClientOriginalName(); // Obtiene el nombre original del archivo
             $archivoCertificadoMedico->storeAs('public/uploads', $nombreArchivoCertificadoMedico);
             $input['archivo_certificado_medico'] = $nombreArchivoCertificadoMedico;
+        }
+        if ($request->hasFile('firma_registro_fpc')) {
+            $archivo_fpc = $request->file('firma_registro_fpc');
+            $nombrearchivo_fpc = $archivo_fpc->getClientOriginalName(); // Obtiene el nombre original del archivo
+            $archivo_fpc->storeAs('public/uploads', $nombrearchivo_fpc);
+            $input['firma_registro_fpc'] = $nombrearchivo_fpc;
+        }
+        if ($request->hasFile('copia_cedula_fpc')) {
+            $archivo_copia = $request->file('archivo_certificado_medico');
+            $nombrearchivo_copia = $archivo_copia->getClientOriginalName(); // Obtiene el nombre original del archivo
+            $archivo_copia->storeAs('public/uploads', $nombrearchivo_copia);
+            $input['copia_cedula_fpc'] = $nombrearchivo_copia;
         }
 
         // Resto de tu código para crear el documento
@@ -140,11 +144,7 @@ class DocumentoController extends AppBaseController
     }else{
          $rules = [
         'id_inscripcion'=>'required|unique:documentos,id_inscripcion',
-        'archivo_pago' => 'required',
-        'archivo_inscripcion' => 'required',
-        'archivo_seguro_medico' => 'required',
-        'archivo_copia_cedula' => 'required',
-        'archivo_certificado_medico' => 'required',
+        
       ];
        $mensaje = [
         'required'=>'El :attribute es requerido',
@@ -153,13 +153,6 @@ class DocumentoController extends AppBaseController
       $this->validate($request,$rules,$mensaje);
 
         $input = $request->all();
-
-        if ($request->hasFile('archivo_pago')) {
-            $archivoPago = $request->file('archivo_pago');
-            $nombreArchivoPago = $archivoPago->getClientOriginalName(); // Obtiene el nombre original del archivo
-            $archivoPago->storeAs('public/uploads', $nombreArchivoPago);
-            $input['archivo_pago'] = $nombreArchivoPago;
-        }
 
         if ($request->hasFile('archivo_inscripcion')) {
             $archivoInscripcion = $request->file('archivo_inscripcion');
@@ -187,6 +180,18 @@ class DocumentoController extends AppBaseController
             $nombreArchivoCertificadoMedico = $archivoCertificadoMedico->getClientOriginalName(); // Obtiene el nombre original del archivo
             $archivoCertificadoMedico->storeAs('public/uploads', $nombreArchivoCertificadoMedico);
             $input['archivo_certificado_medico'] = $nombreArchivoCertificadoMedico;
+        }
+        if ($request->hasFile('firma_registro_fpc')) {
+            $archivo_fpc = $request->file('firma_registro_fpc');
+            $nombrearchivo_fpc = $archivo_fpc->getClientOriginalName(); // Obtiene el nombre original del archivo
+            $archivo_fpc->storeAs('public/uploads', $nombrearchivo_fpc);
+            $input['firma_registro_fpc'] = $nombrearchivo_fpc;
+        }
+        if ($request->hasFile('copia_cedula_fpc')) {
+            $archivo_copia = $request->file('archivo_certificado_medico');
+            $nombrearchivo_copia = $archivo_copia->getClientOriginalName(); // Obtiene el nombre original del archivo
+            $archivo_copia->storeAs('public/uploads', $nombrearchivo_copia);
+            $input['copia_cedula_fpc'] = $nombrearchivo_copia;
         }
         $documento = $this->documentoRepository->create($input);
 

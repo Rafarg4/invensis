@@ -14,9 +14,11 @@ use App\Models\Inscripcion;
 use App\Models\Documento;
 use App\Models\Seguro;
 use App\Models\Pago;
+use App\Models\Banco;
 use PDF;
 use Auth;
 use DB; 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 class InscripcionController extends AppBaseController
 {
@@ -55,7 +57,51 @@ class InscripcionController extends AppBaseController
         $ci = $request->get('buscarpor');
         $inscripcions = Inscripcion::where('id_user', auth()->user()->id)
         ->paginate(3);
-        return view('inscripcions.index')->with('inscripcions', $inscripcions)->with('user', Auth::user());
+        //Consultas para obtener si tiene documentos pagos y seguros
+        $pagosUsuario = Pago::whereHas('inscripcion', function ($query) {
+            $query->where('id_user', Auth::user()->id);
+        })->where('estado', 'verificado')->get();
+        //return $pagosUsuario;
+        $seguroUsuario = Seguro::whereHas('inscripto', function ($query) {
+            $query->where('id_user', Auth::user()->id);
+        })->get();
+         $tieneSeguro = $seguroUsuario->isNotEmpty();
+
+        $documentoUsuario = Documento::whereHas('inscripto', function ($query) {
+            $query->where('id_user', Auth::user()->id);
+        })->get();
+         $tieneDocumento = $documentoUsuario->isNotEmpty();
+        //return $pagosUsuario;
+         //Para obtener pagos
+         $pagos_licencia = DB::table('pagos')
+            ->join('tarifas', 'pagos.id_tarifa', '=', 'tarifas.id')
+            ->select('pagos.*', 'tarifas.*')
+            ->where('tipo_plan','Pago de inscripcion')
+            ->where('pagos.id_user', Auth::user()->id)
+            ->get();
+        $pagos_seguro = DB::table('pagos')
+            ->join('tarifas', 'pagos.id_tarifa', '=', 'tarifas.id')
+            ->select('pagos.*', 'tarifas.*')
+            ->where('tipo_plan','Pago de seguro')
+            ->where('pagos.id_user', Auth::user()->id)
+            ->get();
+        $pagos_evento = DB::table('pagos')
+            ->join('tarifas', 'pagos.id_tarifa', '=', 'tarifas.id')
+            ->select('pagos.*', 'tarifas.*')
+            ->where('tipo_plan','Pago de Evento')
+            ->where('pagos.id_user', Auth::user()->id)
+            ->get();
+
+       // return $pagos_seguro;
+        return view('inscripcions.index')
+        ->with('inscripcions', $inscripcions)
+        ->with('pagosUsuario', $pagosUsuario)
+        ->with('tieneSeguro', $tieneSeguro)
+        ->with('tieneDocumento', $tieneDocumento)
+        ->with('pagos_licencia', $pagos_licencia)
+        ->with('pagos_seguro', $pagos_seguro)
+        ->with('pagos_evento', $pagos_evento)
+        ->with('user', Auth::user());
      } 
 
     }
@@ -67,10 +113,17 @@ class InscripcionController extends AppBaseController
      */
     public function create()
     {
-        $categoria = Categoria::where('tipo_categoria','Principal')->pluck('nombre','id');
-        $categoria2 = Categoria::where('tipo_categoria','Master')->pluck('nombre','id');
-        $categoria3 = Categoria::where('tipo_categoria','Ciclismo para todos')->pluck('nombre','id');
-        return view('inscripcions.create', compact('categoria','categoria2','categoria3'));
+        $categoriaPrincipal = Categoria::where('tipo_categoria', 'Principal')->pluck('nombre', 'id');
+        $categoriaMaster = Categoria::where('tipo_categoria', 'Master')->pluck('nombre', 'id');
+        $categoriaCiclismoParaTodos = Categoria::where('tipo_categoria', 'Ciclismo para todos')->pluck('nombre', 'id');
+         $bancos=Banco::all();
+        // Obtener edades
+        $edadesPrincipal = Categoria::where('tipo_categoria', 'Principal')->get(['id', 'edad_ini', 'edad_fin']);
+        $edadesMaster = Categoria::where('tipo_categoria', 'Master')->get(['id', 'edad_ini', 'edad_fin']);
+        $edadesCiclismoParaTodos = Categoria::where('tipo_categoria', 'Ciclismo para todos')->get(['id', 'edad_ini', 'edad_fin']);
+
+
+        return view('inscripcions.create', compact('bancos','categoriaPrincipal','categoriaMaster','categoriaCiclismoParaTodos','edadesPrincipal','edadesMaster','edadesCiclismoParaTodos'));
     }
 
     /**
@@ -83,9 +136,11 @@ class InscripcionController extends AppBaseController
     public function store(CreateInscripcionRequest $request)
     {
     if(Auth::user()->hasRole('super_admin')) {
+       // return $request->all();
         $rules = [
-    
+        
         'foto' => 'required',
+         'ci' => 'required|unique:inscripcions,ci',
       ];
        $mensaje = [
         'required'=>'El :attribute es requerido',
@@ -208,7 +263,7 @@ class InscripcionController extends AppBaseController
         'uciid',
         'id_user'
         ];
-        $mensaje = [
+        $mensaje = [ 
         'required'=>'El :attribute es requerido',
       ];
 
@@ -316,27 +371,48 @@ class InscripcionController extends AppBaseController
 
         return redirect()->back()->with('success', 'Datos actualizados correctamente');
 }
-public function guardarDescarga($id)
-{
-    $inscripcion = Inscripcion::find($id);
+    public function por_dia(Request $request, $id)
+        {
+        $fecha_inicio = Carbon::parse($request->input('fecha_inicio'))->toDateTimeString();
+        $fecha_fin = Carbon::parse($request->input('fecha_fin'))->toDateTimeString();
+        //return $request->all();
+        DB::table('inscripcions')
+            ->where('id', $id)
+            ->update([
+                'fecha_inicio' => $fecha_inicio,
+                'fecha_fin' => $fecha_fin
+            ]);
+            //return $fechas;
 
-    if ($inscripcion) {
-        $inscripcion->update(['licencia' => 'S']);
-        return response()->json(['success' => true, 'message' => 'Descarga actualizada correctamente.']);
+            return redirect()->back()->with('success', 'Datos actualizados correctamente');
     }
+        public function guardarDescarga($id)
+        {
+            $inscripcion = Inscripcion::find($id);
 
-    return response()->json(['success' => false, 'message' => 'No se pudo encontrar la inscripción.']);
-}
-public function actualizarSeguro($id)
-{
-    $inscripcion = Inscripcion::find($id);
+            if ($inscripcion) {
+                $inscripcion->update(['licencia' => 'S']);
+                return response()->json(['success' => true, 'message' => 'Descarga actualizada correctamente.']);
+            }
 
-    if ($inscripcion) {
-        $inscripcion->update(['seguro' => 'S']);
-        return response()->json(['success' => true, 'message' => 'Descarga actualizada correctamente.']);
-    }
+            return response()->json(['success' => false, 'message' => 'No se pudo encontrar la inscripción.']);
+        }
+        public function actualizarSeguro($id)
+        {
+            $inscripcion = Inscripcion::find($id);
 
-    return response()->json(['success' => false, 'message' => 'No se pudo encontrar la inscripción.']);
-}
+            if ($inscripcion) {
+                $inscripcion->update(['seguro' => 'S']);
+                return response()->json(['success' => true, 'message' => 'Descarga actualizada correctamente.']);
+            }
+
+            return response()->json(['success' => false, 'message' => 'No se pudo encontrar la inscripción.']);
+        }
+        public function ver_licencia($id){
+        $inscripcion = Inscripcion::find($id);
+
+        return view('inscripcions.licencia_dia',compact('inscripcion'));
+
+ }
 
 }

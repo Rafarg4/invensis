@@ -30,14 +30,24 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+<style type="text/css">
+      body{
+      background:url("/fondo_pagina.jpeg");
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-size: cover; 
+  }
+  .bg-light {
+      background-color: #fff !important;
+  }
+  </style>
 </head>
 <body class="hold-transition login-page">
 <div class="login-box"style="width: 19rem;">
     <div class="card card-outline card-primary">
  
         <div class="card-body login-card-body">
-            <center> <img src="/logof.png" width="150" height="150" class="img-circle" alt="User Image"/></center>
+            <center> <img src="/logof.png" width="150" height="130" class="img-circle" alt="User Image"/></center>
             <p class="login-box-msg">Iniciar Sesion </p>
 
             <form method="post" action="{{ url('/login') }}">

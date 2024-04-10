@@ -25,13 +25,14 @@ class CreateInscripcionsTable extends Migration
             $table->text('grupo_sanguineo');
             $table->text('nacionalidad');
             $table->text('celular');
+            $table->text('edad');
             $table->text('email');
             $table->text('domiciolio');
             $table->text('ciudad');
             $table->text('region');
             $table->text('departamento');
-            $table->unsignedBigInteger('id_categoria')->nullable();
-            $table->foreign('id_categoria')->references('id')->on('categorias');
+            $table->unsignedBigInteger('id_categorias')->nullable();
+            $table->foreign('id_categorias')->references('id')->on('categorias');
             $table->text('nombre_equipo');
             $table->text('contacto_emergencia');
             $table->text('nombre_apellido_contacto_emergencia');
@@ -40,6 +41,11 @@ class CreateInscripcionsTable extends Migration
             $table->text('federacion_id')->nullable();
             $table->text('monto')->nullable();
             $table->text('estado')->nullable();
+            $table->text('tipo_licencia')->nullable();
+            $table->text('licencia')->nullable();
+            $table->text('seguro')->nullable();
+            $table->text('fecha_inicio')->nullable();
+            $table->text('fecha_fin')->nullable();
             $table->unsignedBigInteger('id_user');
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

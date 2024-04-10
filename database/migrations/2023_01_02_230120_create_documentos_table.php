@@ -16,11 +16,12 @@ class CreateDocumentosTable extends Migration
     {
         Schema::create('documentos', function (Blueprint $table) {
             $table->id('id');
-            $table->text('archivo_pago');
             $table->text('archivo_inscripcion');
-            $table->text('archivo_seguro_medico');
+            $table->text('archivo_seguro_medico')->nullable();
             $table->text('archivo_certificado_medico');
             $table->text('archivo_copia_cedula');
+            $table->text('firma_registro_fpc');
+            $table->text('copia_cedula_fpc');
             $table->text('estado')->nullable();
             $table->unsignedBigInteger('id_user');
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');

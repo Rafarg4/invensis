@@ -17,7 +17,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', function () {
         return view('home');
    });
-});
+}); 
 Route::get('/symlink', function () {
    $target =$_SERVER['DOCUMENT_ROOT'].'/storage/app/public';
    $link = $_SERVER['DOCUMENT_ROOT'].'/public/storage';
@@ -29,7 +29,6 @@ Auth::routes();
 Route::get('', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //Route::group(['middleware' => ['permission:create_inscripcion|edit_inscripcion|delete_inscripcion|admin_inscripcion']], function () {
-	
 
 Route::get('reportes/inscripcions', [App\Http\Controllers\ReporteController::class, 'reporte_inscripcion'])->name('reporte_inscripcion')->middleware('auth');
 
@@ -41,11 +40,20 @@ Route::get('download_comprobante/{id}', [App\Http\Controllers\PdfController::cla
 Route::get('download_inscripcion/{id}', [App\Http\Controllers\PdfController::class, 'download_inscripcion'])->name('documento.download_inscripcion')->middleware('auth');
 Route::get('download_seguro/{id}', [App\Http\Controllers\PdfController::class, 'download_seguro'])->name('documento.download_seguro')->middleware('auth');
 
+Route::get('firma_registro_fpc/{id}', [App\Http\Controllers\PdfController::class, 'firma_registro_fpc'])->name('documento.firma_registro_fpc')->middleware('auth');
+Route::get('copia_cedula_fpc/{id}', [App\Http\Controllers\PdfController::class, 'copia_cedula_fpc'])->name('documento.copia_cedula_fpc')->middleware('auth');
+
 
 Route::get('download_copia/{id}', [App\Http\Controllers\PdfController::class, 'download_copia'])->name('documento.download_copia')->middleware('auth');
 Route::get('download_certificado/{id}', [App\Http\Controllers\PdfController::class, 'download_certificado'])->name('documento.download_certificado')->middleware('auth');
 
 Route::get('seguro/{id}', [App\Http\Controllers\InscripcionController::class, 'seguro'])->name('seguro')->middleware('auth');
+Route::get('descargarseguro/{id}', [App\Http\Controllers\SeguroController::class, 'descargarseguro'])->name('descargarseguro')->middleware('auth');
+Route::post('/seguros/{id}/marcar-descargado', [App\Http\Controllers\SeguroController::class, 'marcarDescargado'])->name('marcarSeguroDescargado');
+
+Route::post('/seguros/{id}/marcar-documento', [App\Http\Controllers\SeguroController::class, 'marcarDocumento'])->name('marcarSeguroDocumento');
+
+
 
 
 Route::resource('licencias', App\Http\Controllers\LicenciaController::class)->middleware('auth');
@@ -60,7 +68,7 @@ Route::resource('categorias', App\Http\Controllers\CategoriaController::class)->
 Route::resource('pdf', App\Http\Controllers\PdfController::class)->middleware('auth');
 
 Route::resource('inscripcions', App\Http\Controllers\InscripcionController::class)->middleware('auth');
-
+Route::get('/inscripcions/licencia_dia/{id}', [App\Http\Controllers\InscripcionController::class, 'ver_licencia'])->name('ver_licencia');
 
 Route::resource('documentos', App\Http\Controllers\DocumentoController::class)->middleware('auth');
 
@@ -113,10 +121,14 @@ Route::post('/eliminar_ranking_mtb', [RankingMTBController::class, 'eliminar_ran
 
 Route::post('/pago/{id}', 'App\Http\Controllers\InscripcionController@pago')->name('pago');
 
+Route::post('/por_dia/{id}', 'App\Http\Controllers\InscripcionController@por_dia')->name('por_dia');
+
 Route::post('cambiar_estado/{id}', [App\Http\Controllers\InscripcionController::class, 'cambiar_estado'])->name('cambiar_estado');
 
 Route::resource('pagos', App\Http\Controllers\PagoController::class);
 Route::post('cambiar_estado_pago/{id}', [App\Http\Controllers\PagoController::class, 'cambiar_estado_pago'])->name('cambiar_estado_pago');
+
+Route::post('cambiar_estado_atleta/{id}', [App\Http\Controllers\AtletaController::class, 'cambiar_estado_atleta'])->name('cambiar_estado_atleta');
 
 Route::resource('eventos', App\Http\Controllers\EventoController::class);
 
@@ -127,6 +139,8 @@ Route::get('/buscar', [App\Http\Controllers\EventoController::class, 'buscar'])-
 
 Route::get('ver_evento', [App\Http\Controllers\EventoController::class, 'ver_evento'])->name('ver_evento');
 
+Route::get('inicio', [App\Http\Controllers\EventoController::class, 'inicio'])->name('inicio');
+
 Route::get('registro_atleta', [App\Http\Controllers\AtletaController::class, 'registro_atleta'])->name('registro_atleta');
 // En tu archivo de rutas web.php
 Route::post('/guardar-descarga/{id}', [App\Http\Controllers\InscripcionController::class, 'guardarDescarga'])->name('guardarDescarga');
@@ -134,4 +148,9 @@ Route::post('/guardar-seguro/{id}', [App\Http\Controllers\InscripcionController:
 
 Route::get('ver_eventos_detalles/{id}', [App\Http\Controllers\EventoController::class, 'ver_eventos_detalles'])->name('ver_eventos_detalles');
 
+Route::get('eventos_detalles/{id}', [App\Http\Controllers\EventoController::class, 'eventos_detalles'])->name('eventos_detalles');
+
 Route::post('/guardar_atelta', [App\Http\Controllers\AtletaController::class, 'guardar_atelta'])->name('guardar_atelta');
+
+
+Route::resource('bancos', App\Http\Controllers\BancoController::class);

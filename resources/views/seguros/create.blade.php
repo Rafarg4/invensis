@@ -40,8 +40,21 @@
                 <div class="row">
                     @include('seguros.fields')
                 </div>
-
             </div>
+
+  <div class="card">
+  <div class="card-header">
+   <strong>Datos bancarios</strong>
+  </div>
+  <div class="card-body">
+                 @foreach($bancos as $b)
+                        <p>Para realizar el pago de la inscripción al evento de ciclismo, puedes optar por transferencia bancaria a la siguiente cuenta:
+                        <li>Nombre de la cuenta:<strong> {{$b->nombre_cuenta}}</strong></li> 
+                        <li> CI/RUC:<strong> {{$b->ci_ruc}}</strong></li> 
+                        <li> Banco:<strong> {{$b->banco}}</strong></li> </p>
+                        @endforeach
+                </div>
+</div>
 
             <div class="card-footer">
                 {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
@@ -49,6 +62,7 @@
             </div>
 
             {!! Form::close() !!}
+
 
         </div>
     </div>

@@ -47,14 +47,17 @@ class Atleta extends Model
         'celular',
         'ciudad',
         'departamento',
-        'categoria',
+        'id_categoria',
         'tipo_categoria',
         'nombre_equipo',
         'federacion_id',
         'uci_id',
         'modo',
         'id_user',
-        'id_evento'
+        'id_evento',
+        'estado',
+        'id_inscripcion'
+
     ];
 
     /**
@@ -91,5 +94,8 @@ class Atleta extends Model
      return $this-> belongsTo('App\Models\Evento','id_evento');
 
     }
-    
+    public function categoria()
+{
+    return $this->belongsTo(Categoria::class, 'id_categoria');
+}
 }

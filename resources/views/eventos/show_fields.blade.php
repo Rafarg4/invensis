@@ -28,6 +28,26 @@
     <div class="form-group col-md-3">
     <label for="cupos">Cupos:</label>
     <input type="text" class="form-control" id="cupo" value="{{ $evento->cupos }}">
+</div> 
+    <div class="form-group col-md-3">
+    <label for="cupos">Monto:</label>
+    <input type="text" class="form-control" id="cupo" value="{{ number_format($evento->monto) }}">
+</div>
+ <div class="form-group col-md-3">
+    <label for="estado">Recorrido CRI:</label>
+    <input type="text" class="form-control" id="estado" value="{{ $evento->recorrido1 }}">
+</div>
+ <div class="form-group col-md-3">
+    <label for="estado">Url recorrido CRI:</label>
+    <input type="text" class="form-control" id="estado" value="{{ $evento->url_cri }}">
+</div>
+ <div class="form-group col-md-3">
+    <label for="estado">Recorrido de Ruta:</label>
+    <input type="text" class="form-control" id="estado" value="{{ $evento->recorrido2 }}">
+</div>
+ <div class="form-group col-md-3">
+    <label for="estado">Url de Ruta:</label>
+    <input type="text" class="form-control" id="estado" value="{{ $evento->url_ruta }}">
 </div>    
     <div class="form-group col-md-3">
     <label for="estado">Estado:</label>
@@ -61,7 +81,7 @@
                     <tbody>
                     @foreach($atletas as $atleta)
                         <tr>
-                         <td>{{ $atleta->evento->nombre }}</td>
+                         <td>{{ $atleta->evento->nombre ?? 'Sin datos'}}</td>
                         <td>{{ $atleta->ci }}</td>
                         <td>{{ $atleta->nombres }}</td>
                         <td>{{ $atleta->apellidos }}</td>
@@ -69,7 +89,7 @@
                         <td>{{ $atleta->celular }}</td>
                         <td>{{ $atleta->ciudad }}</td>
                         <td>{{ $atleta->departamento }}</td>
-                        <td>{{ $atleta->categoria }}</td>
+                        <td>{{ $atleta->nombre_categoria ?? 'Sin datos'}}</td>
                         <td>{{ $atleta->tipo_categoria }}</td>
                         <td>{{ $atleta->modo }}</td>
                             <td width="120">

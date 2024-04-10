@@ -9,6 +9,7 @@
         <th>Distancia</th>
         <th>Organiza</th>
         <th>Cupos</th>
+        <th>Monto</th>
         <th>Estado</th>
         <th>Accion</th>
         </tr>
@@ -23,6 +24,7 @@
             <td>{{ $evento->distancia }}</td>
             <td>{{ $evento->organiza }}</td>
             <td>{{ $evento->cupos }}</td>
+             <td>{{ number_format($evento->monto) }} Gs.</td>
             <td>{{ $evento->estado }}</td>
                 <td width="120">
                     {!! Form::open(['route' => ['eventos.destroy', $evento->id], 'method' => 'delete']) !!}

@@ -76,6 +76,7 @@
     <label>Fecha uno:</label>
     <input type="text" class="form-control" placeholder="{{ $rankingMTB->fecha_uno }}" disabled>
 </div>
+<!--
 <div class="form-group col-md-3">
     <label>Fecha dos:</label>
     <input type="text" class="form-control" placeholder="{{ $rankingMTB->fecha_dos ?? 'A competir' }}" disabled>
@@ -119,7 +120,7 @@
 <div class="form-group col-md-3">
     <label>Total:</label>
     <input type="text" class="form-control" placeholder="{{ $totales  }}" disabled>
-</div>
+</div>-->
 </div>
 </form>
 

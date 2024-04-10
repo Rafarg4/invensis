@@ -1,13 +1,6 @@
 <br> 
 @if(Auth::user()->hasRole('super_admin'))
-<!-- Agrega la referencia a la biblioteca de Bootstrap (asegúrate de usar la versión adecuada) -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-<!-- Agrega la referencia a la biblioteca de Popper.js (necesaria para Bootstrap) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-
-<!-- Agrega la referencia a la biblioteca de Bootstrap (necesaria para Bootstrap) -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+ 
 <div class="table-responsive" style="padding:15px;font-size: 12px;">
     <table class="table" id="table">
         <thead>
@@ -20,7 +13,7 @@
         <th>Estado</th>
         <th>Ciudad</th>
         <th>Categoria</th>
-         <th>Email</th>
+         <th>Tipo licencia</th>
          <th>Accion</th>
         </tr>
         </thead>
@@ -39,7 +32,7 @@
     </button>
     <div class="dropdown-menu" aria-labelledby="btnGroupDrop{{$inscripcion->id}}">
         @if ($inscripcion->estado != 'En espera')
-        <a class="dropdown-item cambiar-estado" href="#" data-estado="En espera">En espera</a>
+        <a class="dropdown-item cambiar-estado" href="#" data-estado="En espera"> En espera</a>
         @endif
         @if ($inscripcion->estado != 'Verificado')
         <a class="dropdown-item cambiar-estado" href="#" data-estado="Verificado">Verificado</a>
@@ -96,30 +89,78 @@
         });
     });
 </script>
-
+ 
             </td>
             <td>{{ $inscripcion->ciudad }}</td>
             <td>{{ $inscripcion->categoria->nombre  ?? 'Categoria no asignada' }}</td>
-             <td>{{$inscripcion->email}}</td>
+             <td>{{$inscripcion->tipo_licencia}}</td>
             <td>
 <a href="{{ route('inscripcions.show', [$inscripcion->id]) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Ver inscripcion">
 <i class="fas fa-eye"></i>
 </a>
+@if($inscripcion->tipo_licencia =='Por dia')
+<a href="{{route('ver_licencia', $inscripcion->id)}}" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Descargar inscripcion">
+<i class="fas fa-file-pdf"></i> 
+</a>
+@else
 <a href="{{route('pdf.show', $inscripcion->id)}}" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Descargar inscripcion">
 <i class="fas fa-file-pdf"></i> 
 </a>
-<a href="{{route('seguro',$inscripcion->id)}}" class="btn btn-sm btn-info"data-toggle="tooltip" title="Descargar seguro">
-<i class="fa fas-regular fa-laptop-medical"></i></a>
-@if($inscripcion->estado =="Verificado")
-<a href="#" class="btn btn-sm btn-success"data-toggle="tooltip" title="Verificado">
-<i class="fa fa-check-circle" aria-hidden="true"></i></a>
-@else
+@endif
+@if($inscripcion->tipo_licencia =='Por dia' && $inscripcion->fecha_fin == null)
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#exampleModal{{ $inscripcion->id }}">
+<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#example{{ $inscripcion->id }}">
+        <i class="fa fa-history" aria-hidden="true"></i>
+    </button>
+<!-- Modal -->
+ <div class="modal fade" id="example{{ $inscripcion->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> Asignacion de vigencia de licencia</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>        
+      <div class="modal-body">
+       <form action="{{ route('por_dia', $inscripcion->id) }}" method="POST" id="por_dia{{ $inscripcion->id }}">
+          @csrf
+          @method('POST')
+           <div class="form-group col-sm-12">
+                <label for="fecha_inicio">Fecha y hora de inicio:</label>
+                <input type="datetime-local" id="fecha_inicio" name="fecha_inicio" class="form-control">
+            </div>
+
+            <div class="form-group col-sm-12">
+                <label for="fecha_fin">Fecha y hora de finalización:</label>
+                <input type="datetime-local" id="fecha_fin" name="fecha_fin" class="form-control">
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="submit" name="aplicado" value="aplicado" class="btn btn-primary">Aplicar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+@else
+@if($inscripcion->fecha_fin !== null)
+<a href="#" class="btn btn-sm btn-info"data-toggle="tooltip" title="Aplicado">
+<i class="fa fa-check-circle" aria-hidden="true"></i></a>
+@endif
+@endif
+
+<!--
+<a href="{{route('seguro',$inscripcion->id)}}" class="btn btn-sm btn-info"data-toggle="tooltip" title="Descargar seguro">
+<i class="fa fas-regular fa-laptop-medical"></i></a>-->
+@if($inscripcion->uci_id ==null && $inscripcion->uci_id  ==null)
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#exampleModal2{{ $inscripcion->id }}">
         <i class="fa fa-id-badge" aria-hidden="true"></i>
     </button>
 <!-- Modal -->
- <div class="modal fade" id="exampleModal{{ $inscripcion->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal fade" id="exampleModal2{{ $inscripcion->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -156,6 +197,9 @@
     </div>
   </div>
 </div>
+@else
+<a href="#" class="btn btn-sm btn-success"data-toggle="tooltip" title="Verificado">
+<i class="fa fa-check-circle" aria-hidden="true"></i></a>
 @endif
 @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
 <a href="{{ route('inscripcions.edit', [$inscripcion->id]) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Editar">
@@ -179,6 +223,15 @@
   $(document).on('click', '.btn-success', function () {
     var id = $(this).data('id');
     var form = $('#formularioPago' + id);
+    var action = form.attr('action');
+    // Modifica la URL de acción con el ID recogido
+    form.attr('action', action + '/' + id);
+  });
+</script>
+<script>
+  $(document).on('click', '.btn-success', function () {
+    var id = $(this).data('id');
+    var form = $('#por_dia' + id);
     var action = form.attr('action');
     // Modifica la URL de acción con el ID recogido
     form.attr('action', action + '/' + id);
@@ -209,7 +262,7 @@
         </div>
     </section>
     @endcan
-    <!-- Agrega la referencia a la biblioteca de Bootstrap (asegúrate de usar la versión adecuada) -->
+   <!-- Agrega la referencia a la biblioteca de Bootstrap (asegúrate de usar la versión adecuada) -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 <!-- Agrega la referencia a la biblioteca de Popper.js (necesaria para Bootstrap) -->
@@ -220,61 +273,69 @@
     <div class="card-body pb-0">
         <div class="row">
             @foreach($inscripcions as $inscripcion)
-        @if($inscripcion->licencia === null)
-            <script>
-                $(document).ready(function(){
-                    $('#miModal').modal('show');
+ @if($inscripcion->licencia === null) 
+    <script>
+        $(document).ready(function(){
+            $('#miModal').modal('show');
+            
+            // Manejar el clic en el botón de Descargar
+            $('#btnDescargar').on('click', function() {
+                // Hacer la descarga del PDF
+                window.location.href = "{{ route('pdf.show', $inscripcion->id) }}";
+                
+                // Actualizar la columna descarga
+                $.post("{{ route('guardarDescarga', ['id' => $inscripcion->id]) }}", { _token: "{{ csrf_token() }}" }, function(data) {
+                    console.log(data);
+                    // Opcional: Puedes ocultar el modal después de la descarga
+                    $('#miModal').modal('hide');
+
+                    // Actualizar el seguro y mostrar el otro modal
+                    $.post("{{ route('actualizarSeguro', ['id' => $inscripcion->id]) }}", { _token: "{{ csrf_token() }}" }, function(data) {
+                        console.log(data);
+                        // Mostrar el otro modal después de actualizar el seguro
+                        $('#miModal2').modal('show');
+                    });
+                });
+            });
+        });
+    </script>
+@elseif($inscripcion->seguro === null && $inscripcion->licencia)
+       <script>
+        $(document).ready(function(){
+            $('#miModal2').modal('show');
+
+            // Manejar el clic en el botón "Crear seguro"
+            $('#btnCrearSeguro').on('click', function() {
+                // Actualizar la columna seguro
+                $.post("{{ route('actualizarSeguro', ['id' => $inscripcion->id]) }}", { _token: "{{ csrf_token() }}" }, function(data) {
+                    console.log(data);
+                    // Opcional: Puedes realizar alguna acción adicional después de la actualización
+                    $('#miModal2').modal('hide');
                     
-                    // Manejar el clic en el botón de Descargar
-                    $('#btnDescargar').on('click', function() {
-                        // Hacer la descarga del PDF
-                        window.location.href = "{{ route('pdf.show', $inscripcion->id) }}";
-                        
-                        // Actualizar la columna descarga
-                        $.post("{{ route('guardarDescarga', ['id' => $inscripcion->id]) }}", { _token: "{{ csrf_token() }}" }, function(data) {
-                            console.log(data);
-                            // Opcional: Puedes ocultar el modal después de la descarga
-                            $('#miModal').modal('hide');
-                        });
-                    });
+                      location.reload();
                 });
-            </script>
-        @elseif($inscripcion->seguro === null && $inscripcion->licencia)
-            <script>
-                $(document).ready(function(){
-                    $('#miModal2').modal('show');
-
-                    // Manejar el clic en el botón "Crear seguro"
-                    $('#btnCrearSeguro').on('click', function() {
-                        // Actualizar la columna seguro
-                        $.post("{{ route('actualizarSeguro', ['id' => $inscripcion->id]) }}", { _token: "{{ csrf_token() }}" }, function(data) {
-                            console.log(data);
-                            // Opcional: Puedes realizar alguna acción adicional después de la actualización
-                            $('#miModal2').modal('hide');
-                        });
-                    });
-                });
-            </script>
-            <script>
-    $(document).ready(function(){
-        // Manejar el clic en el botón "Descargar Deslinde"
-        $('#btnDescargarDeslinde').on('click', function(e) {
-            e.preventDefault(); // Evitar que el enlace se abra automáticamente
-
+            });
+    
+        $('#btnDescargarDeslinde').on('click', function() {
             // Realizar la descarga del formulario de deslinde
-            window.location.href = "/formulario.pdf";
+            var link = document.createElement('a');
+            link.href = "/formulario.pdf";
+            link.download = "formulario.pdf";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // Cerrar el modal
+            $('#miModal2').modal('hide');
 
             // Actualizar la columna seguro
             $.post("{{ route('actualizarSeguro', ['id' => $inscripcion->id]) }}", { _token: "{{ csrf_token() }}" }, function(data) {
                 console.log(data);
                 // Opcional: Puedes realizar alguna acción adicional después de la actualización
-
-                // Recargar la página después de la actualización
-                location.reload();
             });
         });
     });
-</script>
+    </script>
         @endif
 
         <!-- Modal para descargar licencia -->
@@ -291,9 +352,15 @@
                         <p>Se ha creado la licencia correctamente. Por favor, descargue su licencia en el apartado de licencias.</p>
                     </div>
                     <div class="modal-footer">
-                        <a href="{{ route('pdf.show', $inscripcion->id) }}" id="btnDescargar" class="btn btn-danger" data-toggle="tooltip" title="Descargar">
+                        @if($inscripcion->tipo_licencia =='Por dia')
+                        <a href="{{route('ver_licencia', $inscripcion->id)}}" id="btnDescargar" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Descargar inscripcion">
                         <i class="fas fa-file-pdf"></i> Descargar
                         </a>
+                        @else
+                        <a href="{{route('pdf.show', $inscripcion->id)}}" id="btnDescargar" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Descargar inscripcion">
+                        <i class="fas fa-file-pdf"></i> Descargar
+                        </a>
+                        @endif
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
@@ -316,7 +383,7 @@
                         <a href="{{ route('seguros.create') }}" id="btnCrearSeguro" class="btn btn-primary" data-toggle="tooltip" title="Crear seguro">
                             <i class="fas fa-clipboard"></i> Crear seguro
                         </a>
-                        <a href="/formulario.pdf" id="btnDescargarDeslinde" download class="btn btn-warning" data-toggle="tooltip" title="Deslinde">
+                        <a href="formulario.pdf" id="btnDescargarDeslinde" download class="btn btn-warning" data-toggle="tooltip" title="Deslinde">
                             <i class="fas fa-file-pdf"></i> Formulario de deslinde 
                         </a>
 
@@ -334,15 +401,17 @@
                             <div class="col-7">
                                 <ul class="ml-3 mb-0 fa-ul text-muted">
                                     <br>
-                                    <li class="small"><span class="fa-li"><i class="fas fa-solid fa-user"></i></span>
+                                    <li ><span class="fa-li"><i class="fas fa-solid fa-user"></i></span>
                                         Nombres: {{ $inscripcion->primer_y_segundo_nombre}}</li><br>
-                                        <li class="small"><span class="fa-li"><i class="fas fa-solid fa-user"></i></span>
-                                        Nombres: {{ $inscripcion->primer_y_segundo_apellido}}</li><br>
-                                    <li class="small"><span class="fa-li"><i class="fas fa-solid fa-bars"></i></span>
-                                        Categoria:{{ $inscripcion->categoria->nombre ?? 'Categoria no asignada'}}</li><br>
-                                    <li class="small"><span class="fa-li"><i class="fas fa-solid fa-id-badge"></i></span>
-                                        Cedula:{{ $inscripcion->ci }}</li><br>
-                                    <li class="small"><span class="fa-li"><i class="fas fa-solid fa-address-book"></i></span>
+                                        <li ><span class="fa-li"><i class="fas fa-solid fa-user"></i></span>
+                                        Apellidos: {{ $inscripcion->primer_y_segundo_apellido}}</li><br>
+                                    <li ><span class="fa-li"><i class="fas fa-solid fa-bars"></i></span>
+                                        Tipo Categoria: {{ $inscripcion->tipo_categoria ?? 'Categoria no asignada'}}</li><br>
+                                    <li ><span class="fa-li"><i class="fas fa-solid fa-id-badge"></i></span>
+                                        Cedula de identidad: {{ $inscripcion->ci }}</li><br>
+                                        <li ><span class="fa-li"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+                                        Ciudad: {{ $inscripcion->ciudad }}</li><br>
+                                    <li ><span class="fa-li"><i class="fas fa-solid fa-address-book"></i></span>
                                         Estado:
                                         @switch(true)
                                         @case($inscripcion->estado == 'En espera')
@@ -355,13 +424,13 @@
                                         <span class="badge badge-success"> {{ $inscripcion->estado }} </span>
                                         @break
                                         @endswitch</li><br>
-                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Telefono:
+                                    <li ><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Telefono:
                                         {{ $inscripcion->celular }}</li>
                                 </ul>
                             </div>
                             <div class="col-5 text-center">
                                 <br>
-                                <img src="{{asset('storage/uploads/' . $inscripcion->foto) }}" width="130" height="130"
+                                <img src="{{asset('storage/uploads/' . $inscripcion->foto) }}" width="120" height="120"
                                     class="img-circle">
                             </div>
                         </div>
@@ -384,11 +453,17 @@
                                 class="btn btn-sm btn-primary" data-toggle="tooltip" title="Ver inscripcion">
                                 <i class="fas fa-eye"></i>
                             </a>
-                            <a href="{{route('pdf.show', $inscripcion->id)}}" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Descargar inscripcion">
-                                <i class="fas fa-file-pdf"></i>
+                            @if($inscripcion->tipo_licencia =='Por dia')
+                            <a href="{{route('ver_licencia', $inscripcion->id)}}" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Descargar inscripcion">
+                            <i class="fas fa-file-pdf"></i> 
                             </a>
-                            <a href="{{route('seguro',$inscripcion->id)}}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Descargar seguro">
-                                <i class="fa fas-regular fa-laptop-medical"></i></a>
+                            @else
+                            <a href="{{route('pdf.show', $inscripcion->id)}}" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Descargar inscripcion">
+                            <i class="fas fa-file-pdf"></i> 
+                            </a>
+                            @endif
+                            <!--<a href="{{route('seguro',$inscripcion->id)}}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Descargar seguro">
+                                <i class="fa fas-regular fa-laptop-medical"></i></a>-->
                         </div>
                     </div>
                     {!! Form::close() !!}
@@ -397,57 +472,146 @@
                <div class="col d-flex justify-content-center">
                 <div class="card" style="width: 28rem;">
                     <div class="card-body pt-0">
-                         <h5 class="card-header"><i class="fas fa-id-card"></i> Mi licencia</h5>
+                         <h5 class="card-header"><i class="fas fa-id-card"></i> Estado de licencia</h5>
                         <div class="row">
                             <div class="col-7">
                                 <ul class="ml-3 mb-0 fa-ul text-muted">
                                     <br>
-                                    @if($inscripcion->monto==null)
-                                    <li class="small"><span class="fa-li"><i class="fas fa-solid fa-money-bill"></i></span>
-                                        Incripcion pagada: <strong>No</strong></li><br>
+                                   @foreach($pagos_licencia as $pl)
+                                   @if($pl->estado=='En espera')
+                                   <li ><span class="fa-li"><i class="fas fa-solid fa-money-bill"></i></span>
+                                    Saldo por licencia: <strong><span class="badge badge-danger">{{number_format($pl->tarifa) ?? 'NN' }} Gs.</strong></li><br>
                                      @else   
-                                    <li class="small"><span class="fa-li"><i class="fas fa-solid fa-money-bill"></i></span>
-                                        Pagado: {{ number_format($inscripcion->monto) ??'Sin datos' }}.Gs</li><br>
+                                      <li ><span class="fa-li"><i class="fas fa-solid fa-money-bill"></i></span>
+                                      Pago de licencia: <span class="badge badge-success">Realizado</span></li><br>
                                     @endif
-                                    <li class="small"><span class="fa-li"><i class="fas fa-solid fa-bars"></i></span>
+                                    @endforeach
+                                    @foreach($pagos_seguro as $ps)
+                                    @if($ps->estado=='En espera')
+                                   <li ><span class="fa-li"><i class="fas fa-solid fa-money-bill"></i></span>
+                                    <strong>Saldo por seguro: <span class="badge badge-danger">{{number_format($ps->tarifa)}} Gs.</strong></li><br>
+                                     @else   
+                                      <li ><span class="fa-li"><i class="fas fa-solid fa-money-bill"></i></span>
+                                      Pago de seguro: <span class="badge badge-success">Realizado</span></li><br>
+                                    @endif
+                                    @endforeach
+                                    @foreach($pagos_evento as $pe)
+                                    @if($pe->estado=='En espera')
+                                   <li ><span class="fa-li"><i class="fas fa-solid fa-money-bill"></i></span>
+                                    <strong>Saldo por evento: <span class="badge badge-danger">{{number_format($ps->tarifa)}} Gs.</strong></li><br>
+                                     @else   
+                                      <li ><span class="fa-li"><i class="fas fa-solid fa-money-bill"></i></span>
+                                      Pago de evento: <span class="badge badge-success">Realizado</span></li><br>
+                                    @endif
+                                    @endforeach
+                                    <li ><span class="fa-li"><i class="fas fa-solid fa-bars"></i></span>
                                         Uciid:{{ $inscripcion->categoria->uciid ?? 'Sin datos'}}</li><br>
-                                    <li class="small"><span class="fa-li"><i class="fa fa-address-card" aria-hidden="true"></i></span>
+                                    <li ><span class="fa-li"><i class="fa fa-address-card" aria-hidden="true"></i></span>
                                         Federacion id:{{ $inscripcion->federacion_id ?? 'Sin datos' }}</li><br>
-                                        <li class="small"><span class="fa-li"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
-                                        Categoria:{{ $inscripcion->categoria->nombre ?? 'Sin categoria' }}</li><br>
-                                    <li class="small"><span class="fa-li"><i class="fas fa-solid fa-address-book"></i></span>
-                                        Estado:
-                                        @switch(true)
-                                        @case($inscripcion->estado == 'En espera')
-                                        <span class="badge badge-primary"> {{ $inscripcion->estado }} </span>
-                                        @break
-                                        @case($inscripcion->estado == 'Paralizado')
-                                        <span class="badge badge-warning"> {{ $inscripcion->estado }} </span>
-                                        @break
-                                        @case($inscripcion->estado == 'Verificado' )
-                                        <span class="badge badge-success"> {{ $inscripcion->estado }} </span>
-                                        @break
-                                        @endswitch</li><br>
-                                </ul>
+                                        
+                                        @if($inscripcion->licencia=="S")
+                                        <li ><span class="fa-li"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                                        Licencia descargada.
+                                        </li><br>
+                                        @else
+                                        <li ><span class="fa-li"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                                        Licencia no descargada.
+                                        </li><br>
+                                        @endif
+                                        @if($inscripcion->seguro=="S")
+                                        <li ><span class="fa-li"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                                        Seguro descargada.
+                                        </li><br>
+                                        @else
+                                        <li ><span class="fa-li"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                                        Seguro no descargado.
+                                        </li><br>
+                                        @endif
+
+                                      @if($inscripcion->tipo_licencia =='Por dia')  
+                                    <li>
+                                        <span class="fa-li"><i class="fas fa-solid fa-address-book"></i></span>
+                                        Validez: <span class="badge badge-primary"><i class="fa fa-history" aria-hidden="true"></i> <span id="tiempo_validez"></span></span>
+                                    </li>
+                                    <br>
+
+                                    <script>
+                                        // Obtener la fecha y hora de creación desde PHP
+                                        var fecha_inicio = new Date("{{$inscripcion->fecha_inicio}}");
+
+                                        // Calcular la fecha y hora de caducidad sumando un día al tiempo de creación
+                                        var expiration_time = new Date(fecha_inicio);
+                                        expiration_time.setDate(expiration_time.getDate() + 1);
+
+                                        // Función para actualizar el cronómetro
+                                        function updateTimer() {
+                                            // Obtener la fecha y hora actual
+                                            var now = new Date();
+
+                                            // Calcular la diferencia entre la fecha y hora actual y la fecha y hora de caducidad
+                                            var difference = expiration_time - now;
+
+                                            // Si la diferencia es menor a 0, significa que ha pasado un día completo, por lo tanto, el registro ya no es válido
+                                            if (difference < 0) {
+                                                document.getElementById("tiempo_validez").innerHTML = "No válido";
+                                            } else {
+                                                // Convertir la diferencia a horas, minutos y segundos
+                                                var hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                                var minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                                                var seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                                                // Actualizar el cronómetro en la interfaz de usuario
+                                                document.getElementById("tiempo_validez").innerHTML = hours + " horas " + minutes + " minutos " + seconds + " segundos ";
+                                            }
+                                        }
+
+                                        // Actualizar el cronómetro cada segundo
+                                        setInterval(updateTimer, 1000);
+
+                                        // Actualizar el cronómetro al cargar la página
+                                        updateTimer();
+                                    </script>
+                                @else
+                                <li ><span class="fa-li"><i class="fas fa-solid fa-address-book"></i></span>
+                                        Tipo de licencia:  <span class="badge badge-success"> <i class="fa fa-history" aria-hidden="true"></i> {{$inscripcion->tipo_licencia}}</span>
+                                        </li><br>
+                            @endif
                             </div>
                             <div class="col-5 text-center">
                                 <br>
-                                <img src="logof.png" width="150" height="150"
+                                <img src="logof.png" width="120" height="120"
                                     class="img-circle">
                             </div>
                             </div>
                         </div>
                         <div class="card-footer">
                         <div class="text-right">
-                            @if($inscripcion->monto==null)
+                            @if($tieneDocumento)
+                            <a href="#" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Documento creado">
+                                <i class="fa fa-check-circle" aria-hidden="true"></i> Documento
+                            </a>
+                            @else
                             <a href="{{ route('documentos.create') }}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Cargar documentos">
-                               <i class="fa fas-light fa-book"></i>
+                               <i class="fa fas-light fa-book"></i>  Subir documentos
+                            </a>
+                            @endif
+                            @if ($pagosUsuario)
+                           <a href="{{ route('pagos.create') }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Cargar pago"> 
+                              <i class="fa fas-solid fa-credit-card"></i> Subir pago
                             </a>
                             @else
                             <a href="#" class="btn btn-sm btn-success" data-toggle="tooltip" title="Pago Verificado">
-                                <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                <i class="fa fa-check-circle" aria-hidden="true"></i> Pago 
                             </a>
-
+                             @endif
+                            @if($tieneSeguro)
+                            <a href="#" class="btn btn-sm btn-info" data-toggle="tooltip" title="Seguro creado">
+                                <i class="fa fa-check-circle" aria-hidden="true"></i> Seguro 
+                            </a>
+                            @else
+                            <a href="{{ route('seguros.create') }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Cargar seguro"> 
+                               <i class="fa fas-regular fa-laptop-medical"></i> Crear seguro
+                            </a>
                             @endif
                         </div>
                     </div>

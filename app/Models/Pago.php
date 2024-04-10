@@ -37,7 +37,8 @@ class Pago extends Model
         'comprobante',
         'estado',
         'observacion',
-        'forma_pago'
+        'forma_pago',
+        'monto'
     ];
 
     /**
@@ -62,7 +63,7 @@ class Pago extends Model
     public static $rules = [
         
     ];
-    public function tarifa (){
+    public function tarifas (){
      return $this-> belongsTo('App\Models\Tarifa','id_tarifa');
 
     }

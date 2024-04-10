@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCategoriasTable extends Migration
+class CreateBancosTable extends Migration
 {
 
     /**
@@ -14,12 +14,11 @@ class CreateCategoriasTable extends Migration
      */
     public function up()
     {
-        Schema::create('categorias', function (Blueprint $table) {
+        Schema::create('bancos', function (Blueprint $table) {
             $table->id('id');
-            $table->text('nombre');
-            $table->text('tipo_categoria');
-            $table->text('edad_ini');
-            $table->text('edad_fin');
+            $table->text('nombre_cuenta');
+            $table->text('ci_ruc');
+            $table->text('banco');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -32,6 +31,6 @@ class CreateCategoriasTable extends Migration
      */
     public function down()
     {
-        Schema::drop('categorias');
+        Schema::drop('bancos');
     }
 }

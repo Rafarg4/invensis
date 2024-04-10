@@ -1,95 +1,58 @@
 <link href="//netdna.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-<style type="text/css">
- 
-.stepwizard-step p {
-    margin-top: 10px;
-}
-
-.stepwizard-row {
-    display: table-row;
-}
-
-.stepwizard {
-    display: table;
-    width: 100%;
-    position: relative;
-}
-
-.stepwizard-step button[disabled] {
-    opacity: 1 !important;
-    filter: alpha(opacity=100) !important;
-}
-
-.stepwizard-row:before {
-    top: 14px;
-    bottom: 0;
-    position: absolute;
-    content: " ";
-    width: 100%;
-    height: 1px;
-    background-color: #ccc;
-    z-order: 0;
-
-}
-
-.stepwizard-step {
-    display: table-cell;
-    text-align: center;
-    position: relative;
-}
-
-.btn-circle {
-  width: 30px;
-  height: 30px;
-  text-align: center;
-  padding: 6px 0;
-  font-size: 12px;
-  line-height: 1.428571429;
-  border-radius: 15px;
-}
-</style>
-
-<div class="container"style="font-size: 12px;">
-<div class="stepwizard">
-    <div class="stepwizard-row setup-panel">
-        <div class="stepwizard-step">
-            <a href="#step-1" type="button" class="btn btn-primary btn-circle">1</a>
-            <p>Paso 1</p>
-        </div>
-        <div class="stepwizard-step">
-            <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
-            <p>Paso 2</p>
-        </div>
-        <div class="stepwizard-step">
-            <a href="#step-3" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
-            <p>Paso 3</p>
-        </div>
-    </div>
-</div>
-<form role="form">
-    <div class="row setup-content" id="step-1">
             <div class="col-md-12">
-                <h3> Datos personales</h3>
+                <div class="card">
+                <div class="card-body">
+                 <h4><strong><i class="fa fa-user-plus" aria-hidden="true"></i>
+                    Ingrese datos personales </strong></h4>
+                </div>
+                </div>
                 <div class="form-group col-sm-12">
                 <label for="id_user">Identificador:</label>
                 <input type="text" name="id_user" class="form-control form-control-sm" value="{{ Auth::user()->id }}" readonly>
                 </div>
+                <div class="form-group col-sm-12">
+                    {!! Form::label('ci', 'Cedula de Identidad:') !!}
+                    {!! Form::text('ci', null, ['class' => 'form-control','required']) !!}
+                </div>
                 <!-- Grupo Sanguineo Field -->
                 <div class="form-group col-sm-12">
                     {!! Form::label('primer_y_segundo_nombre', 'Primer y segundo nombre:') !!}
-                    {!! Form::text('primer_y_segundo_nombre', null, ['class' => 'form-control form-control-sm','required']) !!}
+                    {!! Form::text('primer_y_segundo_nombre', null, ['class' => 'form-control form-control','required']) !!}
                 </div><!-- Grupo Sanguineo Field -->
                 <div class="form-group col-sm-12">
                     {!! Form::label('primer_y_segundo_apellido', 'Primer y segundo apellido:') !!}
                     {!! Form::text('primer_y_segundo_apellido', null, ['class' => 'form-control','required']) !!}
                 </div><!-- Grupo Sanguineo Field -->
-                <!-- Grupo Sanguineo Field -->
+               <!-- Campo de fecha de nacimiento -->
                 <div class="form-group col-sm-12">
-                    {!! Form::label('fechanac', 'Fecha de nacimiento n:') !!}
-                    {!! Form::date('fechanac', null, ['class' => 'form-control','required']) !!}
+                    {!! Form::label('fechanac', 'Fecha de nacimiento:') !!}
+                    {!! Form::date('fechanac', null, ['class' => 'form-control', 'id' => 'fechanac', 'required']) !!}
                 </div>
-                
+
+                <!-- Campo de edad -->
+                <div class="form-group col-sm-12">
+                    {!! Form::label('edad', 'Edad:') !!}
+                    {!! Form::text('edad', null, ['class' => 'form-control', 'id' => 'edad', 'readonly', 'required']) !!}
+                </div>
+
+                <script>
+                    // Función para calcular la edad a partir de la fecha de nacimiento
+                    function calcularEdad() {
+                        var fechaNacimiento = document.getElementById('fechanac').value;
+                        var fechaNac = new Date(fechaNacimiento);
+                        var fechaActual = new Date();
+                        var edad = fechaActual.getFullYear() - fechaNac.getFullYear();
+                        var mes = fechaActual.getMonth() - fechaNac.getMonth();
+                        if (mes < 0 || (mes === 0 && fechaActual.getDate() < fechaNac.getDate())) {
+                            edad--;
+                        }
+                        document.getElementById('edad').value = edad;
+                    }
+
+                    // Escuchar cambios en el campo de fecha de nacimiento y calcular la edad
+                    document.getElementById('fechanac').addEventListener('change', calcularEdad);
+                </script>
                 <!-- Grupo Sanguineo Field -->
                 <div class=" form-group col-sm-12">
                 {!! Form::label('sexo', 'Sexo:') !!}
@@ -99,10 +62,6 @@
                 <div class="form-group col-sm-12">
                     {!! Form::label('grupo_sanguineo', 'Grupo sanguineo:') !!}
                 {!! Form::select('grupo_sanguineo',array('A +' => 'A +', 'A-' => 'A-','B +' => 'B +','B-' => 'B-','AB+' => 'AB+','AB-' => 'AB-','O+' => 'O+','O-' => 'O-'),null, ['class' => 'form-control','placeholder'=>'Seleccione una opcion','required'])!!}
-                </div>
-                <div class="form-group col-sm-12">
-                    {!! Form::label('ci', 'Identificacion:') !!}
-                    {!! Form::text('ci', null, ['class' => 'form-control']) !!}
                 </div>
                 <!-- Nacionalidad Field -->
                 <div class="form-group col-sm-12">
@@ -186,58 +145,99 @@
         });
     });
 </script>
-                <button class="btn btn-primary nextBtn  pull-right" type="submit" >Siguiente</button>
+
+    <div class="card">
+        <div class="card-body">
+            <h4><strong><i class="fa fa-bicycle" aria-hidden="true"></i>
+                   Ingrese datos de ciclistas </strong></h4>
             </div>
         </div>
-    <div class="row setup-content" id="step-2">
-            <div class="col-md-12">
-                <h3>Datos de cliclista</h3>
-                            <!-- Id Categoria Field -->
-                <div class="form-group col-sm-12">
-                    {!! Form::label('tipo_categoria', 'Categoria:') !!}
-                {!! Form::select('tipo_categoria',array('Principal' => 'Principal', 'Master' => 'Master','Ciclismo para todos' => 'Ciclismo para todos'),null, ['class' => 'form-control','placeholder'=>'Seleccione una opcion','required','required'])!!}
-                </div>
-            <div class="form-group col-sm-12" id="id_categoria" style="display: none;">
-                
-            </div>
-            <div class="form-group col-sm-12" id="id_categoria2" style="display: none;">
-                
-            </div>
-            <div class="form-group col-sm-12" id="id_categoria3" style="display: none;">
-                
-            </div>
+<div class="form-group col-sm-12">
+    {!! Form::label('tipo_licencia', 'Tipo de licencia:') !!}
+    {!! Form::select('tipo_licencia', ['Anual' => 'Anual', 'Por dia' => 'Por día'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione una opcion', 'id' => 'tipo_licencia', 'required']) !!}
+</div>
+    <!-- Id Categoria Field -->
+<div class="form-group col-sm-12">
+    {!! Form::label('tipo_categoria', 'Categoria:') !!}
+    {!! Form::select('tipo_categoria', ['Principal' => 'Principal', 'Master' => 'Master', 'Ciclismo para todos' => 'Ciclismo para todos'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione una opcion', 'id' => 'tipo_categoria', 'required']) !!}
+</div>
+
+<div class="form-group col-sm-12" id="id_categoria" style="display: none;"></div>
+<div class="form-group col-sm-12" id="id_categoria2" style="display: none;"></div>
+<div class="form-group col-sm-12" id="id_categoria3" style="display: none;"></div>
+
+<!-- Input oculto para almacenar el valor de id_categoria -->
+{!! Form::hidden('id_categoria', null, ['id' => 'id_categoria_hidden', 'name' => 'id_categoria']) !!}
 
 <script type="text/javascript">
-const tipo_categoria = document.querySelector("#tipo_categoria");
-const input1 = document.querySelector("[id=id_categoria]");
-const input2 = document.querySelector("[id=id_categoria2]");
-const input3 = document.querySelector("[id=id_categoria3]");
+    const tipo_categoria = document.querySelector("#tipo_categoria");
+    const input1 = document.querySelector("#id_categoria");
+    const input2 = document.querySelector("#id_categoria2");
+    const input3 = document.querySelector("#id_categoria3");
+    const inputEdad = document.querySelector("#fechanac");
+    const inputIdCategoriaHidden = document.querySelector("#id_categoria_hidden");
 
-tipo_categoria.addEventListener("change", changeTipo);
+    tipo_categoria.addEventListener("change", changeCategoria);
+    inputEdad.addEventListener("input", changeCategoria);
 
-function changeTipo(){
-
-    if (tipo_categoria.value === "Principal") {
-        input1.innerHTML = '{!! Form::select("id_categoria", $categoria, null, ["class" => "form-control custom-select","placeholder"=>"Selecione una opcion","id"=>"id_categoria","required"]) !!}';
-        input1.style.display = 'initial'
-        /*input1.style.display = 'initial';
+    function changeCategoria(){
+        // Ocultar todos los campos
+        input1.style.display = 'none';
         input2.style.display = 'none';
-        input3.style.display = 'none';*/
-    } else if(tipo_categoria.value === "Master") {
-        input1.innerHTML = '{!! Form::select("id_categoria", $categoria2, null, ["class" => "form-control custom-select","placeholder"=>"Selecione una opcion","id"=>"id_categoria2","required"]) !!}';
-        input1.style.display = 'initial'
-        /*input1.style.display = 'none';
         input3.style.display = 'none';
-        input2.style.display = 'initial';*/
-    } else if (tipo_categoria.value === "Ciclismo para todos"){
-        input1.innerHTML = '{!! Form::select("id_categoria", $categoria3, null, ["class" => "form-control custom-select","placeholder"=>"Selecione una opcion","id"=>"id_categoria3","required"]) !!}';
-        input1.style.display = 'initial'
-        /*input1.style.display = 'none';
-        input2.style.display = 'none';
-        input3.style.display = 'initial';*/
+
+        // Restablecer el nombre del campo oculto a 'id_categoria' por defecto
+        inputIdCategoriaHidden.setAttribute('name', 'id_categoria');
+
+        // Obtener la fecha de nacimiento
+        const fechaNacimiento = new Date(inputEdad.value);
+        // Obtener la fecha actual
+        const fechaActual = new Date();
+        // Calcular la edad
+        const edad = fechaActual.getFullYear() - fechaNacimiento.getFullYear();
+
+        // Mostrar el campo correspondiente según la edad y el tipo de categoría seleccionados
+        if (tipo_categoria.value === "Principal") {
+            mostrarSegunEdad({!! json_encode($categoriaPrincipal) !!}, {!! json_encode($edadesPrincipal) !!}, input1, edad);
+        } else if(tipo_categoria.value === "Master") {
+            mostrarSegunEdad({!! json_encode($categoriaMaster) !!}, {!! json_encode($edadesMaster) !!}, input2, edad);
+        } else if (tipo_categoria.value === "Ciclismo para todos"){
+            mostrarSegunEdad({!! json_encode($categoriaCiclismoParaTodos) !!}, {!! json_encode($edadesCiclismoParaTodos) !!}, input3, edad);
+        }
+
+        // Actualizar el campo oculto con el valor seleccionado
+        inputIdCategoriaHidden.value = tipo_categoria.value;
+    }
+
+    function mostrarSegunEdad(categorias, edades, input, edad) {
+    var htmlOptions = '<select class="form-control custom-select" name="id_categorias" required>';
+
+    htmlOptions += '<option value="" selected disabled>Seleccione una opcion</option>';
+
+    for (var id in categorias) {
+        if (categorias.hasOwnProperty(id)) {
+            var categoriaId = id;
+            var categoriaEdades = edades.find(e => e.id === parseInt(id));
+            if (categoriaEdades && edad >= categoriaEdades.edad_ini && edad <= categoriaEdades.edad_fin) {
+                htmlOptions += '<option value="' + categoriaId + '">' + categorias[id] + '</option>';
+            }
+        }
+    }
+
+    htmlOptions += '</select>';
+
+    input.innerHTML = htmlOptions;
+    input.style.display = 'initial';
+    // Añade o quita el atributo required según la visibilidad del campo
+    if (input.style.display !== 'none') {
+        input.querySelector('select').setAttribute('required', 'required');
+    } else {
+        input.querySelector('select').removeAttribute('required');
     }
 }
 </script>
+         
+
             <div class="form-group col-sm-12">
                     {!! Form::label('region', 'Elegir a que region pertenece:') !!}
                      {!! Form::select('region',array('Asosiacion metropolitana de ciclismo' => 'Asosiacion metropolitana de ciclismo', 'Federacion paranaense de ciclismo' => 'Federacion paranaense de ciclismo','Union Regional de ciclistas (URCI)' => 'Union Regional de ciclistas (URCI)','Federacion de ciclismo Itapuense' => 'Federacion de ciclismo Itapuense'),null, ['class' => 'form-control','placeholder'=>'Seleccione una opcion','required','required','required'])!!}
@@ -272,14 +272,6 @@ function changeTipo(){
                 {!! Form::label('nombre_apellido_contacto_emergencia', 'Nombre Apellido Contacto Emergencia:') !!}
                 {!! Form::text('nombre_apellido_contacto_emergencia', null, ['class' => 'form-control','required']) !!}
             </div>
-
-            <!-- Foto Field -->
-                <button class="btn btn-primary nextBtn  pull-right" type="submit" >Siguiente</button>
-        </div>
-    </div>
-    <div class="row setup-content" id="step-3">
-            <div class="col-md-12">
-                <h3> Ultimo paso, confirmar datos ingresados</h3>
                 @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
             @endcan
             @if(Auth::user()->hasRole('super_admin'))
@@ -293,7 +285,7 @@ function changeTipo(){
                 <input type="text" name="estado" class="form-control" value="En espera" readonly>
                 </div>
             @endif
-                <button class="btn btn-success  pull-right" type="submit">Confirmar!</button>
+                <button class="btn btn-success  pull-right" type="submit">Guardar</button>
                 
             </div>
 
@@ -302,51 +294,7 @@ function changeTipo(){
 </form>
 </div>
 
-<script type="text/javascript">
- $(document).ready(function () {
-    var navListItems = $('div.setup-panel div a'),
-            allWells = $('.setup-content'),
-            allNextBtn = $('.nextBtn');
 
-    allWells.hide();
-
-    navListItems.click(function (e) {
-        e.preventDefault();
-        var $target = $($(this).attr('href')),
-                $item = $(this);
-
-        if (!$item.hasClass('disabled')) {
-            navListItems.removeClass('btn-primary').addClass('btn-default');
-            $item.addClass('btn-primary');
-            allWells.hide();
-            $target.show();
-            $target.find('input:eq(0)').focus();
-        }
-    });
-
-    allNextBtn.click(function(){
-        var curStep = $(this).closest(".setup-content"),
-            curStepBtn = curStep.attr("id"),
-            nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
-            curInputs = curStep.find("input[type='text'],input[type='url']"),
-            isValid = true;
-
-        $(".form-group").removeClass("has-error");
-        for(var i=0; i<curInputs.length; i++){
-            if (!curInputs[i].validity.valid){
-                isValid = false;
-                $(curInputs[i]).closest(".form-group").addClass("has-error");
-            }
-        }
-
-        if (isValid)
-            nextStepWizard.removeAttr('disabled').trigger('click');
-    });
-
-    $('div.setup-panel div a.btn-primary').trigger('click');
-});
-
-</script>
 
 
 

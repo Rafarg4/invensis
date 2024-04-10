@@ -17,7 +17,6 @@ class CreateSegurosTable extends Migration
         Schema::create('seguros', function (Blueprint $table) {
             $table->id('id');
             $table->text('estado_civil');
-            $table->text('edad');
             $table->text('usted_es');
             $table->text('padece_enfermedad');
             $table->text('especificar_enfermedad')->nullable();
@@ -25,6 +24,7 @@ class CreateSegurosTable extends Migration
             $table->text('especifique_defecto_fisico')->nullable();
             $table->text('estatura');
             $table->text('peso');
+             $table->text('descargado')->nullable();
             $table->text('tipo_plan');
             $table->text('nombre_apellido_fallecimiento_titular');
             $table->text('parentesco_titular_beneficiario');

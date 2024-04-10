@@ -24,6 +24,7 @@ class CreatePagosTable extends Migration
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->text('comprobante');
             $table->text('forma_pago');
+            $table->text('monto');
             $table->text('estado');
             $table->text('observacion');
             $table->timestamps();

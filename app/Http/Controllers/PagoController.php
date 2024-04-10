@@ -12,6 +12,8 @@ use Response;
 use App\Models\Tarifa;
 use App\Models\Inscripcion;
 use App\Models\Pago;
+use App\Models\Banco;
+Use DB;
 use Auth;
 class PagoController extends AppBaseController
 {
@@ -62,13 +64,18 @@ class PagoController extends AppBaseController
     public function create()
     {   
         if(Auth::user()->hasRole('super_admin')) {
-        $tarifas = Tarifa::pluck('tipo_plan','id');
+         $tarifas = Tarifa::select(DB::raw('CONCAT(tipo_plan, " - Gs. ", FORMAT(tarifa, 0)) AS tarifa_completa'), 'id')
+                     ->pluck('tarifa_completa', 'id');
+        //return $tarifas;
         $inscripcions = Inscripcion::pluck('primer_y_segundo_nombre','id');
-        return view('pagos.create',compact('tarifas','inscripcions'));
+        $bancos=Banco::all();
+        return view('pagos.create',compact('tarifas','inscripcions', 'bancos'));
         }else{
+        $bancos=Banco::all();
         $inscripcions = Inscripcion::where('id_user', auth()->user()->id)->pluck('primer_y_segundo_nombre','id');
-        $tarifas = Tarifa::pluck('tipo_plan','id');
-        return view('pagos.create')->with('tarifas', $tarifas)->with('inscripcions', $inscripcions)->with('user', Auth::user());
+        $tarifas = Tarifa::select(DB::raw('CONCAT(tipo_plan, " - Gs. ", FORMAT(tarifa, 0)) AS tarifa_completa'), 'id')
+                     ->pluck('tarifa_completa', 'id');
+        return view('pagos.create')->with('tarifas', $tarifas)->with('bancos', $bancos)->with('inscripcions', $inscripcions)->with('user', Auth::user());
      }
     }
 

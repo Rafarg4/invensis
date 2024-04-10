@@ -46,6 +46,7 @@ class Inscripcion extends Model
         'fechanac',
         'email',
         'ci',
+        'edad',
         'tipo_categoria',
         'sexo',
         'grupo_sanguineo',
@@ -53,7 +54,7 @@ class Inscripcion extends Model
         'celular',
         'domiciolio',
         'ciudad',
-        'id_categoria',
+        'id_categorias',
         'nombre_equipo',
         'contacto_emergencia',
         'nombre_apellido_contacto_emergencia',
@@ -67,7 +68,10 @@ class Inscripcion extends Model
         'id_user',
         'ruc',
         'licencia',
-        'seguro'
+        'seguro',
+        'tipo_licencia',
+        'fecha_inicio',
+        'fecha_fin'
     ];
 
     /**
@@ -87,7 +91,7 @@ class Inscripcion extends Model
         'celular' => 'string',
         'domiciolio' => 'string',
         'ciudad' => 'string',
-        'id_categoria' => 'string',
+        'id_categorias' => 'string',
         'nombre_equipo' => 'string',
         'contacto_emergencia' => 'string',
         'nombre_apellido_contacto_emergencia' => 'string',
@@ -112,7 +116,7 @@ class Inscripcion extends Model
     ];
 
       public function categoria (){
-     return $this-> belongsTo('App\Models\Categoria','id_categoria');
+     return $this-> belongsTo('App\Models\Categoria','id_categorias');
 
     }
     public function usuario (){

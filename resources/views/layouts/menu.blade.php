@@ -114,6 +114,13 @@
         <p>Atletas</p>
     </a>
 </li>
+<li class="nav-item">
+    <a href="{{ route('bancos.index') }}"
+       class="nav-link {{ Request::is('bancos*') ? 'active' : '' }}">
+       <i class="fa fa-university" aria-hidden="true"></i>
+        <p>Bancos</p>
+    </a>
+</li>
 @endcan
 @if(Auth::user()->hasRole('super_admin'))
  @else
@@ -226,9 +233,6 @@ class="nav-link {{ Request::is('reporte_ranking*') ? 'active' : '' }}">
     </a>
 </li>
 @endif
-
-
-
 
 
 

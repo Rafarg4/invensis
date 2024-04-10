@@ -42,7 +42,6 @@ class Seguro extends Model
 
     public $fillable = [
         'estado_civil',
-        'edad',
         'usted_es',
         'padece_enfermedad',
         'especificar_enfermedad',
@@ -51,6 +50,7 @@ class Seguro extends Model
         'estatura',
         'peso',
         'plan',
+        'seguro',
         'nombre_apellido_fallecimiento_titular',
         'parentesco_titular_beneficiario',
         'ci_beneficiario',
@@ -97,7 +97,6 @@ class Seguro extends Model
      */
     public static $rules = [
         'estado_civil' => 'required',
-        'edad' => 'required',
         'usted_es' => 'required',
         'padece_enfermedad' => 'required',
         'presenta_defecto_fisico' => 'required',

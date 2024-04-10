@@ -98,7 +98,7 @@
 <div class="info-box">
 <span class="info-box-icon bg-danger elevation-1"><a href="{{ route('inscripcions.create') }}"  class="fa fas-solid fa-user-plus"></i></a></span>
 <div class="info-box-content">
-<span class="info-box-text"><b>Paso 1: Registrar Licnecia</b></span>
+<span class="info-box-text"><b>Paso 1: Registro de Licnecia</b></span>
 <span class="info-box-number">
 <a href="{{ route('inscripcions.create') }}" class="small-box-footer">Ir a <i class="fas fa-arrow-circle-right"></i></a>
 </span>
@@ -160,6 +160,29 @@
 <div class="info-box-content">
 <span class="info-box-text">Documentos registrado!</span>
 <span class="info-box-number"><a href="{{ route('documentos.index') }}" class="small-box-footer">Mis documentos <i class="fas fa-arrow-circle-right"></i></a></span>
+</div>
+</div>
+</div>
+@endif
+@if($pagos->isempty())
+<div class="col-12 col-sm-6 col-md-3">
+<div class="info-box mb-3">
+<span class="info-box-icon bg-danger elevation-1"><a href="{{ route('documentos.create') }}"  class="fa-solid fas fa-folder-plus"></i></a></span>
+<div class="info-box-content">
+<span class="info-box-text"><b>Paso 4: Cargar pago</b></span>
+<span class="info-box-number"><a href="{{ route('pagos.create') }}" class="small-box-footer">Ir a <i class="fas fa-arrow-circle-right"></i></a></span>
+</div>
+
+</div>
+
+</div>
+@else
+<div class="col-12 col-sm-6 col-md-3">
+<div class="info-box mb-3">
+<span class="info-box-icon bg-success elevation-1"><i class="fa fas-solid fa-check"></i></span>
+<div class="info-box-content">
+<span class="info-box-text">Pago registrado!</span>
+<span class="info-box-number"><a href="{{ route('pagos.index') }}" class="small-box-footer">Mis Pagos <i class="fas fa-arrow-circle-right"></i></a></span>
 </div>
 </div>
 </div>

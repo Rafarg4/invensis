@@ -20,7 +20,7 @@
     <div class="content px-3">
 
         @include('flash::message')
-
+         <div id="mensaje" class="alert alert-success" style="display: none;"></div>
         <div class="clearfix"></div>
 
         <div class="card">

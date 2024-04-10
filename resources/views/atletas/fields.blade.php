@@ -81,9 +81,14 @@
     {!! Form::label('uci_id', 'Uci Id:') !!}
     {!! Form::text('uci_id', null, ['class' => 'form-control']) !!}
 </div>
-
 <!-- Modo Field -->
 <div class="form-group col-sm-3">
-     {!! Form::label('modo', 'Modo:') !!}
-    {!! Form::select('modo',array('Inscripto' => 'Inscripto', 'Visitante' => 'Visitante'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
+<label for="modo">Modo:</label>
+<input type="text" name="modo" class="form-control" value="Visitante" readonly>
 </div>
+
+<div class="form-group col-sm-3">
+<label for="estado">Estado:</label>
+<input type="text" name="estado" class="form-control" value="En espera" readonly>
+</div>
+

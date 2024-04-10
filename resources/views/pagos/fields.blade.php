@@ -10,8 +10,8 @@
                 </div>
 @endif
 <div class="form-group col-sm-6">
-      {!! Form::label('id_tarifa', 'Tipo de pago:') !!}
-      {!! Form::select('id_tarifa', $tarifas, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion','required']) !!}
+    {!! Form::label('id_tarifa', 'Tipo de pago:') !!}
+    {!! Form::select('id_tarifa', $tarifas, null, ['class' => 'form-control custom-select','placeholder'=>'Seleccione una opción','required']) !!}
 </div>
 <!-- Comprobante Field -->
 <div class="form-group col-sm-6">
@@ -30,6 +30,11 @@
 <div class="form-group col-sm-6">
     {!! Form::label('forma_pago', 'Forma de pago:') !!}
     {!! Form::select('forma_pago',array('Transferencia' => 'Transferencia', 'Giro' => 'Giro','Deposito' => 'Deposito','Deposito' => 'Deposito'),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
+</div>
+<!-- Monto Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('monto', 'Monto:') !!}
+    {!! Form::number('monto', null, ['class' => 'form-control', 'requierd']) !!}
 </div>
 @if(Auth::user()->hasRole('super_admin'))
 <!-- Estado Field -->

@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Inscripcion;
+use App\Models\Pago;
 use DB;
 class GraficoController extends Controller
 {
     public function grafico(){
   
-   	    $ingreso = Inscripcion::select(
+   	    $ingreso = Pago::select(
               DB::raw('MONTH(created_at) as mes'),
               DB::raw('SUM(monto) as m'),
         )

@@ -61,9 +61,6 @@
                 <a class="nav-link" href="{{ url('ranking_m_tbs/consulta') }}"><i class="fas fa-trophy"></i> Ranking MTB</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('rankings/consulta') }}"><i class="fas fa-trophy"></i> Ranking Ruta</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="{{ url('ver_evento') }}"><i class="fa fa-calendar" aria-hidden="true"></i> Eventos</a>
             </li>
             <li class="nav-item">
@@ -82,50 +79,29 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-sm-8">
-            @foreach($eventos as $evento)
-             @include('flash::message')
-                <div class="card mb-3">
-
-                    <div class="card-header">
-                        <h5 class="card-title">{{ $evento->nombre }}</h5>
-                    </div>
-                    <div class="row no-gutters">
-                        <div class="col-md-6">
-                            <td><img src="{{ asset('storage/uploads/' . $evento->imagen) }}" width="370" height="350"></td>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card-body">
-                                <p class="card-text">
-                                    <strong>Lugar:</strong> {{ $evento->lugar }}<br>
-                                    <strong>Modalidad:</strong> {{ $evento->modalidad }}<br>
-                                    <strong>Distancia:</strong> {{ $evento->distancia }}<br>
-                                    <strong>Organización:</strong> {{ $evento->organizacion }}<br>
-                                    <strong>Monto:</strong> {{ number_format($evento->monto) }} Gs.<br>
-                                    <strong>Estado:</strong> {{ $evento->estado }}
-                                </p>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5 class="card-title"><i class="fa fa-info-circle" aria-hidden="true"></i>
+                    <strong> MAS INFORMACION</strong></h5>
+                </div>
+                <div class="row no-gutters">
+                    <div class="col-md-12">
+                        <div class="card-body">
+                            <div class="d-flex flex-column gap-2">
+                                <button class="btn btn-primary w-100" type="button">Inscripciones</button>
+                                <button class="btn btn-primary w-100 mt-2" type="button">Licencia por dia</button>
+                                <button class="btn btn-primary w-100 mt-2" type="button">Pagos</button>
+                                 <button class="btn btn-primary w-100 mt-2" type="button">Eventos</button>
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer d-flex justify-content-end"> <!-- Agregamos las clases d-flex y justify-content-end para alinear los botones a la derecha -->
-                    @if($evento->estado=='Disponible')
-                        <button class="btn btn-primary mr-2" onclick="window.location.href='{{ url('ver_eventos_detalles', [$evento->id]) }}'">
-                            <i class="fa fa-user-plus" aria-hidden="true"></i> Inscribirse
-                        </button>
-                        <button class="btn btn-primary" onclick="window.location.href='{{ url('eventos_detalles', [$evento->id]) }}'">
-                          <i class="fa fa-eye" aria-hidden="true"></i> Detalles de evento
-                        </button>
-                    @else
-                        <button class="btn btn-danger">
-                            <i class="fa fa-ban" aria-hidden="true"></i> Sin cupos disponibles
-                        </button>
-                    @endif
                 </div>
-                </div>                
-            @endforeach
-            {{ $eventos->links() }} <!-- Muestra los enlaces de paginación -->
+            </div>                
         </div>
     </div>
 </div>
+
+
 
 
 

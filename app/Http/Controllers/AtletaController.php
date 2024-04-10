@@ -24,7 +24,17 @@ class AtletaController extends AppBaseController
     {
         $this->atletaRepository = $atletaRepo;
     }
+     public function cambiar_estado_atleta(Request $request, $id)
+    {
+        $nuevoEstado = $request->input('estado');
 
+        // Aquí debes realizar la lógica para actualizar el estado en tu modelo, por ejemplo:
+        $pago = Atleta::find($id);
+        $pago->estado = $nuevoEstado;
+        $pago->save(); 
+        
+        return response()->json(['message' => 'Estado actualizado correctamente']);
+    }
     /**
      * Display a listing of the Atleta.
      *
@@ -41,7 +51,9 @@ class AtletaController extends AppBaseController
 
  
     public function verificarCI($ci) {
-    $participante = Inscripcion::where('ci', $ci)->first();
+    $participante = Inscripcion::where('ci', $ci)
+    ->where('estado','verificado')
+    ->first();
 
     if ($participante) {
         // El CI existe, devolver información del participante
@@ -54,7 +66,11 @@ class AtletaController extends AppBaseController
     public function index(Request $request)
     {
          if(Auth::user()->hasRole('super_admin')) {
-        $atletas = $this->atletaRepository->all();
+        $atletas = DB::table('atletas')
+            ->join('categorias', 'atletas.id_categoria', '=', 'categorias.id')
+            ->join('eventos', 'atletas.id_evento', '=', 'eventos.id')
+            ->select('atletas.*', 'categorias.nombre AS nombre_categoria', 'eventos.nombre as nombre_evento')
+            ->get();
         return view('atletas.index')
             ->with('atletas', $atletas);
         }else{ 
@@ -94,11 +110,18 @@ class AtletaController extends AppBaseController
     }
     public function guardar_atelta(CreateAtletaRequest $request)
     {
+          $request->validate([
+        'ci' => 'required|unique:atletas',
+        // Otras reglas de validación aquí
+        ], [
+            'ci.unique' => 'Usted ya se encuentra registrado en el evento!.',
+            // Otros mensajes de validación personalizados aquí
+        ]);
         $input = $request->all();
 
         $atleta = $this->atletaRepository->create($input);
 
-        Flash::success('Atleta creado correctamente.');
+        Flash::success('Inscripcion a evento creado correctamente.');
 
         return redirect(route('ver_evento'));
     }
@@ -113,12 +136,18 @@ class AtletaController extends AppBaseController
     public function show($id)
     {
         $user_id = Auth::id();
-        $atleta = $this->atletaRepository->find($id);
+        $atleta = DB::table('atletas')
+        ->join('categorias', 'atletas.id_categoria', '=', 'categorias.id')
+        ->join('eventos', 'atletas.id_evento', '=', 'eventos.id')
+        ->select('atletas.*', 'categorias.nombre AS nombre_categoria', 'eventos.nombre as nombre_evento')
+        ->where('atletas.id', $id)
+        ->first();
+
         $pagos = DB::table('pagos')
             ->where('id_user', $user_id)
             ->get();
         if (empty($atleta)) {
-            Flash::error('Atleta not found');
+            Flash::error('Atleta no encontrado');
 
             return redirect(route('atletas.index'));
         }

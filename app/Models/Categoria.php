@@ -29,7 +29,9 @@ class Categoria extends Model
 
     public $fillable = [
         'nombre',
-        'tipo_categoria'
+        'tipo_categoria',
+        'edad_ini',
+        'edad_fin'
     ];
 
     /**
@@ -55,4 +57,8 @@ class Categoria extends Model
      public function incripcion (){
         return $this-> hasMany('App\Models\Inscripcion');
     }
+    public function Atleta (){
+        return $this-> hasMany('App\Models\Atleta');
+    }
+    
 }

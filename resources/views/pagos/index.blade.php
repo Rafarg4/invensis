@@ -27,7 +27,7 @@
         <div class="card">
             <div class="card-body p-0">
                 @include('pagos.table')
-
+                
                 <div class="card-footer clearfix">
                     <div class="float-right">
                         

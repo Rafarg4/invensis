@@ -14,6 +14,8 @@ use DB;
 use App\Models\Inscripcion;
 use App\Models\Seguro;
 use App\Models\Tarifa;
+use App\Models\Banco;
+use PDF;
 class SeguroController extends AppBaseController
 {
     /** @var SeguroRepository $seguroRepository*/
@@ -31,6 +33,52 @@ class SeguroController extends AppBaseController
      *
      * @return Response
      */
+
+
+    //Para cambiar el estado y que no muestre mas el modal de descargar seguro
+    public function marcarDescargado($id)
+    {
+        // Encuentra el seguro por su ID 
+        $seguro = Seguro::findOrFail($id);
+        
+        // Actualiza el campo descargado a 'S'
+        $seguro->descargado = 'S';
+        $seguro->save();
+
+        // Redirige de nuevo a donde quieras
+          return redirect()->route('seguros.index');
+
+        return response()->json(['message' => 'Seguro marcado como descargado']);
+    }
+    public function marcarDocumento($id)
+    {
+        // Encuentra el seguro por su ID 
+        $seguro = Seguro::findOrFail($id);
+        
+        // Actualiza el campo descargado a 'S'
+        $seguro->documento = 'S';
+        $seguro->save();
+
+        // Redirige de nuevo a donde quieras
+          return redirect()->route('seguros.index');
+
+        return response()->json(['message' => 'Seguro marcado como descargado']);
+    }
+    //Para descargar el seguro con la inscripcion
+    public function descargarseguro($id)
+   {
+     $seguros = DB::table('seguros')
+            ->join('inscripcions', 'seguros.id_inscripcion', '=', 'inscripcions.id')
+            ->join('tarifas', 'seguros.id_tarifa', '=', 'tarifas.id')
+            ->select('seguros.*', 'inscripcions.*','tarifas.tarifa')
+            ->where('seguros.id', $id)
+            ->first();
+    return view('seguros.seguro', compact('seguros'));
+    //return $seguros;
+    //$pdf = PDF::loadView('seguros.seguro', compact('seguros'));
+   //return $pdf->download('Seguro.pdf');
+    }
+
     public function index(Request $request)
     {
         if(Auth::user()->hasRole('super_admin')) {
@@ -59,10 +107,12 @@ class SeguroController extends AppBaseController
          $tarifa_sin = Tarifa::select(DB::raw('CONCAT("Gs. ", FORMAT(tarifa, 0)) AS tarifa_formateada'), 'id')
          ->where('tipo_plan', 'Plan sin deducible')
          ->pluck('tarifa_formateada', 'id');
+          $bancos=Banco::all();
 
-        return view('seguros.create')->with('inscripcions', $inscripcions)->with('tarifa_sin', $tarifa_sin)->with('tarifa_con', $tarifa_con);
+        return view('seguros.create')->with('inscripcions', $inscripcions)->with('bancos', $bancos)->with('tarifa_sin', $tarifa_sin)->with('tarifa_con', $tarifa_con);
 
          }else{
+        $bancos=Banco::all();
         $inscripcions = Inscripcion::where('id_user', auth()->user()->id)->pluck('primer_y_segundo_nombre','id');
          $tarifa_con = Tarifa::select(DB::raw('CONCAT("Gs. ", FORMAT(tarifa, 0)) AS tarifa_formateada'), 'id')
          ->where('tipo_plan', 'Plan con deducible')
@@ -70,7 +120,7 @@ class SeguroController extends AppBaseController
          $tarifa_sin = Tarifa::select(DB::raw('CONCAT("Gs. ", FORMAT(tarifa, 0)) AS tarifa_formateada'), 'id')
          ->where('tipo_plan', 'Plan sin deducible')
          ->pluck('tarifa_formateada', 'id');
-        return view('seguros.create')->with('inscripcions', $inscripcions)->with('tarifa_sin', $tarifa_sin)->with('tarifa_con', $tarifa_con)->with('user', Auth::user());
+        return view('seguros.create')->with('inscripcions', $inscripcions)->with('bancos', $bancos)->with('tarifa_sin', $tarifa_sin)->with('tarifa_con', $tarifa_con)->with('user', Auth::user());
      }
      }
 
@@ -96,7 +146,7 @@ class SeguroController extends AppBaseController
 
         $seguro = $this->seguroRepository->create($input);
 
-        return redirect(route('home'));
+       return redirect(route('seguros.index'));
 
      }
     }

@@ -42,7 +42,12 @@ class Evento extends Model
         'organiza',
         'cupos',
         'estado',
-        'imagen'
+        'imagen',
+        'monto',
+        'recorrido1',
+        'url_cri',
+        'recorrido2',
+        'url_ruta'
     ];
 
     /**
@@ -69,6 +74,10 @@ class Evento extends Model
     public static $rules = [
         
     ];
+    public function categoria (){
+     return $this-> belongsTo('App\Models\Categoria','id_categoria');
 
+    }
+    
     
 }

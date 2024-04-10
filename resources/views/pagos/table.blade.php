@@ -6,6 +6,7 @@
         <th>Nombre y apellido</th>
         <th>Tipo Pago</th>
         <th>Comprobante</th>
+        <th>Monto</th>
         <th>Forma de pago</th>
         <th>Estado</th>
         <th>Observacion</th>
@@ -15,10 +16,11 @@
         <tbody>
         @foreach($pagos as $pago)
             <tr>
-            <td>{{ $pago->inscripcion->ci }}</td>
-            <td>{{ $pago->inscripcion->primer_y_segundo_nombre }} {{ $pago->inscripcion->primer_y_segundo_apellido }}</td>
-            <td>{{ $pago->tarifa->tipo_plan ?? 'Sin datos' }}</td>
+            <td>{{ $pago->inscripcion->ci ?? 'Sin datos'}}</td>
+            <td>{{ $pago->inscripcion->primer_y_segundo_nombre ?? 'Sin datos' }} {{ $pago->inscripcion->primer_y_segundo_apellido ?? 'Sin datos'}}</td>
+            <td>{{ $pago->tarifas->tipo_plan ?? 'Sin datos' }} {{number_format ($pago->tarifas->tarifa)?? 'Sin datos'}} Gs.</td>
             <td><a href="{{route('comprobante.download_comprobante',$pago->id)}}"><img src="pdf.jpg" width="35" height="35"></a></td>
+            <td>{{number_format($pago->monto)}} Gs.</td>
             <td>{{ $pago->forma_pago }}</td>
             @if(Auth::user()->hasRole('super_admin'))
              <td>

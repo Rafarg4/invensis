@@ -25,6 +25,7 @@ class CreateEventosTable extends Migration
             $table->text('cupos');
             $table->text('estado');
             $table->text('imagen');
+            $table->text('monto');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -3,16 +3,19 @@
 @section('content')
     <section class="content-header">
         <div class="container-fluid">
+            
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Denuncias</h1>
+                    <h1>Bancos</h1>
                 </div>
+                @if($bancos->isempty())
                 <div class="col-sm-6">
                     <a class="btn btn-primary float-right"
-                       href="{{ route('denuncias.create') }}">
-                        Add New
+                       href="{{ route('bancos.create') }}">
+                        Nuevo
                     </a>
                 </div>
+                @endif
             </div>
         </div>
     </section>
@@ -25,7 +28,7 @@
 
         <div class="card">
             <div class="card-body p-0">
-                @include('denuncias.table')
+                @include('bancos.table')
 
                 <div class="card-footer clearfix">
                     <div class="float-right">

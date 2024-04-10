@@ -52,6 +52,33 @@
     {!! Form::text('cupos', null, ['class' => 'form-control']) !!}
 </div>
 
+<!-- Cupos Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('monto', 'Monto:') !!}
+    {!! Form::text('monto', null, ['class' => 'form-control']) !!}
+</div>
+
+<!-- Recrrorrido Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('recorrido1', 'Recorrido CRI:') !!}
+    {!! Form::text('recorrido1', null, ['class' => 'form-control']) !!}
+</div>
+
+<div class="form-group col-sm-6">
+    {!! Form::label('url_cri', 'Url Recorrido CRI:') !!}
+    {!! Form::text('url_cri', null, ['class' => 'form-control']) !!}
+</div>
+
+<div class="form-group col-sm-6">
+    {!! Form::label('recorrido2', 'Recorrido Ruta:') !!}
+    {!! Form::text('recorrido2', null, ['class' => 'form-control']) !!}
+</div>
+
+<div class="form-group col-sm-6">
+    {!! Form::label('url_ruta', 'Url Recorrido Ruta:') !!}
+    {!! Form::text('url_ruta', null, ['class' => 'form-control']) !!}
+</div>
+
 <!-- Estado Field -->
 <div class=" form-group col-sm-6">
     {!! Form::label('estado', 'Estado:') !!}

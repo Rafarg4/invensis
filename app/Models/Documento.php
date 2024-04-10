@@ -28,14 +28,16 @@ class Documento extends Model
 
 
     public $fillable = [
-        'archivo_pago',
         'archivo_inscripcion',
         'id_inscripcion',
         'archivo_seguro_medico',
         'estado',
         'archivo_certificado_medico',
         'archivo_copia_cedula',
-        'id_user'
+        'id_user',
+        'copia_cedula_fpc',
+        'firma_registro_fpc'
+
 
     ];
 
@@ -45,7 +47,7 @@ class Documento extends Model
      * @var array
      */
     protected $casts = [
-        'archivo_pago' => 'string',
+    
         'archivo_inscripcion' => 'string',
         'id_inscripcion'=>'string',
         'archivo_seguro_medico'=>'string',

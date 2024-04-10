@@ -4,11 +4,12 @@
         <tr>
         <th>Ci Inscripto</th>
         <th>Nombre y Apellido</th>
-        <th>Pago</th>
-        <th>Inscripcion</th>
+        <th>Copia de cedula</th>
+        <th>Firma de registro FPC</th>
+        <th>Firma de Inscripcion</th>
         <th> Seguro medico</th>
         <th>Certificado medico</th>
-        <th> Copia de cedula</th>
+        <th> Copia de cedula de beneficario</th>
         <th>Estado</th>
             <th>Accion</th>
         </tr>
@@ -18,7 +19,8 @@
             <tr>
                 <td>{{ $documento->inscripto->ci  ?? 'Inscripto no asignada' }}</td>
                 <td>{{ $documento->inscripto->primer_y_segundo_nombre  ?? 'Inscripto no asignada' }} {{ $documento->inscripto->primer_y_segundo_apellido  ?? 'Inscripto no asignada' }}</td>
-                <td><a href="{{route('documento.download_pago',$documento->id)}}"><img src="/pdf.jpg" width="35" height="35"></a></td>
+                <td><a href="{{route('documento.copia_cedula_fpc',$documento->id)}}"><img src="/pdf.jpg" width="35" height="35"></a></td>
+                 <td><a href="{{route('documento.firma_registro_fpc',$documento->id)}}"><img src="/pdf.jpg" width="35" height="35"></a></td>
             <td><a href="{{route('documento.download_inscripcion',$documento->id)}}"><img src="pdf.jpg" width="35" height="35"></a></td>
             <td><a href="{{route('documento.download_seguro',$documento->id)}}"><img src="/pdf.jpg" width="35" height="35"></a></td>
             <td><a href="{{route('documento.download_certificado',$documento->id)}}"><img src="/pdf.jpg" width="35" height="35"></a></td>
@@ -100,18 +102,21 @@
             @endif
                             <td width="120">
                     {!! Form::open(['route' => ['documentos.destroy', $documento->id], 'method' => 'delete']) !!}
-                    <!--<div class='btn-group'>
-                        <a href="{{ route('documentos.show', [$documento->id]) }}"
-                           class='btn btn-default btn-xs'>
-                            <i class="far fa-eye"></i>
-                        </a>-->
+                    <div class='btn-group'>
                         @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
-                        <a href="{{ route('documentos.edit', [$documento->id]) }}"
-                           class='btn btn-default btn-xs'>
+                        <button type="button" class='btn btn-info btn-sm' onclick="window.location='{{ route('documentos.show', [$documento->id]) }}'">
+                            <i class="far fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class='btn-group'>
+                        <button type="button" class='btn btn-warning btn-sm' onclick="window.location='{{ route('documentos.edit', [$documento->id]) }}'">
                             <i class="far fa-edit"></i>
-                        </a>
-                        {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
-                    </div>@endcan
+                        </button>
+                    </div>
+                     <div class='btn-group'>
+                        {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'onclick' => "return confirm('Estas seguro?')"]) !!}
+                        @endcan
+                    </div>
                     {!! Form::close() !!}
                 </td>
             </tr>

@@ -10,6 +10,14 @@
     <input type="text" class="form-control" id="apellido" value="{{ $inscripcion->primer_y_segundo_apellido  }}">
 </div>
 <div class="form-group col-md-3">
+    <label for="fechanac">Fecha de nacimiento:</label>
+    <input type="text" class="form-control" id="fechanac" value="{{ $inscripcion->fechanac }}">
+</div>
+<div class="form-group col-md-3">
+    <label for="edad">Edad:</label>
+    <input type="text" class="form-control" id="edad" value="{{ $inscripcion->edad }}">
+</div>
+<div class="form-group col-md-3">
     <label for="email">Email:</label>
     <input type="text" class="form-control" id="email" value="{{ $inscripcion->email }}">
 </div>
@@ -52,10 +60,6 @@
 <div class="form-group col-md-3">
     <label for="estado">Estado:</label>
     <input type="text" class="form-control" id="estado" value="{{ $inscripcion->estado }}">
-</div>
-<div class="form-group col-md-3">
-    <label for="monto">Monto:</label>
-    <input type="text" class="form-control" id="monto" value="{{ number_format($inscripcion->monto) }}.Gs">
 </div>
 <div class="form-group col-md-3">
     <label for="federacion_id">Federación Id:</label>
@@ -230,6 +234,7 @@
         <th>Tipo Pago</th>
         <th>Comprobante</th>
         <th>Forma de pago</th>
+        <th>Monto</th>
         <th>Estado</th>
         <th>Observacion</th>
         <th>Accion</th>
@@ -243,6 +248,7 @@
             <td>{{ $pago->tarifa->tipo_plan ?? 'Sin datos' }}</td>
             <td><a href="{{route('comprobante.download_comprobante',$pago->id)}}"><img src="/pdf.jpg" width="35" height="35"></a></td>
             <td>{{ $pago->forma_pago }}</td>
+             <td>{{number_format($pago->monto)}} Gs.</td>
              </td>
              <td>@switch(true)
             @case($pago->estado == 'En espera')

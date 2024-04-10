@@ -1,31 +1,29 @@
-    <div class="table-responsive" style="padding:15px;font-size: 12px;">
+<div class="table-responsive" style="padding:15px;font-size: 12px;">
     <table class="table" id="table">
         <thead>
         <tr>
-        <th>Nombre</th>
-        <th>Tipo Categoria</th>
-         <th>Edad desde</th>
-          <th>Edad hasta</th>
-            <th >Accion</th>
+            <th>Nombre Cuenta</th>
+        <th>CI/Ruc</th>
+        <th>Banco</th>
+            <th>Accion</th>
         </tr>
         </thead>
         <tbody>
-        @foreach($categorias as $categoria)
+        @foreach($bancos as $banco)
             <tr>
-                <td>{{ $categoria->nombre }}</td>
-            <td>{{ $categoria->tipo_categoria }}</td>
-            <td>{{ $categoria->edad_ini }}</td>
-            <td>{{ $categoria->edad_fin }}</td>
+                <td>{{ $banco->nombre_cuenta }}</td>
+            <td>{{ $banco->ci_ruc }}</td>
+            <td>{{ $banco->banco }}</td>
                 <td width="120">
-                    {!! Form::open(['route' => ['categorias.destroy', $categoria->id], 'method' => 'delete']) !!}
+                    {!! Form::open(['route' => ['bancos.destroy', $banco->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
                         @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
-                        <button type="button" class='btn btn-info btn-sm' onclick="window.location='{{ route('categorias.show', [$categoria->id]) }}'">
+                        <button type="button" class='btn btn-info btn-sm' onclick="window.location='{{ route('bancos.show', [$banco->id]) }}'">
                             <i class="far fa-eye"></i>
                         </button>
                     </div>
                     <div class='btn-group'>
-                        <button type="button" class='btn btn-warning btn-sm' onclick="window.location='{{ route('categorias.edit', [$categoria->id]) }}'">
+                        <button type="button" class='btn btn-warning btn-sm' onclick="window.location='{{ route('bancos.edit', [$banco->id]) }}'">
                             <i class="far fa-edit"></i>
                         </button>
                     </div>
