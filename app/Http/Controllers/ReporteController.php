@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Inscripcion;
 use App\Models\Seguro;
 use App\Models\Ranking;
+use App\Models\Pago;
 use DB;
 class ReporteController extends Controller
 {
@@ -34,8 +35,10 @@ class ReporteController extends Controller
          ->get();   
 
     	return view('reportes.rankings',compact('rankings'));
-
-
+    }
+    public function reporte_pago(){
+        $pagos = Pago::all();
+        return view('reportes.pagos',compact('pagos'));
     }
 
 }

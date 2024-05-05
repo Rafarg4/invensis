@@ -194,6 +194,13 @@
 </a>
 </li>
 <li class="nav-item">
+<a href="{{ route('reporte_pago') }}" class="nav-link"
+  class="nav-link {{ Request::is('reporte_pago*') ? 'active' : '' }}">
+<i class="fa fas-solid fa-list"></i>
+<p>Pagos</p>
+</a>
+</li>
+<li class="nav-item">
 <a href="{{ route('reporte_ranking') }}" class="nav-link"
 class="nav-link {{ Request::is('reporte_ranking*') ? 'active' : '' }}">
 <i class="fa fas-solid fa-list"></i>

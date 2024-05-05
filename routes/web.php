@@ -32,6 +32,8 @@ Route::get('', [App\Http\Controllers\HomeController::class, 'index'])->name('hom
 
 Route::get('reportes/inscripcions', [App\Http\Controllers\ReporteController::class, 'reporte_inscripcion'])->name('reporte_inscripcion')->middleware('auth');
 
+Route::get('reportes/pagos', [App\Http\Controllers\ReporteController::class, 'reporte_pago'])->name('reporte_pago')->middleware('auth');
+
 Route::get('reportes/seguros', [App\Http\Controllers\ReporteController::class, 'reporte_seguro'])->name('reporte_seguro')->middleware('auth');
 
 Route::get('reportes/rankings', [App\Http\Controllers\ReporteController::class, 'reporte_ranking'])->name('reporte_ranking')->middleware('auth');

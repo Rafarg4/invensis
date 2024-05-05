@@ -35,7 +35,6 @@
         <th>Ciudad</th>
         <th>Region</th>
         <th>Estado</th>
-        <th>Monto</th>
         <th>Federacion Id</th>
         <th>Uciid</th>
         <th>Categoria</th>
@@ -74,7 +73,6 @@
             <span class="badge badge-danger"> {{ $inscripcion->estado }} </span>
             @break
             @endswitch</td>
-            <td>{{number_format ($inscripcion->monto) }}</td>
              <td>{{ $inscripcion->federacion_id ?? 'Sin asignar'}}</td>
               <td>{{ $inscripcion->uciid ?? 'Sin asignar'}}</td>
             <td>{{ $inscripcion->categoria->nombre  ?? 'Categoria no asignada' }}</td>

@@ -393,89 +393,87 @@
             </div>
         </div>
         <!-- Modal para registrar seguro -->
-            <div class="col d-flex justify-content-center">
-                <div class="card" style="width: 28rem;">
-                    <div class="card-body pt-0">
-                         <h5 class="card-header"><i class="fa fas-solid fa-bicycle"></i> Informacion de Licencia </h5>
-                        <div class="row">
-                            <div class="col-7">
-                                <ul class="ml-3 mb-0 fa-ul text-muted">
-                                    <br>
-                                    <li ><span class="fa-li"><i class="fas fa-solid fa-user"></i></span>
-                                        Nombres: {{ $inscripcion->primer_y_segundo_nombre}}</li><br>
-                                        <li ><span class="fa-li"><i class="fas fa-solid fa-user"></i></span>
-                                        Apellidos: {{ $inscripcion->primer_y_segundo_apellido}}</li><br>
-                                    <li ><span class="fa-li"><i class="fas fa-solid fa-bars"></i></span>
-                                        Tipo Categoria: {{ $inscripcion->tipo_categoria ?? 'Categoria no asignada'}}</li><br>
-                                    <li ><span class="fa-li"><i class="fas fa-solid fa-id-badge"></i></span>
-                                        Cedula de identidad: {{ $inscripcion->ci }}</li><br>
-                                        <li ><span class="fa-li"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
-                                        Ciudad: {{ $inscripcion->ciudad }}</li><br>
-                                    <li ><span class="fa-li"><i class="fas fa-solid fa-address-book"></i></span>
-                                        Estado:
-                                        @switch(true)
-                                        @case($inscripcion->estado == 'En espera')
-                                        <span class="badge badge-primary"> {{ $inscripcion->estado }} </span>
-                                        @break
-                                        @case($inscripcion->estado == 'Paralizado')
-                                        <span class="badge badge-warning"> {{ $inscripcion->estado }} </span>
-                                        @break
-                                        @case($inscripcion->estado == 'Verificado' )
-                                        <span class="badge badge-success"> {{ $inscripcion->estado }} </span>
-                                        @break
-                                        @endswitch</li><br>
-                                    <li ><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Telefono:
-                                        {{ $inscripcion->celular }}</li>
-                                </ul>
-                            </div>
-                            <div class="col-5 text-center">
-                                <br>
-                                <img src="{{asset('storage/uploads/' . $inscripcion->foto) }}" width="120" height="120"
-                                    class="img-circle">
-                            </div>
-                        </div>
-                    </div>
-                    {!! Form::open(['route' => ['inscripcions.destroy', $inscripcion->id], 'method' => 'delete']) !!}
-                    <div class="card-footer">
-                        <div class="text-right">
-                            @canany(['create_inscripcion', 'edit_inscripcion', 'delete_inscripcion'])
-                            <a class="class='btn btn-default btn-xs">
-                                <button type="submit" class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Estas seguro?')"><i class="fa fas-solid fa-trash"></i></button>
-                            </a>
-                            @endcan
-                            @canany(['create_inscripcion', 'edit_inscripcion', 'delete_inscripcion'])
-                            <a href="{{ route('inscripcions.edit', [$inscripcion->id]) }}" class="btn btn-sm btn-warning">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            @endcan
-                            <a href="{{ route('inscripcions.show', [$inscripcion->id]) }}"
-                                class="btn btn-sm btn-primary" data-toggle="tooltip" title="Ver inscripcion">
-                                <i class="fas fa-eye"></i>
-                            </a>
-                            @if($inscripcion->tipo_licencia =='Por dia')
-                            <a href="{{route('ver_licencia', $inscripcion->id)}}" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Descargar inscripcion">
-                            <i class="fas fa-file-pdf"></i> 
-                            </a>
-                            @else
-                            <a href="{{route('pdf.show', $inscripcion->id)}}" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Descargar inscripcion">
-                            <i class="fas fa-file-pdf"></i> 
-                            </a>
-                            @endif
-                            <!--<a href="{{route('seguro',$inscripcion->id)}}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Descargar seguro">
-                                <i class="fa fas-regular fa-laptop-medical"></i></a>-->
-                        </div>
-                    </div>
-                    {!! Form::close() !!}
+    <div class="col d-flex justify-content-center">
+    <div class="card mb-3" style="max-width: 28rem;">
+        <div class="card-body pt-0">
+            <h5 class="card-header"><i class="fa fas-solid fa-bicycle"></i> Informacion de Licencia </h5>
+            <div class="row">
+                <div class="col-md-7">
+                    <ul class="ml-3 mb-0 fa-ul text-muted">
+                        <br>
+                        <li><span class="fa-li"><i class="fas fa-solid fa-user"></i></span>
+                            Nombres: {{ $inscripcion->primer_y_segundo_nombre}}</li><br>
+                        <li><span class="fa-li"><i class="fas fa-solid fa-user"></i></span>
+                            Apellidos: {{ $inscripcion->primer_y_segundo_apellido}}</li><br>
+                        <li><span class="fa-li"><i class="fas fa-solid fa-bars"></i></span>
+                            Tipo Categoria: {{ $inscripcion->tipo_categoria ?? 'Categoria no asignada'}}</li><br>
+                        <li><span class="fa-li"><i class="fas fa-solid fa-id-badge"></i></span>
+                            Cedula de identidad: {{ $inscripcion->ci }}</li><br>
+                        <li><span class="fa-li"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+                            Ciudad: {{ $inscripcion->ciudad }}</li><br>
+                        <li><span class="fa-li"><i class="fas fa-solid fa-address-book"></i></span>
+                            Estado:
+                            @switch(true)
+                                @case($inscripcion->estado == 'En espera')
+                                <span class="badge badge-primary"> {{ $inscripcion->estado }} </span>
+                                @break
+                                @case($inscripcion->estado == 'Paralizado')
+                                <span class="badge badge-warning"> {{ $inscripcion->estado }} </span>
+                                @break
+                                @case($inscripcion->estado == 'Verificado' )
+                                <span class="badge badge-success"> {{ $inscripcion->estado }} </span>
+                                @break
+                            @endswitch</li><br>
+                        <li><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Telefono:
+                            {{ $inscripcion->celular }}</li>
+                    </ul>
                 </div>
-               </div>
+                <div class="col-md-5 text-center">
+                    <br>
+                    <img src="{{asset('storage/uploads/' . $inscripcion->foto) }}" width="120" height="120" class="img-circle">
+                </div>
+            </div>
+        </div>
+        {!! Form::open(['route' => ['inscripcions.destroy', $inscripcion->id], 'method' => 'delete']) !!}
+        <div class="card-footer">
+            <div class="text-md-right">
+                @canany(['create_inscripcion', 'edit_inscripcion', 'delete_inscripcion'])
+                <a class="class='btn btn-default btn-xs'>
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Estas seguro?')"><i class="fa fas-solid fa-trash"></i></button>
+                </a>
+                @endcan
+                @canany(['create_inscripcion', 'edit_inscripcion', 'delete_inscripcion'])
+                <a href="{{ route('inscripcions.edit', [$inscripcion->id]) }}" class="btn btn-sm btn-warning">
+                    <i class="fas fa-edit"></i>
+                </a>
+                @endcan
+                <a href="{{ route('inscripcions.show', [$inscripcion->id]) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Ver inscripcion">
+                    <i class="fas fa-eye"></i>
+                </a>
+                @if($inscripcion->tipo_licencia =='Por dia')
+                <a href="{{route('ver_licencia', $inscripcion->id)}}" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Descargar inscripcion">
+                    <i class="fas fa-file-pdf"></i>
+                </a>
+                @else
+                <a href="{{route('pdf.show', $inscripcion->id)}}" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Descargar inscripcion">
+                    <i class="fas fa-file-pdf"></i>
+                </a>
+                @endif
+                <!--<a href="{{route('seguro',$inscripcion->id)}}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Descargar seguro">
+                    <i class="fa fas-regular fa-laptop-medical"></i></a>-->
+            </div>
+        </div>
+        {!! Form::close() !!}
+    </div>
+</div>
+
                <div class="col d-flex justify-content-center">
-                <div class="card" style="width: 28rem;">
-                    <div class="card-body pt-0">
-                         <h5 class="card-header"><i class="fas fa-id-card"></i> Estado de licencia</h5>
-                        <div class="row">
-                            <div class="col-7">
-                                <ul class="ml-3 mb-0 fa-ul text-muted">
+    <div class="card mb-3" style="max-width: 28rem;">
+        <div class="card-body pt-0">
+            <h5 class="card-header"><i class="fas fa-id-card"></i> Detalles de Licencia </h5>
+            <div class="row">
+                <div class="col-md-7">
+                    <ul class="ml-3 mb-0 fa-ul text-muted">
                                     <br>
                                    @foreach($pagos_licencia as $pl)
                                    @if($pl->estado=='En espera')
@@ -592,12 +590,12 @@
                             </a>
                             @else
                             <a href="{{ route('documentos.create') }}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Cargar documentos">
-                               <i class="fa fas-light fa-book"></i>  Subir documentos
+                               <i class="fa fas-light fa-book"></i> Crear
                             </a>
                             @endif
                             @if ($pagosUsuario)
                            <a href="{{ route('pagos.create') }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Cargar pago"> 
-                              <i class="fa fas-solid fa-credit-card"></i> Subir pago
+                              <i class="fa fas-solid fa-credit-card"></i> Subir 
                             </a>
                             @else
                             <a href="#" class="btn btn-sm btn-success" data-toggle="tooltip" title="Pago Verificado">
@@ -610,7 +608,7 @@
                             </a>
                             @else
                             <a href="{{ route('seguros.create') }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Cargar seguro"> 
-                               <i class="fa fas-regular fa-laptop-medical"></i> Crear seguro
+                               <i class="fa fas-regular fa-laptop-medical"></i> Crear
                             </a>
                             @endif
                         </div>

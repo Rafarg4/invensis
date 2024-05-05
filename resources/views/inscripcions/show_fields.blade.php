@@ -143,12 +143,6 @@
     <label for="estado_civil">Estado Civil:</label>
     <input type="text" class="form-control" id="estado_civil" value="{{ $seguro->estado_civil }}">
 </div>
-
-<div class="form-group col-md-3">
-    <label for="edad">Edad:</label>
-    <input type="text" class="form-control" id="edad" value="{{ $seguro->edad }}">
-</div>
-
 <div class="form-group col-md-3">
     <label for="usted_es">Usted es:</label>
     <input type="text" class="form-control" id="usted_es" value="{{ $seguro->usted_es }}">

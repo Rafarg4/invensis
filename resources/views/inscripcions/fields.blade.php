@@ -210,7 +210,7 @@
     }
 
     function mostrarSegunEdad(categorias, edades, input, edad) {
-    var htmlOptions = '<select class="form-control custom-select" name="id_categorias" required>';
+    var htmlOptions = '<select class="form-control custom-select" name="id_categorias">';
 
     htmlOptions += '<option value="" selected disabled>Seleccione una opcion</option>';
 
