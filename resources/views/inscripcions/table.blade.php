@@ -28,7 +28,7 @@
             <td>
             <div class="btn-group btn-group-sm" role="group">
     <button id="btnGroupDrop{{$inscripcion->id}}" type="button" class="btn btn-sm {{$inscripcion->estado == 'En espera' ? 'btn-primary' : ($inscripcion->estado == 'Verificado' ? 'btn-success' : ($inscripcion->estado == 'Paralizado' ? 'btn-warning' : 'btn-danger'))}} dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-id="{{$inscripcion->id}}" style="font-size: .575rem;">
-        {{$inscripcion->estado}}
+        {{$inscripcion->estado}} 
     </button>
     <div class="dropdown-menu" aria-labelledby="btnGroupDrop{{$inscripcion->id}}">
         @if ($inscripcion->estado != 'En espera')
@@ -286,55 +286,10 @@
                 // Actualizar la columna descarga
                 $.post("{{ route('guardarDescarga', ['id' => $inscripcion->id]) }}", { _token: "{{ csrf_token() }}" }, function(data) {
                     console.log(data);
-                    // Opcional: Puedes ocultar el modal después de la descarga
-                    $('#miModal').modal('hide');
-
-                    // Actualizar el seguro y mostrar el otro modal
-                    $.post("{{ route('actualizarSeguro', ['id' => $inscripcion->id]) }}", { _token: "{{ csrf_token() }}" }, function(data) {
-                        console.log(data);
-                        // Mostrar el otro modal después de actualizar el seguro
-                        $('#miModal2').modal('show');
-                    });
-                });
-            });
-        });
-    </script>
-@elseif($inscripcion->seguro === null && $inscripcion->licencia)
-       <script>
-        $(document).ready(function(){
-            $('#miModal2').modal('show');
-
-            // Manejar el clic en el botón "Crear seguro"
-            $('#btnCrearSeguro').on('click', function() {
-                // Actualizar la columna seguro
-                $.post("{{ route('actualizarSeguro', ['id' => $inscripcion->id]) }}", { _token: "{{ csrf_token() }}" }, function(data) {
-                    console.log(data);
-                    // Opcional: Puedes realizar alguna acción adicional después de la actualización
-                    $('#miModal2').modal('hide');
                     
-                      location.reload();
                 });
             });
-    
-        $('#btnDescargarDeslinde').on('click', function() {
-            // Realizar la descarga del formulario de deslinde
-            var link = document.createElement('a');
-            link.href = "/formulario.pdf";
-            link.download = "formulario.pdf";
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-
-            // Cerrar el modal
-            $('#miModal2').modal('hide');
-
-            // Actualizar la columna seguro
-            $.post("{{ route('actualizarSeguro', ['id' => $inscripcion->id]) }}", { _token: "{{ csrf_token() }}" }, function(data) {
-                console.log(data);
-                // Opcional: Puedes realizar alguna acción adicional después de la actualización
-            });
         });
-    });
     </script>
         @endif
 
@@ -361,32 +316,6 @@
                         <i class="fas fa-file-pdf"></i> Descargar
                         </a>
                         @endif
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- fin de Modal para descargar licencia -->
-        <div class="modal fade" id="miModal2" tabindex="-1" role="dialog" aria-labelledby="miModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="miModalLabel">Paso 2 Registrar seguro</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Para continuar con el registro se debe de subir datos de seguro, EN CASO DE CONTAR CON SEGURO PROPIO DESCARGAR FORMLARIO DE DESLINDE.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="{{ route('seguros.create') }}" id="btnCrearSeguro" class="btn btn-primary" data-toggle="tooltip" title="Crear seguro">
-                            <i class="fas fa-clipboard"></i> Crear seguro
-                        </a>
-                        <a href="formulario.pdf" id="btnDescargarDeslinde" download class="btn btn-warning" data-toggle="tooltip" title="Deslinde">
-                            <i class="fas fa-file-pdf"></i> Formulario de deslinde 
-                        </a>
-
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>

@@ -33,10 +33,10 @@
         // Imprimir automáticamente al cargar la página
         window.print();
 
-        // Esperar un momento antes de redirigir hacia atrás
+        // Esperar un momento antes de redirigir hacia la página de inicio
         setTimeout(function() {
-            // Redirigir hacia atrás
-            window.history.back();
+            // Redirigir a la ruta home
+            window.location.href = "{{ route('home') }}";
         }, 1000); // Espera 1 segundo antes de redirigir
     };
 </script>

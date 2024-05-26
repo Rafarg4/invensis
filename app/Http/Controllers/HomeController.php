@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Inscripcion;
 use Auth;
 use App\Models\Seguro;
-use App\Models\Documento;
+use App\Models\Documento; 
 use App\Models\Pago;
 class HomeController extends Controller
 {
@@ -29,6 +29,7 @@ class HomeController extends Controller
     {
         $inscripcions = Inscripcion::all()
         ->where('id_user', auth()->user()->id);
+        //return $inscripcions;
         $seguros = Seguro::all()
         ->where('id_user', auth()->user()->id);
         $documentos = Documento::all()

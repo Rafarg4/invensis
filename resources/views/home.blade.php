@@ -89,7 +89,108 @@
 @endcan
 @else
 <!-- Home de usuarios -->
+   <!-- Agrega la referencia a la biblioteca de Bootstrap (asegúrate de usar la versión adecuada) -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+<!-- Agrega la referencia a la biblioteca de Popper.js (necesaria para Bootstrap) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+<!-- Agrega la referencia a la biblioteca de Bootstrap (necesaria para Bootstrap) -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<!-- fin de Modal para descargar licencia -->
+
+  @foreach($inscripcions as $inscripcion)
+    @if($inscripcion->seguro === null)
+        <div class="modal fade" id="miModal2" tabindex="-1" role="dialog" aria-labelledby="miModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="miModalLabel">Paso 2 Registrar seguro</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Para continuar con el registro se debe de subir datos de seguro, EN CASO DE CONTAR CON SEGURO PROPIO DESCARGAR FORMLARIO DE DESLINDE.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnCrearSeguro" class="btn btn-primary" data-dismiss="modal">
+                            <i class="fas fa-clipboard"></i> Crear seguro
+                        </button>
+                        <a href="formulario.pdf" id="btnDescargarDeslinde" download class="btn btn-warning" data-toggle="tooltip" title="Deslinde">
+                            <i class="fas fa-file-pdf"></i> Formulario de deslinde 
+                        </a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function(){
+                $('#miModal2').modal('show');
+
+                // Manejar el clic en el botón "Crear seguro"
+                $('#btnCrearSeguro').on('click', function() {
+                    // Redireccionar y actualizar la columna seguro
+                    $.post("{{ route('actualizarSeguro', ['id' => $inscripcion->id]) }}", { _token: "{{ csrf_token() }}" }, function(data) {
+                        console.log(data);
+                        window.location.href = "{{ route('seguros.create') }}";
+                    });
+                });
+
+                // Manejar el clic en el botón "Descargar deslinde"
+                $('#btnDescargarDeslinde').on('click', function() {
+                    // Realizar la descarga del formulario de deslinde
+                    var link = document.createElement('a');
+                    link.href = "/formulario.pdf";
+                    link.download = "formulario.pdf";
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+
+                    // Actualizar la columna seguro
+                    $.post("{{ route('actualizarSeguro', ['id' => $inscripcion->id]) }}", { _token: "{{ csrf_token() }}" }, function(data) {
+                        console.log(data);
+                        // Opcional: Puedes realizar alguna acción adicional después de la actualización
+                    });
+                });
+            });
+        </script>
+        @elseif($inscripcion->seguro === 'S')
+        <!-- Modal para mostrar cuando seguro es 'S' -->
+        <div class="modal fade" id="miModal3" tabindex="-1" role="dialog" aria-labelledby="miModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="miModalLabel">Registro terminado <i class="fa fa-check-circle" aria-hidden="true"></i></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Felicidades, el registro se ha completado correctamente!.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Script para mostrar el modal solo una vez -->
+         <script>
+            // Verificar si el modal3 ya ha sido mostrado
+            var modal3Mostrado = localStorage.getItem('modal3Mostrado');
+            if (!modal3Mostrado) {
+                // Mostrar el modal
+                $('#miModal3').modal('show');
+                // Marcar que el modal ha sido mostrado
+                localStorage.setItem('modal3Mostrado', true);
+            }
+        </script>
+    @endif
+@endforeach
 
 <div class="container-fluid">
 <div class="row">

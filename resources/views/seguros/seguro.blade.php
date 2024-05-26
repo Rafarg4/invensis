@@ -61,8 +61,8 @@
         // Esperar un momento antes de redirigir hacia atrás
         setTimeout(function() {
             // Redirigir hacia atrás
-            window.history.back();
-        }, 1000); // Espera 1 segundo antes de redirigir
+           window.location.href = "{{ route('home') }}";
+        }, 1000); // Espera 1 segundo antes de redirigir // Espera 1 segundo antes de redirigir
     };
 </script>
 
