@@ -116,7 +116,7 @@ class InscripcionController extends AppBaseController
         $categoriaPrincipal = Categoria::where('tipo_categoria', 'Principal')->pluck('nombre', 'id');
         $categoriaMaster = Categoria::where('tipo_categoria', 'Master')->pluck('nombre', 'id');
         $categoriaCiclismoParaTodos = Categoria::where('tipo_categoria', 'Ciclismo para todos')->pluck('nombre', 'id');
-         $bancos=Banco::all();
+        $bancos=Banco::all();
         // Obtener edades
         $edadesPrincipal = Categoria::where('tipo_categoria', 'Principal')->get(['id', 'edad_ini', 'edad_fin']);
         $edadesMaster = Categoria::where('tipo_categoria', 'Master')->get(['id', 'edad_ini', 'edad_fin']);

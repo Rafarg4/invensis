@@ -157,7 +157,7 @@
                 });
             });
         </script>
-        @elseif($inscripcion->seguro === 'S')
+        @elseif($inscripcion->seguro === 'S'))
         <!-- Modal para mostrar cuando seguro es 'S' -->
         <div class="modal fade" id="miModal3" tabindex="-1" role="dialog" aria-labelledby="miModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -191,7 +191,6 @@
         </script>
     @endif
 @endforeach
-
 <div class="container-fluid">
 <div class="row">
 @if($inscripcions->isempty())	

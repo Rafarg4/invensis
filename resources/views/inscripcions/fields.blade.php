@@ -156,7 +156,7 @@
     {!! Form::label('tipo_licencia', 'Tipo de licencia:') !!}
     {!! Form::select('tipo_licencia', ['Anual' => 'Anual', 'Por dia' => 'Por día'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione una opcion', 'id' => 'tipo_licencia', 'required']) !!}
 </div>
-    <!-- Id Categoria Field -->
+  <!-- Id Categoria Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('tipo_categoria', 'Categoria:') !!}
     {!! Form::select('tipo_categoria', ['Principal' => 'Principal', 'Master' => 'Master', 'Ciclismo para todos' => 'Ciclismo para todos'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione una opcion', 'id' => 'tipo_categoria', 'required']) !!}
@@ -165,6 +165,7 @@
 <div class="form-group col-sm-12" id="id_categoria" style="display: none;"></div>
 <div class="form-group col-sm-12" id="id_categoria2" style="display: none;"></div>
 <div class="form-group col-sm-12" id="id_categoria3" style="display: none;"></div>
+<div class="form-group col-sm-12" id="no_categorias" style="display: none; color: red;">No hay categorías disponibles para su edad.</div>
 
 <!-- Input oculto para almacenar el valor de id_categoria -->
 {!! Form::hidden('id_categoria', null, ['id' => 'id_categoria_hidden', 'name' => 'id_categoria']) !!}
@@ -174,6 +175,7 @@
     const input1 = document.querySelector("#id_categoria");
     const input2 = document.querySelector("#id_categoria2");
     const input3 = document.querySelector("#id_categoria3");
+    const inputNoCategorias = document.querySelector("#no_categorias");
     const inputEdad = document.querySelector("#fechanac");
     const inputIdCategoriaHidden = document.querySelector("#id_categoria_hidden");
 
@@ -185,6 +187,12 @@
         input1.style.display = 'none';
         input2.style.display = 'none';
         input3.style.display = 'none';
+        inputNoCategorias.style.display = 'none';
+
+        // Limpiar el contenido de los campos select
+        input1.innerHTML = '';
+        input2.innerHTML = '';
+        input3.innerHTML = '';
 
         // Restablecer el nombre del campo oculto a 'id_categoria' por defecto
         inputIdCategoriaHidden.setAttribute('name', 'id_categoria');
@@ -210,34 +218,33 @@
     }
 
     function mostrarSegunEdad(categorias, edades, input, edad) {
-    var htmlOptions = '<select class="form-control custom-select" name="id_categorias">';
+        var htmlOptions = '<select class="form-control custom-select" name="id_categorias">';
 
-    htmlOptions += '<option value="" selected disabled>Seleccione una opcion</option>';
+        htmlOptions += '<option value="" selected disabled>Seleccione una opcion</option>';
 
-    for (var id in categorias) {
-        if (categorias.hasOwnProperty(id)) {
-            var categoriaId = id;
-            var categoriaEdades = edades.find(e => e.id === parseInt(id));
-            if (categoriaEdades && edad >= categoriaEdades.edad_ini && edad <= categoriaEdades.edad_fin) {
-                htmlOptions += '<option value="' + categoriaId + '">' + categorias[id] + '</option>';
+        var hasValidOption = false;
+        for (var id in categorias) {
+            if (categorias.hasOwnProperty(id)) {
+                var categoriaId = id;
+                var categoriaEdades = edades.find(e => e.id === parseInt(id));
+                if (categoriaEdades && edad >= categoriaEdades.edad_ini && edad <= categoriaEdades.edad_fin) {
+                    htmlOptions += '<option value="' + categoriaId + '">' + categorias[id] + '</option>';
+                    hasValidOption = true;
+                }
             }
         }
-    }
 
-    htmlOptions += '</select>';
+        htmlOptions += '</select>';
 
-    input.innerHTML = htmlOptions;
-    input.style.display = 'initial';
-    // Añade o quita el atributo required según la visibilidad del campo
-    if (input.style.display !== 'none') {
-        input.querySelector('select').setAttribute('required', 'required');
-    } else {
-        input.querySelector('select').removeAttribute('required');
+        input.innerHTML = htmlOptions;
+        if (hasValidOption) {
+            input.style.display = 'initial';
+            input.querySelector('select').setAttribute('required', 'required');
+        } else {
+            inputNoCategorias.style.display = 'block';
+        }
     }
-}
 </script>
-         
-
             <div class="form-group col-sm-12">
                     {!! Form::label('region', 'Elegir a que region pertenece:') !!}
                      {!! Form::select('region',array('Asosiacion metropolitana de ciclismo' => 'Asosiacion metropolitana de ciclismo', 'Federacion paranaense de ciclismo' => 'Federacion paranaense de ciclismo','Union Regional de ciclistas (URCI)' => 'Union Regional de ciclistas (URCI)','Federacion de ciclismo Itapuense' => 'Federacion de ciclismo Itapuense'),null, ['class' => 'form-control','placeholder'=>'Seleccione una opcion','required','required','required'])!!}
