@@ -89,9 +89,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="https://fpc.org.py"><i class="fas fa-home"></i> Inicio</a>
             </li>
-            <li class="nav-item">
+             <li class="nav-item">
                 <a class="nav-link" href="{{ url('ranking_m_tbs/consulta') }}"><i class="fas fa-trophy"></i> Ranking MTB</a>
-            </li>
+            </li> 
             <li class="nav-item">
                 <a class="nav-link" href="{{ url('ver_evento') }}"><i class="fa fa-calendar" aria-hidden="true"></i> Eventos</a>
             </li>

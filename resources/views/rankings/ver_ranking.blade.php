@@ -79,7 +79,6 @@
         <label>Fecha dos:</label>
         <input type="text" class="form-control" placeholder="{{ $rankings->fecha_dos ?? 'A competir' }}" disabled>
     </div>
-    <!--
     <div class="form-group col-md-3">
         <label>Fecha tres:</label>
         <input type="text" class="form-control" placeholder="{{ $rankings->fecha_tres ?? 'A competir' }}" disabled>

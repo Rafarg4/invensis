@@ -9,7 +9,8 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
-
+use App\Models\Modalidad;
+use App\Models\Categoria;
 class CategoriaController extends AppBaseController
 {
     /** @var CategoriaRepository $categoriaRepository*/
@@ -29,7 +30,7 @@ class CategoriaController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $categorias = $this->categoriaRepository->all();
+         $categorias = Categoria::with('modalidad')->get();
 
         return view('categorias.index')
             ->with('categorias', $categorias);
@@ -42,7 +43,9 @@ class CategoriaController extends AppBaseController
      */
     public function create()
     {
-        return view('categorias.create');
+
+        $modalidades =Modalidad::pluck('nombre','id');
+        return view('categorias.create',compact('modalidades'));
     }
 
     /**
@@ -92,6 +95,7 @@ class CategoriaController extends AppBaseController
      */
     public function edit($id)
     {
+        $modalidades =Modalidad::pluck('nombre','id');
         $categoria = $this->categoriaRepository->find($id);
 
         if (empty($categoria)) {
@@ -100,7 +104,7 @@ class CategoriaController extends AppBaseController
             return redirect(route('categorias.index'));
         }
 
-        return view('categorias.edit')->with('categoria', $categoria);
+        return view('categorias.edit')->with('categoria', $categoria)->with('modalidades', $modalidades);
     }
 
     /**

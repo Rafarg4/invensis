@@ -191,7 +191,7 @@ class EventoController extends AppBaseController
         Flash::success('Evento eliminado correctamente.');
 
         return redirect(route('eventos.index'));
-    }
+    } 
 
     public function ver_eventos_detalles($id)
         {
@@ -212,7 +212,13 @@ class EventoController extends AppBaseController
         public function eventos_detalles($id)
         {
             $evento = $this->eventoRepository->find($id);
-            $atletas = Atleta::where('id_evento',$id)->get();
+            //$atletas = Atleta::where('id_evento',$id)->get();
+            $atletas = DB::table('atletas')
+            ->join('categorias', 'atletas.id_categoria', '=', 'categorias.id')
+            ->join('eventos', 'atletas.id_evento', '=', 'eventos.id')
+            ->select('atletas.*', 'categorias.nombre AS nombre_categoria')
+            ->where('atletas.id_evento', $id)
+            ->get();
             if (empty($evento)) {
                 Flash::error('Evento not found');
 

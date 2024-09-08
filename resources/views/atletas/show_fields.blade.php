@@ -34,8 +34,8 @@
     <input type="text" class="form-control" id="categoria" value="{{ $atleta->nombre_categoria ??'Sin datos'}}">
 </div>
 <div class="form-group col-md-3">
-    <label for="tipo_categoria">Categoría:</label>
-    <input type="text" class="form-control" id="tipo_categoria" value="{{ $atleta->tipo_categoria ?? 'Sin asignar' }}">
+    <label for="tipo_categoria">Modalidad:</label>
+    <input type="text" class="form-control" id="tipo_categoria" value="{{ $atleta->id_modalidad ?? 'Sin asignar' }}">
 </div>
 <div class="form-group col-md-3">
     <label for="tipo_categoria">Estado:</label>

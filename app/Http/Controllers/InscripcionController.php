@@ -16,6 +16,7 @@ use App\Models\Seguro;
 use App\Models\Pago;
 use App\Models\Banco;
 use PDF;
+use App\Models\Modalidad;
 use Auth;
 use DB; 
 use Carbon\Carbon;
@@ -113,17 +114,10 @@ class InscripcionController extends AppBaseController
      */
     public function create()
     {
-        $categoriaPrincipal = Categoria::where('tipo_categoria', 'Principal')->pluck('nombre', 'id');
-        $categoriaMaster = Categoria::where('tipo_categoria', 'Master')->pluck('nombre', 'id');
-        $categoriaCiclismoParaTodos = Categoria::where('tipo_categoria', 'Ciclismo para todos')->pluck('nombre', 'id');
+        $categoria =Categoria::pluck('nombre','id');
         $bancos=Banco::all();
-        // Obtener edades
-        $edadesPrincipal = Categoria::where('tipo_categoria', 'Principal')->get(['id', 'edad_ini', 'edad_fin']);
-        $edadesMaster = Categoria::where('tipo_categoria', 'Master')->get(['id', 'edad_ini', 'edad_fin']);
-        $edadesCiclismoParaTodos = Categoria::where('tipo_categoria', 'Ciclismo para todos')->get(['id', 'edad_ini', 'edad_fin']);
-
-
-        return view('inscripcions.create', compact('bancos','categoriaPrincipal','categoriaMaster','categoriaCiclismoParaTodos','edadesPrincipal','edadesMaster','edadesCiclismoParaTodos'));
+      
+        return view('inscripcions.create', compact('bancos','categoria'));
     }
 
     /**
@@ -157,6 +151,7 @@ class InscripcionController extends AppBaseController
         $inscripcion = $this->inscripcionRepository->create($input);
 
        Flash::success('Licencia creada. Descargue su licencia en el apartado de licencias.');
+      //   return $input;
 
     return redirect(route('inscripcions.index'));
     }else{
@@ -175,6 +170,7 @@ class InscripcionController extends AppBaseController
             $input['foto'] = $nombrefoto;
         }
         $inscripcion = $this->inscripcionRepository->create($input);
+
 
         return redirect(route('inscripcions.index'));
     }
@@ -414,5 +410,27 @@ class InscripcionController extends AppBaseController
         return view('inscripcions.licencia_dia',compact('inscripcion'));
 
  }
+ //Para obtener modalidades de las categorias
+ public function getModalidades($id_categoria)
+    {
+        $modalidades = Modalidad::whereHas('categorias', function ($query) use ($id_categoria) {
+            $query->where('id', $id_categoria);
+        })->get();
+
+        return response()->json($modalidades);
+    }
+    //Para obtener categorias segun la edad
+   public function getCategoriasByEdad($edad)
+    {
+        $categorias = Categoria::where('edad_ini', '<=', $edad)
+                                ->where('edad_fin', '>=', $edad)
+                                ->get();
+        
+        if ($categorias->isEmpty()) {
+            return response()->json(['message' => 'No hay categorías disponibles para esta edad.'], 404);
+        }
+
+        return response()->json($categorias);
+    }
 
 }

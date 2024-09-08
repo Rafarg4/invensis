@@ -15,6 +15,6 @@
 </div>
 <!-- tipo categoria Field -->
 <div class=" form-group col-sm-6">
-{!! Form::label('tipo_categoria', 'Categoria:') !!}
-{!! Form::select('tipo_categoria',array('Principal' => 'Principal', 'Ciclismo para todos' => 'Ciclismo para todos','Master' => 'Master '),null, ['class' => 'form-control','placeholder'=>'Seleccione','required'])!!}
+{!! Form::label('id_modalidad', 'Modalidad:') !!}
+ {!! Form::select('id_modalidad', $modalidades, null, ['class' => 'form-control custom-select','placeholder'=>'Selecione una opcion','required']) !!}
 </div>

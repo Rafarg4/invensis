@@ -8,7 +8,7 @@
         <th>Apellidos</th>
         <th>Ciudad</th>
         <th>Categoria</th>
-        <th>Tipo Categoria</th>
+        <th>Modalidad</th>
         <th>Modo</th>
         <th>Estado</th>
             <th>Accion</th>
@@ -23,7 +23,7 @@
             <td>{{ $atleta->apellidos ?? 'Sin datos'}}</td>
             <td>{{ $atleta->ciudad ?? 'Sin datos'}}</td>
             <td>{{ $atleta->nombre_categoria ?? 'Sin datos'}}</td>
-            <td>{{ $atleta->tipo_categoria ?? 'Sin datos'}}</td>
+            <td>{{ $atleta->id_modalidad ?? 'Sin datos'}}</td>
             <td>{{ $atleta->modo ?? 'Sin datos'}}</td>
             @if(Auth::user()->hasRole('super_admin'))
              <td>

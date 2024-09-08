@@ -30,29 +30,10 @@
                     {!! Form::date('fechanac', null, ['class' => 'form-control', 'id' => 'fechanac', 'required']) !!}
                 </div>
 
-                <!-- Campo de edad -->
-                <div class="form-group col-sm-12">
+               <div class="form-group col-sm-12">
                     {!! Form::label('edad', 'Edad:') !!}
-                    {!! Form::text('edad', null, ['class' => 'form-control', 'id' => 'edad', 'readonly', 'required']) !!}
+                    {!! Form::text('edad', null, ['class' => 'form-control', 'id' => 'edad', 'required']) !!}
                 </div>
-
-                <script>
-                    // Función para calcular la edad a partir de la fecha de nacimiento
-                    function calcularEdad() {
-                        var fechaNacimiento = document.getElementById('fechanac').value;
-                        var fechaNac = new Date(fechaNacimiento);
-                        var fechaActual = new Date();
-                        var edad = fechaActual.getFullYear() - fechaNac.getFullYear();
-                        var mes = fechaActual.getMonth() - fechaNac.getMonth();
-                        if (mes < 0 || (mes === 0 && fechaActual.getDate() < fechaNac.getDate())) {
-                            edad--;
-                        }
-                        document.getElementById('edad').value = edad;
-                    }
-
-                    // Escuchar cambios en el campo de fecha de nacimiento y calcular la edad
-                    document.getElementById('fechanac').addEventListener('change', calcularEdad);
-                </script>
                 <!-- Grupo Sanguineo Field -->
                 <div class=" form-group col-sm-12">
                 {!! Form::label('sexo', 'Sexo:') !!}
@@ -63,12 +44,23 @@
                     {!! Form::label('grupo_sanguineo', 'Grupo sanguineo:') !!}
                 {!! Form::select('grupo_sanguineo',array('A +' => 'A +', 'A-' => 'A-','B +' => 'B +','B-' => 'B-','AB+' => 'AB+','AB-' => 'AB-','O+' => 'O+','O-' => 'O-'),null, ['class' => 'form-control','placeholder'=>'Seleccione una opcion','required'])!!}
                 </div>
-                <!-- Nacionalidad Field -->
-                <div class="form-group col-sm-12">
+               <div class="form-group col-sm-12">
                     {!! Form::label('nacionalidad', 'Nacionalidad:') !!}
-                    {!! Form::text('nacionalidad', null, ['class' => 'form-control','required']) !!}
+                    {!! Form::select('nacionalidad', [
+                        'Argentina' => 'Argentina',
+                        'Bolivia' => 'Bolivia',
+                        'Brasil' => 'Brasil',
+                        'Chile' => 'Chile',
+                        'Colombia' => 'Colombia',
+                        'Ecuador' => 'Ecuador',
+                        'Guyana' => 'Guyana',
+                        'Paraguay' => 'Paraguay',
+                        'Perú' => 'Perú',
+                        'Surinam' => 'Surinam',
+                        'Uruguay' => 'Uruguay',
+                        'Venezuela' => 'Venezuela',
+                    ], null, ['class' => 'form-control', 'placeholder' => 'Seleccione una nacionalidad', 'required']) !!}
                 </div>
-
                 <!-- Celular Field -->
                 <div class="form-group col-sm-12">
                     {!! Form::label('celular', 'Celular:') !!}
@@ -152,99 +144,108 @@
                    Ingrese datos de ciclistas </strong></h4>
             </div>
         </div>
-<div class="form-group col-sm-12">
+    <div class="form-group col-sm-12">
     {!! Form::label('tipo_licencia', 'Tipo de licencia:') !!}
     {!! Form::select('tipo_licencia', ['Anual' => 'Anual', 'Por dia' => 'Por día'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione una opcion', 'id' => 'tipo_licencia', 'required']) !!}
-</div>
-  <!-- Id Categoria Field -->
-<div class="form-group col-sm-12">
-    {!! Form::label('tipo_categoria', 'Categoria:') !!}
-    {!! Form::select('tipo_categoria', ['Principal' => 'Principal', 'Master' => 'Master', 'Ciclismo para todos' => 'Ciclismo para todos'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione una opcion', 'id' => 'tipo_categoria', 'required']) !!}
-</div>
+    </div>
+    <div class="form-group col-sm-12">
+        {!! Form::label('id_categorias', 'Categoria:') !!}
+        {!! Form::select('id_categorias', [], null, ['class' => 'form-control custom-select', 'placeholder' => 'Seleccione una opción', 'required', 'id' => 'id_categorias']) !!}
+    </div>
 
-<div class="form-group col-sm-12" id="id_categoria" style="display: none;"></div>
-<div class="form-group col-sm-12" id="id_categoria2" style="display: none;"></div>
-<div class="form-group col-sm-12" id="id_categoria3" style="display: none;"></div>
-<div class="form-group col-sm-12" id="no_categorias" style="display: none; color: red;">No hay categorías disponibles para su edad.</div>
+    <div class="form-group col-sm-12">
+        {!! Form::label('id_modalidad', 'Modalidad:') !!}
+        {!! Form::select('id_modalidad', [], null, ['class' => 'form-control custom-select', 'placeholder' => 'Seleccione una modalidad', 'required', 'id' => 'id_modalidad']) !!}
+    </div>
 
-<!-- Input oculto para almacenar el valor de id_categoria -->
-{!! Form::hidden('id_categoria', null, ['id' => 'id_categoria_hidden', 'name' => 'id_categoria']) !!}
-
-<script type="text/javascript">
-    const tipo_categoria = document.querySelector("#tipo_categoria");
-    const input1 = document.querySelector("#id_categoria");
-    const input2 = document.querySelector("#id_categoria2");
-    const input3 = document.querySelector("#id_categoria3");
-    const inputNoCategorias = document.querySelector("#no_categorias");
-    const inputEdad = document.querySelector("#fechanac");
-    const inputIdCategoriaHidden = document.querySelector("#id_categoria_hidden");
-
-    tipo_categoria.addEventListener("change", changeCategoria);
-    inputEdad.addEventListener("input", changeCategoria);
-
-    function changeCategoria(){
-        // Ocultar todos los campos
-        input1.style.display = 'none';
-        input2.style.display = 'none';
-        input3.style.display = 'none';
-        inputNoCategorias.style.display = 'none';
-
-        // Limpiar el contenido de los campos select
-        input1.innerHTML = '';
-        input2.innerHTML = '';
-        input3.innerHTML = '';
-
-        // Restablecer el nombre del campo oculto a 'id_categoria' por defecto
-        inputIdCategoriaHidden.setAttribute('name', 'id_categoria');
-
-        // Obtener la fecha de nacimiento
-        const fechaNacimiento = new Date(inputEdad.value);
-        // Obtener la fecha actual
-        const fechaActual = new Date();
-        // Calcular la edad
-        const edad = fechaActual.getFullYear() - fechaNacimiento.getFullYear();
-
-        // Mostrar el campo correspondiente según la edad y el tipo de categoría seleccionados
-        if (tipo_categoria.value === "Principal") {
-            mostrarSegunEdad({!! json_encode($categoriaPrincipal) !!}, {!! json_encode($edadesPrincipal) !!}, input1, edad);
-        } else if(tipo_categoria.value === "Master") {
-            mostrarSegunEdad({!! json_encode($categoriaMaster) !!}, {!! json_encode($edadesMaster) !!}, input2, edad);
-        } else if (tipo_categoria.value === "Ciclismo para todos"){
-            mostrarSegunEdad({!! json_encode($categoriaCiclismoParaTodos) !!}, {!! json_encode($edadesCiclismoParaTodos) !!}, input3, edad);
-        }
-
-        // Actualizar el campo oculto con el valor seleccionado
-        inputIdCategoriaHidden.value = tipo_categoria.value;
-    }
-
-    function mostrarSegunEdad(categorias, edades, input, edad) {
-        var htmlOptions = '<select class="form-control custom-select" name="id_categorias">';
-
-        htmlOptions += '<option value="" selected disabled>Seleccione una opcion</option>';
-
-        var hasValidOption = false;
-        for (var id in categorias) {
-            if (categorias.hasOwnProperty(id)) {
-                var categoriaId = id;
-                var categoriaEdades = edades.find(e => e.id === parseInt(id));
-                if (categoriaEdades && edad >= categoriaEdades.edad_ini && edad <= categoriaEdades.edad_fin) {
-                    htmlOptions += '<option value="' + categoriaId + '">' + categorias[id] + '</option>';
-                    hasValidOption = true;
-                }
+   <script type="text/javascript">
+    $(document).ready(function() {
+        // Evento para calcular la edad basado en la fecha de nacimiento
+        $('#fechanac').on('change', function() {
+            var fechaNacimiento = new Date($(this).val());
+            var ahora = new Date();
+            var edad = ahora.getFullYear() - fechaNacimiento.getFullYear();
+            var mes = ahora.getMonth() - fechaNacimiento.getMonth();
+            if (mes < 0 || (mes === 0 && ahora.getDate() < fechaNacimiento.getDate())) {
+                edad--;
             }
-        }
+            $('#edad').val(edad);
+            $('#edad').change(); // Desencadena el cambio para actualizar las categorías y modalidades
+        });
 
-        htmlOptions += '</select>';
+        $('#edad').on('change', function() {
+            var edad = $(this).val();
+            console.log('Edad ingresada:', edad);  // Verifica la edad ingresada
+            if (edad) {
+                $.ajax({
+                    url: '/categorias_edad/' + edad,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        console.log('Datos recibidos:', data);  // Verifica los datos recibidos
+                        $('#id_categorias').empty();
+                        if (data.message || data.length === 0) {
+                            alert(data.message || 'No hay categorías disponibles para esta edad.');
+                            $('#id_categorias').append('<option value="">No hay categorías disponibles para su edad</option>');
+                        } else {
+                            $('#id_categorias').append('<option value="">Seleccione una opción</option>');
+                            $.each(data, function(key, value) {
+                                $('#id_categorias').append('<option name="id_categorias" value="'+ value.id +'">'+ value.nombre +'</option>');
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Error:', error);  // Verifica si hay errores
+                        console.log('Status:', status);
+                        console.dir(xhr);
+                        $('#id_categorias').empty();
+                        $('#id_categorias').append('<option value="">No se pudieron cargar las categorías</option>');
+                    }
+                });
+            } else {
+                $('#id_categorias').empty();
+                $('#id_categorias').append('<option value="">Ingrese una edad válida</option>');
+            }
+        });
 
-        input.innerHTML = htmlOptions;
-        if (hasValidOption) {
-            input.style.display = 'initial';
-            input.querySelector('select').setAttribute('required', 'required');
-        } else {
-            inputNoCategorias.style.display = 'block';
-        }
-    }
+        $('#id_categorias').on('change', function() {
+            var id_categorias = $(this).val();
+            console.log('Categoría seleccionada:', id_categorias);  // Verifica la categoría seleccionada
+            if (id_categorias) {
+                $.ajax({
+                    url: '/modalidades/' + id_categorias,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        console.log('Modalidades recibidas:', data);  // Verifica las modalidades recibidas
+                        $('#id_modalidad').empty();
+                        if (data.length === 0) {
+                            $('#id_modalidad').append('<option value="">No hay modalidades disponibles para esta categoría</option>');
+                        } else {
+                            $('#id_modalidad').append('<option value="">Seleccione una modalidad</option>');
+                            $.each(data, function(key, value) {
+                                $('#id_modalidad').append('<option name="modalidad" value="'+ value.nombre +'">'+ value.nombre +'</option>'); // Enviamos solo el nombre de la modalidad
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Error:', error);  // Verifica si hay errores
+                        console.log('Status:', status);
+                        console.dir(xhr);
+                        $('#id_modalidad').empty();
+                        $('#id_modalidad').append('<option value="">No se pudieron cargar las modalidades</option>');
+                    }
+                });
+            } else {
+                $('#id_modalidad').empty();
+                $('#id_modalidad').append('<option value="">Seleccione una categoría válida</option>');
+            }
+        });
+    });
 </script>
+
+
+
             <div class="form-group col-sm-12">
                     {!! Form::label('region', 'Elegir a que region pertenece:') !!}
                      {!! Form::select('region',array('Asosiacion metropolitana de ciclismo' => 'Asosiacion metropolitana de ciclismo', 'Federacion paranaense de ciclismo' => 'Federacion paranaense de ciclismo','Union Regional de ciclistas (URCI)' => 'Union Regional de ciclistas (URCI)','Federacion de ciclismo Itapuense' => 'Federacion de ciclismo Itapuense'),null, ['class' => 'form-control','placeholder'=>'Seleccione una opcion','required','required','required'])!!}

@@ -71,6 +71,7 @@ class AtletaController extends AppBaseController
             ->join('eventos', 'atletas.id_evento', '=', 'eventos.id')
             ->select('atletas.*', 'categorias.nombre AS nombre_categoria', 'eventos.nombre as nombre_evento')
             ->get();
+            //return $atletas;
         return view('atletas.index')
             ->with('atletas', $atletas);
         }else{ 

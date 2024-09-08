@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $ciudad
  * @property string $departamento
  * @property string $categoria
- * @property string $tipo_categoria
+ * @property string $id_modalidad
  * @property string $nombre_equipo
  * @property string $federacion_id
  * @property string $uci_id
@@ -48,7 +48,7 @@ class Atleta extends Model
         'ciudad',
         'departamento',
         'id_categoria',
-        'tipo_categoria',
+        'id_modalidad',
         'nombre_equipo',
         'federacion_id',
         'uci_id',
@@ -74,7 +74,7 @@ class Atleta extends Model
         'ciudad' => 'string',
         'departamento' => 'string',
         'categoria' => 'string',
-        'tipo_categoria' => 'string',
+        'id_modalidad' => 'string',
         'nombre_equipo' => 'string',
         'federacion_id' => 'string',
         'uci_id' => 'string',

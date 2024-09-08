@@ -102,6 +102,9 @@
                 <a class="nav-link" href="{{ url('ranking_m_tbs/consulta') }}"><i class="fas fa-trophy"></i> Ranking MTB</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{{ url('rankings/consulta')}}"><i class="fas fa-trophy"></i> Ranking Ruta</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{ url('ver_evento') }}"><i class="fa fa-calendar" aria-hidden="true"></i> Eventos</a>
             </li>
             <li class="nav-item">
@@ -137,15 +140,15 @@
                                 </button>
                             </a>
 
-                            <a href="{{ $evento->url_cri }}">
+                            <a href="{{url('ranking_m_tbs/consulta')}}">
                                 <button class="btn btn-primary w-100 mt-2" type="button">
-                                    <i class="fas fa-trophy"></i> {{ $evento->recorrido1 }}
+                                    <i class="fas fa-trophy"></i> Ranking MTB
                                 </button>
                             </a>
 
-                            <a href="{{ $evento->url_ruta }}">
+                            <a href="{{ url('rankings/consulta')}}">
                                 <button class="btn btn-primary w-100 mt-2" type="button">
-                                    <i class="fas fa-trophy"></i> {{ $evento->recorrido2 }}
+                                    <i class="fas fa-trophy"></i> Ranking Ruta
                                 </button>
                             </a>
 
@@ -231,7 +234,7 @@
         <th>Ciudad</th>
         <th>Departamento</th>
         <th>Categoria</th>
-        <th>Tipo Categoria</th>
+        <th>Modalidad</th>
         <th>Estado</th>
         </tr>
         </thead>
@@ -242,8 +245,8 @@
             <td>{{ $atleta->nombres ?? 'Sin datos'}} {{ $atleta->apellidos ?? 'Sin datos'}}</td>
             <td>{{ $atleta->ciudad ?? 'Sin datos'}}</td>
             <td>{{ $atleta->departamento ?? 'Sin datos'}}</td>
-            <td>{{ $atleta->categorias->nombre ?? 'Sin datos'}}</td>
-            <td>{{ $atleta->tipo_categoria ?? 'Sin datos'}}</td>
+            <td>{{ $atleta->nombre_categoria ?? 'Sin datos'}}</td>
+            <td>{{ $atleta->id_modalidad ?? 'Sin datos'}}</td>
             <td>@switch(true)
             @case($atleta->estado == 'En espera')
             <span class="badge badge-warning"><i class="fa fa-history" aria-hidden="true"></i> {{ $atleta->estado }} </span>

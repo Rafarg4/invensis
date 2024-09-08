@@ -47,7 +47,7 @@ class Inscripcion extends Model
         'email',
         'ci',
         'edad',
-        'tipo_categoria',
+        'tipo_licencia',
         'sexo',
         'grupo_sanguineo',
         'nacionalidad',
@@ -69,7 +69,7 @@ class Inscripcion extends Model
         'ruc',
         'licencia',
         'seguro',
-        'tipo_licencia',
+        'id_modalidad',
         'fecha_inicio',
         'fecha_fin'
     ];

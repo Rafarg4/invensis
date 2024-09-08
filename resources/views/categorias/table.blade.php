@@ -3,9 +3,9 @@
         <thead>
         <tr>
         <th>Nombre</th>
-        <th>Tipo Categoria</th>
          <th>Edad desde</th>
           <th>Edad hasta</th>
+          <th>Modalidad</th>
             <th >Accion</th>
         </tr>
         </thead>
@@ -13,17 +13,18 @@
         @foreach($categorias as $categoria)
             <tr>
                 <td>{{ $categoria->nombre }}</td>
-            <td>{{ $categoria->tipo_categoria }}</td>
             <td>{{ $categoria->edad_ini }}</td>
             <td>{{ $categoria->edad_fin }}</td>
+            <td>{{ $categoria->modalidad->nombre ?? 'Sin asignar'}}</td>
                 <td width="120">
                     {!! Form::open(['route' => ['categorias.destroy', $categoria->id], 'method' => 'delete']) !!}
-                    <div class='btn-group'>
+                   <!-- <div class='btn-group'>
                         @canany(['create_inscripcion','edit_inscripcion','delete_inscripcion'])
+                        
                         <button type="button" class='btn btn-info btn-sm' onclick="window.location='{{ route('categorias.show', [$categoria->id]) }}'">
                             <i class="far fa-eye"></i>
                         </button>
-                    </div>
+                    </div>-->
                     <div class='btn-group'>
                         <button type="button" class='btn btn-warning btn-sm' onclick="window.location='{{ route('categorias.edit', [$categoria->id]) }}'">
                             <i class="far fa-edit"></i>

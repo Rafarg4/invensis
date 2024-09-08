@@ -28,26 +28,29 @@ class RankingMTBController extends AppBaseController
      * @param Request $request
      *
      * @return Response
-     */
+     */ 
      public function consulta(Request $request)
-    {
-        $nombre_apellido = $request->get('buscar');
-        $categoriaSeleccionada = $request->input('categoria_filtro');
-        $rankingmtbs = DB::table('ranking_m_t_bs')
-            ->select('ci', 'nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis', 'fecha_seis', 'fecha_ocho', 'fecha_nueve', 'fecha_dies','fecha_once',
-            DB::raw('COALESCE(fecha_uno, 0) + COALESCE(fecha_dos, 0) + COALESCE(fecha_tres, 0) + COALESCE(fecha_cuatro, 0) + COALESCE(fecha_cinco, 0) + COALESCE(fecha_seis, 0) + COALESCE(fecha_siete, 0) + COALESCE(fecha_ocho, 0) + COALESCE(fecha_nueve, 0) + COALESCE(fecha_dies, 0 )+ COALESCE(fecha_dies, 0) AS totales'))
-            ->where('ranking_m_t_bs.deleted_at', null)
-            ->when($nombre_apellido, function ($query) use ($nombre_apellido) {
-                return $query->where('nombre_apellido', 'like', "%$nombre_apellido%");
-            })
-            ->when(!empty($categoriaSeleccionada), function ($query) use ($categoriaSeleccionada) {
-                return $query->where('categoria', $categoriaSeleccionada);
-            })
-            ->get();
-            $categorias = RankingMTB::distinct()->pluck('categoria');
+{
+    $nombre_apellido = $request->get('buscar');
+    $categoriaSeleccionada = $request->input('categoria_filtro');
 
-        return view('ranking_m_t_bs.consulta',compact('rankingmtbs','categorias')); 
-    }
+    $rankingmtbs = DB::table('ranking_m_t_bs')
+        ->select('ci', 'nombre_apellido', 'id', 'posicion', 'categoria', 'team', 'fecha_uno', 'fecha_dos', 'fecha_tres', 'fecha_cuatro', 'fecha_cinco', 'fecha_seis', 'fecha_siete', 'fecha_ocho', 'fecha_nueve', 'fecha_dies','fecha_once',
+        DB::raw('COALESCE(fecha_uno, 0) + COALESCE(fecha_dos, 0) + COALESCE(fecha_tres, 0) + COALESCE(fecha_cuatro, 0) + COALESCE(fecha_cinco, 0) + COALESCE(fecha_seis, 0) + COALESCE(fecha_siete, 0) + COALESCE(fecha_ocho, 0) + COALESCE(fecha_nueve, 0) + COALESCE(fecha_dies, 0 )+ COALESCE(fecha_dies, 0) AS totales'))
+        ->where('ranking_m_t_bs.deleted_at', null)
+        ->when($nombre_apellido, function ($query) use ($nombre_apellido) {
+            return $query->where('nombre_apellido', 'like', "%$nombre_apellido%");
+        })
+        ->when(!empty($categoriaSeleccionada), function ($query) use ($categoriaSeleccionada) {
+            return $query->where('tipo', $categoriaSeleccionada);
+        })
+        ->get();
+
+    // Generar una lista de categorías dinámicas para el dropdown
+    $categorias = RankingMTB::distinct()->pluck('categoria');
+
+    return view('ranking_m_t_bs.consulta', compact('rankingmtbs', 'categorias'));
+}
      public function ver_ranking_mtb ($id)
     {
         $rankingMTB = $this->rankingMTBRepository->find($id);

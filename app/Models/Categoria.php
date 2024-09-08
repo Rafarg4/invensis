@@ -29,7 +29,7 @@ class Categoria extends Model
 
     public $fillable = [
         'nombre',
-        'tipo_categoria',
+        'id_modalidad',
         'edad_ini',
         'edad_fin'
     ];
@@ -51,7 +51,6 @@ class Categoria extends Model
      */
     public static $rules = [
         'nombre' => 'required',
-        'tipo_categoria' => 'required'
     ];
 
      public function incripcion (){
@@ -59,6 +58,10 @@ class Categoria extends Model
     }
     public function Atleta (){
         return $this-> hasMany('App\Models\Atleta');
+    }
+         public function modalidad()
+    {
+        return $this->belongsTo(Modalidad::class, 'id_modalidad');
     }
     
 }

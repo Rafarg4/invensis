@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -156,3 +157,11 @@ Route::post('/guardar_atelta', [App\Http\Controllers\AtletaController::class, 'g
 
 
 Route::resource('bancos', App\Http\Controllers\BancoController::class);
+
+
+Route::resource('modalidads', App\Http\Controllers\ModalidadController::class);
+
+Route::get('/modalidades/{id_categoria}', [App\Http\Controllers\InscripcionController::class, 'getModalidades']);
+
+
+Route::get('/categorias_edad/{edad}', [App\Http\Controllers\InscripcionController::class, 'getCategoriasByEdad']);

@@ -58,6 +58,10 @@
     <input type="text" class="form-control" id="categoria" value="{{ $inscripcion->categoria->nombre ?? 'Sin asignar' }}">
 </div>
 <div class="form-group col-md-3">
+    <label for="categoria">Modalidad:</label>
+    <input type="text" class="form-control" id="categoria" value="{{ $inscripcion->id_modalidad ?? 'Sin asignar' }}">
+</div>
+<div class="form-group col-md-3">
     <label for="estado">Estado:</label>
     <input type="text" class="form-control" id="estado" value="{{ $inscripcion->estado }}">
 </div>

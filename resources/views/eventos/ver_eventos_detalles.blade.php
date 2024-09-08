@@ -105,7 +105,7 @@
                       } else {
                           $('#categoria').val(''); // Puedes dejar el campo vacío o establecer un valor predeterminado
                       }
-                    $('#tipo_categoriaInput').val(response.data.tipo_categoria);
+                    $('#modalidadInput').val(response.data.id_modalidad);
                     $('#nombreequipoInput').val(response.data.nombre_equipo);
                     $('#federacionInput').val(response.data.federacion_id);
                     $('#uciInput').val(response.data.uciid);
@@ -283,8 +283,8 @@
                         </div>
                         <div class="col-sm-6">  
                         <div class="form-group">
-                            {!! Form::label('tipo_categoria', 'Tipo categoria:') !!}
-                            {!! Form::text('tipo_categoria', null, ['class' => 'form-control','id' => 'tipo_categoriaInput', 'readonly' => 'readonly']) !!}
+                            {!! Form::label('id_modalidad', 'Modalidad:') !!}
+                            {!! Form::text('id_modalidad', null, ['class' => 'form-control','id' => 'modalidadInput', 'readonly' => 'readonly']) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('cat', 'Categoria:') !!}

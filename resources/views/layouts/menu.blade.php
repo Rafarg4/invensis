@@ -62,6 +62,13 @@
         <p>Categorias</p>
     </a>
 </li>
+<li class="nav-item">
+    <a href="{{ route('modalidads.index') }}"
+       class="nav-link {{ Request::is('modalidads*') ? 'active' : '' }}">
+       <i class="fa fa-clone" aria-hidden="true"></i>
+        <p>Modalidades</p>
+    </a>
+</li>
 @endcan
 <li class="nav-item">
     <a href="{{ route('inscripcions.index') }}"

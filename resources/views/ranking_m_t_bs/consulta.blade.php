@@ -157,6 +157,14 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
                             @endforeach
                         </select>
                     </div>
+                    <div class="input-group mt-3">
+                    <span class="input-group-text"><i class="fa fa-bicycle" aria-hidden="true"></i></span>
+                    <select name="categoria_filtro" class="form-control" onchange="this.form.submit()">
+                        <option value="">Sub Ranking</option>
+                        <option value="XCM">Ranking XCM</option>
+                        <option value="XCO">Ranking XCO</option>
+                    </select>
+                </div>
                 </form>
             </div>
         </div>

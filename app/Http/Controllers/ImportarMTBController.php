@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace App\Http\Controllers;
 use App\Imports\RankingMTBImport;
 use App\Http\Requests\CreateRankingRequest;
