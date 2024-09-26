@@ -251,9 +251,9 @@ $(document).ready(function() {
             <b>Version</b> 1.2.0
         </div>
         <strong>
-           Copyright &copy; 2023 <a href="https://fpc.org.py/">Federacion Paraguaya de Ciclismo</a>.
+           Copyright &copy; 2024 <a href="https://fpc.org.py/">Service MCE E.A.S.</a>.
         </strong>
-        All rights reserved.
+        Derechos Reservados
     </footer>
 </div>
 
