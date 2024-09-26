@@ -165,3 +165,18 @@ Route::get('/modalidades/{id_categoria}', [App\Http\Controllers\InscripcionContr
 
 
 Route::get('/categorias_edad/{edad}', [App\Http\Controllers\InscripcionController::class, 'getCategoriasByEdad']);
+
+
+Route::resource('clientes', App\Http\Controllers\ClienteController::class);
+
+
+Route::resource('cierres', App\Http\Controllers\CierreController::class);
+
+
+Route::resource('cobros', App\Http\Controllers\CobroController::class);
+
+
+Route::resource('electrodomesticos', App\Http\Controllers\ElectrodomesticoController::class);
+
+
+Route::resource('prestamos', App\Http\Controllers\PrestamosController::class);

@@ -32,7 +32,7 @@
     <![endif]-->
 <style type="text/css">
       body{
-      background:url("/fondo_pagina.jpeg");
+      background:url("/fondo_pagina");
       background-attachment: fixed;
       background-repeat: no-repeat;
       background-size: cover; 

@@ -18,10 +18,10 @@ class PermissionsSeeder extends Seeder
     {
   
     $permission_array =[];
-    array_push($permission_array,Permission::create(['name' => 'create_inscripcion']));
-    array_push($permission_array,Permission::create(['name' => 'edit_inscripcion']));
-    array_push($permission_array,Permission::create(['name' => 'delete_inscripcion']));
-    $UsuarioPermission= Permission::create(['name' => 'usuario_inscripcion']);
+    array_push($permission_array,Permission::create(['name' => 'crear']));
+    array_push($permission_array,Permission::create(['name' => 'editar']));
+    array_push($permission_array,Permission::create(['name' => 'eliminar']));
+    $UsuarioPermission= Permission::create(['name' => 'usuario']);
     $Adminpermission=Permission::create(['name' => 'admin']);
     array_push($permission_array,  $UsuarioPermission,$Adminpermission);
 
@@ -32,7 +32,7 @@ class PermissionsSeeder extends Seeder
     $AdminRole->syncPermissions($Adminpermission);
 
 
-	$UsuarioRole = Role::create(['name' => 'usuario_inscripcion']);
+	$UsuarioRole = Role::create(['name' => 'usuario']);
 	$UsuarioRole->syncPermissions($UsuarioPermission);
 
 	 $userSuperAdmin=User::create([
@@ -49,7 +49,7 @@ class PermissionsSeeder extends Seeder
             'password' => Hash::make('123456789'),
             'role' => 2,
         ]);
-	 $UserView->assignRole('usuario_inscripcion');
+	 $UserView->assignRole('usuario');
 
      $Admin=User::create([
             'name' => 'admin',

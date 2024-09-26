@@ -27,16 +27,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $inscripcions = Inscripcion::all()
-        ->where('id_user', auth()->user()->id);
-        //return $inscripcions;
-        $seguros = Seguro::all()
-        ->where('id_user', auth()->user()->id);
-        $documentos = Documento::all()
-        ->where('id_user', auth()->user()->id);
-        $pagos = Pago::all()
-        ->where('id_user', auth()->user()->id);
-        return view('home')->with('inscripcions', $inscripcions)->with('pagos', $pagos)->with('seguros', $seguros)->with('documentos', $documentos)->with('user', Auth::user());
+        
+        return view('home');
 
        
     }
