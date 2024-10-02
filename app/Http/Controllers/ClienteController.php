@@ -53,15 +53,25 @@ class ClienteController extends AppBaseController
      * @return Response
      */
     public function store(CreateClienteRequest $request)
-    {
-        $input = $request->all();
+{
+    $input = $request->all();
 
-        $cliente = $this->clienteRepository->create($input);
-
-        Flash::success('Cliente saved successfully.');
-
-        return redirect(route('clientes.index'));
+    // Autocompletar el campo 'mapa' con un enlace del mapa si está vacío
+    if (empty($input['mapa'])) {
+        // Construir un enlace de Google Maps utilizando latitud y longitud
+        $lat = $input['lat'];
+        $lng = $input['lang'];
+        $input['mapa'] = "https://www.google.com/maps?q={$lat},{$lng}&z=15";
     }
+
+    $cliente = $this->clienteRepository->create($input);
+
+    Flash::success('Cliente Guardado con Éxito.');
+
+    return redirect(route('clientes.index'));
+}
+
+    
 
     /**
      * Display the specified Cliente.
@@ -75,7 +85,7 @@ class ClienteController extends AppBaseController
         $cliente = $this->clienteRepository->find($id);
 
         if (empty($cliente)) {
-            Flash::error('Cliente not found');
+            Flash::error('No se encontro el cliente');
 
             return redirect(route('clientes.index'));
         }
@@ -95,7 +105,7 @@ class ClienteController extends AppBaseController
         $cliente = $this->clienteRepository->find($id);
 
         if (empty($cliente)) {
-            Flash::error('Cliente not found');
+            Flash::error('No se encontro el cliente');
 
             return redirect(route('clientes.index'));
         }
@@ -116,14 +126,14 @@ class ClienteController extends AppBaseController
         $cliente = $this->clienteRepository->find($id);
 
         if (empty($cliente)) {
-            Flash::error('Cliente not found');
+            Flash::error('No se encontro el cliente');
 
             return redirect(route('clientes.index'));
         }
 
         $cliente = $this->clienteRepository->update($request->all(), $id);
 
-        Flash::success('Cliente updated successfully.');
+        Flash::success('Cliente actualizado exitosamente..');
 
         return redirect(route('clientes.index'));
     }
@@ -142,14 +152,14 @@ class ClienteController extends AppBaseController
         $cliente = $this->clienteRepository->find($id);
 
         if (empty($cliente)) {
-            Flash::error('Cliente not found');
+            Flash::error('No se encontro el cliente');
 
             return redirect(route('clientes.index'));
         }
 
         $this->clienteRepository->delete($id);
 
-        Flash::success('Cliente deleted successfully.');
+        Flash::success('Cliente eliminado exitosamente.');
 
         return redirect(route('clientes.index'));
     }

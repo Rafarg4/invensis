@@ -248,10 +248,10 @@ $(document).ready(function() {
     <!-- Main Footer -->
     <footer class="main-footer">
         <div class="float-right d-none d-sm-block">
-            <b>Version</b> 1.2.0
+            <b>Version</b> 1.1.0
         </div>
         <strong>
-           Copyright &copy; 2024 <a href="https://fpc.org.py/">Service MCE E.A.S.</a>.
+           Copyright &copy; 2024 <a href="https:///">Service MCE E.A.S.</a>.
         </strong>
         Derechos Reservados
     </footer>

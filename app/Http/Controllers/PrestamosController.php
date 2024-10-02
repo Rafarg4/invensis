@@ -7,12 +7,14 @@ use App\Http\Requests\UpdatePrestamosRequest;
 use App\Repositories\PrestamosRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use App\Models\Cliente; // Importar el modelo Cliente
+use Carbon\Carbon; // Importar Carbon para manejar fechas
 use Flash;
 use Response;
 
 class PrestamosController extends AppBaseController
 {
-    /** @var PrestamosRepository $prestamosRepository*/
+    /** @var PrestamosRepository $prestamosRepository */
     private $prestamosRepository;
 
     public function __construct(PrestamosRepository $prestamosRepo)
@@ -42,7 +44,10 @@ class PrestamosController extends AppBaseController
      */
     public function create()
     {
-        return view('prestamos.create');
+        // Obtener la lista de clientes
+        $clientes = Cliente::pluck('nombre', 'id');
+
+        return view('prestamos.create', compact('clientes'));
     }
 
     /**
@@ -56,9 +61,20 @@ class PrestamosController extends AppBaseController
     {
         $input = $request->all();
 
+        // Procesar el monto: eliminar comas y puntos para guardar un número limpio
+        $input['monto'] = str_replace(['.', ','], '', $input['monto']);
+
+        // Calcular los días de mora antes de guardar
+        $fechaVencimiento = new \DateTime($input['fecha_vencimiento']);
+        $fechaPago = new \DateTime($input['fecha_pago']);
+        $diasMora = $fechaPago > $fechaVencimiento ? $fechaPago->diff($fechaVencimiento)->days : 0;
+
+        // Guardar los valores procesados en el input
+        $input['dias_mora'] = $diasMora;
+
         $prestamos = $this->prestamosRepository->create($input);
 
-        Flash::success('Prestamos saved successfully.');
+        Flash::success('Prestamo guardado correctamente.');
 
         return redirect(route('prestamos.index'));
     }
@@ -75,7 +91,7 @@ class PrestamosController extends AppBaseController
         $prestamos = $this->prestamosRepository->find($id);
 
         if (empty($prestamos)) {
-            Flash::error('Prestamos not found');
+            Flash::error('Préstamo no encontrado.');
 
             return redirect(route('prestamos.index'));
         }
@@ -95,12 +111,15 @@ class PrestamosController extends AppBaseController
         $prestamos = $this->prestamosRepository->find($id);
 
         if (empty($prestamos)) {
-            Flash::error('Prestamos not found');
+            Flash::error('Préstamo no encontrado.');
 
             return redirect(route('prestamos.index'));
         }
 
-        return view('prestamos.edit')->with('prestamos', $prestamos);
+        // Obtener la lista de clientes para el dropdown en la edición
+        $clientes = Cliente::pluck('nombre', 'id');
+
+        return view('prestamos.edit', compact('prestamos', 'clientes'));
     }
 
     /**
@@ -116,14 +135,26 @@ class PrestamosController extends AppBaseController
         $prestamos = $this->prestamosRepository->find($id);
 
         if (empty($prestamos)) {
-            Flash::error('Prestamos not found');
+            Flash::error('Prestamo no encontrado');
 
             return redirect(route('prestamos.index'));
         }
 
-        $prestamos = $this->prestamosRepository->update($request->all(), $id);
+        $input = $request->all();
 
-        Flash::success('Prestamos updated successfully.');
+        // Procesar el monto: eliminar comas y puntos
+        $input['monto'] = str_replace(['.', ','], '', $input['monto']);
+
+        // Calcular los días de mora antes de actualizar
+        $fechaVencimiento = new \DateTime($input['fecha_vencimiento']);
+        $fechaPago = new \DateTime($input['fecha_pago']);
+        $diasMora = $fechaPago > $fechaVencimiento ? $fechaPago->diff($fechaVencimiento)->days : 0;
+
+        $input['dias_mora'] = $diasMora;
+
+        $prestamos = $this->prestamosRepository->update($input, $id);
+
+        Flash::success('Prestamo actualizado correctamente.');
 
         return redirect(route('prestamos.index'));
     }
@@ -142,14 +173,14 @@ class PrestamosController extends AppBaseController
         $prestamos = $this->prestamosRepository->find($id);
 
         if (empty($prestamos)) {
-            Flash::error('Prestamos not found');
+            Flash::error('Préstamo no encontrado.');
 
             return redirect(route('prestamos.index'));
         }
 
         $this->prestamosRepository->delete($id);
 
-        Flash::success('Prestamos deleted successfully.');
+        Flash::success('Préstamo eliminado exitosamente.');
 
         return redirect(route('prestamos.index'));
     }

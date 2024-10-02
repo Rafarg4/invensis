@@ -43,7 +43,9 @@
 <!-- Mapa Field -->
 <div class="col-sm-12">
     {!! Form::label('mapa', 'Mapa:') !!}
-    <p>{{ $cliente->mapa }}</p>
+    @if($cliente->mapa)
+        <a href="{{ $cliente->mapa }}" target="_blank" class="btn btn-primary">Ver Mapa</a>
+    @endif
 </div>
 
 <!-- Lat Field -->
@@ -69,4 +71,5 @@
     {!! Form::label('updated_at', 'Updated At:') !!}
     <p>{{ $cliente->updated_at }}</p>
 </div>
+
 

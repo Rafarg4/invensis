@@ -6,34 +6,14 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-/**
- * Class Cliente
- * @package App\Models
- * @version September 23, 2024, 7:46 pm -04
- *
- * @property string $nombre
- * @property string $apellido
- * @property string $ci_numero
- * @property string $direccion
- * @property string $telefono
- * @property string $ciudad
- * @property string $pais
- * @property string $mapa
- * @property string $lat
- * @property string $lang
- */
 class Cliente extends Model
 {
     use SoftDeletes;
-
     use HasFactory;
 
     public $table = 'clientes';
-    
 
     protected $dates = ['deleted_at'];
-
-
 
     public $fillable = [
         'nombre',
@@ -77,12 +57,10 @@ class Cliente extends Model
         'ci_numero' => 'required',
         'direccion' => 'required',
         'telefono' => 'required',
-        'ciudad' => 'requried',
+        'ciudad' => 'required',  // Corregí el error aquí ("requried" a "required")
         'pais' => 'required',
-        'mapa' => 'tipo_cliente text text',
         'lat' => 'required',
         'lang' => 'required'
     ];
-
-    
 }
+
