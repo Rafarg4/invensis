@@ -1,3 +1,9 @@
+<!-- Zona Field -->
+<div class="col-sm-12">
+    {!! Form::label('zona', 'Zona:') !!}
+    <p>{{ $prestamos->zona }}</p>
+</div>
+
 <!-- Id Cliente Field -->
 <div class="col-sm-12">
     {!! Form::label('id_cliente', 'Id Cliente:') !!}
@@ -22,10 +28,14 @@
     <p>{{ $prestamos->fecha_pago }}</p>
 </div>
 
-<!-- Fecha Vencimineto Field -->
+<!-- Fechas de Vencimiento Field -->
 <div class="col-sm-12">
-    {!! Form::label('fecha_vencimineto', 'Fecha Vencimineto:') !!}
-    <p>{{ $prestamos->fecha_vencimineto }}</p>
+    {!! Form::label('fechas_vencimiento', 'Fechas de Vencimiento:') !!}
+    <p>
+        @foreach(json_decode($prestamos->fechas_vencimiento, true) as $fecha)
+            {{ $fecha }}<br>
+        @endforeach
+    </p>
 </div>
 
 <!-- Cantidad Cuota Field -->
@@ -46,6 +56,12 @@
     <p>{{ $prestamos->dias_mora }}</p>
 </div>
 
+<!-- Interés Field -->
+<div class="col-sm-12">
+    {!! Form::label('interes', 'Interés por Mora (%):') !!}
+    <p>{{ $prestamos->interes }}</p>
+</div>
+
 <!-- Created At Field -->
 <div class="col-sm-12">
     {!! Form::label('created_at', 'Created At:') !!}
@@ -57,4 +73,5 @@
     {!! Form::label('updated_at', 'Updated At:') !!}
     <p>{{ $prestamos->updated_at }}</p>
 </div>
+
 

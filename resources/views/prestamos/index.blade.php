@@ -25,7 +25,12 @@
 
         <div class="card">
             <div class="card-body p-0">
-                @include('prestamos.table')
+                @include('prestamos.table', ['prestamos' => $prestamos->map(function($prestamo) {
+                    // Convertimos el monto y total_interes a tipo float antes de formatearlos
+                    $prestamo->monto = number_format((float) $prestamo->monto, 0, ',', '.');
+                    $prestamo->total_interes = number_format((float) $prestamo->total_interes, 2, ',', '.');
+                    return $prestamo;
+                })])
 
                 <div class="card-footer clearfix">
                     <div class="float-right">
@@ -33,9 +38,10 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
 @endsection
+
+
 

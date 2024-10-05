@@ -7,12 +7,14 @@ use App\Http\Requests\UpdateCobroRequest;
 use App\Repositories\CobroRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use App\Models\Cliente; // Importar el modelo Cliente
+use Illuminate\Support\Facades\Auth; // Importar Auth para obtener el usuario autenticado
 use Flash;
 use Response;
 
 class CobroController extends AppBaseController
 {
-    /** @var CobroRepository $cobroRepository*/
+    /** @var CobroRepository $cobroRepository */
     private $cobroRepository;
 
     public function __construct(CobroRepository $cobroRepo)
@@ -20,13 +22,6 @@ class CobroController extends AppBaseController
         $this->cobroRepository = $cobroRepo;
     }
 
-    /**
-     * Display a listing of the Cobro.
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
     public function index(Request $request)
     {
         $cobros = $this->cobroRepository->all();
@@ -35,47 +30,34 @@ class CobroController extends AppBaseController
             ->with('cobros', $cobros);
     }
 
-    /**
-     * Show the form for creating a new Cobro.
-     *
-     * @return Response
-     */
     public function create()
     {
-        return view('cobros.create');
+        // Obtener la lista de clientes
+        $clientes = Cliente::pluck('nombre', 'id');
+
+        return view('cobros.create', compact('clientes'));
     }
 
-    /**
-     * Store a newly created Cobro in storage.
-     *
-     * @param CreateCobroRequest $request
-     *
-     * @return Response
-     */
     public function store(CreateCobroRequest $request)
     {
         $input = $request->all();
 
+        // Agregar el nombre del usuario autenticado al registro
+        $input['usuario'] = Auth::user()->name;
+
         $cobro = $this->cobroRepository->create($input);
 
-        Flash::success('Cobro saved successfully.');
+        Flash::success('Cobro guardado correctamente.');
 
         return redirect(route('cobros.index'));
     }
 
-    /**
-     * Display the specified Cobro.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
     public function show($id)
     {
         $cobro = $this->cobroRepository->find($id);
 
         if (empty($cobro)) {
-            Flash::error('Cobro not found');
+            Flash::error('Cobro no encontrado.');
 
             return redirect(route('cobros.index'));
         }
@@ -83,74 +65,59 @@ class CobroController extends AppBaseController
         return view('cobros.show')->with('cobro', $cobro);
     }
 
-    /**
-     * Show the form for editing the specified Cobro.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
     public function edit($id)
     {
         $cobro = $this->cobroRepository->find($id);
 
         if (empty($cobro)) {
-            Flash::error('Cobro not found');
+            Flash::error('Cobro no encontrado.');
 
             return redirect(route('cobros.index'));
         }
 
-        return view('cobros.edit')->with('cobro', $cobro);
+        // Obtener la lista de clientes para la edición
+        $clientes = Cliente::pluck('nombre', 'id');
+
+        return view('cobros.edit', compact('cobro', 'clientes'));
     }
 
-    /**
-     * Update the specified Cobro in storage.
-     *
-     * @param int $id
-     * @param UpdateCobroRequest $request
-     *
-     * @return Response
-     */
     public function update($id, UpdateCobroRequest $request)
     {
         $cobro = $this->cobroRepository->find($id);
 
         if (empty($cobro)) {
-            Flash::error('Cobro not found');
+            Flash::error('Cobro no encontrado.');
 
             return redirect(route('cobros.index'));
         }
 
-        $cobro = $this->cobroRepository->update($request->all(), $id);
+        // Agregar el nombre del usuario autenticado al registro
+        $input = $request->all();
+        $input['usuario'] = Auth::user()->name;
 
-        Flash::success('Cobro updated successfully.');
+        $cobro = $this->cobroRepository->update($input, $id);
+
+        Flash::success('Cobro actualizado correctamente.');
 
         return redirect(route('cobros.index'));
     }
 
-    /**
-     * Remove the specified Cobro from storage.
-     *
-     * @param int $id
-     *
-     * @throws \Exception
-     *
-     * @return Response
-     */
     public function destroy($id)
     {
         $cobro = $this->cobroRepository->find($id);
 
         if (empty($cobro)) {
-            Flash::error('Cobro not found');
+            Flash::error('Cobro no encontrado.');
 
             return redirect(route('cobros.index'));
         }
 
         $this->cobroRepository->delete($id);
 
-        Flash::success('Cobro deleted successfully.');
+        Flash::success('Cobro eliminado correctamente.');
 
         return redirect(route('cobros.index'));
     }
 }
+
+

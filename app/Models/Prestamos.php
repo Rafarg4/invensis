@@ -15,10 +15,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $monto
  * @property string $fecha_inicio
  * @property string $fecha_pago
- * @property string $fecha_vencimiento
+ * @property array $fechas_vencimiento
  * @property string $cantidad_cuota
  * @property string $tipo_prestamo
  * @property string $dias_mora
+ * @property int $id_electrodomestico
+ * @property string $zona
  */
 class Prestamos extends Model
 {
@@ -32,10 +34,12 @@ class Prestamos extends Model
         'monto',
         'fecha_inicio',
         'fecha_pago',
-        'fecha_vencimiento',
+        'fechas_vencimiento', // Cambiado a array para múltiples fechas
         'cantidad_cuota',
         'tipo_prestamo',
-        'dias_mora'
+        'dias_mora',
+        'id_electrodomestico',
+        'zona' // Nuevo campo
     ];
 
     protected $casts = [
@@ -43,10 +47,12 @@ class Prestamos extends Model
         'monto' => 'string',
         'fecha_inicio' => 'date',
         'fecha_pago' => 'date',
-        'fecha_vencimiento' => 'date',
+        'fechas_vencimiento' => 'array', // Cambiado a array
         'cantidad_cuota' => 'string',
         'tipo_prestamo' => 'string',
-        'dias_mora' => 'integer'
+        'dias_mora' => 'integer',
+        'id_electrodomestico' => 'integer',
+        'zona' => 'string' // Nuevo campo
     ];
 
     public static $rules = [
@@ -54,9 +60,18 @@ class Prestamos extends Model
         'monto' => 'required',
         'fecha_inicio' => 'required|date',
         'fecha_pago' => 'required|date',
-        'fecha_vencimiento' => 'required|date',
         'cantidad_cuota' => 'required|integer',
         'tipo_prestamo' => 'required',
-        'dias_mora' => 'nullable|integer'
+        'dias_mora' => 'nullable|integer',
+        'id_electrodomestico' => 'nullable|integer',
+        'zona' => 'required|string' // Nueva regla de validación
     ];
+
+    /**
+     * Relación con el modelo Electrodomestico
+     */
+    public function electrodomestico()
+    {
+        return $this->belongsTo(Electrodomestico::class, 'id_electrodomestico');
+    }
 }
