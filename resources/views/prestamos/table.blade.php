@@ -26,7 +26,7 @@
                 <td>{{ $prestamo->fecha_pago }}</td>
                 <td>
                     @php
-                        $fechas = is_array($prestamo->fechas_vencimiento) ? $prestamo->fechas_vencimiento : json_decode($prestamo->fechas_vencimiento, true);
+                        $fechas = is_array($prestamo->fecha_vencimiento) ? $prestamo->fecha_vencimiento : json_decode($prestamo->fechas_vencimiento, true);
                     @endphp
                     @if(is_array($fechas))
                         @foreach($fechas as $fecha)

@@ -15,7 +15,6 @@ use Response;
 
 class PrestamosController extends AppBaseController
 {
-    /** @var PrestamosRepository $prestamosRepository */
     private $prestamosRepository;
 
     public function __construct(PrestamosRepository $prestamosRepo)
@@ -44,21 +43,17 @@ class PrestamosController extends AppBaseController
 
         // Limpiar y procesar el monto: eliminar puntos y comas para convertirlo en un número limpio
         $input['monto'] = str_replace(['.', ','], '', $input['monto']);
-        $input['monto'] = (float) $input['monto']; // Asegurarse de que sea numérico
-
-        // Guardar las fechas de vencimiento ingresadas por el usuario
-        $input['fechas_vencimiento'] = json_encode($input['fechas_vencimiento']);
+        $input['monto'] = (float) $input['monto']; 
 
         // Calcular días de mora e interés
         $fechaPago = Carbon::parse($input['fecha_pago']);
-        $fechasVencimientoArray = json_decode($input['fechas_vencimiento'], true);
-        $fechaVencimiento = Carbon::parse(end($fechasVencimientoArray));
+        $fechaVencimiento = Carbon::parse($input['fecha_vencimiento']);
         $diasMora = $fechaPago->diffInDays($fechaVencimiento, false);
         $input['dias_mora'] = $diasMora > 0 ? $diasMora : 0;
 
         // Calcular el interés según los días de mora
-        $interes = $request->input('interes'); // Obtener el interés proporcionado por el usuario
-        $input['interes'] = (float) str_replace(',', '.', $interes); // Convertir a float para cálculos
+        $interes = $request->input('interes');
+        $input['interes'] = (float) str_replace(',', '.', $interes);
 
         // Calcular el monto acumulado de mora
         $input['monto_mora_acumulado'] = $input['monto'] * ($input['interes'] / 100) * $input['dias_mora'];
@@ -68,22 +63,6 @@ class PrestamosController extends AppBaseController
         Flash::success('Prestamo guardado correctamente.');
 
         return redirect(route('prestamos.index'));
-    }
-
-    public function show($id)
-    {
-        $prestamos = $this->prestamosRepository->find($id);
-
-        if (empty($prestamos)) {
-            Flash::error('Préstamo no encontrado.');
-
-            return redirect(route('prestamos.index'));
-        }
-
-        // Formatear el monto para mostrarlo correctamente en la vista
-        $prestamos->monto = number_format($prestamos->monto, 0, ',', '.');
-
-        return view('prestamos.show')->with('prestamos', $prestamos);
     }
 
     public function edit($id)
@@ -96,9 +75,10 @@ class PrestamosController extends AppBaseController
             return redirect(route('prestamos.index'));
         }
 
-        // Convertir el monto y monto_mora_acumulado a float si es necesario antes de formatear
+        // Convertir el monto, monto_mora_acumulado y el interés a float si es necesario antes de formatear
         $prestamos->monto = number_format((float) $prestamos->monto, 0, ',', '.');
         $prestamos->monto_mora_acumulado = isset($prestamos->monto_mora_acumulado) ? number_format((float) $prestamos->monto_mora_acumulado, 2, ',', '.') : '0.00';
+        $prestamos->interes = isset($prestamos->interes) ? number_format((float) $prestamos->interes, 2, ',', '.') : '0.00';
 
         $clientes = Cliente::pluck('nombre', 'id');
         $electrodomesticos = Electrodomestico::pluck('nombre', 'id');
@@ -120,21 +100,17 @@ class PrestamosController extends AppBaseController
 
         // Limpiar y procesar el monto: eliminar puntos y comas para convertirlo en un número limpio
         $input['monto'] = str_replace(['.', ','], '', $input['monto']);
-        $input['monto'] = (float) $input['monto']; // Asegurarse de que sea numérico
-
-        // Guardar las fechas de vencimiento ingresadas por el usuario
-        $input['fechas_vencimiento'] = json_encode($input['fechas_vencimiento']);
+        $input['monto'] = (float) $input['monto'];
 
         // Calcular días de mora e interés
         $fechaPago = Carbon::parse($input['fecha_pago']);
-        $fechasVencimientoArray = json_decode($input['fechas_vencimiento'], true);
-        $fechaVencimiento = Carbon::parse(end($fechasVencimientoArray));
+        $fechaVencimiento = Carbon::parse($input['fecha_vencimiento']);
         $diasMora = $fechaPago->diffInDays($fechaVencimiento, false);
         $input['dias_mora'] = $diasMora > 0 ? $diasMora : 0;
 
         // Calcular el interés según los días de mora
-        $interes = $request->input('interes'); // Obtener el interés proporcionado por el usuario
-        $input['interes'] = (float) str_replace(',', '.', $interes); // Convertir a float para cálculos
+        $interes = $request->input('interes');
+        $input['interes'] = (float) str_replace(',', '.', $interes);
 
         // Calcular el monto acumulado de mora
         $input['monto_mora_acumulado'] = $input['monto'] * ($input['interes'] / 100) * $input['dias_mora'];
@@ -163,6 +139,8 @@ class PrestamosController extends AppBaseController
         return redirect(route('prestamos.index'));
     }
 }
+
+
 
 
 

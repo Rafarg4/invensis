@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $monto
  * @property string $fecha_inicio
  * @property string $fecha_pago
- * @property array $fechas_vencimiento
+ * @property string $fecha_vencimiento
  * @property string $cantidad_cuota
  * @property string $tipo_prestamo
  * @property string $dias_mora
@@ -34,7 +34,7 @@ class Prestamos extends Model
         'monto',
         'fecha_inicio',
         'fecha_pago',
-        'fechas_vencimiento', // Cambiado a array para múltiples fechas
+        'fecha_vencimiento', // Cambiado a fecha_vencimiento
         'cantidad_cuota',
         'tipo_prestamo',
         'dias_mora',
@@ -47,7 +47,7 @@ class Prestamos extends Model
         'monto' => 'string',
         'fecha_inicio' => 'date',
         'fecha_pago' => 'date',
-        'fechas_vencimiento' => 'array', // Cambiado a array
+        'fecha_vencimiento' => 'date', // Cambiado a fecha_vencimiento
         'cantidad_cuota' => 'string',
         'tipo_prestamo' => 'string',
         'dias_mora' => 'integer',
@@ -60,6 +60,7 @@ class Prestamos extends Model
         'monto' => 'required',
         'fecha_inicio' => 'required|date',
         'fecha_pago' => 'required|date',
+        'fecha_vencimiento' => 'required|date', // Cambiado a fecha_vencimiento
         'cantidad_cuota' => 'required|integer',
         'tipo_prestamo' => 'required',
         'dias_mora' => 'nullable|integer',
