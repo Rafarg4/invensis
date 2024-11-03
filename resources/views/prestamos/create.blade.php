@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>Crear Prestamos</h1>
+                    <h1>Crear Préstamo</h1>
                 </div>
             </div>
         </div>
@@ -20,11 +20,9 @@
             {!! Form::open(['route' => 'prestamos.store']) !!}
 
             <div class="card-body">
-
                 <div class="row">
-                    @include('prestamos.fields')
+                    @include('prestamos.fields') <!-- Incluye los campos existentes de préstamos -->
                 </div>
-
             </div>
 
             <div class="card-footer">
@@ -33,7 +31,7 @@
             </div>
 
             {!! Form::close() !!}
-
         </div>
     </div>
 @endsection
+

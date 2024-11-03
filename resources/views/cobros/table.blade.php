@@ -1,12 +1,12 @@
-<div class="table-responsive">
-<table class="table table-bordered">
+ <div class="table-responsive" style="padding:15px;font-size: 12px;">
+    <table class="table" id="table">
     <thead>
         <tr>
             <th>Id Cliente</th>
             <th>Monto Cobro</th>
             <th>Fecha Cobro</th>
             <th>Usuario</th> <!-- Nueva columna para mostrar el usuario -->
-            <th colspan="3">Action</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>

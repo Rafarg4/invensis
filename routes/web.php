@@ -180,3 +180,12 @@ Route::resource('electrodomesticos', App\Http\Controllers\ElectrodomesticoContro
 
 
 Route::resource('prestamos', App\Http\Controllers\PrestamosController::class);
+
+
+Route::get('prestamos/{id}/pdf', [App\Http\Controllers\PrestamosController::class, 'downloadPdf'])->name('prestamos.downloadPdf');
+
+
+Route::get('/cobros/prestamos/{id_cliente}', [App\Http\Controllers\CobroController::class, 'getPrestamos']);
+
+
+Route::get('/cobros/saldos/{prestamoId}', [App\Http\Controllers\CobroController::class, 'getSaldos']);

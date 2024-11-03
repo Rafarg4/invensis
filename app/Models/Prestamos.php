@@ -6,22 +6,6 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-/**
- * Class Prestamos
- * @package App\Models
- * @version October 2, 2024
- *
- * @property string $id_cliente
- * @property string $monto
- * @property string $fecha_inicio
- * @property string $fecha_pago
- * @property string $fecha_vencimiento
- * @property string $cantidad_cuota
- * @property string $tipo_prestamo
- * @property string $dias_mora
- * @property int $id_electrodomestico
- * @property string $zona
- */
 class Prestamos extends Model
 {
     use SoftDeletes, HasFactory;
@@ -34,45 +18,50 @@ class Prestamos extends Model
         'monto',
         'fecha_inicio',
         'fecha_pago',
-        'fecha_vencimiento', // Cambiado a fecha_vencimiento
         'cantidad_cuota',
         'tipo_prestamo',
-        'dias_mora',
         'id_electrodomestico',
-        'zona' // Nuevo campo
+        'zona',
+        'monto_cuota',
+        'numero_prestamo',
+        'frecuencia_pago' // Asegura que este campo es asignable
     ];
 
     protected $casts = [
         'id_cliente' => 'string',
-        'monto' => 'string',
+        'monto' => 'decimal:2',
         'fecha_inicio' => 'date',
         'fecha_pago' => 'date',
-        'fecha_vencimiento' => 'date', // Cambiado a fecha_vencimiento
-        'cantidad_cuota' => 'string',
+        'cantidad_cuota' => 'integer',
         'tipo_prestamo' => 'string',
-        'dias_mora' => 'integer',
         'id_electrodomestico' => 'integer',
-        'zona' => 'string' // Nuevo campo
+        'zona' => 'string',
+        'monto_cuota' => 'decimal:2',
+        'numero_prestamo' => 'integer',
+        'frecuencia_pago' => 'string' // Definimos el tipo de dato
     ];
 
     public static $rules = [
-        'id_cliente' => 'required',
-        'monto' => 'required',
+        'id_cliente' => 'required|integer',
+        'monto' => 'required|numeric',
         'fecha_inicio' => 'required|date',
-        'fecha_pago' => 'required|date',
-        'fecha_vencimiento' => 'required|date', // Cambiado a fecha_vencimiento
         'cantidad_cuota' => 'required|integer',
-        'tipo_prestamo' => 'required',
-        'dias_mora' => 'nullable|integer',
-        'id_electrodomestico' => 'nullable|integer',
-        'zona' => 'required|string' // Nueva regla de validación
+        'tipo_prestamo' => 'required|string',
+        'monto_cuota' => 'required|numeric',
+        'frecuencia_pago' => 'required|string'
     ];
 
     /**
-     * Relación con el modelo Electrodomestico
+     * Relación con la tabla 'saldos' para obtener las cuotas de un préstamo.
      */
-    public function electrodomestico()
+    public function saldos()
     {
-        return $this->belongsTo(Electrodomestico::class, 'id_electrodomestico');
+        return $this->hasMany(Saldo::class, 'numero_prestamo', 'numero_prestamo');
+    }
+     public function cliente (){
+     return $this-> belongsTo('App\Models\Cliente','id_cliente');
+
     }
 }
+
+

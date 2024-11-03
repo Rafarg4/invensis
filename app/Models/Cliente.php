@@ -62,5 +62,6 @@ class Cliente extends Model
         'lat' => 'required',
         'lang' => 'required'
     ];
+    
 }
 

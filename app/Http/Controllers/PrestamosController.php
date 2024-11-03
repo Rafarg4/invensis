@@ -8,11 +8,12 @@ use App\Repositories\PrestamosRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use App\Models\Cliente;
-use App\Models\Electrodomestico;
+use App\Models\Prestamos;
+use App\Models\Saldo;
 use Carbon\Carbon;
 use Flash;
 use Response;
-
+use PDF;
 class PrestamosController extends AppBaseController
 {
     private $prestamosRepository;
@@ -22,123 +23,223 @@ class PrestamosController extends AppBaseController
         $this->prestamosRepository = $prestamosRepo;
     }
 
+    // Método para listar todos los préstamos con búsqueda
     public function index(Request $request)
     {
-        $prestamos = $this->prestamosRepository->all();
+        $prestamos = $this->prestamosRepository->allQuery();
+
+        if ($request->filled('buscar_general')) {
+            $prestamos->where(function ($query) use ($request) {
+                $query->where('numero_prestamo', $request->buscar_general)
+                      ->orWhere('id_cliente', 'like', '%' . $request->buscar_general . '%')
+                      ->orWhereHas('cliente', function ($q) use ($request) {
+                          $q->where('ci', 'like', '%' . $request->buscar_general . '%');
+                      });
+            });
+        }
+
+        $prestamos = $prestamos->get();
 
         return view('prestamos.index')->with('prestamos', $prestamos);
     }
 
+    // Método para mostrar los detalles de un préstamo con cuotas pendientes
+    public function show($id)
+    {
+        // Cargar el préstamo con la relación `saldos` usando el modelo `Prestamos` directamente
+        $prestamo = Prestamos::with('saldos')->find($id);
+
+        if (empty($prestamo)) {
+            Flash::error('Préstamo no encontrado.');
+            return redirect(route('prestamos.index'));
+        }
+
+        // Obtener cuotas pendientes desde la relación `saldos` del préstamo
+        $cuotasPendientes = $prestamo->saldos->where('estado', 'pendiente')->sortBy('fecha_cuota');
+
+        return view('prestamos.show')->with([
+            'prestamo' => $prestamo,
+            'cuotasPendientes' => $cuotasPendientes,
+        ]);
+    }
+    public function downloadPdf($id)
+{
+    // Cargar el préstamo con la relación `saldos`
+    $prestamo = Prestamos::with('saldos')->find($id);
+
+    if (empty($prestamo)) {
+        Flash::error('Préstamo no encontrado.');
+        return redirect(route('prestamos.index'));
+    }
+
+    // Obtener cuotas pendientes desde la relación `saldos`
+    $cuotasPendientes = $prestamo->saldos->where('estado', 'pendiente')->sortBy('fecha_cuota');
+
+    // Generar el PDF
+    $pdf = PDF::loadView('prestamos.pdf', [
+        'prestamo' => $prestamo,
+        'cuotasPendientes' => $cuotasPendientes,
+    ]);
+
+    // Descargar el PDF
+    return $pdf->download('prestamo_' . $prestamo->numero_prestamo . '.pdf');
+}
+
+    // Método para crear un nuevo préstamo
     public function create()
     {
         $clientes = Cliente::pluck('nombre', 'id');
-        $electrodomesticos = Electrodomestico::pluck('nombre', 'id');
+        $cuotasPendientes = collect();  // Inicialmente no habrá cuotas pendientes en la creación
+        // Obtén el último préstamo registrado
+         $ultimoPrestamo = Prestamos::orderBy('numero_prestamo', 'desc')->first();
+    
+        // Calcula el siguiente número de préstamo
+         $siguienteNumeroPrestamo = $ultimoPrestamo ? $ultimoPrestamo->numero_prestamo + 1 : 1;
 
-        return view('prestamos.create', compact('clientes', 'electrodomesticos'));
+        return view('prestamos.create')->with([
+            'clientes' => $clientes,
+            'cuotasPendientes' => $cuotasPendientes, 'siguienteNumeroPrestamo' => $siguienteNumeroPrestamo,
+        ]);
     }
 
-    public function store(CreatePrestamosRequest $request)
-    {
-        $input = $request->all();
+    public function store(Request $request)
+{
+    // Validar y guardar el préstamo
+    $prestamo = new Prestamos();
+    $prestamo->numero_prestamo = $request->numero_prestamo;
+    $prestamo->tipo_prestamo = $request->tipo_prestamo;
+    $prestamo->monto = $request->monto;
+    $prestamo->zona = $request->zona;
+    $prestamo->monto_cuota = $request->monto_cuota;
+    $prestamo->id_cliente = $request->id_cliente;
+    $prestamo->cantidad_cuota = $request->cantidad_cuota;
+    $prestamo->fecha_inicio = $request->fecha_inicio;
+    $prestamo->frecuencia_pago = $request->frecuencia_pago;
+    $prestamo->save();
+ 
+      // Decodificar el JSON de cuotas
+    $cuotas = json_decode($request->input('cuotas'), true);
 
-        // Limpiar y procesar el monto: eliminar puntos y comas para convertirlo en un número limpio
-        $input['monto'] = str_replace(['.', ','], '', $input['monto']);
-        $input['monto'] = (float) $input['monto']; 
-
-        // Calcular días de mora e interés
-        $fechaPago = Carbon::parse($input['fecha_pago']);
-        $fechaVencimiento = Carbon::parse($input['fecha_vencimiento']);
-        $diasMora = $fechaPago->diffInDays($fechaVencimiento, false);
-        $input['dias_mora'] = $diasMora > 0 ? $diasMora : 0;
-
-        // Calcular el interés según los días de mora
-        $interes = $request->input('interes');
-        $input['interes'] = (float) str_replace(',', '.', $interes);
-
-        // Calcular el monto acumulado de mora
-        $input['monto_mora_acumulado'] = $input['monto'] * ($input['interes'] / 100) * $input['dias_mora'];
-
-        $prestamos = $this->prestamosRepository->create($input);
-
-        Flash::success('Prestamo guardado correctamente.');
-
-        return redirect(route('prestamos.index'));
+    if (is_array($cuotas)) {
+        foreach ($cuotas as $cuota) {
+            $saldo = new Saldo();
+            $saldo->id_cliente = $prestamo->id_cliente;
+            $saldo->numero_prestamo = $prestamo->numero_prestamo;
+            $saldo->fecha_cuota = $cuota['fecha'];
+            $saldo->monto_cuota = $cuota['monto'];
+            $saldo->estado = 'pendiente';
+            $saldo->save();
+        }
+    } else {
+        return redirect()->back()->withErrors(['error' => 'Error al generar las cuotas.']);
     }
 
+    return redirect()->route('prestamos.index')->with('success', 'Préstamo y cuotas guardados correctamente.');
+}
+
+    // Método para mostrar la vista de edición de un préstamo
     public function edit($id)
     {
-        $prestamos = $this->prestamosRepository->find($id);
+        $prestamo = $this->prestamosRepository->find($id);
 
-        if (empty($prestamos)) {
+        if (empty($prestamo)) {
             Flash::error('Préstamo no encontrado.');
-
             return redirect(route('prestamos.index'));
         }
-
-        // Convertir el monto, monto_mora_acumulado y el interés a float si es necesario antes de formatear
-        $prestamos->monto = number_format((float) $prestamos->monto, 0, ',', '.');
-        $prestamos->monto_mora_acumulado = isset($prestamos->monto_mora_acumulado) ? number_format((float) $prestamos->monto_mora_acumulado, 2, ',', '.') : '0.00';
-        $prestamos->interes = isset($prestamos->interes) ? number_format((float) $prestamos->interes, 2, ',', '.') : '0.00';
 
         $clientes = Cliente::pluck('nombre', 'id');
-        $electrodomesticos = Electrodomestico::pluck('nombre', 'id');
+        $cuotasPendientes = Saldo::where('numero_prestamo', $prestamo->numero_prestamo)
+                                  ->where('estado', 'pendiente')
+                                  ->orderBy('fecha_cuota')
+                                  ->get();
 
-        return view('prestamos.edit', compact('prestamos', 'clientes', 'electrodomesticos'));
+        return view('prestamos.edit')->with([
+            'prestamo' => $prestamo,
+            'clientes' => $clientes,
+            'cuotasPendientes' => $cuotasPendientes,
+        ]);
     }
 
+    // Método para actualizar un préstamo existente
     public function update($id, UpdatePrestamosRequest $request)
     {
-        $prestamos = $this->prestamosRepository->find($id);
-
-        if (empty($prestamos)) {
-            Flash::error('Prestamo no encontrado.');
-
+        $prestamo = $this->prestamosRepository->find($id);
+    
+        if (empty($prestamo)) {
+            Flash::error('Préstamo no encontrado.');
             return redirect(route('prestamos.index'));
         }
-
+    
         $input = $request->all();
-
-        // Limpiar y procesar el monto: eliminar puntos y comas para convertirlo en un número limpio
-        $input['monto'] = str_replace(['.', ','], '', $input['monto']);
-        $input['monto'] = (float) $input['monto'];
-
-        // Calcular días de mora e interés
-        $fechaPago = Carbon::parse($input['fecha_pago']);
-        $fechaVencimiento = Carbon::parse($input['fecha_vencimiento']);
-        $diasMora = $fechaPago->diffInDays($fechaVencimiento, false);
-        $input['dias_mora'] = $diasMora > 0 ? $diasMora : 0;
-
-        // Calcular el interés según los días de mora
-        $interes = $request->input('interes');
-        $input['interes'] = (float) str_replace(',', '.', $interes);
-
-        // Calcular el monto acumulado de mora
-        $input['monto_mora_acumulado'] = $input['monto'] * ($input['interes'] / 100) * $input['dias_mora'];
-
-        $prestamos = $this->prestamosRepository->update($input, $id);
-
-        Flash::success('Prestamo actualizado correctamente.');
-
+    
+        // Procesar los montos eliminando los puntos y comas
+        $input['monto'] = (float) str_replace(['.', ','], '', $input['monto']);
+        $input['monto_cuota'] = (float) str_replace(['.', ','], '', $input['monto_cuota']);
+    
+        // Guardar la actualización del préstamo
+        $prestamo = $this->prestamosRepository->update($input, $id);
+    
+        // Actualizar las cuotas en la tabla de saldos
+        Saldo::where('numero_prestamo', $prestamo->numero_prestamo)->delete();
+        $this->generarSaldos($prestamo, $input);
+    
+        Flash::success('Préstamo actualizado correctamente.');
         return redirect(route('prestamos.index'));
     }
 
+    // Método para eliminar un préstamo
     public function destroy($id)
     {
-        $prestamos = $this->prestamosRepository->find($id);
+        $prestamo = $this->prestamosRepository->find($id);
 
-        if (empty($prestamos)) {
+        if (empty($prestamo)) {
             Flash::error('Préstamo no encontrado.');
-
             return redirect(route('prestamos.index'));
         }
 
+        // Eliminar las cuotas asociadas al préstamo en la tabla de saldos
+        Saldo::where('numero_prestamo', $prestamo->numero_prestamo)->delete();
         $this->prestamosRepository->delete($id);
 
-        Flash::success('Préstamo eliminado exitosamente.');
-
+        Flash::success('Préstamo eliminado correctamente.');
         return redirect(route('prestamos.index'));
     }
+
+   
+
+    // Método para calcular las fechas de las cuotas
+    public function calcularFechas($fechaInicio, $frecuenciaPago, $cantidadCuotas)
+    {
+        $fechas = [];
+
+        for ($i = 0; $i < $cantidadCuotas; $i++) {
+            switch ($frecuenciaPago) {
+                case 'Diario':
+                    $fecha = $fechaInicio->copy()->addDays($i);
+                    break;
+                case 'Semanal':
+                    $fecha = $fechaInicio->copy()->addWeeks($i);
+                    break;
+                case 'Quincenal':
+                    $fecha = $fechaInicio->copy()->addDays(15 * $i);
+                    break;
+                case 'Mensual':
+                    $fecha = $fechaInicio->copy()->addMonths($i);
+                    break;
+                default:
+                    $fecha = $fechaInicio;
+                    break;
+            }
+            $fechas[] = $fecha->format('Y-m-d');
+        }
+
+        return $fechas;
+    }
 }
+
+
+
+
 
 
 

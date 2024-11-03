@@ -17,16 +17,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Cobro extends Model
 {
-    use SoftDeletes;
-
-    use HasFactory;
+    use SoftDeletes, HasFactory;
 
     public $table = 'cobros';
-    
-
     protected $dates = ['deleted_at'];
-
-
 
     public $fillable = [
         'id_cliente',
@@ -42,8 +36,8 @@ class Cobro extends Model
      */
     protected $casts = [
         'id_cliente' => 'string',
-        'monto_cobro' => 'string',
-        'fecha_cobro' => 'string'
+        'monto_cobro' => 'decimal:2',
+        'fecha_cobro' => 'date'
     ];
 
     /**
@@ -57,5 +51,27 @@ class Cobro extends Model
         'fecha_cobro' => 'required'
     ];
 
-    
+    /**
+     * Relación con el modelo Cliente
+     */
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class, 'id_cliente');
+    }
+
+    /**
+     * Relación con el modelo Saldo para obtener cuotas pendientes del cliente
+     */
+    public function cuotasPendientes()
+    {
+        return $this->hasManyThrough(
+            Saldo::class,
+            Prestamos::class,
+            'id_cliente',       // Foreign key en Prestamos
+            'numero_prestamo',  // Foreign key en Saldo
+            'id_cliente',       // Foreign key en Cobro
+            'numero_prestamo'   // Local key en Prestamos
+        )->where('estado', 'pendiente');
+    }
 }
+
