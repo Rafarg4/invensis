@@ -28,8 +28,8 @@
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('cobros.index') }}" class="btn btn-default">Nuevo</a>
+                {!! Form::submit('Guardar', ['class' => 'btn btn-primary', 'id' => 'guardarDetalles']) !!}
+                <a href="{{ route('cobros.index') }}" class="btn btn-default">Cancelar</a>
             </div>
 
             {!! Form::close() !!}

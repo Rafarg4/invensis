@@ -24,7 +24,8 @@ class PrestamosRepository extends BaseRepository
         'fecha_vencimineto',
         'cantidad_cuota',
         'tipo_prestamo',
-        'dias_mora'
+        'dias_mora',
+        'id_electrodomestico'
     ];
 
     /**

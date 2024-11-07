@@ -189,3 +189,8 @@ Route::get('/cobros/prestamos/{id_cliente}', [App\Http\Controllers\CobroControll
 
 
 Route::get('/cobros/saldos/{prestamoId}', [App\Http\Controllers\CobroController::class, 'getSaldos']);
+
+
+Route::post('/cobros/guardar-detalles', [App\Http\Controllers\CobroController::class, 'guardarDetalles'])->name('cobros.guardarDetalles');
+
+Route::get('descargar_pago/{id}', [App\Http\Controllers\CobroController::class, 'descargar_pago'])->name('descargar_pago');

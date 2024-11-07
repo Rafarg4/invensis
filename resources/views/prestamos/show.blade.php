@@ -69,7 +69,13 @@
                     {!! Form::label('monto_cuota', 'Monto de la Cuota:') !!}
                     <p>{{ number_format($prestamo->monto_cuota, 0, ',', '.') }}</p>
                 </div>
-            </div>
+               @if(!empty($prestamo->id_electrodomestico))
+                    <div class="col-sm-4">
+                        {!! Form::label('electrodomestico', 'Electrodoméstico:') !!}
+                        <p>{{ $prestamo->electrodomestico ? $prestamo->electrodomestico->nombre : 'Cliente no asignado' }}</p>
+                    </div>
+                @endif
+                </div>
 
    <div class="row border p-3 mb-3" style="border: 1px solid black; border-radius: 5px;">
                 <!-- Listado de Cuotas Generadas -->
@@ -87,7 +93,7 @@
                         <tbody>
                             @foreach($prestamo->saldos as $cuota)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $cuota->nro_cuota }}</td>
                                     <td>{{ $cuota->fecha_cuota }}</td>
                                     <td>{{ number_format($cuota->monto_cuota, 0, ',', '.') }}</td>
                                     <td>{{ $cuota->estado == 'pendiente' ? 'Pendiente' : 'Pagada' }}</td>

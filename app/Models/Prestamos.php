@@ -23,6 +23,7 @@ class Prestamos extends Model
         'id_electrodomestico',
         'zona',
         'monto_cuota',
+        'id_electrodomestico',
         'numero_prestamo',
         'frecuencia_pago' // Asegura que este campo es asignable
     ];
@@ -60,6 +61,10 @@ class Prestamos extends Model
     }
      public function cliente (){
      return $this-> belongsTo('App\Models\Cliente','id_cliente');
+
+    }
+     public function electrodomestico (){
+     return $this-> belongsTo('App\Models\Electrodomestico','id_electrodomestico');
 
     }
 }

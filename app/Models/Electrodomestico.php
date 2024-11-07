@@ -31,7 +31,8 @@ class Electrodomestico extends Model
     public $fillable = [
         'nombre',
         'marca',
-        'precio'
+        'precio_venta',
+        'precio_compra'
     ];
 
     /**

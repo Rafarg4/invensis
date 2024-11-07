@@ -9,6 +9,31 @@
     {!! Form::label('tipo_prestamo', 'Tipo de Préstamo:') !!}
     {!! Form::select('tipo_prestamo', ['Efectivo' => 'Efectivo', 'Electrodoméstico' => 'Electrodoméstico'], $prestamo->tipo_prestamo ?? null, ['class' => 'form-control', 'id' => 'tipo_prestamo', 'placeholder' => 'Seleccione el tipo de préstamo']) !!}
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Obtén el select del tipo de préstamo y el campo de producto
+        const tipoPrestamoSelect = document.getElementById('tipo_prestamo');
+        const productoField = document.getElementById('id_electrodomesticos');
+
+        // Función para mostrar/ocultar el campo de producto
+        function toggleProductoField() {
+            if (tipoPrestamoSelect.value === 'Electrodoméstico') {
+                productoField.style.display = 'block';
+            } else {
+                productoField.style.display = 'none';
+            }
+        }
+
+        // Ejecuta la función al cargar la página y cuando cambie el valor del select
+        toggleProductoField();
+        tipoPrestamoSelect.addEventListener('change', toggleProductoField);
+    });
+</script>
+
+<div class="form-group col-sm-6" id="id_electrodomesticos" style="display: none;">
+    {!! Form::label('id_electrodomestico', 'Electrodomesticos:') !!}
+    {!! Form::select('id_electrodomestico', $electrodomesticos, null, ['class' => 'form-control', 'placeholder' => 'Seleccione un cliente']) !!}
+</div>
 
 <!-- Monto Field -->
 <div class="form-group col-sm-6">

@@ -24,7 +24,7 @@ class Cobro extends Model
 
     public $fillable = [
         'id_cliente',
-        'monto_cobro',
+        'id_prestamo',
         'fecha_cobro',
         'usuario'
     ];
@@ -46,18 +46,12 @@ class Cobro extends Model
      * @var array
      */
     public static $rules = [
-        'id_cliente' => 'required',
-        'monto_cobro' => 'required',
-        'fecha_cobro' => 'required'
+      
     ];
 
     /**
      * Relación con el modelo Cliente
      */
-    public function cliente()
-    {
-        return $this->belongsTo(Cliente::class, 'id_cliente');
-    }
 
     /**
      * Relación con el modelo Saldo para obtener cuotas pendientes del cliente
@@ -72,6 +66,10 @@ class Cobro extends Model
             'id_cliente',       // Foreign key en Cobro
             'numero_prestamo'   // Local key en Prestamos
         )->where('estado', 'pendiente');
+    }
+     public function cliente (){
+     return $this-> belongsTo('App\Models\Cliente','id_cliente');
+
     }
 }
 

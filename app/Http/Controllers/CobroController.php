@@ -12,7 +12,10 @@ use App\Models\Saldo; // Importar el modelo Saldo para manejar las cuotas
 use Illuminate\Support\Facades\Auth;
 use Flash;
 use Response;
+use DB;
+use PDF;
 use App\Models\Prestamos;
+use App\Models\CobroDetalle;
 class CobroController extends AppBaseController
 {
     /** @var CobroRepository $cobroRepository */
@@ -68,7 +71,9 @@ class CobroController extends AppBaseController
 {
     try {
        
-        $saldosArray = Saldo::where('numero_prestamo', $id_prestamo)->get();
+        $saldosArray = Saldo::where('numero_prestamo', $id_prestamo)
+        ->where('estado','Pendiente')
+        ->get();
     
 
         return response()->json($saldosArray);
@@ -78,35 +83,76 @@ class CobroController extends AppBaseController
 }
 
 
-    public function store(CreateCobroRequest $request)
-    {
-        $input = $request->all();
+   public function store(Request $request)
+{
+    $input = $request->all();
+    $detalles = $request->input('detalles');
+    // Guarda el cobro principal
+    $cobro = $this->cobroRepository->create($input);
 
-        // Agregar el nombre del usuario autenticado al registro
-        $input['usuario'] = Auth::user()->name;
-
-        // Registrar el cobro y actualizar el estado de la cuota
-        $cobro = $this->cobroRepository->create($input);
-        if (isset($input['cuota_id'])) {
-            Saldo::where('id', $input['cuota_id'])->update(['estado' => 'pagado']);
+    // Guarda los detalles asociados
+    //return $detalles;
+    foreach ($detalles as $detalle) {
+        // Lógica para guardar cada detalle
+        $cobroDetalle = new CobroDetalle();
+        $cobroDetalle->cobro_id = $cobro->id; // Asocia el detalle con el cobro
+        $cobroDetalle->nro_cuota = $detalle['nroCuota'];
+        $cobroDetalle->monto_cuota = $detalle['montoCuota'];
+        $cobroDetalle->monto_pagado = $detalle['montoPagado'];
+        $cobroDetalle->fecha_pago = $detalle['fechaPago'];
+        $cobroDetalle->save();
+    
+          // Cambia el estado en la tabla saldos
+        $saldo = Saldo::find($detalle['id']); // Obtén el saldo por el ID
+        if ($saldo) {
+            $saldo->estado = 'pagado'; // Cambia el estado a pagado
+            $saldo->save(); // Guarda los cambios
         }
-
-        Flash::success('Cobro guardado correctamente.');
-
-        return redirect(route('cobros.index'));
     }
+    Flash::success('Cobro guardado correctamente.');
 
+    return redirect()->route('cobros.index')->with('success', 'Cobros guardados correctamente.');
+}
+// En tu controlador CobroController
     public function show($id)
     {
         $cobro = $this->cobroRepository->find($id);
-
+        $cobro_detalles = DB::table('cobros')
+        ->join('cobro_detalles', 'cobros.id', '=', 'cobro_detalles.cobro_id')
+        ->where('cobros.id', $id)
+        ->select('cobros.*', 'cobro_detalles.*')
+        ->get();
         if (empty($cobro)) {
             Flash::error('Cobro no encontrado.');
             return redirect(route('cobros.index'));
         }
 
-        return view('cobros.show')->with('cobro', $cobro);
+        return view('cobros.show')->with('cobro', $cobro)->with('cobro_detalles', $cobro_detalles);
     }
+    public function descargar_pago($id)
+{
+    // Obtener el cobro
+    $cobro = $this->cobroRepository->find($id);
+
+    // Obtener los detalles del cobro
+    $cobro_detalles = DB::table('cobros')
+        ->join('cobro_detalles', 'cobros.id', '=', 'cobro_detalles.cobro_id')
+        ->where('cobros.id', $id)
+        ->select('cobros.*', 'cobro_detalles.*')
+        ->get();
+
+    // Verificar si el cobro existe
+    if (empty($cobro)) {
+        Flash::error('Cobro no encontrado.');
+        return redirect(route('cobros.index'));
+    }
+
+    // Generar el PDF
+    $pdf = PDF::loadView('cobros.pdf', compact('cobro', 'cobro_detalles'));
+
+    // Descargar el PDF
+    return $pdf->download('cobro_' . $id . '.pdf');
+}
 
     public function edit($id)
     {

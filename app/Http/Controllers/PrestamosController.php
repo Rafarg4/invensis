@@ -9,6 +9,7 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use App\Models\Cliente;
 use App\Models\Prestamos;
+use App\Models\Electrodomestico;
 use App\Models\Saldo;
 use Carbon\Carbon;
 use Flash;
@@ -89,6 +90,7 @@ class PrestamosController extends AppBaseController
     public function create()
     {
         $clientes = Cliente::pluck('nombre', 'id');
+        $electrodomesticos = Electrodomestico::pluck('nombre', 'id');
         $cuotasPendientes = collect();  // Inicialmente no habrá cuotas pendientes en la creación
         // Obtén el último préstamo registrado
          $ultimoPrestamo = Prestamos::orderBy('numero_prestamo', 'desc')->first();
@@ -96,10 +98,7 @@ class PrestamosController extends AppBaseController
         // Calcula el siguiente número de préstamo
          $siguienteNumeroPrestamo = $ultimoPrestamo ? $ultimoPrestamo->numero_prestamo + 1 : 1;
 
-        return view('prestamos.create')->with([
-            'clientes' => $clientes,
-            'cuotasPendientes' => $cuotasPendientes, 'siguienteNumeroPrestamo' => $siguienteNumeroPrestamo,
-        ]);
+        return view('prestamos.create',compact('clientes','electrodomesticos','siguienteNumeroPrestamo'));
     }
 
     public function store(Request $request)
@@ -110,6 +109,7 @@ class PrestamosController extends AppBaseController
     $prestamo->tipo_prestamo = $request->tipo_prestamo;
     $prestamo->monto = $request->monto;
     $prestamo->zona = $request->zona;
+    $prestamo->id_electrodomestico = $request->id_electrodomestico;
     $prestamo->monto_cuota = $request->monto_cuota;
     $prestamo->id_cliente = $request->id_cliente;
     $prestamo->cantidad_cuota = $request->cantidad_cuota;
@@ -125,6 +125,7 @@ class PrestamosController extends AppBaseController
             $saldo = new Saldo();
             $saldo->id_cliente = $prestamo->id_cliente;
             $saldo->numero_prestamo = $prestamo->numero_prestamo;
+            $saldo->nro_cuota = $cuota['nro_cuota']; 
             $saldo->fecha_cuota = $cuota['fecha'];
             $saldo->monto_cuota = $cuota['monto'];
             $saldo->estado = 'pendiente';

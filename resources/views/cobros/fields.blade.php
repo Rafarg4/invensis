@@ -10,12 +10,6 @@
     {!! Form::select('id_prestamo', [], null, ['id' => 'prestamoSelect', 'class' => 'form-control', 'placeholder' => 'Seleccione un préstamo']) !!}
 </div>
 
-<!-- Monto Cobro Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('monto_cobro', 'Monto Cobrado:') !!}
-    {!! Form::number('monto_cobro', null, ['class' => 'form-control', 'step' => '0.01', 'placeholder' => 'Ingrese el monto cobrado']) !!}
-</div>
-
 <!-- Fecha Cobro Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('fecha_cobro', 'Fecha de Cobro:') !!}
@@ -48,6 +42,7 @@
                     <thead>
                         <tr>
                             <th>Seleccionar</th>
+                            <th>Nro de Cuota</th>
                             <th>Fecha de Cuota</th>
                             <th>Monto</th>
                             <th>Estado</th>
@@ -59,12 +54,31 @@
                 </table>
             </div>
             <div class="modal-footer">
+                <button type="button" id="confirmarSeleccion" class="btn btn-primary">Confirmar Selección</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" id="cancelarCuotas" class="btn btn-danger">Cancelar Cuotas Seleccionadas</button>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Tabla de Saldos Seleccionados -->
+<table class="table table-bordered" id="selectedSaldosTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nro de Cuota</th>
+            <th>Fecha de Cuota</th>
+            <th>Monto</th>
+            <th>Estado</th>
+            <th>Monto Pagado</th>
+            <th>Fecha de Pago</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody id="selectedSaldosTableBody">
+    </tbody>
+</table>
+
 
 <script type="text/javascript">
     // Manejar selección de cliente
@@ -76,9 +90,19 @@ document.getElementById('clienteSelect').addEventListener('change', function() {
             .then(data => {
                 var prestamoSelect = document.getElementById('prestamoSelect');
                 prestamoSelect.innerHTML = ''; // Limpiar el select previo
+
+                // Agregar opción deshabilitada "Seleccione una opción"
+                var defaultOption = document.createElement('option');
+                defaultOption.textContent = 'Seleccione una opción';
+                defaultOption.value = '';
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                prestamoSelect.appendChild(defaultOption);
+
+                // Agregar opciones dinámicas para cada préstamo
                 for (var id in data) {
                     var option = document.createElement('option');
-                    option.value = data[id].numero_prestamo; // Aquí estableces el valor como numero_prestamo
+                    option.value = data[id].numero_prestamo; // Establecer el valor como numero_prestamo
                     option.textContent = `Número de Préstamo: ${data[id].numero_prestamo}`; // Mostrar el número de préstamo
                     prestamoSelect.appendChild(option);
                 }
@@ -91,6 +115,7 @@ document.getElementById('clienteSelect').addEventListener('change', function() {
         document.getElementById('saldosTableBody').innerHTML = ''; // Limpiar la tabla si no hay cliente
     }
 });
+
 
 
 // Manejar selección de préstamo
@@ -110,7 +135,7 @@ document.getElementById('prestamoSelect').addEventListener('change', function() 
             .then(data => {
                 console.log(data); // Verificar la estructura de los saldos
                 if (data.length === 0) {
-                    saldosTable.innerHTML = '<tr><td colspan="4">No hay saldos disponibles para este préstamo.</td></tr>';
+                    saldosTable.innerHTML = '<tr><td colspan="5">No hay saldos disponibles para este préstamo.</td></tr>';
                 } else {
                     data.forEach(saldo => {
                         var row = saldosTable.insertRow();
@@ -121,10 +146,12 @@ document.getElementById('prestamoSelect').addEventListener('change', function() 
                         checkbox.type = 'checkbox';
                         checkbox.value = saldo.id; // Asumiendo que 'id' es el identificador de la cuota
                         selectCell.appendChild(checkbox);
-
-                        row.insertCell(1).textContent = saldo.fecha_cuota; // Fecha de la cuota
-                        row.insertCell(2).textContent = saldo.monto_cuota; // Monto de la cuota
-                        row.insertCell(3).textContent = saldo.estado; // Estado de la cuota
+                        
+                        // Agregar las celdas para cada dato
+                        row.insertCell(1).textContent = saldo.nro_cuota; // Número de cuota
+                        row.insertCell(2).textContent = saldo.fecha_cuota; // Fecha de la cuota
+                        row.insertCell(3).textContent = saldo.monto_cuota; // Monto de la cuota
+                        row.insertCell(4).textContent = saldo.estado; // Estado de la cuota
                     });
                 }
             })
@@ -136,41 +163,78 @@ document.getElementById('prestamoSelect').addEventListener('change', function() 
     }
 });
 
+  document.getElementById('confirmarSeleccion').addEventListener('click', function() {
+        var selectedSaldosTableBody = document.getElementById('selectedSaldosTableBody');
+        selectedSaldosTableBody.innerHTML = '';
 
-    // Manejar la cancelación de cuotas seleccionadas
-    document.getElementById('cancelarCuotas').addEventListener('click', function() {
-        var selectedIds = [];
-        var checkboxes = document.querySelectorAll('#saldosTableBody input[type="checkbox"]:checked');
+        document.querySelectorAll('#saldosTableBody input[type="checkbox"]:checked').forEach((checkbox, index) => {
+            var row = checkbox.closest('tr');
+            var saldoId = checkbox.value; // ID
+            var nroCuota = row.cells[1].textContent.trim(); // Número de cuota
+            var fechaCuota = row.cells[2].textContent.trim(); // Fecha de cuota
+            var montoCuota = row.cells[3].textContent.trim(); // Número de cuota
+            var estado = row.cells[4].textContent.trim(); // Estado
 
-        checkboxes.forEach(checkbox => {
-            selectedIds.push(checkbox.value); // Agregar el ID de cada cuota seleccionada
+            var newRow = selectedSaldosTableBody.insertRow();
+
+            // Columna para ID
+            newRow.insertCell(0).innerHTML = `<input type="text" class="form-control" name="detalles[${index}][id]" value="${saldoId}" readonly />`;
+            
+            // Columna para Número de Cuota
+            newRow.insertCell(1).innerHTML = `<input type="text" class="form-control" name="detalles[${index}][nroCuota]" value="${nroCuota}" readonly />`;
+
+            // Columna para Fecha de Cuota
+            newRow.insertCell(2).innerHTML = `<input type="text" class="form-control" name="detalles[${index}][fechaCuota]" value="${fechaCuota}" readonly />`;
+
+            // Columna para Monto (formato sin decimales adicionales ni puntos)
+            newRow.insertCell(3).innerHTML = `<input type="text" class="form-control" name="detalles[${index}][montoCuota]" value="${montoCuota}" readonly />`;
+
+            // Columna para Estado
+            newRow.insertCell(4).innerHTML = `<input type="text" class="form-control" name="detalles[${index}][estado]" value="${estado}" readonly />`;
+
+            // Columna para Monto Pagado
+            newRow.insertCell(5).innerHTML = `<input type="number" class="form-control" name="detalles[${index}][montoPagado]" min="0" placeholder="Monto Pagado" required />`;
+
+            // Columna para Fecha de Pago (editable para ingresar nueva fecha, día, mes, año)
+            newRow.insertCell(6).innerHTML = `<input type="date" class="form-control" name="detalles[${index}][fechaPago]" required />`;
+
+            // Columna para botón Eliminar
+            newRow.insertCell(7).innerHTML = `<button type="button" class="btn btn-danger btn-sm eliminarFila">Eliminar</button>`;
+
+            // Validación para Monto Pagado
+            newRow.querySelector(`input[name="detalles[${index}][montoPagado]"]`).addEventListener('input', function() {
+                var montoPagado = parseFloat(this.value);
+                if (montoPagado > montoCuota) {
+                    this.setCustomValidity("El monto pagado no puede ser mayor al monto de la cuota.");
+                } else {
+                    this.setCustomValidity("");
+                }
+            });
+
+            // Validación para Fecha de Pago
+            newRow.querySelector(`input[name="detalles[${index}][fechaPago]"]`).addEventListener('change', function() {
+                var fechaPago = new Date(this.value);
+                if (fechaPago < new Date()) {
+                    this.setCustomValidity("La fecha de pago no puede ser anterior a hoy.");
+                } else {
+                    this.setCustomValidity("");
+                }
+            });
         });
 
-        if (selectedIds.length > 0) {
-            fetch('/cobros/cancelar-cuotas', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Asegúrate de incluir el token CSRF
-                },
-                body: JSON.stringify({ cuota_ids: selectedIds }) // Envía los IDs seleccionados al backend
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                return response.json();
-            })
-            .then(data => {
-                alert('Cuotas canceladas con éxito');
-                $('#cuotasModal').modal('hide'); // Cerrar el modal
-                document.getElementById('prestamoSelect').dispatchEvent(new Event('change'));
-            })
-            .catch(error => {
-                console.error('Error al cancelar las cuotas:', error);
-            });
-        } else {
-            alert('Por favor, seleccione al menos una cuota para cancelar.');
+        $('#cuotasModal').modal('hide'); 
+    });
+
+    // Manejar acción de eliminar fila
+    document.getElementById('selectedSaldosTableBody').addEventListener('click', function(e) {
+        if (e.target && e.target.matches('.eliminarFila')) {
+            var row = e.target.closest('tr');
+            row.parentNode.removeChild(row);
         }
     });
+</script>
+
+
+
+
 </script>
