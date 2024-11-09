@@ -12,6 +12,11 @@
 
 <!-- Precio Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('precio', 'Precio:') !!}
-    {!! Form::text('precio', null, ['class' => 'form-control']) !!}
+    {!! Form::label('precio_compra', 'Precio de compra:') !!}
+    {!! Form::text('precio_compra', null, ['class' => 'form-control']) !!}
+</div>
+<!-- Precio Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('precio_venta', 'Precio de venta:') !!}
+    {!! Form::text('precio_venta', null, ['class' => 'form-control']) !!}
 </div>

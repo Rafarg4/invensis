@@ -1,11 +1,12 @@
-<div class="table-responsive">
-    <table class="table" id="electrodomesticos-table">
+ <div class="table-responsive" style="padding:15px;font-size: 12px;">
+    <table class="table" id="table">
         <thead>
         <tr>
             <th>Nombre</th>
         <th>Marca</th>
-        <th>Precio</th>
-            <th colspan="3">Action</th>
+        <th>Precio de compra</th>
+        <th>Precio de venta</th>
+            <th>Accion</th>
         </tr>
         </thead>
         <tbody>
@@ -13,7 +14,8 @@
             <tr>
                 <td>{{ $electrodomestico->nombre }}</td>
             <td>{{ $electrodomestico->marca }}</td>
-            <td>{{ $electrodomestico->precio }}</td>
+            <td>{{ $electrodomestico->precio_compra }}</td>
+             <td>{{ $electrodomestico->precio_venta }}</td>
                 <td width="120">
                     {!! Form::open(['route' => ['electrodomesticos.destroy', $electrodomestico->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>

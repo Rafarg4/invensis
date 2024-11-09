@@ -52,9 +52,7 @@ class Electrodomestico extends Model
      * @var array
      */
     public static $rules = [
-        'nombre' => 'required',
-        'marca' => 'required',
-        'precio' => 'required'
+        
     ];
 
     

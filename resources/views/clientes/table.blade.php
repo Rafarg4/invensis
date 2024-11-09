@@ -1,5 +1,5 @@
-<div class="table-responsive">
-    <table class="table" id="clientes-table">
+ <div class="table-responsive" style="padding:15px;font-size: 12px;">
+    <table class="table" id="table">
         <thead>
         <tr>
             <th>Nombre</th>
@@ -10,9 +10,7 @@
             <th>Ciudad</th>
             <th>Pais</th>
             <th>Mapa</th> <!-- Aquí se mantendrá la columna "Mapa" -->
-            <th>Lat</th>
-            <th>Lang</th>
-            <th colspan="3">Acciones</th> <!-- Este encabezado se mantiene para otras acciones -->
+            <th>Acciones</th> <!-- Este encabezado se mantiene para otras acciones -->
         </tr>
         </thead>
         <tbody>
@@ -29,12 +27,11 @@
                 <td>
                     @if($cliente->mapa)
                         <a href="{{ $cliente->mapa }}" target="_blank" class="btn btn-primary btn-xs">
-                            Ver Mapa
+                           <i class="fa fa-map" aria-hidden="true"></i>
                         </a>
                     @endif
                 </td>
-                <td>{{ $cliente->lat }}</td>
-                <td>{{ $cliente->lang }}</td>
+        
                 <td width="120"> <!-- Botones de acciones existentes -->
                     <div class='btn-group'>
                         <a href="{{ route('clientes.show', [$cliente->id]) }}" class='btn btn-default btn-xs'>
