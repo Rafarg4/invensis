@@ -90,7 +90,13 @@ class PrestamosController extends AppBaseController
     public function create()
     {
         $clientes = Cliente::pluck('nombre', 'id');
-        $electrodomesticos = Electrodomestico::pluck('nombre', 'id');
+       $electrodomesticos = Electrodomestico::select('id', 'nombre', 'precio_venta')
+        ->get()
+        ->mapWithKeys(function ($item) {
+            return [$item->id => "{$item->nombre} - {$item->precio_venta} Gs"];
+        })
+        ->toArray();
+
         $cuotasPendientes = collect();  // Inicialmente no habrá cuotas pendientes en la creación
         // Obtén el último préstamo registrado
          $ultimoPrestamo = Prestamos::orderBy('numero_prestamo', 'desc')->first();

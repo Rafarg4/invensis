@@ -14,8 +14,8 @@
             <tr>
                 <td>{{ $electrodomestico->nombre }}</td>
             <td>{{ $electrodomestico->marca }}</td>
-            <td>{{ $electrodomestico->precio_compra }}</td>
-             <td>{{ $electrodomestico->precio_venta }}</td>
+            <td>{{ number_format($electrodomestico->precio_compra) }}</td>
+             <td>{{ number_format($electrodomestico->precio_venta) }}</td>
                 <td width="120">
                     {!! Form::open(['route' => ['electrodomesticos.destroy', $electrodomestico->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
