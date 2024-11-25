@@ -72,7 +72,7 @@ class CobroController extends AppBaseController
     try {
        
         $saldosArray = Saldo::where('numero_prestamo', $id_prestamo)
-        ->where('estado','Pendiente')
+        ->where('estado','<>','Pagado')
         ->get();
     
 
@@ -87,32 +87,45 @@ class CobroController extends AppBaseController
 {
     $input = $request->all();
     $detalles = $request->input('detalles');
+
     // Guarda el cobro principal
     $cobro = $this->cobroRepository->create($input);
 
-    // Guarda los detalles asociados
-    //return $detalles;
     foreach ($detalles as $detalle) {
-        // Lógica para guardar cada detalle
-        $cobroDetalle = new CobroDetalle();
-        $cobroDetalle->cobro_id = $cobro->id; // Asocia el detalle con el cobro
-        $cobroDetalle->nro_cuota = $detalle['nroCuota'];
-        $cobroDetalle->monto_cuota = $detalle['montoCuota'];
-        $cobroDetalle->monto_pagado = $detalle['montoPagado'];
-        $cobroDetalle->fecha_pago = $detalle['fechaPago'];
-        $cobroDetalle->save();
-    
-          // Cambia el estado en la tabla saldos
-        $saldo = Saldo::find($detalle['id']); // Obtén el saldo por el ID
-        if ($saldo) {
-            $saldo->estado = 'pagado'; // Cambia el estado a pagado
-            $saldo->save(); // Guarda los cambios
+        $cuota = Saldo::find($detalle['id']); // Buscar la cuota por ID
+
+        if ($cuota) {
+            $montoPagado = floatval($detalle['montoPagado']); // Monto pagado
+            $saldoActual = floatval($cuota->saldo_cuota); // Saldo actual de la cuota
+
+            // Actualizar el saldo de la cuota
+            $nuevoSaldo = $saldoActual - $montoPagado;
+            $cuota->saldo_cuota = $nuevoSaldo;
+
+            // Actualizar el estado de la cuota
+            if ($nuevoSaldo <= 0) {
+                $cuota->estado = 'pagado'; // Estado cuando el saldo es cero
+                $cuota->saldo_cuota = 0; // Asegurarse de que no quede saldo negativo
+            } elseif ($nuevoSaldo > 0 && $nuevoSaldo < $saldoActual) {
+                $cuota->estado = 'parcial'; // Estado cuando queda saldo
+            }
+
+            $cuota->save(); // Guardar los cambios en la cuota
+
+            // Guardar el detalle del cobro
+            $cobroDetalle = new CobroDetalle();
+            $cobroDetalle->cobro_id = $cobro->id; // Asocia el detalle con el cobro
+            $cobroDetalle->nro_cuota = $detalle['nroCuota'];
+            $cobroDetalle->monto_cuota = $detalle['saldoCuota'];
+            $cobroDetalle->monto_pagado = $detalle['montoPagado'];
+            $cobroDetalle->fecha_pago = $detalle['fechaPago'];
+            $cobroDetalle->save();
         }
     }
-    Flash::success('Cobro guardado correctamente.');
 
-    return redirect()->route('cobros.index')->with('success', 'Cobros guardados correctamente.');
+    return redirect()->route('cobros.index')->with('success', 'Cobro registrado correctamente.');
 }
+
 // En tu controlador CobroController
     public function show($id)
     {

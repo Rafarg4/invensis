@@ -41,6 +41,13 @@
     </a>
 </li>
 
+<li class="nav-item">
+    <a href="{{ url('ver_reporte_cobro') }}"
+       class="nav-link {{ Request::is('repore_cobros*') ? 'active' : '' }}">
+       <i class="fa fa-bars" aria-hidden="true"></i>
+        <p>Repore de cobros</p>
+    </a>
+</li>
 
 <li class="nav-item">
     <a href="{{ route('electrodomesticos.index') }}"

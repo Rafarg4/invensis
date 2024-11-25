@@ -89,7 +89,12 @@ class PrestamosController extends AppBaseController
     // Método para crear un nuevo préstamo
     public function create()
     {
-        $clientes = Cliente::pluck('nombre', 'id');
+        $clientes = Cliente::select('id', 'nombre', 'ci_numero')
+        ->get()
+        ->mapWithKeys(function ($items) {
+            return [$items->id => "{$items->ci_numero} - {$items->nombre} "];
+        })
+        ->toArray();
        $electrodomesticos = Electrodomestico::select('id', 'nombre', 'precio_venta')
         ->get()
         ->mapWithKeys(function ($item) {
@@ -134,6 +139,7 @@ class PrestamosController extends AppBaseController
             $saldo->nro_cuota = $cuota['nro_cuota']; 
             $saldo->fecha_cuota = $cuota['fecha'];
             $saldo->monto_cuota = $cuota['monto'];
+            $saldo->saldo_cuota = $cuota['monto'];
             $saldo->estado = 'pendiente';
             $saldo->save();
         }

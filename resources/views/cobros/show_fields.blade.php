@@ -51,7 +51,8 @@
                                 <th>Número de Cuota</th>
                                 <th>Monto cuota</th>
                                 <th>Fecha de pago</th>
-                                 <th>Monto de pago</th>
+                                <th>Monto de pago</th>
+                                 <th>Estado</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,6 +62,15 @@
                                     <td>{{ $detalle->monto_cuota }}</td>
                                     <td>{{ $detalle->fecha_pago }}</td>
                                     <td>{{ $detalle->monto_pagado }}</td>
+                                    <td>
+                                        @if($detalle->monto_pagado < $detalle->monto_cuota)
+                                            Parcial
+                                        @elseif($detalle->monto_pagado == $detalle->monto_cuota)
+                                            Cancelado
+                                        @else
+                                            Exceso
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

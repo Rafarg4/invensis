@@ -58,6 +58,14 @@ class PermissionsSeeder extends Seeder
             'role' => 3,
         ]);
      $Admin->assignRole('admin');
+
+     $cobrador=User::create([
+            'name' => 'cobrador',
+            'email' => 'cobrador@gmail.com',
+            'password' => Hash::make('123456789'),
+            'role' => 3,
+        ]);
+     $cobrador->assignRole('admin');
 	
 
 

@@ -1,3 +1,18 @@
+<!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.select2').select2({
+            placeholder: "Seleccione un cliente",
+            allowClear: true
+        });
+    });
+</script>
+
 <!-- Número de Préstamo Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('numero_prestamo', 'Número de Préstamo:') !!}
@@ -50,7 +65,11 @@
 <!-- Cliente Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('id_cliente', 'Cliente:') !!}
-    {!! Form::select('id_cliente', $clientes, $prestamo->id_cliente ?? null, ['class' => 'form-control', 'placeholder' => 'Seleccione un cliente']) !!}
+    {!! Form::select('id_cliente', $clientes, $prestamo->id_cliente ?? null, [
+        'class' => 'form-control select2',
+        'placeholder' => 'Seleccione un cliente',
+        'style' => 'width: 100%;',
+    ]) !!}
 </div>
 
 <!-- Cantidad Cuota Field -->
@@ -88,6 +107,7 @@
             <tr>
                 <th>Cuota Nro</th>
                 <th>Fecha de Cuota</th>
+                  <th>Saldo de Cuota</th>
                 <th>Monto de Cuota</th>
                 <th>Estado</th>
             </tr>
@@ -160,7 +180,8 @@ document.getElementById('generateInstallments').addEventListener('click', functi
         cuotasArray.push({
             nro_cuota: i + 1, // Comienza en 1
             fecha: fechaCuotaFormatted,
-            monto: montoCuota
+            monto: montoCuota,
+            saldo_cuota: montoCuota // Saldo inicial es igual al monto de la cuota
         });
 
         // Insertar la fila en la tabla
@@ -168,6 +189,7 @@ document.getElementById('generateInstallments').addEventListener('click', functi
             <td>${i + 1}</td> <!-- Número de cuota que comienza en 1 -->
             <td>${fechaCuotaFormatted}</td>
             <td>${montoCuotaFormatted}</td>
+            <td>${montoCuotaFormatted}</td> <!-- Saldo inicial -->
             <td>Pendiente</td>
         </tr>`;
         tbody.insertAdjacentHTML('beforeend', row);
@@ -182,6 +204,7 @@ document.getElementById('generateInstallments').addEventListener('click', functi
     // Imprimir en consola para verificar
     console.log("Cuotas generadas:", cuotasArray);
 });
+
 </script>
 
 

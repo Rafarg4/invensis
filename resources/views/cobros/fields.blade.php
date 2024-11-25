@@ -45,6 +45,7 @@
                             <th>Nro de Cuota</th>
                             <th>Fecha de Cuota</th>
                             <th>Monto</th>
+                             <th>Saldo cuota</th>
                             <th>Estado</th>
                         </tr>
                     </thead>
@@ -151,7 +152,8 @@ document.getElementById('prestamoSelect').addEventListener('change', function() 
                         row.insertCell(1).textContent = saldo.nro_cuota; // Número de cuota
                         row.insertCell(2).textContent = saldo.fecha_cuota; // Fecha de la cuota
                         row.insertCell(3).textContent = saldo.monto_cuota; // Monto de la cuota
-                        row.insertCell(4).textContent = saldo.estado; // Estado de la cuota
+                        row.insertCell(4).textContent = saldo.saldo_cuota; // Monto de la cuota
+                        row.insertCell(5).textContent = saldo.estado; // Estado de la cuota
                     });
                 }
             })
@@ -163,67 +165,67 @@ document.getElementById('prestamoSelect').addEventListener('change', function() 
     }
 });
 
-  document.getElementById('confirmarSeleccion').addEventListener('click', function() {
-        var selectedSaldosTableBody = document.getElementById('selectedSaldosTableBody');
-        selectedSaldosTableBody.innerHTML = '';
+  document.getElementById('confirmarSeleccion').addEventListener('click', function () {
+    var selectedSaldosTableBody = document.getElementById('selectedSaldosTableBody');
+    selectedSaldosTableBody.innerHTML = '';
 
-        document.querySelectorAll('#saldosTableBody input[type="checkbox"]:checked').forEach((checkbox, index) => {
-            var row = checkbox.closest('tr');
-            var saldoId = checkbox.value; // ID
-            var nroCuota = row.cells[1].textContent.trim(); // Número de cuota
-            var fechaCuota = row.cells[2].textContent.trim(); // Fecha de cuota
-            var montoCuota = row.cells[3].textContent.trim(); // Número de cuota
-            var estado = row.cells[4].textContent.trim(); // Estado
+    document.querySelectorAll('#saldosTableBody input[type="checkbox"]:checked').forEach((checkbox, index) => {
+        var row = checkbox.closest('tr');
+        var saldoId = checkbox.value; // ID
+        var nroCuota = row.cells[1].textContent.trim(); // Número de cuota
+        var fechaCuota = row.cells[2].textContent.trim(); // Fecha de cuota
+        var saldoCuota = parseFloat(row.cells[4].textContent.trim()); // Saldo de cuota (columna reemplazada)
+        var estado = row.cells[5].textContent.trim(); // Estado
 
-            var newRow = selectedSaldosTableBody.insertRow();
+        var newRow = selectedSaldosTableBody.insertRow();
 
-            // Columna para ID
-            newRow.insertCell(0).innerHTML = `<input type="text" class="form-control" name="detalles[${index}][id]" value="${saldoId}" readonly />`;
-            
-            // Columna para Número de Cuota
-            newRow.insertCell(1).innerHTML = `<input type="text" class="form-control" name="detalles[${index}][nroCuota]" value="${nroCuota}" readonly />`;
+        // Columna para ID
+        newRow.insertCell(0).innerHTML = `<input type="text" class="form-control" name="detalles[${index}][id]" value="${saldoId}" readonly />`;
 
-            // Columna para Fecha de Cuota
-            newRow.insertCell(2).innerHTML = `<input type="text" class="form-control" name="detalles[${index}][fechaCuota]" value="${fechaCuota}" readonly />`;
+        // Columna para Número de Cuota
+        newRow.insertCell(1).innerHTML = `<input type="text" class="form-control" name="detalles[${index}][nroCuota]" value="${nroCuota}" readonly />`;
 
-            // Columna para Monto (formato sin decimales adicionales ni puntos)
-            newRow.insertCell(3).innerHTML = `<input type="text" class="form-control" name="detalles[${index}][montoCuota]" value="${montoCuota}" readonly />`;
+        // Columna para Fecha de Cuota
+        newRow.insertCell(2).innerHTML = `<input type="text" class="form-control" name="detalles[${index}][fechaCuota]" value="${fechaCuota}" readonly />`;
 
-            // Columna para Estado
-            newRow.insertCell(4).innerHTML = `<input type="text" class="form-control" name="detalles[${index}][estado]" value="${estado}" readonly />`;
+        // Columna para Saldo de Cuota
+        newRow.insertCell(3).innerHTML = `<input type="text" class="form-control" name="detalles[${index}][saldoCuota]" value="${saldoCuota}" readonly />`;
 
-            // Columna para Monto Pagado
-            newRow.insertCell(5).innerHTML = `<input type="number" class="form-control" name="detalles[${index}][montoPagado]" min="0" placeholder="Monto Pagado" required />`;
+        // Columna para Estado
+        newRow.insertCell(4).innerHTML = `<input type="text" class="form-control" name="detalles[${index}][estado]" value="${estado}" readonly />`;
 
-            // Columna para Fecha de Pago (editable para ingresar nueva fecha, día, mes, año)
-            newRow.insertCell(6).innerHTML = `<input type="date" class="form-control" name="detalles[${index}][fechaPago]" required />`;
+        // Columna para Monto Pagado
+        newRow.insertCell(5).innerHTML = `<input type="number" class="form-control" name="detalles[${index}][montoPagado]" min="0" placeholder="Monto Pagado" required />`;
 
-            // Columna para botón Eliminar
-            newRow.insertCell(7).innerHTML = `<button type="button" class="btn btn-danger btn-sm eliminarFila">Eliminar</button>`;
+        // Columna para Fecha de Pago (editable para ingresar nueva fecha, día, mes, año)
+        newRow.insertCell(6).innerHTML = `<input type="date" class="form-control" name="detalles[${index}][fechaPago]" required />`;
 
-            // Validación para Monto Pagado
-            newRow.querySelector(`input[name="detalles[${index}][montoPagado]"]`).addEventListener('input', function() {
-                var montoPagado = parseFloat(this.value);
-                if (montoPagado > montoCuota) {
-                    this.setCustomValidity("El monto pagado no puede ser mayor al monto de la cuota.");
-                } else {
-                    this.setCustomValidity("");
-                }
-            });
+        // Columna para botón Eliminar
+        newRow.insertCell(7).innerHTML = `<button type="button" class="btn btn-danger btn-sm eliminarFila">Eliminar</button>`;
 
-            // Validación para Fecha de Pago
-            newRow.querySelector(`input[name="detalles[${index}][fechaPago]"]`).addEventListener('change', function() {
-                var fechaPago = new Date(this.value);
-                if (fechaPago < new Date()) {
-                    this.setCustomValidity("La fecha de pago no puede ser anterior a hoy.");
-                } else {
-                    this.setCustomValidity("");
-                }
-            });
+        // Validación para Monto Pagado
+        newRow.querySelector(`input[name="detalles[${index}][montoPagado]"]`).addEventListener('input', function () {
+            var montoPagado = parseFloat(this.value);
+            if (montoPagado > saldoCuota) {
+                this.setCustomValidity("El monto pagado no puede ser mayor al saldo de la cuota.");
+            } else {
+                this.setCustomValidity("");
+            }
         });
 
-        $('#cuotasModal').modal('hide'); 
+        // Validación para Fecha de Pago
+        newRow.querySelector(`input[name="detalles[${index}][fechaPago]"]`).addEventListener('change', function () {
+            var fechaPago = new Date(this.value);
+            if (fechaPago < new Date()) {
+                this.setCustomValidity("La fecha de pago no puede ser anterior a hoy.");
+            } else {
+                this.setCustomValidity("");
+            }
+        });
     });
+
+    $('#cuotasModal').modal('hide');
+});
 
     // Manejar acción de eliminar fila
     document.getElementById('selectedSaldosTableBody').addEventListener('click', function(e) {

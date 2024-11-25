@@ -194,3 +194,9 @@ Route::get('/cobros/saldos/{prestamoId}', [App\Http\Controllers\CobroController:
 Route::post('/cobros/guardar-detalles', [App\Http\Controllers\CobroController::class, 'guardarDetalles'])->name('cobros.guardarDetalles');
 
 Route::get('descargar_pago/{id}', [App\Http\Controllers\CobroController::class, 'descargar_pago'])->name('descargar_pago');
+
+Route::get('ver_reporte_cobro', [App\Http\Controllers\ReporteCobradorController::class, 'ver_reporte_cobro'])->middleware('auth');
+
+Route::post('/generar_reporte', [App\Http\Controllers\ReporteCobradorController::class, 'generar_reporte'])->name('generar_reporte');
+
+Route::post('/reporte-pdf', [ReporteCobradorController::class, 'reporte-pdf'])->name('reporte-pdf');

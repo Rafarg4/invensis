@@ -87,6 +87,7 @@
                                 <th>Número de Cuota</th>
                                 <th>Fecha de Vencimiento</th>
                                 <th>Monto</th>
+                                 <th>Saldo cuota</th>
                                 <th>Estado</th>
                             </tr>
                         </thead>
@@ -96,6 +97,7 @@
                                     <td>{{ $cuota->nro_cuota }}</td>
                                     <td>{{ $cuota->fecha_cuota }}</td>
                                     <td>{{ number_format($cuota->monto_cuota, 0, ',', '.') }}</td>
+                                     <td>{{ number_format($cuota->saldo_cuota, 0, ',', '.') }}</td>
                                     <td>{{ $cuota->estado == 'pendiente' ? 'Pendiente' : 'Pagada' }}</td>
                                 </tr>
                             @endforeach
