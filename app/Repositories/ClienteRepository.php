@@ -8,7 +8,7 @@ use App\Repositories\BaseRepository;
 /**
  * Class ClienteRepository
  * @package App\Repositories
- * @version September 23, 2024, 7:46 pm -04
+ * @version May 1, 2025, 1:30 pm -04
 */
 
 class ClienteRepository extends BaseRepository
@@ -19,14 +19,10 @@ class ClienteRepository extends BaseRepository
     protected $fieldSearchable = [
         'nombre',
         'apellido',
-        'ci_numero',
-        'direccion',
+        'ci',
         'telefono',
-        'ciudad',
-        'pais',
-        'mapa',
-        'lat',
-        'lang'
+        'correo',
+        'direccion'
     ];
 
     /**

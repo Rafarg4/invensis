@@ -6,26 +6,38 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * Class Cliente
+ * @package App\Models
+ * @version May 1, 2025, 1:30 pm -04
+ *
+ * @property string $nombre
+ * @property string $apellido
+ * @property string $ci
+ * @property string $telefono
+ * @property string $correo
+ * @property string $direccion
+ */
 class Cliente extends Model
 {
     use SoftDeletes;
+
     use HasFactory;
 
     public $table = 'clientes';
+    
 
     protected $dates = ['deleted_at'];
+
+
 
     public $fillable = [
         'nombre',
         'apellido',
-        'ci_numero',
-        'direccion',
+        'ci',
         'telefono',
-        'ciudad',
-        'pais',
-        'mapa',
-        'lat',
-        'lang'
+        'correo',
+        'direccion'
     ];
 
     /**
@@ -36,14 +48,10 @@ class Cliente extends Model
     protected $casts = [
         'nombre' => 'string',
         'apellido' => 'string',
-        'ci_numero' => 'string',
-        'direccion' => 'string',
+        'ci' => 'string',
         'telefono' => 'string',
-        'ciudad' => 'string',
-        'pais' => 'string',
-        'mapa' => 'string',
-        'lat' => 'string',
-        'lang' => 'string'
+        'correo' => 'string',
+        'direccion' => 'string'
     ];
 
     /**
@@ -52,16 +60,8 @@ class Cliente extends Model
      * @var array
      */
     public static $rules = [
-        'nombre' => 'required',
-        'apellido' => 'required',
-        'ci_numero' => 'required',
-        'direccion' => 'required',
-        'telefono' => 'required',
-        'ciudad' => 'required',  // Corregí el error aquí ("requried" a "required")
-        'pais' => 'required',
-        'lat' => 'required',
-        'lang' => 'required'
+       
     ];
+
     
 }
-

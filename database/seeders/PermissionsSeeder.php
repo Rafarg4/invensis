@@ -7,6 +7,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+
 class PermissionsSeeder extends Seeder
 {
     /**
@@ -16,59 +17,65 @@ class PermissionsSeeder extends Seeder
      */
     public function run()
     {
-  
-    $permission_array =[];
-    array_push($permission_array,Permission::create(['name' => 'crear']));
-    array_push($permission_array,Permission::create(['name' => 'editar']));
-    array_push($permission_array,Permission::create(['name' => 'eliminar']));
-    $UsuarioPermission= Permission::create(['name' => 'usuario']);
-    $Adminpermission=Permission::create(['name' => 'admin']);
-    array_push($permission_array,  $UsuarioPermission,$Adminpermission);
+        // Crear permisos básicos
+        $permissions = [
+            'crear',
+            'editar',
+            'eliminar',
+            'usuario',
+            'administrador'
+        ];
 
-	$SuperAdminRole = Role::create(['name' => 'super_admin']);
-	$SuperAdminRole->syncPermissions($permission_array);
-    
-    $AdminRole = Role::create(['name' => 'admin']);
-    $AdminRole->syncPermissions($Adminpermission);
+        foreach ($permissions as $perm) {
+            Permission::firstOrCreate(['name' => $perm]);
+        }
 
+        // Obtener permisos para roles
+        $allPermissions = Permission::all();
+        $usuarioPermission = Permission::where('name', 'usuario')->first();
+        $adminPermission = Permission::where('name', 'administrador')->first();
 
-	$UsuarioRole = Role::create(['name' => 'usuario']);
-	$UsuarioRole->syncPermissions($UsuarioPermission);
+        // Crear roles
+        $superAdminRole = Role::firstOrCreate(['name' => 'SuperAdmin']);
+        $adminRole = Role::firstOrCreate(['name' => 'Administrador']);
+        $usuarioRole = Role::firstOrCreate(['name' => 'Usuario']);
+        $cajeroRole = Role::firstOrCreate(['name' => 'Cajero']);
 
-	 $userSuperAdmin=User::create([
-            'name' => 'Superadmin',
-            'email' => 'superadmin@gmail.com',
-            'password' => Hash::make('Admin21141998'),
-            'role' => 1,
-        ]);
-	 $userSuperAdmin->assignRole('super_admin');
+        // Asignar permisos a roles
+        $superAdminRole->syncPermissions($allPermissions);
+        $adminRole->syncPermissions([$adminPermission]);
+        $usuarioRole->syncPermissions([$usuarioPermission]);
+        $cajeroRole->syncPermissions([]); // Puedes definir permisos si es necesario
 
-	 $UserView=User::create([
-            'name' => 'usuario',
-            'email' => 'usuario@gmail.com',
-            'password' => Hash::make('123456789'),
-            'role' => 2,
-        ]);
-	 $UserView->assignRole('usuario');
+        // Crear usuarios y asignarles roles
+        $userSuperAdmin = User::firstOrCreate(
+            ['email' => 'superadmin@gmail.com'],
+            [
+                'name' => 'SuperAdmin',
+                'password' => Hash::make('Admin21141998'),
+                'role' => 1,
+            ]
+        );
+        $userSuperAdmin->assignRole($superAdminRole);
 
-     $Admin=User::create([
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('123456789'),
-            'role' => 3,
-        ]);
-     $Admin->assignRole('admin');
+        $adminUser = User::firstOrCreate(
+            ['email' => 'admin@gmail.com'],
+            [
+                'name' => 'Administrador',
+                'password' => Hash::make('123456789'),
+                'role' => 3,
+            ]
+        );
+        $adminUser->assignRole($adminRole);
 
-     $cobrador=User::create([
-            'name' => 'cobrador',
-            'email' => 'cobrador@gmail.com',
-            'password' => Hash::make('123456789'),
-            'role' => 3,
-        ]);
-     $cobrador->assignRole('admin');
-	
-
-
-
+        $cajeroUser = User::firstOrCreate(
+            ['email' => 'cajero@gmail.com'],
+            [
+                'name' => 'Cajero',
+                'password' => Hash::make('123456789'),
+                'role' => 3,
+            ]
+        );
+        $cajeroUser->assignRole($cajeroRole);
     }
 }

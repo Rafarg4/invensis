@@ -27,7 +27,7 @@
         "name": "apellido",
         "dbType": "text",
         "htmlType": "text",
-        "validations": "required",
+        "validations": "ci text text",
         "searchable": true,
         "fillable": true,
         "primary": false,
@@ -36,21 +36,9 @@
         "inView": true
     },
     {
-        "name": "ci_numero",
+        "name": "ci",
         "dbType": "text",
         "htmlType": "text",
-        "validations": "required",
-        "searchable": true,
-        "fillable": true,
-        "primary": false,
-        "inForm": true,
-        "inIndex": true,
-        "inView": true
-    },
-    {
-        "name": "direccion",
-        "dbType": "text",
-        "htmlType": "texy",
         "validations": "required",
         "searchable": true,
         "fillable": true,
@@ -72,19 +60,7 @@
         "inView": true
     },
     {
-        "name": "ciudad",
-        "dbType": "text",
-        "htmlType": "text",
-        "validations": "requried",
-        "searchable": true,
-        "fillable": true,
-        "primary": false,
-        "inForm": true,
-        "inIndex": true,
-        "inView": true
-    },
-    {
-        "name": "pais",
+        "name": "correo",
         "dbType": "text",
         "htmlType": "text",
         "validations": "required",
@@ -96,31 +72,7 @@
         "inView": true
     },
     {
-        "name": "mapa",
-        "dbType": "text",
-        "htmlType": "text",
-        "validations": "tipo_cliente text text",
-        "searchable": true,
-        "fillable": true,
-        "primary": false,
-        "inForm": true,
-        "inIndex": true,
-        "inView": true
-    },
-    {
-        "name": "lat",
-        "dbType": "text",
-        "htmlType": "text",
-        "validations": "required",
-        "searchable": true,
-        "fillable": true,
-        "primary": false,
-        "inForm": true,
-        "inIndex": true,
-        "inView": true
-    },
-    {
-        "name": "lang",
+        "name": "direccion",
         "dbType": "text",
         "htmlType": "text",
         "validations": "required",

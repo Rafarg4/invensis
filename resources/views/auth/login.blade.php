@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
        <link rel="icon" type="image/png" src="/logof.png" />
-    <title>{{ config('app.name') }} | Login</title>
+    <title>{{ $empresa->nombre }} | Login</title>
 
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -47,7 +47,7 @@
     <div class="card card-outline card-primary">
  
         <div class="card-body login-card-body">
-            <center> <img src="/logof.png" width="150" height="130" class="img-circle" alt="User Image"/></center>
+            <center> <img src="{{ asset('imagenes/' . $empresa->logo) }}" width="150" height="150" class="img-circle" alt="User Image"/></center>
             <p class="login-box-msg">Iniciar Sesion </p>
 
             <form method="post" action="{{ url('/login') }}">

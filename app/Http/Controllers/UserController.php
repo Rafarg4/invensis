@@ -9,6 +9,7 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
+use DB;
 use Spatie\Permission\Models\Role;
 
 class UserController extends AppBaseController
@@ -43,7 +44,8 @@ class UserController extends AppBaseController
      */
     public function create()
     {
-        return view('users.create');
+        $cajas = DB::table('cajas')->select('id', 'nombre')->get();
+        return view('users.create',compact('cajas'));
     }
 
     /**
@@ -117,7 +119,7 @@ class UserController extends AppBaseController
     public function update($id, UpdateUserRequest $request)
     {
         $user = $this->userRepository->find($id);
-
+        $cajas = DB::table('cajas')->select('id', 'nombre')->get();
         if (empty($user)) {
             Flash::error('Usuario no encontrado');
 

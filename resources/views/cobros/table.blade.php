@@ -1,44 +1,34 @@
- <div class="table-responsive" style="padding:15px;font-size: 12px;">
+<div class="table-responsive" style="padding:15px;font-size: 12px;">
     <table class="table" id="table">
-    <thead>
+        <thead>
         <tr>
-            <th>Nro de prestamo</th>
-             <th>Cliente</th>
-            <th>Fecha Cobro</th>
-            <th>Usuario</th> <!-- Nueva columna para mostrar el usuario -->
+            <th>Cliente</th>
+        <th>Venta</th>
+        <th>Fecha Cobro</th>
+        <th>Cajero</th>
+        <th>Observacion</th>
             <th>Acciones</th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         @foreach($cobros as $cobro)
             <tr>
-                <td>{{ $cobro->id_prestamo }}</td>
-                <td>{{ $cobro->cliente->nombre }} {{ $cobro->cliente->apellido }}</td>
-                <td>{{ $cobro->fecha_cobro }}</td>
-                <td>{{ $cobro->usuario }}</td> <!-- Mostrar el usuario aquí -->
+                <td>{{ $cobro->ci }} - {{ $cobro->nombre }} {{ $cobro->apellido }}</td>
+            <td>Nro comprobante: {{ $cobro->numero_comprobante }} - Total: {{ number_format($cobro->total) }}</td>
+            <td>{{ $cobro->fecha_cobro }}</td>
+            <td>{{ $cobro->name }}</td>
+            <td>{{ $cobro->observacion }}</td>
                 <td width="120">
                     {!! Form::open(['route' => ['cobros.destroy', $cobro->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
-                        <a href="{{ route('cobros.show', [$cobro->id]) }}" class='btn btn-default btn-xs'>
-                            <i class="far fa-eye"></i>
-                        </a>
-                        <a href="{{ route('descargar_pago', [$cobro->id]) }}" class="btn btn-default btn-xs">
-                            <i class="fas fa-file-pdf"></i> 
-                        </a>
-                        <a href="{{ route('cobros.edit', [$cobro->id]) }}" class='btn btn-default btn-xs'>
-                            <i class="far fa-edit"></i>
-                        </a>
-                    
-                        {!! Form::button('<i class="far fa-trash-alt"></i>', [
-                            'type' => 'submit',
-                            'class' => 'btn btn-danger btn-xs',
-                            'onclick' => "return confirm('¿Está seguro?')"
-                        ]) !!}
+                        <a href="{{ route('cobro_recibo', $cobro->id) }}" class="btn btn-primary btn-sm" target="_blank">
+                        <i class="fas fa-file-pdf"></i>
+                    </a>
                     </div>
                     {!! Form::close() !!}
                 </td>
             </tr>
         @endforeach
-    </tbody>
-</table>
+        </tbody>
+    </table>
 </div>

@@ -9,24 +9,37 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * Class Cobro
  * @package App\Models
- * @version September 23, 2024, 7:50 pm -04
+ * @version May 2, 2025, 7:52 pm -04
  *
  * @property string $id_cliente
- * @property string $monto_cobro
+ * @property string $id_venta
  * @property string $fecha_cobro
+ * @property string $cajero
+ * @property string $observacion
  */
 class Cobro extends Model
 {
-    use SoftDeletes, HasFactory;
+    use SoftDeletes;
+
+    use HasFactory;
 
     public $table = 'cobros';
+    
+
     protected $dates = ['deleted_at'];
+
+
 
     public $fillable = [
         'id_cliente',
-        'id_prestamo',
+        'id_venta',
         'fecha_cobro',
-        'usuario'
+        'cajero',
+        'total',
+        'id_caja',
+        'monto',
+        'observacion',
+        'numero_comprobante',
     ];
 
     /**
@@ -36,8 +49,10 @@ class Cobro extends Model
      */
     protected $casts = [
         'id_cliente' => 'string',
-        'monto_cobro' => 'decimal:2',
-        'fecha_cobro' => 'date'
+        'id_venta' => 'string',
+        'fecha_cobro' => 'string',
+        'cajero' => 'string',
+        'observacion' => 'string'
     ];
 
     /**
@@ -46,30 +61,8 @@ class Cobro extends Model
      * @var array
      */
     public static $rules = [
-      
+        
     ];
 
-    /**
-     * Relación con el modelo Cliente
-     */
-
-    /**
-     * Relación con el modelo Saldo para obtener cuotas pendientes del cliente
-     */
-    public function cuotasPendientes()
-    {
-        return $this->hasManyThrough(
-            Saldo::class,
-            Prestamos::class,
-            'id_cliente',       // Foreign key en Prestamos
-            'numero_prestamo',  // Foreign key en Saldo
-            'id_cliente',       // Foreign key en Cobro
-            'numero_prestamo'   // Local key en Prestamos
-        )->where('estado', 'pendiente');
-    }
-     public function cliente (){
-     return $this-> belongsTo('App\Models\Cliente','id_cliente');
-
-    }
+    
 }
-

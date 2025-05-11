@@ -14,7 +14,13 @@
         <p>Dashboard</p>
     </a>
 </li>
-
+<li class="nav-item">
+    <a href="{{ route('categorias.index') }}"
+       class="nav-link {{ Request::is('categorias*') ? 'active' : '' }}">
+       <i class="fa fa-bars" aria-hidden="true"></i>
+        <p>Categorias</p>
+    </a>
+</li>
 <li class="nav-item">
     <a href="{{ route('clientes.index') }}"
        class="nav-link {{ Request::is('clientes*') ? 'active' : '' }}">
@@ -22,17 +28,6 @@
         <p>Clientes</p>
     </a>
 </li>
-
-
-<li class="nav-item">
-    <a href="{{ route('cierres.index') }}"
-       class="nav-link {{ Request::is('cierres*') ? 'active' : '' }}">
-       <i class="fa fa-calculator" aria-hidden="true"></i>
-        <p>Cierres</p>
-    </a>
-</li>
-
-
 <li class="nav-item">
     <a href="{{ route('cobros.index') }}"
        class="nav-link {{ Request::is('cobros*') ? 'active' : '' }}">
@@ -40,35 +35,94 @@
         <p>Cobros</p>
     </a>
 </li>
-
 <li class="nav-item">
-    <a href="{{ url('ver_reporte_cobro') }}"
-       class="nav-link {{ Request::is('repore_cobros*') ? 'active' : '' }}">
-       <i class="fa fa-bars" aria-hidden="true"></i>
-        <p>Repore de cobros</p>
+    <a href="{{ route('ventas.index') }}"
+       class="nav-link {{ Request::is('ventas*') ? 'active' : '' }}">
+       <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        <p>Ventas</p>
     </a>
 </li>
-
 <li class="nav-item">
-    <a href="{{ route('electrodomesticos.index') }}"
-       class="nav-link {{ Request::is('electrodomesticos*') ? 'active' : '' }}">
-       <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
-        <p>Electrodomesticos</p>
+    <a href="{{ route('productos.index') }}"
+       class="nav-link {{ Request::is('productos*') ? 'active' : '' }}">
+       <i class="fa fa-archive" aria-hidden="true"></i>
+        <p>Productos</p>
     </a>
 </li>
-
-
 <li class="nav-item">
-    <a href="{{ route('prestamos.index') }}"
-       class="nav-link {{ Request::is('prestamos*') ? 'active' : '' }}">
+    <a href="{{ route('proveedors.index') }}"
+       class="nav-link {{ Request::is('proveedors*') ? 'active' : '' }}">
+       <i class="fa fa-truck" aria-hidden="true"></i>
+        <p>Proveedors</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href=""
+       class="nav-link ">
        <i class="fa fa-bars" aria-hidden="true"></i>
-        <p>Prestamos</p>
+        <p>Reportes</p>
+        <i class="right fas fa-angle-left"></i>
+    </a>
+<ul class="nav nav-treeview">
+<li class="nav-item">
+<a href="{{ route('ver_rendicion_caja') }}" class="nav-link"
+  class="nav-link">
+<i class="fa fas-solid fa-list"></i>
+<p>Rendicion de caja</p>
+</a>
+</li>
+<li class="nav-item">
+<a href="{{ route('ver_cobros_pendientes') }}" class="nav-link"
+  class="nav-link">
+<i class="fa fas-solid fa-list"></i>
+<p>Cobros del dia</p>
+</a>
+</li>
+</ul>
+</li>
+<li class="nav-item">
+    <a href=""
+       class="nav-link ">
+       <i class="fa fa-bars" aria-hidden="true"></i>
+        <p>Caja</p>
+        <i class="right fas fa-angle-left"></i>
+    </a>
+<ul class="nav nav-treeview">
+<li class="nav-item">
+    <a href="{{ route('cajas.index') }}"
+       class="nav-link {{ Request::is('cajas*') ? 'active' : '' }}">
+       <i class="fa fa-address-card" aria-hidden="true"></i>
+        <p>Cajas disponibles</p>
+    </a>
+</li>
+</li>
+<li class="nav-item">
+    <a href="{{ route('ver_cierres') }}"
+       class="nav-link {{ Request::is('ver_cierres*') ? 'active' : '' }}">
+      <i class="fa fa-history" aria-hidden="true"></i>
+        <p>Historial de Cierres </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('cierre_caja') }}"
+       class="nav-link {{ Request::is('cierre_caja*') ? 'active' : '' }}">
+       <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+        <p>Generar Cierre </p>
+    </a>
+</li>
+</ul>
+</li>
+<li class="nav-item">
+    <a href="{{ route('empresas.index') }}"
+       class="nav-link {{ Request::is('empresas*') ? 'active' : '' }}">
+       <i class="fa fa-building" aria-hidden="true"></i>
+        <p>Empresas</p>
     </a>
 </li>
 <li class="nav-item">
     <a href="{{ route('users.index') }}"
        class="nav-link {{ Request::is('users*') ? 'active' : '' }}">
-       <i class="fa fas-light fa-user"></i>
+       <i class="fa fa-light fa-user"></i>
         <p>Usuarios</p>
     </a>
 </li>
@@ -77,7 +131,6 @@
        class="nav-link " onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
       <i class="fas fa-sign-out-alt"></i>
         <p>Salir</p>
-
     </a>
 </li>
 

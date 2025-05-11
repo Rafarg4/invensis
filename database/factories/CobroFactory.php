@@ -23,8 +23,10 @@ class CobroFactory extends Factory
     {
         return [
             'id_cliente' => $this->faker->text,
-        'monto_cobro' => $this->faker->text,
+        'id_venta' => $this->faker->text,
         'fecha_cobro' => $this->faker->text,
+        'cajero' => $this->faker->text,
+        'observacion' => $this->faker->text,
         'created_at' => $this->faker->date('Y-m-d H:i:s'),
         'updated_at' => $this->faker->date('Y-m-d H:i:s')
         ];

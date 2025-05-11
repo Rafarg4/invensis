@@ -15,6 +15,18 @@
         "name": "id_cliente",
         "dbType": "text",
         "htmlType": "text",
+        "validations": "requried",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "id_venta",
+        "dbType": "text",
+        "htmlType": "text",
         "validations": "required",
         "searchable": true,
         "fillable": true,
@@ -24,10 +36,10 @@
         "inView": true
     },
     {
-        "name": "monto_cobro",
+        "name": "fecha_cobro",
         "dbType": "text",
         "htmlType": "text",
-        "validations": "fecha_cobro text text",
+        "validations": "required",
         "searchable": true,
         "fillable": true,
         "primary": false,
@@ -36,7 +48,19 @@
         "inView": true
     },
     {
-        "name": "fecha_cobro",
+        "name": "cajero",
+        "dbType": "text",
+        "htmlType": "text",
+        "validations": "requied",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "observacion",
         "dbType": "text",
         "htmlType": "text",
         "validations": "required",

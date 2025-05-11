@@ -24,14 +24,10 @@ class ClienteFactory extends Factory
         return [
             'nombre' => $this->faker->text,
         'apellido' => $this->faker->text,
-        'ci_numero' => $this->faker->text,
-        'direccion' => $this->faker->text,
+        'ci' => $this->faker->text,
         'telefono' => $this->faker->text,
-        'ciudad' => $this->faker->text,
-        'pais' => $this->faker->text,
-        'mapa' => $this->faker->text,
-        'lat' => $this->faker->text,
-        'lang' => $this->faker->text,
+        'correo' => $this->faker->text,
+        'direccion' => $this->faker->text,
         'created_at' => $this->faker->date('Y-m-d H:i:s'),
         'updated_at' => $this->faker->date('Y-m-d H:i:s')
         ];

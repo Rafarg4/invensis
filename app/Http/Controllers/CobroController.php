@@ -1,24 +1,22 @@
 <?php
- 
-namespace App\Http\Controllers;
 
+namespace App\Http\Controllers;
+use Dompdf\Dompdf;
+use Dompdf\Options; // Asegúrate de que esta línea esté incluida
 use App\Http\Requests\CreateCobroRequest;
 use App\Http\Requests\UpdateCobroRequest;
 use App\Repositories\CobroRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use App\Models\Cliente;
-use App\Models\Saldo; // Importar el modelo Saldo para manejar las cuotas
-use Illuminate\Support\Facades\Auth;
 use Flash;
 use Response;
 use DB;
-use PDF;
-use App\Models\Prestamos;
-use App\Models\CobroDetalle;
+use App\Models\Venta;
+use App\Models\Cliente;
+use App\Models\Cobro;
 class CobroController extends AppBaseController
 {
-    /** @var CobroRepository $cobroRepository */
+    /** @var CobroRepository $cobroRepository*/
     private $cobroRepository;
 
     public function __construct(CobroRepository $cobroRepo)
@@ -26,201 +24,308 @@ class CobroController extends AppBaseController
         $this->cobroRepository = $cobroRepo;
     }
 
+    /**
+     * Display a listing of the Cobro.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
     public function index(Request $request)
     {
-        $cobros = $this->cobroRepository->all();
+       $cobros = DB::table('cobros')
+        ->join('clientes', 'cobros.id_cliente', '=', 'clientes.id')
+        ->join('ventas', 'cobros.id_venta', '=', 'ventas.id')
+        ->join('users', 'cobros.cajero', '=', 'users.id')
 
+        ->select(
+            'clientes.nombre',
+            'users.name',
+            'cobros.id',
+            'clientes.apellido',
+            'clientes.ci',
+            'cobros.fecha_cobro',
+            'cobros.cajero',
+            'cobros.observacion',
+            'ventas.numero_comprobante',
+            'ventas.total'
+        )
+        ->get();
         return view('cobros.index')
             ->with('cobros', $cobros);
-    }
+    } 
+     public function numero_comprobante_cobro(Request $request)
+        {
 
+           $ultimo = \DB::table('cobros')
+                ->max('numero_comprobante');
+
+            $nuevo = $ultimo ? $ultimo + 1 : 1;
+
+            return response()->json(['numero' => $nuevo]);
+        }
+
+    /**
+     * Show the form for creating a new Cobro.
+     *
+     * @return Response
+     */
     public function create()
     {
-        // Obtener la lista de clientes
-        $clientes = Cliente::pluck('nombre', 'id');
-        $cuotasPendientes = []; // Inicialmente vacío hasta que se seleccione un cliente
-
-        return view('cobros.create', compact('clientes', 'cuotasPendientes'));
+        $clientes = DB::table('clientes')->select('id', 'nombre','apellido', 'ci')->get();
+        return view('cobros.create',compact('clientes'));
     }
-    // Método para obtener los préstamos del cliente
-  public function getPrestamos(Request $request, $id_cliente)
-{
-    try {
-        $prestamos = Prestamos::where('id_cliente', $id_cliente)->get(['id', 'numero_prestamo']);
-        
-        // Verificar si se encontraron préstamos
-        if ($prestamos->isEmpty()) {
-            return response()->json(['error' => 'No se encontraron préstamos para este cliente.'], 404);
-        }
+    public function ventasCreditoPorCliente($id)
+    {
+        $ventas = Venta::where('id_cliente', $id)
+                       ->where('condicion_venta', 'credito')
+                       ->get(['id', 'numero_comprobante', 'total']);
 
-        // Transformar la colección a un formato más simple para enviar como respuesta
-        $prestamosArray = [];
-        foreach ($prestamos as $prestamo) {
-            $prestamosArray[$prestamo->id] = [
-                'numero_prestamo' => $prestamo->numero_prestamo // Aquí estás enviando el numero_prestamo
-            ];
-        }
-
-        return response()->json($prestamosArray);
-    } catch (\Exception $e) {
-        return response()->json(['error' => 'Ocurrió un error al procesar la solicitud: ' . $e->getMessage()], 500);
+        return response()->json($ventas);
     }
-}
-
-       public function getSaldos($id_prestamo)
-{
-    try {
-       
-        $saldosArray = Saldo::where('numero_prestamo', $id_prestamo)
-        ->where('estado','<>','Pagado')
+    public function saldosPorVenta($id_venta)
+    {
+       $saldos = DB::table('saldo_ventas')
+        ->where('id_venta', $id_venta)
+        ->where('saldo','>', 0)
         ->get();
-    
 
-        return response()->json($saldosArray);
-    } catch (\Exception $e) {
-        return response()->json(['error' => 'Ocurrió un error al procesar la solicitud: ' . $e->getMessage()], 500);
+    return response()->json($saldos);
     }
-}
 
+    /**
+     * Store a newly created Cobro in storage.
+     *
+     * @param CreateCobroRequest $request
+     *
+     * @return Response
+     */
+    public function store(CreateCobroRequest $request)
+    {
+        DB::beginTransaction();
 
-   public function store(Request $request)
-{
-    $input = $request->all();
-    $detalles = $request->input('detalles');
+        try {
+            // Guardar cabecera
+            $input = $request->all();
+            //return $input;
+            $cobro = $this->cobroRepository->create($input);
 
-    // Guarda el cobro principal
-    $cobro = $this->cobroRepository->create($input);
+            // Procesar detalles seleccionados
+            $cuotas = $request->input('cuotas'); // array con los datos
 
-    foreach ($detalles as $detalle) {
-        $cuota = Saldo::find($detalle['id']); // Buscar la cuota por ID
+            if ($cuotas && is_array($cuotas)) {
+                foreach ($cuotas as $saldoId => $detalle) {
+                    // Obtener el saldo actual
+                    $saldo = DB::table('saldo_ventas')->where('id', $saldoId)->first();
+                    if (!$saldo) continue;
 
-        if ($cuota) {
-            $montoPagado = floatval($detalle['montoPagado']); // Monto pagado
-            $saldoActual = floatval($cuota->saldo_cuota); // Saldo actual de la cuota
+                    $montoPagado = floatval($detalle['pagado']);
+                    $nuevoSaldo = $saldo->saldo - $montoPagado;
+                    $estado = $nuevoSaldo <= 0 ? 'Pagado' : 'Parcial';
 
-            // Actualizar el saldo de la cuota
-            $nuevoSaldo = $saldoActual - $montoPagado;
-            $cuota->saldo_cuota = $nuevoSaldo;
+                    // Insertar en detalle de cobros
+                    DB::table('cobro_detalles')->insert([
+                        'id_cobro' => $cobro->id,
+                        'id_venta' => $saldo->id_venta,
+                        'nro_cuota' => $saldo->numero_cuota,
+                        'monto' => $saldo->monto,
+                        'saldo' => $montoPagado,
+                        'estado' => $estado,
+                        'fecha_vencimiento' => $saldo->fecha_vencimiento,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
 
-            // Actualizar el estado de la cuota
-            if ($nuevoSaldo <= 0) {
-                $cuota->estado = 'pagado'; // Estado cuando el saldo es cero
-                $cuota->saldo_cuota = 0; // Asegurarse de que no quede saldo negativo
-            } elseif ($nuevoSaldo > 0 && $nuevoSaldo < $saldoActual) {
-                $cuota->estado = 'parcial'; // Estado cuando queda saldo
+                    // Actualizar la tabla de saldo_ventas
+                    DB::table('saldo_ventas')
+                        ->where('id', $saldoId)
+                        ->update([
+                            'saldo' => $nuevoSaldo,
+                            'estado' => $estado,
+                            'pagado' => DB::raw('pagado + ' . $montoPagado),
+                            'updated_at' => now(),
+                        ]);
+                }
             }
+             DB::commit(); 
+            Flash::success('Cobro guardado correctamente.');
+            return redirect(route('cobros.index'));
 
-            $cuota->save(); // Guardar los cambios en la cuota
-
-            // Guardar el detalle del cobro
-            $cobroDetalle = new CobroDetalle();
-            $cobroDetalle->cobro_id = $cobro->id; // Asocia el detalle con el cobro
-            $cobroDetalle->nro_cuota = $detalle['nroCuota'];
-            $cobroDetalle->monto_cuota = $detalle['saldoCuota'];
-            $cobroDetalle->monto_pagado = $detalle['montoPagado'];
-            $cobroDetalle->fecha_pago = $detalle['fechaPago'];
-            $cobroDetalle->save();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Flash::error('Error al guardar el cobro: ' . $e->getMessage());
+        
         }
     }
 
-    return redirect()->route('cobros.index')->with('success', 'Cobro registrado correctamente.');
-}
-
-// En tu controlador CobroController
+    /**
+     * Display the specified Cobro.
+     *
+     * @param int $id
+     *
+     * @return Response
+     */
     public function show($id)
     {
         $cobro = $this->cobroRepository->find($id);
-        $cobro_detalles = DB::table('cobros')
-        ->join('cobro_detalles', 'cobros.id', '=', 'cobro_detalles.cobro_id')
-        ->where('cobros.id', $id)
-        ->select('cobros.*', 'cobro_detalles.*')
-        ->get();
+
         if (empty($cobro)) {
-            Flash::error('Cobro no encontrado.');
+            Flash::error('Cobro not found');
+
             return redirect(route('cobros.index'));
         }
 
-        return view('cobros.show')->with('cobro', $cobro)->with('cobro_detalles', $cobro_detalles);
-    }
-    public function descargar_pago($id)
-{
-    // Obtener el cobro
-    $cobro = $this->cobroRepository->find($id);
-
-    // Obtener los detalles del cobro
-    $cobro_detalles = DB::table('cobros')
-        ->join('cobro_detalles', 'cobros.id', '=', 'cobro_detalles.cobro_id')
-        ->where('cobros.id', $id)
-        ->select('cobros.*', 'cobro_detalles.*')
-        ->get();
-
-    // Verificar si el cobro existe
-    if (empty($cobro)) {
-        Flash::error('Cobro no encontrado.');
-        return redirect(route('cobros.index'));
+        return view('cobros.show')->with('cobro', $cobro);
     }
 
-    // Generar el PDF
-    $pdf = PDF::loadView('cobros.pdf', compact('cobro', 'cobro_detalles'));
-
-    // Descargar el PDF
-    return $pdf->download('cobro_' . $id . '.pdf');
-}
-
+    /**
+     * Show the form for editing the specified Cobro.
+     *
+     * @param int $id
+     *
+     * @return Response
+     */
     public function edit($id)
     {
         $cobro = $this->cobroRepository->find($id);
 
         if (empty($cobro)) {
-            Flash::error('Cobro no encontrado.');
+            Flash::error('Cobro not found');
+
             return redirect(route('cobros.index'));
         }
 
-        // Obtener la lista de clientes para la edición y cuotas pendientes para el cliente
-        $clientes = Cliente::pluck('nombre', 'id');
-        $cuotasPendientes = Saldo::where('id_cliente', $cobro->id_cliente)
-                                ->where('estado', 'pendiente')
-                                ->orderBy('fecha_cuota')
-                                ->get();
-
-        return view('cobros.edit', compact('cobro', 'clientes', 'cuotasPendientes'));
+        return view('cobros.edit')->with('cobro', $cobro);
     }
 
+    /**
+     * Update the specified Cobro in storage.
+     *
+     * @param int $id
+     * @param UpdateCobroRequest $request
+     *
+     * @return Response
+     */
     public function update($id, UpdateCobroRequest $request)
     {
         $cobro = $this->cobroRepository->find($id);
 
         if (empty($cobro)) {
-            Flash::error('Cobro no encontrado.');
+            Flash::error('Cobro not found');
+
             return redirect(route('cobros.index'));
         }
 
-        $input = $request->all();
-        $input['usuario'] = Auth::user()->name;
+        $cobro = $this->cobroRepository->update($request->all(), $id);
 
-        // Actualizar el cobro y el estado de la cuota seleccionada
-        $this->cobroRepository->update($input, $id);
-        if (isset($input['cuota_id'])) {
-            Saldo::where('id', $input['cuota_id'])->update(['estado' => 'pagado']);
-        }
+        Flash::success('Cobro updated successfully.');
 
-        Flash::success('Cobro actualizado correctamente.');
         return redirect(route('cobros.index'));
     }
 
+    /**
+     * Remove the specified Cobro from storage.
+     *
+     * @param int $id
+     *
+     * @throws \Exception
+     *
+     * @return Response
+     */
     public function destroy($id)
     {
         $cobro = $this->cobroRepository->find($id);
 
         if (empty($cobro)) {
-            Flash::error('Cobro no encontrado.');
+            Flash::error('Cobro not found');
+
             return redirect(route('cobros.index'));
         }
 
         $this->cobroRepository->delete($id);
-        Flash::success('Cobro eliminado correctamente.');
+
+        Flash::success('Cobro deleted successfully.');
+
         return redirect(route('cobros.index'));
     }
+        public function cobro_recibo($id)
+        {
+            $cobros = DB::table('cobros')
+            ->join('users', 'cobros.cajero', '=', 'users.id')
+            ->join('ventas', 'cobros.id_venta', '=', 'ventas.id')
+            ->where('cobros.id', $id)
+            ->select('cobros.*',
+             'users.name',
+             'ventas.numero_comprobante as comprobante_venta',
+             'cobros.numero_comprobante as comprobante_cobro',
+             'cobros.total as total_cobro',
+                'ventas.total as total_venta')
+            ->first(); // ← devuelve un solo objeto   
+            //return $cobros;
+            $cliente = Cliente::find($cobros->id_cliente);
+            $detalles = DB::table('cobro_detalles')
+            ->join('cobros', 'cobro_detalles.id_cobro', '=', 'cobros.id')
+            ->where('cobro_detalles.id_cobro', $cobros->id)
+            ->select(
+                'cobros.*',
+                'cobro_detalles.*'
+            )
+            ->get();
+            //return $detalles;
+            // Cargar la vista y pasar los datos
+            $html = view('cobros.recibos', compact('cobros', 'cliente', 'detalles'))->render();
+
+            // Crear una instancia de Dompdf
+            $options = new Options();
+            $options->set('isHtml5ParserEnabled', true);
+            $options->set('isPhpEnabled', true);
+            $dompdf = new Dompdf($options);
+
+            // Cargar el HTML
+            $dompdf->loadHtml($html);
+
+            // (Opcional) Definir tamaño de página
+             // Dimensiones para ticket: 80mm x 300mm
+            $customPaper = [0, 0, 226.77, 850]; // 80mm x 300mm en puntos (1 mm = 2.83465 puntos)
+            $dompdf->setPaper($customPaper);
+
+            // Renderizar el PDF
+            $dompdf->render();
+
+            // Enviar el PDF al navegador
+          return $dompdf->stream('recibo_' . $cobros->numero_comprobante . '.pdf', ['Attachment' => false]);
+
+        }
+
+        public function ver_cobros_pendientes(){
+            return view('cobros.ver_cobros_pendientes');
+        }
+
+        public function reporte_cobros_pendientes(Request $request){
+             $fecha_inicio = $request->input('fecha_inicio') . ' 00:00:00';
+            $fecha_fin = $request->input('fecha_fin') . ' 23:59:59';
+            //return $request->all();
+            $datos = DB::select("
+               SELECT clientes.ci, clientes.nombre,clientes.apellido, saldo_ventas.monto, saldo_ventas.saldo, saldo_ventas.numero_cuota, saldo_ventas.estado, saldo_ventas.fecha_vencimiento 
+                FROM clientes, saldo_ventas 
+                WHERE clientes.id = saldo_ventas.id_cliente 
+                AND saldo_ventas.fecha_vencimiento BETWEEN ? AND ?
+                AND saldo_ventas.saldo >0
+            ",[$fecha_inicio,$fecha_fin]);
+                //return $datos;
+                $html = view('cobros.reporte_cobros_pendientes', compact('datos'))->render();
+
+                $options = new Options();
+                $options->set('isHtml5ParserEnabled', true);
+                $options->set('isPhpEnabled', true);
+
+                $dompdf = new Dompdf($options);
+                $dompdf->loadHtml($html);
+                $dompdf->setPaper('A4', 'landscape'); // horizontal
+
+                $dompdf->render();
+
+                return $dompdf->stream('reporte_cobro_pendiente.pdf', ['Attachment' => false]);
+        }
+
 }
-
-

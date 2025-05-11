@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
+use App\Models\Empresa;
+use Illuminate\Support\Facades\View;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -21,8 +22,13 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
+   
+
     public function boot()
     {
-        //
+        View::composer('*', function ($view) {
+            $empresa = Empresa::first();
+            $view->with('empresa', $empresa);
+        });
     }
 }

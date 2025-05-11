@@ -8,7 +8,7 @@ use App\Repositories\BaseRepository;
 /**
  * Class CobroRepository
  * @package App\Repositories
- * @version September 23, 2024, 7:50 pm -04
+ * @version May 2, 2025, 7:52 pm -04
 */
 
 class CobroRepository extends BaseRepository
@@ -18,8 +18,10 @@ class CobroRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'id_cliente',
-        'monto_cobro',
-        'fecha_cobro'
+        'id_venta',
+        'fecha_cobro',
+        'cajero',
+        'observacion'
     ];
 
     /**
