@@ -26,7 +26,19 @@
             <td>{{ number_format($venta->total) }}</td>
             <td>{{ $venta->iva }}%</td>
             <td>{{ $venta->forma_pago }}</td>
-            <td>{{ $venta->estado }}</td>
+           <td>
+                @if($venta->estado === 'Anulado')
+                    <span style="background-color: #f8d7da; color: #721c24; padding: 3px 8px; border-radius: 5px;">
+                        {{ $venta->estado }}
+                    </span>
+                @elseif($venta->estado === 'Activo')
+                    <span style="background-color: #d4edda; color: #155724; padding: 3px 8px; border-radius: 5px;">
+                        {{ $venta->estado }}
+                    </span>
+                @else
+                    {{ $venta->estado }}
+                @endif
+            </td>
             <td>{{ $venta->observacion }}</td>
                 <td width="120">
                     @if($venta->tipo_comprobante=='Recibo')

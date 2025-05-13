@@ -57,9 +57,17 @@
     </a>
 </li>
 <li class="nav-item">
+    <a href="{{ route('compras.index') }}"
+       class="nav-link {{ Request::is('compras*') ? 'active' : '' }}">
+       <i class="fas fa-money-bill-wave"></i> <!-- carrito de compras -->
+        <p>Compras</p>
+    </a>
+</li>
+
+<li class="nav-item">
     <a href=""
        class="nav-link ">
-       <i class="fa fa-bars" aria-hidden="true"></i>
+      <i class="fas fa-file-invoice-dollar"></i>
         <p>Reportes</p>
         <i class="right fas fa-angle-left"></i>
     </a>
@@ -77,13 +85,13 @@
 <i class="fa fas-solid fa-list"></i>
 <p>Cobros del dia</p>
 </a>
-</li>
+</li> 
 </ul>
 </li>
 <li class="nav-item">
     <a href=""
        class="nav-link ">
-       <i class="fa fa-bars" aria-hidden="true"></i>
+       <i class="fas fa-cash-register"></i>
         <p>Caja</p>
         <i class="right fas fa-angle-left"></i>
     </a>
@@ -133,6 +141,5 @@
         <p>Salir</p>
     </a>
 </li>
-
 
 

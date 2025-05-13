@@ -17,7 +17,7 @@
         padding: 0;
         width: 100%;
     }
-
+ 
     .container {
         width: 100%;
         padding: 5px;
@@ -91,7 +91,9 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>RECIBO</h1>
+             <h1>RECIBO</h1>
+            <h1>RUC:{{ $empresa->ruc }}</h1>
+            <h1>{{ $empresa->nombre }}</h1>
             <p>Comprobante N°: {{ $venta->numero_comprobante }}</p>
             <p>Fecha: {{ \Carbon\Carbon::parse($venta->fecha_venta)->format('d/m/Y') }}</p>
             <p>Forma de pago: {{ $venta->forma_pago }}</p>

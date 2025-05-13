@@ -72,7 +72,6 @@ Route::get('/saldosPorVenta/{id_venta}', [App\Http\Controllers\CobroController::
 
 Route::resource('cajas', App\Http\Controllers\CajaController::class);
 
-
 Route::resource('empresas', App\Http\Controllers\EmpresaController::class);
 
 Route::get('/empresa/logo', [App\Http\Controllers\EmpresaController::class, 'ver_logo_empresa'])->name('empresa.logo');
@@ -92,5 +91,8 @@ Route::post('/generar_rendicion_caja', [CajaController::class, 'generar_rendicio
 
 Route::get('/ver_cobros_pendientes', [CobroController::class, 'ver_cobros_pendientes'])->name('ver_cobros_pendientes');
 Route::post('/reporte_cobros_pendientes', [CobroController::class, 'reporte_cobros_pendientes'])->name('reporte_cobros_pendientes');
+Route::post('/cobros/{id}/anular', [CobroController::class, 'anular'])->name('anular_cobro');
 
 
+
+Route::resource('compras', App\Http\Controllers\CompraController::class);

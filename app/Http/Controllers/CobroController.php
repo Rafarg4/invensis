@@ -48,7 +48,9 @@ class CobroController extends AppBaseController
             'cobros.cajero',
             'cobros.observacion',
             'ventas.numero_comprobante',
-            'ventas.total'
+            'ventas.total as total_venta',
+            'cobros.total as total_cobro',
+            'cobros.estado',
         )
         ->get();
         return view('cobros.index')
@@ -108,6 +110,7 @@ class CobroController extends AppBaseController
             // Guardar cabecera
             $input = $request->all();
             //return $input;
+             $input['estado'] = $input['estado'] ?? 'Activo';
             $cobro = $this->cobroRepository->create($input);
 
             // Procesar detalles seleccionados
@@ -157,6 +160,49 @@ class CobroController extends AppBaseController
         
         }
     }
+  public function anular($id)
+{
+    DB::beginTransaction();
+
+
+        // Verificar si el cobro existe
+        $cobro = DB::table('cobros')->where('id', $id)->first();
+        if (!$cobro) {
+            return redirect()->back()->with('error', 'Cobro no encontrado.');
+        }
+
+        // Cambiar el estado del cobro a 'Anulado'
+        DB::table('cobros')->where('id', $id)->update([
+            'estado' => 'Anulado'
+        ]);
+
+        // Obtener los detalles del cobro
+        $detalles = DB::table('cobro_detalles')->where('id_cobro', $id)->get();
+        //return $detalles;
+        foreach ($detalles as $detalle) {
+            // Cambiar el estado del detalle a 'Anulado'
+            DB::table('cobro_detalles')->where('id', $detalle->id)->update([
+                'estado' => 'Anulado'
+            ]);
+
+            // Calcular el monto pagado
+            $montoPagado = $detalle->saldo;
+
+            // Devolver el monto pagado al saldo_ventas usando id_venta y nro_cuota
+           $prueba= DB::table('saldo_ventas')
+                ->where('id_venta', $detalle->id_venta)
+                ->where('numero_cuota', $detalle->nro_cuota)
+                ->increment('saldo', $montoPagado);
+            
+        }
+
+
+        DB::commit();
+        return redirect()->back()->with('success', 'Cobro anulado correctamente.');
+
+    
+}
+
 
     /**
      * Display the specified Cobro.
@@ -329,3 +375,4 @@ class CobroController extends AppBaseController
         }
 
 }
+ 

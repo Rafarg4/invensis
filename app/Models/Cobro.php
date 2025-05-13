@@ -38,6 +38,7 @@ class Cobro extends Model
         'total',
         'id_caja',
         'monto',
+        'estado',
         'observacion',
         'numero_comprobante',
     ];

@@ -91,7 +91,9 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>RECIBO</h1>
+              <h1>RECIBO</h1>
+            <h1>RUC:{{ $empresa->ruc }}</h1>
+            <h1>{{ $empresa->nombre }}</h1>
             <p>Comprobante N°: {{ $cobros->comprobante_cobro }}</p>
             <p>Fecha: {{ \Carbon\Carbon::parse($cobros->fecha_cobro)->format('d/m/Y') }}</p>
         </div>
