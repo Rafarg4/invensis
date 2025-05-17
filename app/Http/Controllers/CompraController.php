@@ -43,9 +43,11 @@ class CompraController extends AppBaseController
      */
     public function create()
     {
-        $proveedores = DB::table('proveedors')->select('id', 'nombre','apellido', 'ci')->get();
+        $pedidos = DB::table('pedidos')->select('id')
+        ->where('estado','=','Pendiente')
+        ->get();
          $productos = DB::table('productos')->select('id', 'nombre','precio_venta','cantidad')->get();
-        return view('compras.create',compact('proveedores','productos'));
+        return view('compras.create',compact('pedidos','productos'));
     }
 
     /**
@@ -59,8 +61,30 @@ class CompraController extends AppBaseController
     {
         $input = $request->all();
 
+        $input['estado'] = $input['estado'] ?? 'Activo';
+
         $compra = $this->compraRepository->create($input);
 
+         // 2. Obtener detalles del pedido
+        $detalles = DB::table('pedido_detalles')
+            ->where('id_pedido', $request->id_pedido)
+            ->get();
+
+        foreach ($detalles as $detalle) {
+            // 3. Actualizar stock y precio del producto
+            DB::table('productos')
+                ->where('id', $detalle->id_producto)
+                ->update([
+                    'cantidad' => DB::raw("cantidad + $detalle->cantidad"),
+                    'precio_compra' => $detalle->precio_unitario,
+                ]);
+        }
+        // 4. Marcar el pedido como aplicado
+        $pedidos =DB::table('pedidos')
+            ->where('id', $request->id_pedido)
+            ->update(['estado' => 'Aplicado']);
+
+        //return $pedidos;
         Flash::success('Compra saved successfully.');
 
         return redirect(route('compras.index'));

@@ -2,48 +2,55 @@
     <table class="table" id="table">
         <thead>
         <tr>
-            <th>Proveedor</th>
+            <th>Nro de pedido</th>
         <th>Fecha Compra</th>
         <th>Tipo Comprobante</th>
         <th>Numero Comprobante</th>
         <th>Total</th>
-        <th>Iva</th>
         <th>Forma Pago</th>
-        <th>Condicion Compra</th>
         <th>Estado</th>
-        <th>Id Caja</th>
         <th>Observacion</th>
-            <th>Action</th>
+            <th>Accion</th>
         </tr>
         </thead>
         <tbody>
         @foreach($compras as $compra)
             <tr>
-                <td>{{ $compra->id_proveedor }}</td>
+                <td>{{ $compra->id_pedido }}</td>
             <td>{{ $compra->fecha_compra }}</td>
             <td>{{ $compra->tipo_comprobante }}</td>
             <td>{{ $compra->numero_comprobante }}</td>
-            <td>{{ $compra->total }}</td>
-            <td>{{ $compra->iva }}</td>
+            <td>{{ number_format($compra->total) }}</td>
             <td>{{ $compra->forma_pago }}</td>
-            <td>{{ $compra->condicion_compra }}</td>
-            <td>{{ $compra->estado }}</td>
-            <td>{{ $compra->id_caja }}</td>
+            <td>
+                @if($compra->estado === 'Anulado')
+                    <span style="background-color: #f8d7da; color: #721c24; padding: 3px 8px; border-radius: 5px;">
+                        {{ $compra->estado }}
+                    </span>
+                @elseif($compra->estado === 'Activo')
+                    <span style="background-color: #d4edda; color: #155724; padding: 3px 8px; border-radius: 5px;">
+                        {{ $compra->estado }}
+                    </span>
+                @else
+                    {{ $compra->estado }}
+                @endif
+            </td>
             <td>{{ $compra->observacion }}</td>
                 <td width="120">
-                    {!! Form::open(['route' => ['compras.destroy', $compra->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
                         <a href="{{ route('compras.show', [$compra->id]) }}"
                            class='btn btn-default btn-xs'>
                             <i class="far fa-eye"></i>
                         </a>
-                        <a href="{{ route('compras.edit', [$compra->id]) }}"
-                           class='btn btn-default btn-xs'>
-                            <i class="far fa-edit"></i>
-                        </a>
-                        {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                        @if($compra->estado == 'Activo')
+                        <form action="" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas anular esta compra?');" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="fas fa-ban"></i> 
+                        </button>
+                    </form>
+                    @endif
                     </div>
-                    {!! Form::close() !!}
                 </td>
             </tr>
         @endforeach

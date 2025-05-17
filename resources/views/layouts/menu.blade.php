@@ -65,6 +65,14 @@
 </li>
 
 <li class="nav-item">
+    <a href="{{ route('pedidos.index') }}"
+       class="nav-link {{ Request::is('pedidos*') ? 'active' : '' }}">
+        <i class="fas fa-receipt"></i>
+        <p>Pedidos</p>
+    </a>
+</li>
+
+<li class="nav-item">
     <a href=""
        class="nav-link ">
       <i class="fas fa-file-invoice-dollar"></i>
@@ -141,5 +149,3 @@
         <p>Salir</p>
     </a>
 </li>
-
-

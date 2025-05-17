@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateComprasTable extends Migration
+class CreatePedidosTable extends Migration
 {
 
     /**
@@ -14,19 +14,12 @@ class CreateComprasTable extends Migration
      */
     public function up()
     {
-        Schema::create('compras', function (Blueprint $table) {
+        Schema::create('pedidos', function (Blueprint $table) {
             $table->id('id');
-            $table->text('id_pedido');
-            $table->text('fecha_compra');
-            $table->text('tipo_comprobante');
-            $table->text('numero_comprobante');
+            $table->text('id_proveedor');
+            $table->text('fecha');
             $table->text('total');
-            $table->text('iva');
-            $table->text('forma_pago');
-            $table->text('condicion_compra');
             $table->text('estado');
-            $table->text('id_caja');
-            $table->text('observacion');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -39,6 +32,6 @@ class CreateComprasTable extends Migration
      */
     public function down()
     {
-        Schema::drop('compras');
+        Schema::drop('pedidos');
     }
 }

@@ -9,6 +9,7 @@ use App\Repositories\CajaRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
+use App\Models\Caja;
 use Response;
 use DB;
 
@@ -193,22 +194,27 @@ class CajaController extends AppBaseController
         $montoInicial = $ultimoCierre ? $ultimoCierre->monto_final : 0;
 
          //return $montoInicial;
+        //Para obtener la apertura 
+        $monto_apertura_caja = DB::table('cajas')
+        ->where('id','=',$id_caja)
+        ->sum('apertura');
+
        //Inserta los datos en cierres
         DB::table('cierres')->insert([
             'id_caja'       => $id_caja,
             'id_usuario'    => $id_usuario,
             'fecha_cierre'  => $fecha_cierre,
             'fecha_apertura'  => $fecha_cierre,
-            'monto_inicial' => $montoInicial,
+            'monto_inicial' => $monto_apertura_caja,
             'monto_final'   => $total_general,
             'observaciones'   => $observacion,
         ]);
-       //Actualiza el estado de la caja    
+       //Actualiza el estado de la caja
        $cajas = DB::table('cajas')
         ->where('id', $id_caja)
         ->update([
             'estado'=>'Inactivo',
-            'apertura' => $montoInicial,
+            'apertura' => $monto_apertura_caja,
             'cierre'   => $total_general,
             'fecha'  => $fecha_cierre,
         ]);
@@ -317,4 +323,16 @@ class CajaController extends AppBaseController
 
                 return $dompdf->stream('reporte_rendicion.pdf', ['Attachment' => false]);
         }
+        public function apertura_caja(Request $request, $id)
+        {
+        
+            $caja = Caja::findOrFail($id);
+            $caja->apertura = $request->monto_apertura;
+            $caja->fecha = now();
+            $caja->estado = 'Activo';
+            $caja->save();
+
+            return redirect()->back()->with('success', 'Caja abierta correctamente.');
+        }
+
 }

@@ -17,6 +17,19 @@
         padding: 0;
         width: 100%;
     }
+    .watermark {
+    position: absolute;
+    top: 40%;
+    left: 20%;
+    font-size: 40px;
+    color: rgba(255, 0, 0, 0.2); /* Rojo con transparencia */
+    transform: rotate(-30deg);
+    z-index: 0;
+    pointer-events: none;
+    width: 100%;
+    text-align: center;
+}
+
 
     .container {
         width: 100%;
@@ -89,6 +102,9 @@
     </style>
 </head>
 <body>
+    @if($cobros->estado === 'Anulado')
+        <div class="watermark">ANULADO</div>
+    @endif
     <div class="container">
         <div class="header">
               <h1>RECIBO</h1>

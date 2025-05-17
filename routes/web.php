@@ -6,7 +6,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\CobroController;
 use App\Http\Controllers\CajaController;
-
+use App\Http\Controllers\PedidoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -71,6 +71,7 @@ Route::get('/saldosPorVenta/{id_venta}', [App\Http\Controllers\CobroController::
 
 
 Route::resource('cajas', App\Http\Controllers\CajaController::class);
+Route::post('/cajas/{caja}/apertura', [CajaController::class, 'apertura_caja'])->name('apertura_caja');
 
 Route::resource('empresas', App\Http\Controllers\EmpresaController::class);
 
@@ -96,3 +97,7 @@ Route::post('/cobros/{id}/anular', [CobroController::class, 'anular'])->name('an
 
 
 Route::resource('compras', App\Http\Controllers\CompraController::class);
+
+
+Route::resource('pedidos', App\Http\Controllers\PedidoController::class);
+Route::get('/pedido_detalles/{id}', [PedidoController::class, 'pedido_detalles']);

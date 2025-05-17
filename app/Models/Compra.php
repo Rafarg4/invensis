@@ -37,11 +37,12 @@ class Compra extends Model
 
 
     public $fillable = [
-        'id_proveedor',
+        'id_pedido',
         'fecha_compra',
         'tipo_comprobante',
         'numero_comprobante',
         'total',
+        'id_pedido',
         'iva',
         'forma_pago',
         'condicion_compra',
@@ -75,17 +76,7 @@ class Compra extends Model
      * @var array
      */
     public static $rules = [
-        'id_proveedor' => 'required',
-        'fecha_compra' => 'required',
-        'tipo_comprobante' => 'required',
-        'numero_comprobante' => 'required',
-        'total' => 'required',
-        'iva' => 'required',
-        'forma_pago' => 'required',
-        'condicion_compra' => 'required',
-        'estado' => 'required',
-        'id_caja' => 'required',
-        'observacion' => 'required'
+        
     ];
 
     
