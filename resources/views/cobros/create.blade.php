@@ -122,7 +122,7 @@
                 <hr>
                 <!-- Botón para abrir el modal de saldos -->
                 <div class="form-group col-sm-3 d-flex align-items-end">
-                    <button type="button" class="btn btn-info" id="btnSeleccionarSaldos" data-toggle="modal" data-target="#modalSaldos">
+                    <button type="button" class="btn btn-primary" id="btnSeleccionarSaldos" data-toggle="modal" data-target="#modalSaldos">
                         Seleccionar Saldos
                     </button>
                 </div>
@@ -248,7 +248,7 @@ $('#confirmarSeleccion').on('click', function () {
                         <input type="number" class="form-control" name="cuotas[${saldoId}][pagado]" step="0.01" min="0" max="${saldo}" required>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-danger btn-sm eliminar-fila" data-id="${saldoId}">X</button>
+                        <button type="button" class="btn btn-danger btn-sm eliminar-fila" data-id="${saldoId}"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>
             `);
