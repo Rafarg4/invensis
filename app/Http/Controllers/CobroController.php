@@ -339,7 +339,9 @@ class CobroController extends AppBaseController
             $dompdf->render();
 
             // Enviar el PDF al navegador
-          return $dompdf->stream('recibo_' . $cobros->numero_comprobante . '.pdf', ['Attachment' => false]);
+         return response($dompdf->output(), 200)
+        ->header('Content-Type', 'application/pdf')
+        ->header('Content-Disposition', 'inline; filename="recibo_'.$cobros->numero_comprobante.'.pdf"');
 
         }
 
@@ -371,7 +373,9 @@ class CobroController extends AppBaseController
 
                 $dompdf->render();
 
-                return $dompdf->stream('reporte_cobro_pendiente.pdf', ['Attachment' => false]);
+                return response($dompdf->output(), 200)
+                ->header('Content-Type', 'application/pdf')
+                ->header('Content-Disposition', 'inline; filename="reporte_cobro_pendiente.pdf"');
         }
 
 }

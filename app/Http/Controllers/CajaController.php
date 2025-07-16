@@ -274,40 +274,38 @@ class CajaController extends AppBaseController
                   AND cobros.fecha_cobro BETWEEN ? AND ?
                 AND cobros.cajero= ?
             ", [$fecha_inicio,$fecha_fin,$cajeros]);
+                $ventas = DB::select("
+                SELECT 
+                        ventas.numero_comprobante,
+                        ventas.tipo_comprobante,
+                        ventas.total,
+                        ventas.estado,
+                        clientes.ci,
+                        clientes.nombre,
+                        clientes.apellido,
+                        ventas.fecha_venta,
+                        GROUP_CONCAT(productos.nombre SEPARATOR ', ') AS productos
+                    FROM 
+                        ventas
+                    JOIN 
+                        detalle_ventas ON detalle_ventas.id_venta = ventas.id
+                    JOIN 
+                        clientes ON ventas.id_cliente = clientes.id
+                    JOIN 
+                        productos ON detalle_ventas.id_producto = productos.id
+                    WHERE ventas.fecha_venta BETWEEN ? AND ?
+                    AND ventas.id_usuario = ?
+                    GROUP BY 
+                        ventas.numero_comprobante,
+                        ventas.tipo_comprobante,
+                        ventas.total,
+                        ventas.estado,
+                        clientes.ci,
+                        clientes.nombre,
+                        clientes.apellido,
+                        ventas.fecha_venta
+                ", [$fecha_inicio, $fecha_fin, $cajeros]);
 
-             $ventas = DB::select("
-               SELECT 
-                    ventas.numero_comprobante,
-                    ventas.tipo_comprobante,
-                    ventas.total,
-                    ventas.estado,
-                    clientes.ci,
-                    clientes.nombre,
-                    clientes.apellido,
-                    ventas.fecha_venta,
-                    GROUP_CONCAT(productos.nombre SEPARATOR ', ') AS productos
-                FROM 
-                    ventas
-                JOIN 
-                    detalle_ventas ON detalle_ventas.id_venta = ventas.id
-                JOIN 
-                    clientes ON ventas.id_cliente = clientes.id
-                JOIN 
-                    productos ON detalle_ventas.id_producto = productos.id
-
-                WHERE ventas.fecha_venta BETWEEN ? AND ?
-                AND ventas.id_usuario
-
-                GROUP BY 
-                    ventas.numero_comprobante,
-                    ventas.tipo_comprobante,
-                    ventas.total,
-                    ventas.estado,
-                    clientes.ci,
-                    clientes.nombre,
-                    clientes.apellido,
-                    ventas.fecha_venta
-            ", [$fecha_inicio,$fecha_fin,$cajeros]);
 
                 $html = view('cajas.reporte_rendicion', compact('datos','ventas','fecha_inicio','fecha_fin'))->render();
 
@@ -321,8 +319,16 @@ class CajaController extends AppBaseController
 
                 $dompdf->render();
 
-                return $dompdf->stream('reporte_rendicion.pdf', ['Attachment' => false]);
-        }
+                $pdfOutput = $dompdf->output();
+                // Enviar el PDF al navegador
+              return Response::make($pdfOutput, 200, [
+                    'Content-Type'        => 'application/pdf',
+                    'Content-Disposition' => 'inline; filename="reporte_rendicion.pdf"',
+                    'Cache-Control'       => 'public, must-revalidate, max-age=0',
+                    'Pragma'              => 'public',
+                    'Expires'             => '0',
+                ]);
+                }
         public function apertura_caja(Request $request, $id)
         {
         
@@ -334,5 +340,6 @@ class CajaController extends AppBaseController
 
             return redirect()->back()->with('success', 'Caja abierta correctamente.');
         }
+
 
 }

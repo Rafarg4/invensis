@@ -32,17 +32,20 @@
                     {{ $pedido->estado }}
                 @endif
             </td>
-                <td width="120">
-                    {!! Form::open(['route' => ['pedidos.destroy', $pedido->id], 'method' => 'delete']) !!}
-                    <div class='btn-group'>
-                        <a href="{{ route('pedidos.show', [$pedido->id]) }}"
-                           class='btn btn-default btn-xs'>
-                            <i class="far fa-eye"></i>
+                    <td width="120">
+                        <a href="{{ route('ficha_pedido', $pedido->id) }}" class="btn btn-primary btn-sm me-1" target="_blank">
+                            <i class="fas fa-file-pdf"></i>
                         </a>
-                        @if($pedido->estado === 'Anulado' && $pedido->estado=='Aplicado')
-                        {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                        @if($pedido->estado=='Pendiente')
+                        <form action="{{ route('anular_pedido', $pedido->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas anular este pedido?');" style="display: inline;">
+                            @csrf
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="fas fa-ban"></i> 
+                            </button>
+                        </form>
                         @endif
-                    </div>
+                    </td>
+
                     {!! Form::close() !!}
                 </td>
             </tr>

@@ -8,8 +8,11 @@ use App\Repositories\PedidoRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
+use Dompdf\Dompdf;
 use Response;
 use DB;
+use Dompdf\Options;
+use App\Models\Pedido;
 class PedidoController extends AppBaseController
 {
     /** @var PedidoRepository $pedidoRepository*/
@@ -190,4 +193,51 @@ class PedidoController extends AppBaseController
 
         return redirect(route('pedidos.index'));
     }
+    public function ficha_pedido($id)
+{
+    $pedido = Pedido::with('proveedor')->findOrFail($id);
+    //return $pedido;
+    $detalles = DB::table('pedido_detalles')
+    ->join('productos', 'pedido_detalles.id_producto', '=', 'productos.id')
+    ->where('pedido_detalles.id_pedido', $pedido->id)
+    ->select(
+        'pedido_detalles.*',
+        'productos.nombre as nombre_producto'
+    )
+    ->get();
+
+    // Cargar la vista y pasar los datos
+    $html = view('pedidos.ficha', compact('pedido','detalles'))->render();
+
+    // Crear una instancia de Dompdf
+    $options = new Options();
+    $options->set('isHtml5ParserEnabled', true);
+    $options->set('isPhpEnabled', true);
+    $dompdf = new Dompdf($options);
+
+    // Cargar el HTML
+    $dompdf->loadHtml($html);
+
+    // (Opcional) Definir tamaño de página
+     // Dimensiones para ticket: 80mm x 300mm
+    $customPaper = [0, 0, 226.77, 850]; // 80mm x 300mm en puntos (1 mm = 2.83465 puntos)
+    $dompdf->setPaper($customPaper);
+
+    // Renderizar el PDF
+    $dompdf->render();
+
+    // Enviar el PDF al navegador
+  return response($dompdf->output(), 200)
+    ->header('Content-Type', 'application/pdf')
+    ->header('Content-Disposition', 'inline; filename="recibo_' . $pedido->id_pedido . '.pdf"');
+
+}
+public function anular_pedido($id)
+{
+    $pedido = Pedido::findOrFail($id);
+    $pedido->estado = 'Anulado';
+    $pedido->save();
+    Flash::success('El pedido ha sido anulado correctamente.');
+    return redirect()->back()->with('success', 'El pedido ha sido anulado correctamente.');
+}
 }

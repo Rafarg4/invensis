@@ -43,9 +43,11 @@ class CompraController extends AppBaseController
      */
     public function create()
     {
+
         $pedidos = DB::table('pedidos')->select('id')
         ->where('estado','=','Pendiente')
         ->get();
+
          $productos = DB::table('productos')->select('id', 'nombre','precio_venta','cantidad')->get();
         return view('compras.create',compact('pedidos','productos'));
     }

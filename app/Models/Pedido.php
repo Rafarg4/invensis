@@ -56,6 +56,10 @@ class Pedido extends Model
     public static $rules = [
         
     ];
+    public function proveedor()
+    {
+        return $this->belongsTo(Proveedor::class, 'id_proveedor');
+    }
 
     
 }

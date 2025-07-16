@@ -298,7 +298,9 @@ class VentaController extends AppBaseController
     $dompdf->render();
 
     // Enviar el PDF al navegador
-  return $dompdf->stream('recibo_' . $venta->numero_comprobante . '.pdf', ['Attachment' => false]);
+  return response($dompdf->output(), 200)
+    ->header('Content-Type', 'application/pdf')
+    ->header('Content-Disposition', 'inline; filename="recibo_' . $venta->numero_comprobante . '.pdf"');
 
 }
 public function generar_factura($id)
@@ -326,7 +328,9 @@ public function generar_factura($id)
 
     $dompdf->render();
 
-    return $dompdf->stream('factura_' . $venta->numero_comprobante . '.pdf', ['Attachment' => false]);
+    return response($dompdf->output(), 200)
+    ->header('Content-Type', 'application/pdf')
+    ->header('Content-Disposition', 'inline; filename="factura_' . $venta->numero_comprobante . '.pdf"');
 }
 
 }
