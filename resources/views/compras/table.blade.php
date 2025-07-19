@@ -36,22 +36,23 @@
                 @endif
             </td>
             <td>{{ $compra->observacion }}</td>
-                <td width="120">
-                    <div class='btn-group'>
-                        <a href="{{ route('compras.show', [$compra->id]) }}"
-                           class='btn btn-default btn-xs'>
-                            <i class="far fa-eye"></i>
+               <td width="120">
+                    <div class="d-flex" style="gap: 3px;">
+                        <a href="{{ route('ficha_compra', $compra->id) }}" class="btn btn-primary btn-sm" target="_blank">
+                            <i class="fas fa-file-pdf"></i>
                         </a>
+
                         @if($compra->estado == 'Activo')
-                        <form action="" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas anular esta compra?');" style="display: inline;">
-                        @csrf
-                        <button type="submit" class="btn btn-danger btn-sm">
-                            <i class="fas fa-ban"></i> 
-                        </button>
-                    </form>
-                    @endif
+                            <form action="{{ route('anular_compra', $compra->id) }}" method="POST" onsubmit="return confirm('¿Deseas anular esta compra?');" style="display: inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-ban"></i>
+                                </button>
+                            </form>
+                        @endif
                     </div>
                 </td>
+
             </tr>
         @endforeach
         </tbody>

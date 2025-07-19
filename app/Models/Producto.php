@@ -43,7 +43,6 @@ class Producto extends Model
         'precio_venta',
         'precio_compra',
         'estado',
-        'id_proveedor'
     ];
 
     /**

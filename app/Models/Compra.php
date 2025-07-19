@@ -78,6 +78,9 @@ class Compra extends Model
     public static $rules = [
         
     ];
-
+    public function Pedido()
+    {
+        return $this->belongsTo(Pedido::class, 'id_pedido');
+    }
     
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\VentaController;
 use App\Http\Controllers\CobroController;
 use App\Http\Controllers\CajaController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\CompraController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -95,10 +96,12 @@ Route::post('/reporte_cobros_pendientes', [CobroController::class, 'reporte_cobr
 Route::post('/cobros/{id}/anular', [CobroController::class, 'anular'])->name('anular_cobro');
 
 
-
+//Compras
 Route::resource('compras', App\Http\Controllers\CompraController::class);
+Route::get('/ficha_compra/{id}', [CompraController::class, 'ficha_compra'])->name('ficha_compra');
+Route::post('/anular_compra/{id}', [CompraController::class, 'anular_compra'])->name('anular_compra');
 
-
+//Pedidos
 Route::resource('pedidos', App\Http\Controllers\PedidoController::class);
 Route::get('/pedido_detalles/{id}', [PedidoController::class, 'pedido_detalles']);
 Route::get('/ficha_pedido/{id}', [PedidoController::class, 'ficha_pedido'])->name('ficha_pedido');
