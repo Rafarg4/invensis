@@ -16,7 +16,7 @@
                     {!! Form::open(['route' => ['categorias.destroy', $categoria->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
                         <a href="{{ route('categorias.show', [$categoria->id]) }}"
-                           class='btn btn-default btn-xs'>
+                            class='btn btn-default btn-xs'>
                             <i class="far fa-eye"></i>
                         </a>
                         <a href="{{ route('categorias.edit', [$categoria->id]) }}"

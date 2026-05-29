@@ -70,20 +70,25 @@ https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js
 "></script>
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css
 ">
-<script type="text/javascript">
-     $(document).ready( function () {
+<script>
+$(document).ready(function () {
     $('#Table').DataTable({
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-            },
-            "dom": "Bftrip",
-            
-            "buttons": [
-            'excel'
+        responsive: true,
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json'
+        },
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                text: 'Exportar Excel',
+                className: 'btn btn-success btn-sm'
+            }
         ]
-        } );
-} );
+    });
+});
 </script>
+
 <script type="text/javascript">
      $(document).ready( function () {
     $('#table').DataTable({

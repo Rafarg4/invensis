@@ -97,6 +97,7 @@ class UserController extends AppBaseController
      */
     public function edit($id)
     {
+        $cajas = DB::table('cajas')->select('id', 'nombre')->get();
         $user = $this->userRepository->find($id);
       
         if (empty($user)) {
@@ -105,7 +106,7 @@ class UserController extends AppBaseController
             return redirect(route('users.index'));
         }
 
-        return view('users.edit',compact('user'));
+        return view('users.edit',compact('user','cajas'));
     }
 
     /**
