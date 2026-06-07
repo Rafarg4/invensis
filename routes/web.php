@@ -106,3 +106,6 @@ Route::resource('pedidos', App\Http\Controllers\PedidoController::class);
 Route::get('/pedido_detalles/{id}', [PedidoController::class, 'pedido_detalles']);
 Route::get('/ficha_pedido/{id}', [PedidoController::class, 'ficha_pedido'])->name('ficha_pedido');
 Route::post('/anular_pedido/{id}', [PedidoController::class, 'anular_pedido'])->name('anular_pedido');
+
+
+Route::resource('cotizacions', App\Http\Controllers\CotizacionController::class);

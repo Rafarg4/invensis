@@ -21,6 +21,13 @@
         <p>Categorias</p>
     </a>
 </li>
+</li><li class="nav-item">
+    <a href="{{ route('cotizacions.index') }}"
+       class="nav-link {{ Request::is('cotizacions*') ? 'active' : '' }}">
+       <i class="fas fa-dollar-sign"></i>
+        <p>Cotizaciones</p>
+    </a>
+</li>
 <li class="nav-item">
     <a href="{{ route('clientes.index') }}"
        class="nav-link {{ Request::is('clientes*') ? 'active' : '' }}">
@@ -148,4 +155,6 @@
       <i class="fas fa-sign-out-alt"></i>
         <p>Salir</p>
     </a>
-</li>
+
+
+
