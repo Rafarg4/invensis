@@ -56,17 +56,23 @@ class EmpresaController extends AppBaseController
     {
         $input = $request->all();
 
-        // Si se subió un logo
         if ($request->hasFile('logo')) {
-            $archivo = $request->file('logo');
-            $nombreArchivo = time() . '_' . $archivo->getClientOriginalName();
-            $archivo->move(public_path('imagenes'), $nombreArchivo);
 
-            // Guardar el nombre en el input
+            $archivo = $request->file('logo');
+
+            $nombreArchivo = time() . '_' . str_replace(' ', '_', $archivo->getClientOriginalName());
+
+            $rutaDestino = public_path('imagenes');
+
+            if (!file_exists($rutaDestino)) {
+                mkdir($rutaDestino, 0777, true);
+            }
+
+            $archivo->move($rutaDestino, $nombreArchivo);
+
             $input['logo'] = $nombreArchivo;
         }
 
-        // Guardar en base de datos
         $empresa = $this->empresaRepository->create($input);
 
         Flash::success('Empresa guardada correctamente.');
@@ -122,21 +128,46 @@ class EmpresaController extends AppBaseController
      * @return Response
      */
     public function update($id, UpdateEmpresaRequest $request)
-    {
-        $empresa = $this->empresaRepository->find($id);
+        {
+            $empresa = $this->empresaRepository->find($id);
 
-        if (empty($empresa)) {
-            Flash::error('Empresa not found');
+            if (empty($empresa)) {
+                Flash::error('Empresa not found');
+                return redirect(route('empresas.index'));
+            }
+
+            $input = $request->all();
+
+            if ($request->hasFile('logo')) {
+
+                if (!empty($empresa->logo)) {
+
+                    $logoAnterior = public_path('imagenes/' . $empresa->logo);
+
+                    if (file_exists($logoAnterior)) {
+                        unlink($logoAnterior);
+                    }
+                }
+
+                $archivo = $request->file('logo');
+
+                $nombreArchivo = time() . '_' .
+                                str_replace(' ', '_', $archivo->getClientOriginalName());
+
+                $archivo->move(public_path('imagenes'), $nombreArchivo);
+
+                $input['logo'] = $nombreArchivo;
+            } else {
+
+                $input['logo'] = $empresa->logo;
+            }
+
+            $this->empresaRepository->update($input, $id);
+
+            Flash::success('Empresa actualizada correctamente.');
 
             return redirect(route('empresas.index'));
         }
-
-        $empresa = $this->empresaRepository->update($request->all(), $id);
-
-        Flash::success('Empresa updated successfully.');
-
-        return redirect(route('empresas.index'));
-    }
 
     /**
      * Remove the specified Empresa from storage.

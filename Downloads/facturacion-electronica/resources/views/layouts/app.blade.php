@@ -2,8 +2,10 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{{ $empresa->nombre }}</title>
-     <link rel="icon" type="image/png" src="{{ asset('imagenes/' . $empresa->logo) }}">
+    <title>{{ $empresa->nombre ?? 'Sin nombre'}}</title>
+    @if(isset($empresa) && !empty($empresa->logo))
+    <link rel="icon" type="image/png" href="{{ asset('imagenes/'.$empresa->logo) }}">
+@endif
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
         integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="

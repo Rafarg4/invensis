@@ -34,7 +34,11 @@ class Empresa extends Model
         'ruc',
         'descripcion',
         'logo',
-        'fecha_habilitacion'
+        'fecha_habilitacion',
+        'timbrado',
+        'direccion',
+        'telefono',
+        'correo',
     ];
 
     /**
